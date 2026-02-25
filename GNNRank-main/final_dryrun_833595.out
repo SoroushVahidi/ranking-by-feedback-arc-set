@@ -1,0 +1,621 @@
+========== TEST 1: Baseline on small dataset (animal) ==========
+Loading existing data!
+Final results for btl:
+upset simple:,0.452830,upset ratio:,0.221363,upset naive:,0.113208,runtime:,1.0437,seconds,
+Final results for btl:
+upset simple:,0.452830,upset ratio:,0.221363,upset naive:,0.113208,runtime:,0.9449,seconds,
++--------+---+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+--------+-------+
+| Parame | K | traina | Fiedle | num_tr | alpha | dropou | upset_ | upset_ | margin | train_ | baseli | pretra | pretr |
+|  ter   |   | ble_al | r_laye |  ials  |       |   t    | ratio_ | margin |        |  with  |   ne   |   in   | ain e |
+|        |   |  pha   | r_num  |        |       |        | coeff  | _coeff |        |        |        |  with  | pochs |
++========+===+========+========+========+=======+========+========+========+========+========+========+========+=======+
+| Values | 3 | False  | 5      | 2      | 1     | 0.500  | 1      | 0      | 0.010  | dist   | Spring | dist   | 1     |
+|        |   |        |        |        |       |        |        |        |        |        | Rank   |        |       |
++--------+---+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+--------+-------+
+Dryad_animal_society/_latestMetric/Method        btl     
+=========================================================
+test kendall tau                            nan$\pm$nan  
+test kendall p                              nan$\pm$nan  
+val kendall tau                             nan$\pm$nan  
+val kendall p                               nan$\pm$nan  
+all kendall tau                             nan$\pm$nan  
+all kendall p                               nan$\pm$nan  
+upset_simple                                0.45$\pm$0.00
+upset_ratio                                 0.22$\pm$0.00
+upset_naive                                 0.11$\pm$0.00
+runtime_sec                                 0.99$\pm$0.05
+
+
+Dryad_animal_society/_bestMetric/Method        btl     
+=======================================================
+test kendall tau                          nan$\pm$nan  
+test kendall p                            nan$\pm$nan  
+val kendall tau                           nan$\pm$nan  
+val kendall p                             nan$\pm$nan  
+all kendall tau                           nan$\pm$nan  
+all kendall p                             nan$\pm$nan  
+upset_simple                              0.45$\pm$0.00
+upset_ratio                               0.22$\pm$0.00
+upset_naive                               0.11$\pm$0.00
+runtime_sec                               0.99$\pm$0.05
+Exit code: 0
+
+========== TEST 2: Our method on small dataset (animal) ==========
+Loading existing data!
+Final results for OURS_MFAS_INS1:
+upset simple:,0.377358,upset ratio:,0.399096,upset naive:,0.094340,runtime:,0.0163,seconds,
+Final results for OURS_MFAS_INS1:
+upset simple:,0.377358,upset ratio:,0.399096,upset naive:,0.094340,runtime:,0.0158,seconds,
++--------+---+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+--------+-------+
+| Parame | K | traina | Fiedle | num_tr | alpha | dropou | upset_ | upset_ | margin | train_ | baseli | pretra | pretr |
+|  ter   |   | ble_al | r_laye |  ials  |       |   t    | ratio_ | margin |        |  with  |   ne   |   in   | ain e |
+|        |   |  pha   | r_num  |        |       |        | coeff  | _coeff |        |        |        |  with  | pochs |
++========+===+========+========+========+=======+========+========+========+========+========+========+========+=======+
+| Values | 3 | False  | 5      | 2      | 1     | 0.500  | 1      | 0      | 0.010  | dist   | Spring | dist   | 1     |
+|        |   |        |        |        |       |        |        |        |        |        | Rank   |        |       |
++--------+---+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+--------+-------+
+Dryad_animal_society/_latestMetric/Method   OURS_MFAS_INS1
+==========================================================
+test kendall tau                            nan$\pm$nan   
+test kendall p                              nan$\pm$nan   
+val kendall tau                             nan$\pm$nan   
+val kendall p                               nan$\pm$nan   
+all kendall tau                             nan$\pm$nan   
+all kendall p                               nan$\pm$nan   
+upset_simple                                0.38$\pm$0.00 
+upset_ratio                                 0.40$\pm$0.00 
+upset_naive                                 0.09$\pm$0.00 
+runtime_sec                                 0.02$\pm$0.00 
+
+
+Dryad_animal_society/_bestMetric/Method   OURS_MFAS_INS1
+========================================================
+test kendall tau                          nan$\pm$nan   
+test kendall p                            nan$\pm$nan   
+val kendall tau                           nan$\pm$nan   
+val kendall p                             nan$\pm$nan   
+all kendall tau                           nan$\pm$nan   
+all kendall p                             nan$\pm$nan   
+upset_simple                              0.38$\pm$0.00 
+upset_ratio                               0.40$\pm$0.00 
+upset_naive                               0.09$\pm$0.00 
+runtime_sec                               0.02$\pm$0.00 
+Exit code: 0
+
+========== TEST 3: GNN DIGRAC on small dataset (animal) ==========
+Loading existing data!
+0, / 2 epoch,Train loss:, 1.210281, upset ratio loss: 1.210281, upset margin loss: 1.000000,val loss:, 0.862433, upset ratio loss: 0.862433, upset margin loss: 1.000000,---, 0.6786, seconds ---
+1, / 2 epoch,Train loss:, 0.875739, upset ratio loss: 0.875739, upset margin loss: 1.000000,val loss:, 0.802593, upset ratio loss: 0.802593, upset margin loss: 1.000000,---, 0.0113, seconds ---
+Final results for DIGRAC:,Best val loss: ,0.803, test loss: ,0.803, all loss: ,0.803,
+ From dist:,upset simple:,1.283019,upset ratio:,0.802593,upset naive:,0.320755,
+ From innerproduct:,upset simple:,0.603774,upset ratio:,0.746906,upset naive:,0.150943,
+ From proximal_dist:,upset simple:,1.635220,upset ratio:,0.875846,upset naive:,0.408805,
+ From proximal_innerproduct:,upset simple:,0.880503,upset ratio:,0.749640,upset naive:,0.220126,
+ From proximal_baseline:,upset simple:,0.754717,upset ratio:,0.684227,upset naive:,0.188679,Latest val loss: ,0.803, test loss: ,0.803, all loss: ,0.803,
+ From dist_latest:,upset simple:,1.283019,upset ratio:,0.802593,upset naive:,0.320755,
+ From innerproduct_latest:,upset simple:,0.603774,upset ratio:,0.746906,upset naive:,0.150943,
+ From proximal_dist_latest:,upset simple:,1.635220,upset ratio:,0.875846,upset naive:,0.408805,
+ From proximal_innerproduct_latest:,upset simple:,0.880503,upset ratio:,0.749640,upset naive:,0.220126,
+ From proximal_baseline_latest:,upset simple:,0.754717,upset ratio:,0.684227,upset naive:,0.188679,
+Runtime: 3.3570 seconds
+0, / 2 epoch,Train loss:, 0.924238, upset ratio loss: 0.924238, upset margin loss: 1.000000,val loss:, 0.854945, upset ratio loss: 0.854945, upset margin loss: 1.000000,---, 0.0115, seconds ---
+1, / 2 epoch,Train loss:, 0.854033, upset ratio loss: 0.854033, upset margin loss: 1.000000,val loss:, 0.792131, upset ratio loss: 0.792131, upset margin loss: 1.000000,---, 0.0109, seconds ---
+Final results for DIGRAC:,Best val loss: ,0.792, test loss: ,0.792, all loss: ,0.792,
+ From dist:,upset simple:,1.132075,upset ratio:,0.792131,upset naive:,0.283019,
+ From innerproduct:,upset simple:,0.981132,upset ratio:,0.739566,upset naive:,0.245283,
+ From proximal_dist:,upset simple:,1.484277,upset ratio:,0.855592,upset naive:,0.371069,
+ From proximal_innerproduct:,upset simple:,1.081761,upset ratio:,0.738442,upset naive:,0.270440,
+ From proximal_baseline:,upset simple:,0.578616,upset ratio:,0.690262,upset naive:,0.144654,Latest val loss: ,0.792, test loss: ,0.792, all loss: ,0.792,
+ From dist_latest:,upset simple:,1.132075,upset ratio:,0.792131,upset naive:,0.283019,
+ From innerproduct_latest:,upset simple:,0.981132,upset ratio:,0.739566,upset naive:,0.245283,
+ From proximal_dist_latest:,upset simple:,1.484277,upset ratio:,0.855592,upset naive:,0.371069,
+ From proximal_innerproduct_latest:,upset simple:,1.081761,upset ratio:,0.738442,upset naive:,0.270440,
+ From proximal_baseline_latest:,upset simple:,0.578616,upset ratio:,0.690262,upset naive:,0.144654,
+Runtime: 0.0284 seconds
++--------+---+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+--------+-------+
+| Parame | K | traina | Fiedle | num_tr | alpha | dropou | upset_ | upset_ | margin | train_ | baseli | pretra | pretr |
+|  ter   |   | ble_al | r_laye |  ials  |       |   t    | ratio_ | margin |        |  with  |   ne   |   in   | ain e |
+|        |   |  pha   | r_num  |        |       |        | coeff  | _coeff |        |        |        |  with  | pochs |
++========+===+========+========+========+=======+========+========+========+========+========+========+========+=======+
+| Values | 3 | False  | 5      | 2      | 1     | 0.500  | 1      | 0      | 0.010  | dist   | Spring | dist   | 1     |
+|        |   |        |        |        |       |        |        |        |        |        | Rank   |        |       |
++--------+---+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+--------+-------+
+Dryad_animal_socie      DIGRAC_dist       DIGRAC_innerproduc   DIGRAC_proximal_d   DIGRAC_proximal_i   DIGRAC_proximal_b
+ty/_latestMetric/M                                t                   ist             nnerproduct           aseline     
+      ethod                                                                                                             
+========================================================================================================================
+test kendall tau     nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+test kendall p       nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+val kendall tau      nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+val kendall p        nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+all kendall tau      nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+all kendall p        nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+upset_simple         1.21$\pm$0.08        \blue{0.79$\pm$0.1   1.56$\pm$0.08       0.98$\pm$0.10       \red{0.67$\pm$0.0
+                                          9}                                                           9}               
+upset_ratio          0.80$\pm$0.01        \blue{0.74$\pm$0.0   0.87$\pm$0.01       \blue{0.74$\pm$0.   \red{0.69$\pm$0.0
+                                          0}                                       01}                 0}               
+upset_naive          0.30$\pm$0.02        \blue{0.20$\pm$0.0   0.39$\pm$0.02       0.25$\pm$0.03       \red{0.17$\pm$0.0
+                                          5}                                                           2}               
+runtime_sec          \red{1.69$\pm$1.66   \red{1.69$\pm$1.66   \red{1.69$\pm$1.6   \red{1.69$\pm$1.6   \red{1.69$\pm$1.6
+                     }                    }                    6}                  6}                  6}               
+
+
+Dryad_animal_socie      DIGRAC_dist       DIGRAC_innerproduc   DIGRAC_proximal_d   DIGRAC_proximal_i   DIGRAC_proximal_b
+ty/_bestMetric/Met                                t                   ist             nnerproduct           aseline     
+       hod                                                                                                              
+========================================================================================================================
+test kendall tau     nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+test kendall p       nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+val kendall tau      nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+val kendall p        nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+all kendall tau      nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+all kendall p        nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+upset_simple         1.21$\pm$0.08        \blue{0.79$\pm$0.1   1.56$\pm$0.08       0.98$\pm$0.10       \red{0.67$\pm$0.0
+                                          9}                                                           9}               
+upset_ratio          0.80$\pm$0.01        \blue{0.74$\pm$0.0   0.87$\pm$0.01       \blue{0.74$\pm$0.   \red{0.69$\pm$0.0
+                                          0}                                       01}                 0}               
+upset_naive          0.30$\pm$0.02        \blue{0.20$\pm$0.0   0.39$\pm$0.02       0.25$\pm$0.03       \red{0.17$\pm$0.0
+                                          5}                                                           2}               
+runtime_sec          \red{1.69$\pm$1.66   \red{1.69$\pm$1.66   \red{1.69$\pm$1.6   \red{1.69$\pm$1.6   \red{1.69$\pm$1.6
+                     }                    }                    6}                  6}                  6}               
+Exit code: 0
+
+========== TEST 4: GNN ib on small dataset (animal) ==========
+Loading existing data!
+0, / 2 epoch,Train loss:, 0.681878, upset ratio loss: 0.681878, upset margin loss: 1.000000,val loss:, 0.683219, upset ratio loss: 0.683219, upset margin loss: 1.000000,---, 0.0974, seconds ---
+1, / 2 epoch,Train loss:, 0.681695, upset ratio loss: 0.681695, upset margin loss: 1.000000,val loss:, 0.683645, upset ratio loss: 0.683645, upset margin loss: 1.000000,---, 0.0156, seconds ---
+Final results for ib:,Best val loss: ,0.683, test loss: ,0.683, all loss: ,0.683,
+ From dist:,upset simple:,0.805031,upset ratio:,0.683219,upset naive:,0.805031,
+ From innerproduct:,upset simple:,1.264151,upset ratio:,1.099153,upset naive:,0.490566,
+ From proximal_dist:,upset simple:,0.855346,upset ratio:,0.844675,upset naive:,0.628931,
+ From proximal_innerproduct:,upset simple:,1.333333,upset ratio:,0.823461,upset naive:,0.484277,
+ From proximal_baseline:,upset simple:,0.528302,upset ratio:,0.659799,upset naive:,0.132075,Latest val loss: ,0.684, test loss: ,0.684, all loss: ,0.684,
+ From dist_latest:,upset simple:,0.805031,upset ratio:,0.683645,upset naive:,0.805031,
+ From innerproduct_latest:,upset simple:,1.314465,upset ratio:,1.231464,upset naive:,0.503145,
+ From proximal_dist_latest:,upset simple:,0.855346,upset ratio:,0.833468,upset naive:,0.459119,
+ From proximal_innerproduct_latest:,upset simple:,1.308176,upset ratio:,0.860536,upset naive:,0.459119,
+ From proximal_baseline_latest:,upset simple:,0.528302,upset ratio:,0.659185,upset naive:,0.132075,
+Runtime: 0.7023 seconds
+0, / 2 epoch,Train loss:, 0.699240, upset ratio loss: 0.699240, upset margin loss: 1.000000,val loss:, 0.683616, upset ratio loss: 0.683616, upset margin loss: 1.000000,---, 0.0166, seconds ---
+1, / 2 epoch,Train loss:, 0.703070, upset ratio loss: 0.703070, upset margin loss: 1.000000,val loss:, 0.682800, upset ratio loss: 0.682800, upset margin loss: 1.000000,---, 0.0152, seconds ---
+Final results for ib:,Best val loss: ,0.683, test loss: ,0.683, all loss: ,0.683,
+ From dist:,upset simple:,0.805031,upset ratio:,0.682800,upset naive:,0.805031,
+ From innerproduct:,upset simple:,0.779874,upset ratio:,0.611828,upset naive:,0.723270,
+ From proximal_dist:,upset simple:,1.283019,upset ratio:,0.854411,upset naive:,0.603774,
+ From proximal_innerproduct:,upset simple:,1.264151,upset ratio:,0.757562,upset naive:,0.622642,
+ From proximal_baseline:,upset simple:,0.503145,upset ratio:,0.660383,upset naive:,0.125786,Latest val loss: ,0.683, test loss: ,0.683, all loss: ,0.683,
+ From dist_latest:,upset simple:,0.805031,upset ratio:,0.682800,upset naive:,0.805031,
+ From innerproduct_latest:,upset simple:,0.779874,upset ratio:,0.611828,upset naive:,0.723270,
+ From proximal_dist_latest:,upset simple:,1.283019,upset ratio:,0.854411,upset naive:,0.603774,
+ From proximal_innerproduct_latest:,upset simple:,1.264151,upset ratio:,0.757562,upset naive:,0.622642,
+ From proximal_baseline_latest:,upset simple:,0.503145,upset ratio:,0.660383,upset naive:,0.125786,
+Runtime: 0.0401 seconds
++--------+---+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+--------+-------+
+| Parame | K | traina | Fiedle | num_tr | alpha | dropou | upset_ | upset_ | margin | train_ | baseli | pretra | pretr |
+|  ter   |   | ble_al | r_laye |  ials  |       |   t    | ratio_ | margin |        |  with  |   ne   |   in   | ain e |
+|        |   |  pha   | r_num  |        |       |        | coeff  | _coeff |        |        |        |  with  | pochs |
++========+===+========+========+========+=======+========+========+========+========+========+========+========+=======+
+| Values | 3 | False  | 5      | 2      | 1     | 0.500  | 1      | 0      | 0.010  | dist   | Spring | dist   | 1     |
+|        |   |        |        |        |       |        |        |        |        |        | Rank   |        |       |
++--------+---+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+--------+-------+
+Dryad_animal_socie        ib_dist          ib_innerproduct     ib_proximal_dist    ib_proximal_inner   ib_proximal_basel
+ty/_latestMetric/M                                                                      product               ine       
+      ethod                                                                                                             
+========================================================================================================================
+test kendall tau     nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+test kendall p       nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+val kendall tau      nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+val kendall p        nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+all kendall tau      nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+all kendall p        nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+upset_simple         \blue{0.81$\pm$0.0   1.05$\pm$0.27        1.07$\pm$0.21       1.29$\pm$0.02       \red{0.52$\pm$0.0
+                     0}                                                                                1}               
+upset_ratio          \blue{0.68$\pm$0.0   0.92$\pm$0.31        0.84$\pm$0.01       0.81$\pm$0.05       \red{0.66$\pm$0.0
+                     0}                                                                                0}               
+upset_naive          0.81$\pm$0.00        0.61$\pm$0.11        \blue{0.53$\pm$0.   0.54$\pm$0.08       \red{0.13$\pm$0.0
+                                                               07}                                     0}               
+runtime_sec          \red{0.37$\pm$0.33   \red{0.37$\pm$0.33   \red{0.37$\pm$0.3   \red{0.37$\pm$0.3   \red{0.37$\pm$0.3
+                     }                    }                    3}                  3}                  3}               
+
+
+Dryad_animal_socie        ib_dist          ib_innerproduct     ib_proximal_dist    ib_proximal_inner   ib_proximal_basel
+ty/_bestMetric/Met                                                                      product               ine       
+       hod                                                                                                              
+========================================================================================================================
+test kendall tau     nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+test kendall p       nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+val kendall tau      nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+val kendall p        nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+all kendall tau      nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+all kendall p        nan$\pm$nan          nan$\pm$nan          nan$\pm$nan         nan$\pm$nan         nan$\pm$nan      
+upset_simple         \blue{0.81$\pm$0.0   1.02$\pm$0.24        1.07$\pm$0.21       1.30$\pm$0.03       \red{0.52$\pm$0.0
+                     0}                                                                                1}               
+upset_ratio          \blue{0.68$\pm$0.0   0.86$\pm$0.24        0.85$\pm$0.00       0.79$\pm$0.03       \red{0.66$\pm$0.0
+                     0}                                                                                0}               
+upset_naive          0.81$\pm$0.00        0.61$\pm$0.12        0.62$\pm$0.01       \blue{0.55$\pm$0.   \red{0.13$\pm$0.0
+                                                                                   07}                 0}               
+runtime_sec          \red{0.37$\pm$0.33   \red{0.37$\pm$0.33   \red{0.37$\pm$0.3   \red{0.37$\pm$0.3   \red{0.37$\pm$0.3
+                     }                    }                    3}                  3}                  3}               
+Exit code: 0
+
+========== TEST 5: mvr on small dataset (animal) ==========
+Loading existing data!
+Final results for mvr:
+upset simple:,2.389937,upset ratio:,nan,upset naive:,0.597484,runtime:,1.2449,seconds,
+Final results for mvr:
+upset simple:,2.012579,upset ratio:,nan,upset naive:,0.503145,runtime:,12.0283,seconds,
++--------+---+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+--------+-------+
+| Parame | K | traina | Fiedle | num_tr | alpha | dropou | upset_ | upset_ | margin | train_ | baseli | pretra | pretr |
+|  ter   |   | ble_al | r_laye |  ials  |       |   t    | ratio_ | margin |        |  with  |   ne   |   in   | ain e |
+|        |   |  pha   | r_num  |        |       |        | coeff  | _coeff |        |        |        |  with  | pochs |
++========+===+========+========+========+=======+========+========+========+========+========+========+========+=======+
+| Values | 3 | False  | 5      | 2      | 1     | 0.500  | 1      | 0      | 0.010  | dist   | Spring | dist   | 1     |
+|        |   |        |        |        |       |        |        |        |        |        | Rank   |        |       |
++--------+---+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+--------+-------+
+Dryad_animal_society/_latestMetric/Method        mvr     
+=========================================================
+test kendall tau                            nan$\pm$nan  
+test kendall p                              nan$\pm$nan  
+val kendall tau                             nan$\pm$nan  
+val kendall p                               nan$\pm$nan  
+all kendall tau                             nan$\pm$nan  
+all kendall p                               nan$\pm$nan  
+upset_simple                                2.20$\pm$0.19
+upset_ratio                                 nan$\pm$nan  
+upset_naive                                 0.55$\pm$0.05
+runtime_sec                                 6.64$\pm$5.39
+
+
+Dryad_animal_society/_bestMetric/Method        mvr     
+=======================================================
+test kendall tau                          nan$\pm$nan  
+test kendall p                            nan$\pm$nan  
+val kendall tau                           nan$\pm$nan  
+val kendall p                             nan$\pm$nan  
+all kendall tau                           nan$\pm$nan  
+all kendall p                             nan$\pm$nan  
+upset_simple                              2.20$\pm$0.19
+upset_ratio                               nan$\pm$nan  
+upset_naive                               0.55$\pm$0.05
+runtime_sec                               6.64$\pm$5.39
+Exit code: 0
+
+========== TEST 6: Baseline on medium dataset (HeadToHead) ==========
+Loading existing data!
+Final results for btl:
+upset simple:,1.127924,upset ratio:,0.714756,upset naive:,0.281981,runtime:,0.0634,seconds,
+Final results for btl:
+upset simple:,1.102634,upset ratio:,0.706349,upset naive:,0.275659,runtime:,0.0609,seconds,
++--------+----+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+-------+-------+
+| Parame | K  | traina | Fiedle | num_tr | alpha | dropou | upset_ | upset_ | margin | train_ | baseli | pretr | pretr |
+|  ter   |    | ble_al | r_laye |  ials  |       |   t    | ratio_ | margin |        |  with  |   ne   |  ain  | ain e |
+|        |    |  pha   | r_num  |        |       |        | coeff  | _coeff |        |        |        | with  | pochs |
++========+====+========+========+========+=======+========+========+========+========+========+========+=======+=======+
+| Values | 48 | False  | 5      | 2      | 1     | 0.500  | 1      | 0      | 0.010  | dist   | Spring | dist  | 1     |
+|        |    |        |        |        |       |        |        |        |        |        | Rank   |       |       |
++--------+----+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+-------+-------+
+Halo2BetaData/HeadToHead_latestMetric/Method        btl     
+============================================================
+test kendall tau                               nan$\pm$nan  
+test kendall p                                 nan$\pm$nan  
+val kendall tau                                nan$\pm$nan  
+val kendall p                                  nan$\pm$nan  
+all kendall tau                                nan$\pm$nan  
+all kendall p                                  nan$\pm$nan  
+upset_simple                                   1.12$\pm$0.01
+upset_ratio                                    0.71$\pm$0.00
+upset_naive                                    0.28$\pm$0.00
+runtime_sec                                    0.06$\pm$0.00
+
+
+Halo2BetaData/HeadToHead_bestMetric/Method        btl     
+==========================================================
+test kendall tau                             nan$\pm$nan  
+test kendall p                               nan$\pm$nan  
+val kendall tau                              nan$\pm$nan  
+val kendall p                                nan$\pm$nan  
+all kendall tau                              nan$\pm$nan  
+all kendall p                                nan$\pm$nan  
+upset_simple                                 1.12$\pm$0.01
+upset_ratio                                  0.71$\pm$0.00
+upset_naive                                  0.28$\pm$0.00
+runtime_sec                                  0.06$\pm$0.00
+Exit code: 0
+
+========== TEST 7: Our method on medium dataset (HeadToHead) ==========
+Loading existing data!
+Final results for OURS_MFAS_INS3:
+upset simple:,0.876712,upset ratio:,0.758381,upset naive:,0.219178,runtime:,1.0723,seconds,
+Final results for OURS_MFAS_INS3:
+upset simple:,0.876712,upset ratio:,0.758381,upset naive:,0.219178,runtime:,1.0788,seconds,
++--------+----+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+-------+-------+
+| Parame | K  | traina | Fiedle | num_tr | alpha | dropou | upset_ | upset_ | margin | train_ | baseli | pretr | pretr |
+|  ter   |    | ble_al | r_laye |  ials  |       |   t    | ratio_ | margin |        |  with  |   ne   |  ain  | ain e |
+|        |    |  pha   | r_num  |        |       |        | coeff  | _coeff |        |        |        | with  | pochs |
++========+====+========+========+========+=======+========+========+========+========+========+========+=======+=======+
+| Values | 48 | False  | 5      | 2      | 1     | 0.500  | 1      | 0      | 0.010  | dist   | Spring | dist  | 1     |
+|        |    |        |        |        |       |        |        |        |        |        | Rank   |       |       |
++--------+----+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+-------+-------+
+Halo2BetaData/HeadToHead_latestMetric/Method   OURS_MFAS_INS3
+=============================================================
+test kendall tau                               nan$\pm$nan   
+test kendall p                                 nan$\pm$nan   
+val kendall tau                                nan$\pm$nan   
+val kendall p                                  nan$\pm$nan   
+all kendall tau                                nan$\pm$nan   
+all kendall p                                  nan$\pm$nan   
+upset_simple                                   0.88$\pm$0.00 
+upset_ratio                                    0.76$\pm$0.00 
+upset_naive                                    0.22$\pm$0.00 
+runtime_sec                                    1.08$\pm$0.00 
+
+
+Halo2BetaData/HeadToHead_bestMetric/Method   OURS_MFAS_INS3
+===========================================================
+test kendall tau                             nan$\pm$nan   
+test kendall p                               nan$\pm$nan   
+val kendall tau                              nan$\pm$nan   
+val kendall p                                nan$\pm$nan   
+all kendall tau                              nan$\pm$nan   
+all kendall p                                nan$\pm$nan   
+upset_simple                                 0.88$\pm$0.00 
+upset_ratio                                  0.76$\pm$0.00 
+upset_naive                                  0.22$\pm$0.00 
+runtime_sec                                  1.08$\pm$0.00 
+Exit code: 0
+
+========== TEST 8: Temporal dataset (basketball season 2009) ==========
+Loading existing data!
+Final results for btl:
+upset simple:,0.953121,upset ratio:,0.566305,upset naive:,0.238280,runtime:,0.0367,seconds,
+Final results for btl:
+upset simple:,0.936477,upset ratio:,0.559068,upset naive:,0.234119,runtime:,0.0358,seconds,
++--------+----+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+-------+-------+
+| Parame | K  | traina | Fiedle | num_tr | alpha | dropou | upset_ | upset_ | margin | train_ | baseli | pretr | pretr |
+|  ter   |    | ble_al | r_laye |  ials  |       |   t    | ratio_ | margin |        |  with  |   ne   |  ain  | ain e |
+|        |    |  pha   | r_num  |        |       |        | coeff  | _coeff |        |        |        | with  | pochs |
++========+====+========+========+========+=======+========+========+========+========+========+========+=======+=======+
+| Values | 20 | False  | 5      | 2      | 1     | 0.500  | 1      | 0      | 0.010  | dist   | Spring | dist  | 1     |
+|        |    |        |        |        |       |        |        |        |        |        | Rank   |       |       |
++--------+----+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+-------+-------+
+Basketball_temporal/2009_latestMetric/Method        btl     
+============================================================
+test kendall tau                               nan$\pm$nan  
+test kendall p                                 nan$\pm$nan  
+val kendall tau                                nan$\pm$nan  
+val kendall p                                  nan$\pm$nan  
+all kendall tau                                nan$\pm$nan  
+all kendall p                                  nan$\pm$nan  
+upset_simple                                   0.94$\pm$0.01
+upset_ratio                                    0.56$\pm$0.00
+upset_naive                                    0.24$\pm$0.00
+runtime_sec                                    0.04$\pm$0.00
+
+
+Basketball_temporal/2009_bestMetric/Method        btl     
+==========================================================
+test kendall tau                             nan$\pm$nan  
+test kendall p                               nan$\pm$nan  
+val kendall tau                              nan$\pm$nan  
+val kendall p                                nan$\pm$nan  
+all kendall tau                              nan$\pm$nan  
+all kendall p                                nan$\pm$nan  
+upset_simple                                 0.94$\pm$0.01
+upset_ratio                                  0.56$\pm$0.00
+upset_naive                                  0.24$\pm$0.00
+runtime_sec                                  0.04$\pm$0.00
+Exit code: 0
+
+========== TEST 9: Our method on temporal (basketball 2009) ==========
+Loading existing data!
+Final results for OURS_MFAS_INS1:
+upset simple:,0.646879,upset ratio:,0.590405,upset naive:,0.161720,runtime:,1.2473,seconds,
+Final results for OURS_MFAS_INS1:
+upset simple:,0.646879,upset ratio:,0.590405,upset naive:,0.161720,runtime:,1.2400,seconds,
++--------+----+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+-------+-------+
+| Parame | K  | traina | Fiedle | num_tr | alpha | dropou | upset_ | upset_ | margin | train_ | baseli | pretr | pretr |
+|  ter   |    | ble_al | r_laye |  ials  |       |   t    | ratio_ | margin |        |  with  |   ne   |  ain  | ain e |
+|        |    |  pha   | r_num  |        |       |        | coeff  | _coeff |        |        |        | with  | pochs |
++========+====+========+========+========+=======+========+========+========+========+========+========+=======+=======+
+| Values | 20 | False  | 5      | 2      | 1     | 0.500  | 1      | 0      | 0.010  | dist   | Spring | dist  | 1     |
+|        |    |        |        |        |       |        |        |        |        |        | Rank   |       |       |
++--------+----+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+-------+-------+
+Basketball_temporal/2009_latestMetric/Method   OURS_MFAS_INS1
+=============================================================
+test kendall tau                               nan$\pm$nan   
+test kendall p                                 nan$\pm$nan   
+val kendall tau                                nan$\pm$nan   
+val kendall p                                  nan$\pm$nan   
+all kendall tau                                nan$\pm$nan   
+all kendall p                                  nan$\pm$nan   
+upset_simple                                   0.65$\pm$0.00 
+upset_ratio                                    0.59$\pm$0.00 
+upset_naive                                    0.16$\pm$0.00 
+runtime_sec                                    1.24$\pm$0.00 
+
+
+Basketball_temporal/2009_bestMetric/Method   OURS_MFAS_INS1
+===========================================================
+test kendall tau                             nan$\pm$nan   
+test kendall p                               nan$\pm$nan   
+val kendall tau                              nan$\pm$nan   
+val kendall p                                nan$\pm$nan   
+all kendall tau                              nan$\pm$nan   
+all kendall p                                nan$\pm$nan   
+upset_simple                                 0.65$\pm$0.00 
+upset_ratio                                  0.59$\pm$0.00 
+upset_naive                                  0.16$\pm$0.00 
+runtime_sec                                  1.24$\pm$0.00 
+Exit code: 0
+
+========== TEST 10: Football dataset ==========
+Generating new data or new data splits!
+Final results for OURS_MFAS_INS3:
+upset simple:,0.634146,upset ratio:,0.493284,upset naive:,0.158537,runtime:,0.0181,seconds,
+Final results for OURS_MFAS_INS3:
+upset simple:,0.634146,upset ratio:,0.493284,upset naive:,0.158537,runtime:,0.0179,seconds,
++--------+---+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+--------+-------+
+| Parame | K | traina | Fiedle | num_tr | alpha | dropou | upset_ | upset_ | margin | train_ | baseli | pretra | pretr |
+|  ter   |   | ble_al | r_laye |  ials  |       |   t    | ratio_ | margin |        |  with  |   ne   |   in   | ain e |
+|        |   |  pha   | r_num  |        |       |        | coeff  | _coeff |        |        |        |  with  | pochs |
++========+===+========+========+========+=======+========+========+========+========+========+========+========+=======+
+| Values | 9 | False  | 5      | 2      | 1     | 0.500  | 1      | 0      | 0.010  | dist   | Spring | dist   | 1     |
+|        |   |        |        |        |       |        |        |        |        |        | Rank   |        |       |
++--------+---+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+--------+-------+
+Football_data_England_Premier_League/England_2009_2010_latestMetric/Method   OURS_MFAS_INS3
+===========================================================================================
+test kendall tau                                                             nan$\pm$nan   
+test kendall p                                                               nan$\pm$nan   
+val kendall tau                                                              nan$\pm$nan   
+val kendall p                                                                nan$\pm$nan   
+all kendall tau                                                              nan$\pm$nan   
+all kendall p                                                                nan$\pm$nan   
+upset_simple                                                                 0.63$\pm$0.00 
+upset_ratio                                                                  0.49$\pm$0.00 
+upset_naive                                                                  0.16$\pm$0.00 
+runtime_sec                                                                  0.02$\pm$0.00 
+
+
+Football_data_England_Premier_League/England_2009_2010_bestMetric/Method   OURS_MFAS_INS3
+=========================================================================================
+test kendall tau                                                           nan$\pm$nan   
+test kendall p                                                             nan$\pm$nan   
+val kendall tau                                                            nan$\pm$nan   
+val kendall p                                                              nan$\pm$nan   
+all kendall tau                                                            nan$\pm$nan   
+all kendall p                                                              nan$\pm$nan   
+upset_simple                                                               0.63$\pm$0.00 
+upset_ratio                                                                0.49$\pm$0.00 
+upset_naive                                                                0.16$\pm$0.00 
+runtime_sec                                                                0.02$\pm$0.00 
+Exit code: 0
+
+========== TEST 11: Finance (largest dataset) ==========
+Loading existing data!
+Final results for btl:
+upset simple:,1.789732,upset ratio:,0.277647,upset naive:,0.447433,runtime:,0.2621,seconds,
+Final results for btl:
+upset simple:,1.788848,upset ratio:,0.277993,upset naive:,0.447212,runtime:,0.2500,seconds,
++--------+----+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+-------+-------+
+| Parame | K  | traina | Fiedle | num_tr | alpha | dropou | upset_ | upset_ | margin | train_ | baseli | pretr | pretr |
+|  ter   |    | ble_al | r_laye |  ials  |       |   t    | ratio_ | margin |        |  with  |   ne   |  ain  | ain e |
+|        |    |  pha   | r_num  |        |       |        | coeff  | _coeff |        |        |        | with  | pochs |
++========+====+========+========+========+=======+========+========+========+========+========+========+=======+=======+
+| Values | 20 | False  | 5      | 2      | 1     | 0.500  | 1      | 0      | 0.010  | dist   | Spring | dist  | 1     |
+|        |    |        |        |        |       |        |        |        |        |        | Rank   |       |       |
++--------+----+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+-------+-------+
+finance/_latestMetric/Method        btl     
+============================================
+test kendall tau               nan$\pm$nan  
+test kendall p                 nan$\pm$nan  
+val kendall tau                nan$\pm$nan  
+val kendall p                  nan$\pm$nan  
+all kendall tau                nan$\pm$nan  
+all kendall p                  nan$\pm$nan  
+upset_simple                   1.79$\pm$0.00
+upset_ratio                    0.28$\pm$0.00
+upset_naive                    0.45$\pm$0.00
+runtime_sec                    0.26$\pm$0.01
+
+
+finance/_bestMetric/Method        btl     
+==========================================
+test kendall tau             nan$\pm$nan  
+test kendall p               nan$\pm$nan  
+val kendall tau              nan$\pm$nan  
+val kendall p                nan$\pm$nan  
+all kendall tau              nan$\pm$nan  
+all kendall p                nan$\pm$nan  
+upset_simple                 1.79$\pm$0.00
+upset_ratio                  0.28$\pm$0.00
+upset_naive                  0.45$\pm$0.00
+runtime_sec                  0.26$\pm$0.01
+Exit code: 0
+
+========== TEST 12: Our method on finance (largest) ==========
+Loading existing data!
+Final results for OURS_MFAS_INS1:
+upset simple:,1.996831,upset ratio:,0.498809,upset naive:,0.499208,runtime:,901.5407,seconds,
+TIMEOUT: OURS_MFAS_INS1 exceeded 1800s limit!
++--------+----+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+-------+-------+
+| Parame | K  | traina | Fiedle | num_tr | alpha | dropou | upset_ | upset_ | margin | train_ | baseli | pretr | pretr |
+|  ter   |    | ble_al | r_laye |  ials  |       |   t    | ratio_ | margin |        |  with  |   ne   |  ain  | ain e |
+|        |    |  pha   | r_num  |        |       |        | coeff  | _coeff |        |        |        | with  | pochs |
++========+====+========+========+========+=======+========+========+========+========+========+========+=======+=======+
+| Values | 20 | False  | 5      | 2      | 1     | 0.500  | 1      | 0      | 0.010  | dist   | Spring | dist  | 1     |
+|        |    |        |        |        |       |        |        |        |        |        | Rank   |       |       |
++--------+----+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+-------+-------+
+finance/_latestMetric/Method   OURS_MFAS_INS1
+=============================================
+test kendall tau               nan$\pm$nan   
+test kendall p                 nan$\pm$nan   
+val kendall tau                nan$\pm$nan   
+val kendall p                  nan$\pm$nan   
+all kendall tau                nan$\pm$nan   
+all kendall p                  nan$\pm$nan   
+upset_simple                   nan$\pm$nan   
+upset_ratio                    nan$\pm$nan   
+upset_naive                    nan$\pm$nan   
+runtime_sec                    nan$\pm$nan   
+
+
+finance/_bestMetric/Method   OURS_MFAS_INS1
+===========================================
+test kendall tau             nan$\pm$nan   
+test kendall p               nan$\pm$nan   
+val kendall tau              nan$\pm$nan   
+val kendall p                nan$\pm$nan   
+all kendall tau              nan$\pm$nan   
+all kendall p                nan$\pm$nan   
+upset_simple                 nan$\pm$nan   
+upset_ratio                  nan$\pm$nan   
+upset_naive                  nan$\pm$nan   
+runtime_sec                  nan$\pm$nan   
+Exit code: 0
+
+========== TEST 13: Check runtime files were saved ==========
+./result_arrays/debug/Halo2BetaData/HeadToHead/upset/btl/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Halo2BetaData/HeadToHead/upset/OURS_MFAS_INS3/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Halo2BetaData/HeadToHead/upset_latest/btl/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Halo2BetaData/HeadToHead/upset_latest/OURS_MFAS_INS3/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Halo2BetaData/HeadToHead/runtime/btl/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Halo2BetaData/HeadToHead/runtime/OURS_MFAS_INS3/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Halo2BetaData/HeadToHead/kendalltau/btl/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Halo2BetaData/HeadToHead/kendalltau/OURS_MFAS_INS3/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Halo2BetaData/HeadToHead/runtime_latest/btl/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Halo2BetaData/HeadToHead/runtime_latest/OURS_MFAS_INS3/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Halo2BetaData/HeadToHead/kendalltau_latest/btl/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Halo2BetaData/HeadToHead/kendalltau_latest/OURS_MFAS_INS3/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Basketball_temporal/2009/upset/btl/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Basketball_temporal/2009/upset/OURS_MFAS_INS1/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Basketball_temporal/2009/upset_latest/btl/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Basketball_temporal/2009/upset_latest/OURS_MFAS_INS1/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Basketball_temporal/2009/runtime/btl/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Basketball_temporal/2009/runtime/OURS_MFAS_INS1/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Basketball_temporal/2009/kendalltau/btl/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Basketball_temporal/2009/kendalltau/OURS_MFAS_INS1/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Basketball_temporal/2009/runtime_latest/btl/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Basketball_temporal/2009/runtime_latest/OURS_MFAS_INS1/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Basketball_temporal/2009/kendalltau_latest/btl/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Basketball_temporal/2009/kendalltau_latest/OURS_MFAS_INS1/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/finance/upset/btl/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/finance/upset/OURS_MFAS_INS1/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/finance/upset_latest/btl/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/finance/upset_latest/OURS_MFAS_INS1/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/finance/runtime/btl/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/finance/runtime/OURS_MFAS_INS1/trials2train_r100test_r100AllTrue.npy
+
+./result_arrays/debug/Halo2BetaData/HeadToHead/runtime/btl/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Halo2BetaData/HeadToHead/runtime/OURS_MFAS_INS3/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Basketball_temporal/2009/runtime/btl/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Basketball_temporal/2009/runtime/OURS_MFAS_INS1/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/finance/runtime/btl/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/finance/runtime/OURS_MFAS_INS1/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Football_data_England_Premier_League/England_2009_2010/runtime/OURS_MFAS_INS3/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Dryad_animal_society/runtime/mvr/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Dryad_animal_society/runtime/ib/K3dropout50ratio_coe100margin_coe0withdistFiedler5sigma100alpha100hid32lr10useSpringRanktrials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Dryad_animal_society/runtime/btl/trials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Dryad_animal_society/runtime/DIGRAC/K3dropout50ratio_coe100margin_coe0withdistFiedler5sigma100alpha100hid32lr10useSpringRanktrials2train_r100test_r100AllTrue.npy
+./result_arrays/debug/Dryad_animal_society/runtime/OURS_MFAS_INS1/trials2train_r100test_r100AllTrue.npy
+
+========== ALL TESTS COMPLETED ==========

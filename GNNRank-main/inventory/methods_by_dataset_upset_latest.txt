@@ -1,0 +1,18 @@
+=== METHODS PER DATASET (upset_latest) ===
+--- Dryad_animal_society ---
+DIGRACib
+mvr
+OURS_MFAS_INS1
+OURS_MFAS_INS1OURS_MFAS_INS2
+OURS_MFAS_INS2
+OURS_MFAS_INS3
+SpringRank
+SpringRanksyncRankserialRankbtldavidScoreeigenvectorCentralityPageRankrankCentralitySVD_RSSVD_NRS
+SVD_NRS
+SVD_RS
+--- finance ---
+DIGRACib
+SpringRank
+SpringRanksyncRankserialRankbtldavidScoreeigenvectorCentralityPageRankrankCentralitySVD_RSSVD_NRS
+SVD_NRS
+SVD_RS

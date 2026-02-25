@@ -1,0 +1,11 @@
+./execution/0ERO.sh
+./execution/4faculty_animal_football.sh
+./execution/5finance.sh
+./execution/5HeadToHead.sh
+./execution/6_alpha_not_trainable_and_no_pretrain.sh
+./execution/7_different_Fiedler_layer_num.sh
+./execution/baselines.sh
+./execution/basketball1.sh
+./execution/basketball2.sh
+./execution/basketball3.sh
+./execution/setup_test.sh

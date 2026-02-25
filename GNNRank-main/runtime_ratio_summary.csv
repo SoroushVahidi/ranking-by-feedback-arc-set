@@ -1,0 +1,3 @@
+comparison,median_runtime_ratio,mean_runtime_ratio,num_missing_runtime,total_datasets
+OURS_vs_best_non_ours,1.008734,8.983061,38,78
+OURS_vs_best_gnn,0.056473,0.067330,1,78

@@ -1,0 +1,9 @@
+=== RESULT_ARRAYS DATASETS ===
+Basketball_temporal
+debug
+Dryad_animal_society
+ERO
+FacultyHiringNetworks
+finance
+Football_data_England_Premier_League
+Halo2BetaData

@@ -1,0 +1,857 @@
+===== PYTHON FILES WITH LINE COUNTS =====
+   433 ./src/comparison.py
+    96 ./src/DiGCNConv.py
+    45 ./src/DiGCN_Inception_Block.py
+    52 ./src/extract_network.py
+    35 ./src/generate_data.py
+   186 ./src/get_adj.py
+   192 ./src/GNN_models.py
+   320 ./src/metrics.py
+   561 ./src/ours_mfas.py
+   196 ./src/param_parser.py
+    68 ./src/preprocess.py
+   157 ./src/RankingGNNBase.py
+   143 ./src/SpringRank.py
+   760 ./src/train_inductive_finer_basketball.py
+   737 ./src/train.py
+   178 ./src/utils.py
+  4159 total
+
+===== DATA DIRECTORY STRUCTURE =====
+./data/Halo2BetaData/HeadToHeadnode_list.npy
+./data/Halo2BetaData/HeadToHead_K_F.ipynb
+./data/Halo2BetaData/HeadToHeadtrials2train_r100test_r100.pk
+./data/Halo2BetaData/adj.npz
+./data/Halo2BetaData/Halo2Beta_preprocess.ipynb
+./data/Halo2BetaData/HeadToHeadtrials10train_r100test_r100.pk
+./data/Halo2BetaData/trials1train_r100test_r100.pk
+./data/Halo2BetaData/HeadToHead_Slim.csv
+./data/Basketball_temporal/2005trials10train_r100test_r100.pk
+./data/Basketball_temporal/finer1985node_list.npy
+./data/Basketball_temporal/finer2003node_list.npy
+./data/Basketball_temporal/1992node_list.npy
+./data/Basketball_temporal/1994trials10train_r100test_r100.pk
+./data/Basketball_temporal/finer1998trials10train_r100test_r100.pk
+./data/Basketball_temporal/finer1991trials10train_r100test_r100.pk
+./data/Basketball_temporal/2014trials10train_r100test_r100.pk
+./data/Basketball_temporal/finer_basketball_preprocess.ipynb
+./data/Basketball_temporal/2012node_list.npy
+./data/Basketball_temporal/1989node_list.npy
+./data/Basketball_temporal/2006adj.npz
+./data/Basketball_temporal/2010node_list.npy
+./data/Basketball_temporal/finer2013trials10train_r100test_r100.pk
+./data/Basketball_temporal/1991trials10train_r100test_r100.pk
+./data/Basketball_temporal/finer2001adj.npz
+./data/Basketball_temporal/finer1999trials10train_r100test_r100.pk
+./data/Basketball_temporal/finer2008trials10train_r100test_r100.pk
+./data/Basketball_temporal/finer1985adj.npz
+./data/Basketball_temporal/finer2006adj.npz
+./data/Basketball_temporal/finer1991node_list.npy
+./data/Basketball_temporal/finer2008node_list.npy
+./data/Basketball_temporal/finer2010trials10train_r100test_r100.pk
+./data/Basketball_temporal/1990adj.npz
+./data/Basketball_temporal/finer1997trials10train_r100test_r100.pk
+./data/Basketball_temporal/finer2003adj.npz
+./data/Basketball_temporal/finer2002adj.npz
+./data/Basketball_temporal/1992adj.npz
+./data/Basketball_temporal/2002adj.npz
+./data/Basketball_temporal/1988adj.npz
+./data/Basketball_temporal/finer2006trials10train_r100test_r100.pk
+./data/Basketball_temporal/2007node_list.npy
+./data/Basketball_temporal/2000trials10train_r100test_r100.pk
+./data/Basketball_temporal/1996node_list.npy
+./data/Basketball_temporal/1985adj.npz
+./data/Basketball_temporal/2003adj.npz
+./data/Basketball_temporal/2003trials10train_r100test_r100.pk
+./data/Basketball_temporal/2008adj.npz
+./data/Basketball_temporal/finer1996adj.npz
+./data/Basketball_temporal/1995adj.npz
+./data/Basketball_temporal/1998node_list.npy
+./data/Basketball_temporal/2002node_list.npy
+./data/Basketball_temporal/basketball_K_F.ipynb
+./data/Basketball_temporal/2008node_list.npy
+./data/Basketball_temporal/1989adj.npz
+./data/Basketball_temporal/1996adj.npz
+./data/Basketball_temporal/2008trials10train_r100test_r100.pk
+./data/Basketball_temporal/finer2012adj.npz
+./data/Basketball_temporal/finer1997adj.npz
+./data/Basketball_temporal/1995node_list.npy
+./data/Basketball_temporal/basketball_preprocess.ipynb
+./data/Basketball_temporal/finer2010node_list.npy
+./data/Basketball_temporal/2001trials10train_r100test_r100.pk
+./data/Basketball_temporal/finer1987adj.npz
+./data/Basketball_temporal/2001node_list.npy
+./data/Basketball_temporal/finer1994trials10train_r100test_r100.pk
+./data/Basketball_temporal/1997node_list.npy
+./data/Basketball_temporal/2002trials10train_r100test_r100.pk
+./data/Basketball_temporal/2013trials10train_r100test_r100.pk
+./data/Basketball_temporal/2007trials10train_r100test_r100.pk
+./data/Basketball_temporal/finer1992adj.npz
+./data/Basketball_temporal/finer1990trials10train_r100test_r100.pk
+./data/Basketball_temporal/finer1992node_list.npy
+./data/Basketball_temporal/finer1986trials10train_r100test_r100.pk
+./data/Basketball_temporal/2000adj.npz
+./data/Basketball_temporal/1990node_list.npy
+./data/Basketball_temporal/finer2014adj.npz
+./data/Basketball_temporal/1989trials10train_r100test_r100.pk
+./data/Basketball_temporal/finer1994node_list.npy
+./data/Basketball_temporal/2011node_list.npy
+./data/Basketball_temporal/finer1989trials10train_r100test_r100.pk
+./data/Basketball_temporal/1986node_list.npy
+./data/Basketball_temporal/finer2008adj.npz
+./data/Basketball_temporal/finer2007trials10train_r100test_r100.pk
+./data/Basketball_temporal/2000trials2train_r100test_r100.pk
+./data/Basketball_temporal/finer1995adj.npz
+./data/Basketball_temporal/2014node_list.npy
+./data/Basketball_temporal/2010adj.npz
+./data/Basketball_temporal/finer1997node_list.npy
+./data/Basketball_temporal/1994adj.npz
+./data/Basketball_temporal/1997adj.npz
+./data/Basketball_temporal/finer2003trials10train_r100test_r100.pk
+./data/Basketball_temporal/finer1999node_list.npy
+./data/Basketball_temporal/1999adj.npz
+./data/Basketball_temporal/finer1996trials10train_r100test_r100.pk
+./data/Basketball_temporal/finer1989adj.npz
+./data/Basketball_temporal/2013adj.npz
+./data/Basketball_temporal/2004adj.npz
+./data/Basketball_temporal/1986adj.npz
+./data/Basketball_temporal/2007adj.npz
+./data/Basketball_temporal/finer1986adj.npz
+./data/Basketball_temporal/1992trials10train_r100test_r100.pk
+
+===== DATA FILE SIZES =====
+58K ./data/_AUTO/Basketball_temporal__1985adj/trials1train_r100test_r100.pk
+8.9K ./data/Basketball_temporal/1985adj.npz
+2.4K ./data/Basketball_temporal/1985node_list.npy
+124K ./data/Basketball_temporal/1985trials10train_r100test_r100.pk
+9.0K ./data/Basketball_temporal/1986adj.npz
+2.4K ./data/Basketball_temporal/1986node_list.npy
+125K ./data/Basketball_temporal/1986trials10train_r100test_r100.pk
+9.4K ./data/Basketball_temporal/1987adj.npz
+2.4K ./data/Basketball_temporal/1987node_list.npy
+129K ./data/Basketball_temporal/1987trials10train_r100test_r100.pk
+9.5K ./data/Basketball_temporal/1988adj.npz
+2.4K ./data/Basketball_temporal/1988node_list.npy
+129K ./data/Basketball_temporal/1988trials10train_r100test_r100.pk
+9.7K ./data/Basketball_temporal/1989adj.npz
+2.5K ./data/Basketball_temporal/1989node_list.npy
+131K ./data/Basketball_temporal/1989trials10train_r100test_r100.pk
+9.8K ./data/Basketball_temporal/1990adj.npz
+2.5K ./data/Basketball_temporal/1990node_list.npy
+131K ./data/Basketball_temporal/1990trials10train_r100test_r100.pk
+10K ./data/Basketball_temporal/1991adj.npz
+2.5K ./data/Basketball_temporal/1991node_list.npy
+132K ./data/Basketball_temporal/1991trials10train_r100test_r100.pk
+10K ./data/Basketball_temporal/1992adj.npz
+2.5K ./data/Basketball_temporal/1992node_list.npy
+133K ./data/Basketball_temporal/1992trials10train_r100test_r100.pk
+9.5K ./data/Basketball_temporal/1993adj.npz
+2.5K ./data/Basketball_temporal/1993node_list.npy
+132K ./data/Basketball_temporal/1993trials10train_r100test_r100.pk
+9.6K ./data/Basketball_temporal/1994adj.npz
+2.5K ./data/Basketball_temporal/1994node_list.npy
+133K ./data/Basketball_temporal/1994trials10train_r100test_r100.pk
+9.7K ./data/Basketball_temporal/1995adj.npz
+2.5K ./data/Basketball_temporal/1995node_list.npy
+134K ./data/Basketball_temporal/1995trials10train_r100test_r100.pk
+9.9K ./data/Basketball_temporal/1996adj.npz
+2.6K ./data/Basketball_temporal/1996node_list.npy
+136K ./data/Basketball_temporal/1996trials10train_r100test_r100.pk
+11K ./data/Basketball_temporal/1997adj.npz
+2.6K ./data/Basketball_temporal/1997node_list.npy
+137K ./data/Basketball_temporal/1997trials10train_r100test_r100.pk
+10K ./data/Basketball_temporal/1998adj.npz
+2.6K ./data/Basketball_temporal/1998node_list.npy
+137K ./data/Basketball_temporal/1998trials10train_r100test_r100.pk
+11K ./data/Basketball_temporal/1999adj.npz
+2.6K ./data/Basketball_temporal/1999node_list.npy
+139K ./data/Basketball_temporal/1999trials10train_r100test_r100.pk
+11K ./data/Basketball_temporal/2000adj.npz
+2.7K ./data/Basketball_temporal/2000node_list.npy
+142K ./data/Basketball_temporal/2000trials10train_r100test_r100.pk
+142K ./data/Basketball_temporal/2000trials2train_r100test_r100.pk
+11K ./data/Basketball_temporal/2001adj.npz
+2.7K ./data/Basketball_temporal/2001node_list.npy
+142K ./data/Basketball_temporal/2001trials10train_r100test_r100.pk
+11K ./data/Basketball_temporal/2002adj.npz
+2.7K ./data/Basketball_temporal/2002node_list.npy
+144K ./data/Basketball_temporal/2002trials10train_r100test_r100.pk
+11K ./data/Basketball_temporal/2003adj.npz
+2.7K ./data/Basketball_temporal/2003node_list.npy
+146K ./data/Basketball_temporal/2003trials10train_r100test_r100.pk
+11K ./data/Basketball_temporal/2004adj.npz
+2.7K ./data/Basketball_temporal/2004node_list.npy
+146K ./data/Basketball_temporal/2004trials10train_r100test_r100.pk
+11K ./data/Basketball_temporal/2005adj.npz
+2.8K ./data/Basketball_temporal/2005node_list.npy
+148K ./data/Basketball_temporal/2005trials10train_r100test_r100.pk
+11K ./data/Basketball_temporal/2006adj.npz
+2.8K ./data/Basketball_temporal/2006node_list.npy
+150K ./data/Basketball_temporal/2006trials10train_r100test_r100.pk
+12K ./data/Basketball_temporal/2007adj.npz
+2.8K ./data/Basketball_temporal/2007node_list.npy
+154K ./data/Basketball_temporal/2007trials10train_r100test_r100.pk
+12K ./data/Basketball_temporal/2008adj.npz
+2.8K ./data/Basketball_temporal/2008node_list.npy
+157K ./data/Basketball_temporal/2008trials10train_r100test_r100.pk
+13K ./data/Basketball_temporal/2009adj.npz
+2.9K ./data/Basketball_temporal/2009node_list.npy
+160K ./data/Basketball_temporal/2009trials10train_r100test_r100.pk
+160K ./data/Basketball_temporal/2009trials1train_r100test_r100.pk
+160K ./data/Basketball_temporal/2009trials2train_r100test_r100.pk
+13K ./data/Basketball_temporal/2010adj.npz
+2.9K ./data/Basketball_temporal/2010node_list.npy
+159K ./data/Basketball_temporal/2010trials10train_r100test_r100.pk
+12K ./data/Basketball_temporal/2011adj.npz
+2.9K ./data/Basketball_temporal/2011node_list.npy
+158K ./data/Basketball_temporal/2011trials10train_r100test_r100.pk
+13K ./data/Basketball_temporal/2012adj.npz
+2.9K ./data/Basketball_temporal/2012node_list.npy
+159K ./data/Basketball_temporal/2012trials10train_r100test_r100.pk
+13K ./data/Basketball_temporal/2013adj.npz
+2.9K ./data/Basketball_temporal/2013node_list.npy
+160K ./data/Basketball_temporal/2013trials10train_r100test_r100.pk
+13K ./data/Basketball_temporal/2014adj.npz
+2.9K ./data/Basketball_temporal/2014node_list.npy
+161K ./data/Basketball_temporal/2014trials10train_r100test_r100.pk
+427K ./data/Basketball_temporal/basketball_K_F.ipynb
+18K ./data/Basketball_temporal/basketball_preprocess.ipynb
+4.8M ./data/Basketball_temporal/basketball_temporal_season.csv
+17K ./data/Basketball_temporal/finer1985adj.npz
+2.4K ./data/Basketball_temporal/finer1985node_list.npy
+147K ./data/Basketball_temporal/finer1985trials10train_r100test_r100.pk
+17K ./data/Basketball_temporal/finer1986adj.npz
+2.4K ./data/Basketball_temporal/finer1986node_list.npy
+148K ./data/Basketball_temporal/finer1986trials10train_r100test_r100.pk
+18K ./data/Basketball_temporal/finer1987adj.npz
+2.4K ./data/Basketball_temporal/finer1987node_list.npy
+152K ./data/Basketball_temporal/finer1987trials10train_r100test_r100.pk
+18K ./data/Basketball_temporal/finer1988adj.npz
+2.4K ./data/Basketball_temporal/finer1988node_list.npy
+153K ./data/Basketball_temporal/finer1988trials10train_r100test_r100.pk
+19K ./data/Basketball_temporal/finer1989adj.npz
+2.5K ./data/Basketball_temporal/finer1989node_list.npy
+156K ./data/Basketball_temporal/finer1989trials10train_r100test_r100.pk
+19K ./data/Basketball_temporal/finer1990adj.npz
+2.5K ./data/Basketball_temporal/finer1990node_list.npy
+156K ./data/Basketball_temporal/finer1990trials10train_r100test_r100.pk
+19K ./data/Basketball_temporal/finer1991adj.npz
+2.5K ./data/Basketball_temporal/finer1991node_list.npy
+158K ./data/Basketball_temporal/finer1991trials10train_r100test_r100.pk
+19K ./data/Basketball_temporal/finer1992adj.npz
+2.5K ./data/Basketball_temporal/finer1992node_list.npy
+159K ./data/Basketball_temporal/finer1992trials10train_r100test_r100.pk
+18K ./data/Basketball_temporal/finer1993adj.npz
+2.5K ./data/Basketball_temporal/finer1993node_list.npy
+156K ./data/Basketball_temporal/finer1993trials10train_r100test_r100.pk
+18K ./data/Basketball_temporal/finer1994adj.npz
+2.5K ./data/Basketball_temporal/finer1994node_list.npy
+158K ./data/Basketball_temporal/finer1994trials10train_r100test_r100.pk
+18K ./data/Basketball_temporal/finer1995adj.npz
+2.5K ./data/Basketball_temporal/finer1995node_list.npy
+159K ./data/Basketball_temporal/finer1995trials10train_r100test_r100.pk
+19K ./data/Basketball_temporal/finer1996adj.npz
+2.6K ./data/Basketball_temporal/finer1996node_list.npy
+162K ./data/Basketball_temporal/finer1996trials10train_r100test_r100.pk
+19K ./data/Basketball_temporal/finer1997adj.npz
+2.6K ./data/Basketball_temporal/finer1997node_list.npy
+164K ./data/Basketball_temporal/finer1997trials10train_r100test_r100.pk
+19K ./data/Basketball_temporal/finer1998adj.npz
+2.6K ./data/Basketball_temporal/finer1998node_list.npy
+165K ./data/Basketball_temporal/finer1998trials10train_r100test_r100.pk
+20K ./data/Basketball_temporal/finer1999adj.npz
+2.6K ./data/Basketball_temporal/finer1999node_list.npy
+167K ./data/Basketball_temporal/finer1999trials10train_r100test_r100.pk
+21K ./data/Basketball_temporal/finer2000adj.npz
+2.7K ./data/Basketball_temporal/finer2000node_list.npy
+175K ./data/Basketball_temporal/finer2000trials10train_r100test_r100.pk
+20K ./data/Basketball_temporal/finer2001adj.npz
+2.7K ./data/Basketball_temporal/finer2001node_list.npy
+173K ./data/Basketball_temporal/finer2001trials10train_r100test_r100.pk
+21K ./data/Basketball_temporal/finer2002adj.npz
+2.7K ./data/Basketball_temporal/finer2002node_list.npy
+175K ./data/Basketball_temporal/finer2002trials10train_r100test_r100.pk
+21K ./data/Basketball_temporal/finer2003adj.npz
+2.7K ./data/Basketball_temporal/finer2003node_list.npy
+179K ./data/Basketball_temporal/finer2003trials10train_r100test_r100.pk
+21K ./data/Basketball_temporal/finer2004adj.npz
+2.7K ./data/Basketball_temporal/finer2004node_list.npy
+178K ./data/Basketball_temporal/finer2004trials10train_r100test_r100.pk
+22K ./data/Basketball_temporal/finer2005adj.npz
+2.8K ./data/Basketball_temporal/finer2005node_list.npy
+181K ./data/Basketball_temporal/finer2005trials10train_r100test_r100.pk
+22K ./data/Basketball_temporal/finer2006adj.npz
+2.8K ./data/Basketball_temporal/finer2006node_list.npy
+185K ./data/Basketball_temporal/finer2006trials10train_r100test_r100.pk
+24K ./data/Basketball_temporal/finer2007adj.npz
+2.8K ./data/Basketball_temporal/finer2007node_list.npy
+192K ./data/Basketball_temporal/finer2007trials10train_r100test_r100.pk
+24K ./data/Basketball_temporal/finer2008adj.npz
+2.8K ./data/Basketball_temporal/finer2008node_list.npy
+196K ./data/Basketball_temporal/finer2008trials10train_r100test_r100.pk
+24K ./data/Basketball_temporal/finer2009adj.npz
+2.9K ./data/Basketball_temporal/finer2009node_list.npy
+199K ./data/Basketball_temporal/finer2009trials10train_r100test_r100.pk
+24K ./data/Basketball_temporal/finer2010adj.npz
+2.9K ./data/Basketball_temporal/finer2010node_list.npy
+199K ./data/Basketball_temporal/finer2010trials10train_r100test_r100.pk
+24K ./data/Basketball_temporal/finer2011adj.npz
+2.9K ./data/Basketball_temporal/finer2011node_list.npy
+198K ./data/Basketball_temporal/finer2011trials10train_r100test_r100.pk
+25K ./data/Basketball_temporal/finer2012adj.npz
+2.9K ./data/Basketball_temporal/finer2012node_list.npy
+199K ./data/Basketball_temporal/finer2012trials10train_r100test_r100.pk
+25K ./data/Basketball_temporal/finer2013adj.npz
+2.9K ./data/Basketball_temporal/finer2013node_list.npy
+200K ./data/Basketball_temporal/finer2013trials10train_r100test_r100.pk
+25K ./data/Basketball_temporal/finer2014adj.npz
+2.9K ./data/Basketball_temporal/finer2014node_list.npy
+202K ./data/Basketball_temporal/finer2014trials10train_r100test_r100.pk
+429K ./data/Basketball_temporal/finer_basketball_K_F.ipynb
+31K ./data/Basketball_temporal/finer_basketball_preprocess.ipynb
+12K ./data/dataset_info.ipynb
+1.4K ./data/Dryad_animal_society/adj.npz
+991 ./data/Dryad_animal_society/aggXquarter_G1_Q3.csv
+1014 ./data/Dryad_animal_society/aggXquarter_G1_Q4.csv
+819 ./data/Dryad_animal_society/aggXquarter_G2_Q3.csv
+861 ./data/Dryad_animal_society/aggXquarter_G2_Q4.csv
+16K ./data/Dryad_animal_society/aggXquarter.txt
+20K ./data/Dryad_animal_society/animal_K_F.ipynb
+20K ./data/Dryad_animal_society/Dryad_animal_preprocess.ipynb
+380 ./data/Dryad_animal_society/node_list.npy
+888 ./data/Dryad_animal_society/README.txt
+4.0K ./data/Dryad_animal_society/trials10train_r100test_r100.pk
+4.0K ./data/Dryad_animal_society/trials1train_r100test_r100.pk
+4.0K ./data/Dryad_animal_society/trials2train_r100test_r100.pk
+121K ./data/DSBM/path_randomp5K5N350size_r150eta10ambient0trials2train_r80test_r10seed10.pk
+5.9M ./data/ERO/p100K5N1000eta0stylegammatrials2train_r100test_r100.pk
+5.9M ./data/ERO/p100K5N1000eta0stylegammatrials2train_r80test_r10.pk
+5.9M ./data/ERO/p100K5N1000eta0styleuniformtrials2train_r100test_r100.pk
+5.9M ./data/ERO/p100K5N1000eta0styleuniformtrials2train_r80test_r10.pk
+5.9M ./data/ERO/p100K5N1000eta10stylegammatrials2train_r100test_r100.pk
+5.9M ./data/ERO/p100K5N1000eta10stylegammatrials2train_r80test_r10.pk
+5.9M ./data/ERO/p100K5N1000eta10styleuniformtrials2train_r100test_r100.pk
+5.9M ./data/ERO/p100K5N1000eta10styleuniformtrials2train_r80test_r10.pk
+5.9M ./data/ERO/p100K5N1000eta20stylegammatrials2train_r100test_r100.pk
+5.9M ./data/ERO/p100K5N1000eta20stylegammatrials2train_r80test_r10.pk
+5.9M ./data/ERO/p100K5N1000eta20styleuniformtrials2train_r100test_r100.pk
+5.9M ./data/ERO/p100K5N1000eta20styleuniformtrials2train_r80test_r10.pk
+5.9M ./data/ERO/p100K5N1000eta30stylegammatrials2train_r100test_r100.pk
+5.9M ./data/ERO/p100K5N1000eta30stylegammatrials2train_r80test_r10.pk
+5.9M ./data/ERO/p100K5N1000eta30styleuniformtrials2train_r100test_r100.pk
+5.9M ./data/ERO/p100K5N1000eta30styleuniformtrials2train_r80test_r10.pk
+5.9M ./data/ERO/p100K5N1000eta40stylegammatrials2train_r100test_r100.pk
+5.9M ./data/ERO/p100K5N1000eta40stylegammatrials2train_r80test_r10.pk
+5.9M ./data/ERO/p100K5N1000eta40styleuniformtrials2train_r100test_r100.pk
+5.9M ./data/ERO/p100K5N1000eta40styleuniformtrials2train_r80test_r10.pk
+5.9M ./data/ERO/p100K5N1000eta50stylegammatrials2train_r80test_r10.pk
+5.9M ./data/ERO/p100K5N1000eta50styleuniformtrials2train_r80test_r10.pk
+5.9M ./data/ERO/p100K5N1000eta60stylegammatrials2train_r80test_r10.pk
+5.9M ./data/ERO/p100K5N1000eta60styleuniformtrials2train_r80test_r10.pk
+5.9M ./data/ERO/p100K5N1000eta70stylegammatrials2train_r80test_r10.pk
+5.9M ./data/ERO/p100K5N1000eta70styleuniformtrials2train_r80test_r10.pk
+5.9M ./data/ERO/p100K5N1000eta80stylegammatrials2train_r80test_r10.pk
+5.9M ./data/ERO/p100K5N1000eta80styleuniformtrials2train_r80test_r10.pk
+5.9M ./data/ERO/p100K5N1000eta90stylegammatrials2train_r80test_r10.pk
+5.9M ./data/ERO/p100K5N1000eta90styleuniformtrials2train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta0stylegammatrials10train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta0stylegammatrials2train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta0stylegammatrials2train_r80test_r10seed10.pk
+749K ./data/ERO/p100K5N350eta0stylegammatrials2train_r80test_r10seed20.pk
+749K ./data/ERO/p100K5N350eta0stylegammatrials2train_r80test_r10seed30.pk
+749K ./data/ERO/p100K5N350eta0stylegammatrials2train_r80test_r10seed40.pk
+749K ./data/ERO/p100K5N350eta0stylegammatrials2train_r80test_r10seed50.pk
+749K ./data/ERO/p100K5N350eta0styleuniformtrials10train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta0styleuniformtrials2train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta0styleuniformtrials2train_r80test_r10seed10.pk
+749K ./data/ERO/p100K5N350eta0styleuniformtrials2train_r80test_r10seed20.pk
+749K ./data/ERO/p100K5N350eta0styleuniformtrials2train_r80test_r10seed30.pk
+749K ./data/ERO/p100K5N350eta0styleuniformtrials2train_r80test_r10seed40.pk
+749K ./data/ERO/p100K5N350eta0styleuniformtrials2train_r80test_r10seed50.pk
+749K ./data/ERO/p100K5N350eta10stylegammatrials10train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta10stylegammatrials2train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta10stylegammatrials2train_r80test_r10seed10.pk
+749K ./data/ERO/p100K5N350eta10stylegammatrials2train_r80test_r10seed20.pk
+749K ./data/ERO/p100K5N350eta10stylegammatrials2train_r80test_r10seed30.pk
+749K ./data/ERO/p100K5N350eta10stylegammatrials2train_r80test_r10seed40.pk
+749K ./data/ERO/p100K5N350eta10stylegammatrials2train_r80test_r10seed50.pk
+749K ./data/ERO/p100K5N350eta10styleuniformtrials10train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta10styleuniformtrials2train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta10styleuniformtrials2train_r80test_r10seed10.pk
+749K ./data/ERO/p100K5N350eta10styleuniformtrials2train_r80test_r10seed20.pk
+749K ./data/ERO/p100K5N350eta10styleuniformtrials2train_r80test_r10seed30.pk
+749K ./data/ERO/p100K5N350eta10styleuniformtrials2train_r80test_r10seed40.pk
+749K ./data/ERO/p100K5N350eta10styleuniformtrials2train_r80test_r10seed50.pk
+749K ./data/ERO/p100K5N350eta20stylegammatrials10train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta20stylegammatrials2train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta20stylegammatrials2train_r80test_r10seed10.pk
+749K ./data/ERO/p100K5N350eta20stylegammatrials2train_r80test_r10seed20.pk
+749K ./data/ERO/p100K5N350eta20stylegammatrials2train_r80test_r10seed30.pk
+749K ./data/ERO/p100K5N350eta20stylegammatrials2train_r80test_r10seed40.pk
+749K ./data/ERO/p100K5N350eta20stylegammatrials2train_r80test_r10seed50.pk
+749K ./data/ERO/p100K5N350eta20styleuniformtrials10train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta20styleuniformtrials2train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta20styleuniformtrials2train_r80test_r10seed10.pk
+749K ./data/ERO/p100K5N350eta20styleuniformtrials2train_r80test_r10seed20.pk
+749K ./data/ERO/p100K5N350eta20styleuniformtrials2train_r80test_r10seed30.pk
+749K ./data/ERO/p100K5N350eta20styleuniformtrials2train_r80test_r10seed40.pk
+749K ./data/ERO/p100K5N350eta20styleuniformtrials2train_r80test_r10seed50.pk
+749K ./data/ERO/p100K5N350eta30stylegammatrials2train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta30stylegammatrials2train_r80test_r10seed10.pk
+749K ./data/ERO/p100K5N350eta30stylegammatrials2train_r80test_r10seed20.pk
+749K ./data/ERO/p100K5N350eta30stylegammatrials2train_r80test_r10seed30.pk
+749K ./data/ERO/p100K5N350eta30stylegammatrials2train_r80test_r10seed40.pk
+749K ./data/ERO/p100K5N350eta30stylegammatrials2train_r80test_r10seed50.pk
+749K ./data/ERO/p100K5N350eta30styleuniformtrials2train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta30styleuniformtrials2train_r80test_r10seed10.pk
+749K ./data/ERO/p100K5N350eta30styleuniformtrials2train_r80test_r10seed20.pk
+749K ./data/ERO/p100K5N350eta30styleuniformtrials2train_r80test_r10seed30.pk
+749K ./data/ERO/p100K5N350eta30styleuniformtrials2train_r80test_r10seed40.pk
+749K ./data/ERO/p100K5N350eta30styleuniformtrials2train_r80test_r10seed50.pk
+749K ./data/ERO/p100K5N350eta40stylegammatrials2train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta40stylegammatrials2train_r80test_r10seed10.pk
+749K ./data/ERO/p100K5N350eta40stylegammatrials2train_r80test_r10seed20.pk
+749K ./data/ERO/p100K5N350eta40stylegammatrials2train_r80test_r10seed30.pk
+749K ./data/ERO/p100K5N350eta40stylegammatrials2train_r80test_r10seed40.pk
+749K ./data/ERO/p100K5N350eta40stylegammatrials2train_r80test_r10seed50.pk
+749K ./data/ERO/p100K5N350eta40styleuniformtrials2train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta40styleuniformtrials2train_r80test_r10seed10.pk
+749K ./data/ERO/p100K5N350eta40styleuniformtrials2train_r80test_r10seed20.pk
+749K ./data/ERO/p100K5N350eta40styleuniformtrials2train_r80test_r10seed30.pk
+749K ./data/ERO/p100K5N350eta40styleuniformtrials2train_r80test_r10seed40.pk
+749K ./data/ERO/p100K5N350eta40styleuniformtrials2train_r80test_r10seed50.pk
+749K ./data/ERO/p100K5N350eta50stylegammatrials2train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta50stylegammatrials2train_r80test_r10seed10.pk
+749K ./data/ERO/p100K5N350eta50stylegammatrials2train_r80test_r10seed20.pk
+749K ./data/ERO/p100K5N350eta50stylegammatrials2train_r80test_r10seed30.pk
+749K ./data/ERO/p100K5N350eta50stylegammatrials2train_r80test_r10seed40.pk
+749K ./data/ERO/p100K5N350eta50stylegammatrials2train_r80test_r10seed50.pk
+749K ./data/ERO/p100K5N350eta50styleuniformtrials2train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta50styleuniformtrials2train_r80test_r10seed10.pk
+749K ./data/ERO/p100K5N350eta50styleuniformtrials2train_r80test_r10seed20.pk
+749K ./data/ERO/p100K5N350eta50styleuniformtrials2train_r80test_r10seed30.pk
+749K ./data/ERO/p100K5N350eta50styleuniformtrials2train_r80test_r10seed40.pk
+749K ./data/ERO/p100K5N350eta50styleuniformtrials2train_r80test_r10seed50.pk
+749K ./data/ERO/p100K5N350eta60stylegammatrials2train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta60stylegammatrials2train_r80test_r10seed10.pk
+749K ./data/ERO/p100K5N350eta60stylegammatrials2train_r80test_r10seed20.pk
+749K ./data/ERO/p100K5N350eta60stylegammatrials2train_r80test_r10seed30.pk
+749K ./data/ERO/p100K5N350eta60stylegammatrials2train_r80test_r10seed40.pk
+749K ./data/ERO/p100K5N350eta60stylegammatrials2train_r80test_r10seed50.pk
+749K ./data/ERO/p100K5N350eta60styleuniformtrials2train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta60styleuniformtrials2train_r80test_r10seed10.pk
+749K ./data/ERO/p100K5N350eta60styleuniformtrials2train_r80test_r10seed20.pk
+749K ./data/ERO/p100K5N350eta60styleuniformtrials2train_r80test_r10seed30.pk
+749K ./data/ERO/p100K5N350eta60styleuniformtrials2train_r80test_r10seed40.pk
+749K ./data/ERO/p100K5N350eta60styleuniformtrials2train_r80test_r10seed50.pk
+749K ./data/ERO/p100K5N350eta70stylegammatrials2train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta70stylegammatrials2train_r80test_r10seed10.pk
+749K ./data/ERO/p100K5N350eta70stylegammatrials2train_r80test_r10seed20.pk
+749K ./data/ERO/p100K5N350eta70stylegammatrials2train_r80test_r10seed30.pk
+749K ./data/ERO/p100K5N350eta70stylegammatrials2train_r80test_r10seed40.pk
+749K ./data/ERO/p100K5N350eta70stylegammatrials2train_r80test_r10seed50.pk
+749K ./data/ERO/p100K5N350eta70styleuniformtrials2train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta70styleuniformtrials2train_r80test_r10seed10.pk
+749K ./data/ERO/p100K5N350eta70styleuniformtrials2train_r80test_r10seed20.pk
+749K ./data/ERO/p100K5N350eta70styleuniformtrials2train_r80test_r10seed30.pk
+749K ./data/ERO/p100K5N350eta70styleuniformtrials2train_r80test_r10seed40.pk
+749K ./data/ERO/p100K5N350eta70styleuniformtrials2train_r80test_r10seed50.pk
+749K ./data/ERO/p100K5N350eta80stylegammatrials2train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta80stylegammatrials2train_r80test_r10seed10.pk
+749K ./data/ERO/p100K5N350eta80stylegammatrials2train_r80test_r10seed20.pk
+749K ./data/ERO/p100K5N350eta80stylegammatrials2train_r80test_r10seed30.pk
+749K ./data/ERO/p100K5N350eta80stylegammatrials2train_r80test_r10seed40.pk
+749K ./data/ERO/p100K5N350eta80stylegammatrials2train_r80test_r10seed50.pk
+749K ./data/ERO/p100K5N350eta80styleuniformtrials2train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta80styleuniformtrials2train_r80test_r10seed10.pk
+749K ./data/ERO/p100K5N350eta80styleuniformtrials2train_r80test_r10seed20.pk
+749K ./data/ERO/p100K5N350eta80styleuniformtrials2train_r80test_r10seed30.pk
+749K ./data/ERO/p100K5N350eta80styleuniformtrials2train_r80test_r10seed40.pk
+749K ./data/ERO/p100K5N350eta80styleuniformtrials2train_r80test_r10seed50.pk
+749K ./data/ERO/p100K5N350eta90stylegammatrials2train_r80test_r10.pk
+749K ./data/ERO/p100K5N350eta90styleuniformtrials2train_r80test_r10.pk
+973K ./data/ERO/p100K5N400eta10stylegammatrials2train_r80test_r10.pk
+678K ./data/ERO/p10K5N1000eta10stylegammatrials2train_r100test_r100.pk
+388K ./data/ERO/p5K5N1000eta0stylegammatrials2train_r100test_r100.pk
+388K ./data/ERO/p5K5N1000eta0stylegammatrials2train_r80test_r10.pk
+386K ./data/ERO/p5K5N1000eta0styleuniformtrials2train_r100test_r100.pk
+386K ./data/ERO/p5K5N1000eta0styleuniformtrials2train_r80test_r10.pk
+388K ./data/ERO/p5K5N1000eta10stylegammatrials2train_r100test_r100.pk
+388K ./data/ERO/p5K5N1000eta10stylegammatrials2train_r80test_r10.pk
+386K ./data/ERO/p5K5N1000eta10styleuniformtrials2train_r100test_r100.pk
+386K ./data/ERO/p5K5N1000eta10styleuniformtrials2train_r80test_r10.pk
+388K ./data/ERO/p5K5N1000eta20stylegammatrials2train_r100test_r100.pk
+388K ./data/ERO/p5K5N1000eta20stylegammatrials2train_r80test_r10.pk
+386K ./data/ERO/p5K5N1000eta20styleuniformtrials2train_r100test_r100.pk
+386K ./data/ERO/p5K5N1000eta20styleuniformtrials2train_r80test_r10.pk
+388K ./data/ERO/p5K5N1000eta30stylegammatrials2train_r100test_r100.pk
+388K ./data/ERO/p5K5N1000eta30stylegammatrials2train_r80test_r10.pk
+386K ./data/ERO/p5K5N1000eta30styleuniformtrials2train_r100test_r100.pk
+386K ./data/ERO/p5K5N1000eta30styleuniformtrials2train_r80test_r10.pk
+388K ./data/ERO/p5K5N1000eta40stylegammatrials2train_r100test_r100.pk
+388K ./data/ERO/p5K5N1000eta40stylegammatrials2train_r80test_r10.pk
+386K ./data/ERO/p5K5N1000eta40styleuniformtrials2train_r100test_r100.pk
+386K ./data/ERO/p5K5N1000eta40styleuniformtrials2train_r80test_r10.pk
+388K ./data/ERO/p5K5N1000eta50stylegammatrials2train_r100test_r100.pk
+388K ./data/ERO/p5K5N1000eta50stylegammatrials2train_r80test_r10.pk
+386K ./data/ERO/p5K5N1000eta50styleuniformtrials2train_r100test_r100.pk
+386K ./data/ERO/p5K5N1000eta50styleuniformtrials2train_r80test_r10.pk
+388K ./data/ERO/p5K5N1000eta60stylegammatrials2train_r100test_r100.pk
+388K ./data/ERO/p5K5N1000eta60stylegammatrials2train_r80test_r10.pk
+386K ./data/ERO/p5K5N1000eta60styleuniformtrials2train_r100test_r100.pk
+386K ./data/ERO/p5K5N1000eta60styleuniformtrials2train_r80test_r10.pk
+388K ./data/ERO/p5K5N1000eta70stylegammatrials2train_r100test_r100.pk
+388K ./data/ERO/p5K5N1000eta70stylegammatrials2train_r80test_r10.pk
+386K ./data/ERO/p5K5N1000eta70styleuniformtrials2train_r100test_r100.pk
+386K ./data/ERO/p5K5N1000eta70styleuniformtrials2train_r80test_r10.pk
+388K ./data/ERO/p5K5N1000eta80stylegammatrials2train_r100test_r100.pk
+388K ./data/ERO/p5K5N1000eta80stylegammatrials2train_r80test_r10.pk
+386K ./data/ERO/p5K5N1000eta80styleuniformtrials2train_r100test_r100.pk
+386K ./data/ERO/p5K5N1000eta80styleuniformtrials2train_r80test_r10.pk
+388K ./data/ERO/p5K5N1000eta90stylegammatrials2train_r100test_r100.pk
+388K ./data/ERO/p5K5N1000eta90stylegammatrials2train_r80test_r10.pk
+386K ./data/ERO/p5K5N1000eta90styleuniformtrials2train_r100test_r100.pk
+386K ./data/ERO/p5K5N1000eta90styleuniformtrials2train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta0stylegammatrials10train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta0stylegammatrials2train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta0stylegammatrials2train_r80test_r10seed10.pk
+69K ./data/ERO/p5K5N350eta0stylegammatrials2train_r80test_r10seed20.pk
+69K ./data/ERO/p5K5N350eta0stylegammatrials2train_r80test_r10seed30.pk
+69K ./data/ERO/p5K5N350eta0stylegammatrials2train_r80test_r10seed40.pk
+69K ./data/ERO/p5K5N350eta0stylegammatrials2train_r80test_r10seed50.pk
+69K ./data/ERO/p5K5N350eta0styleuniformtrials10train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta0styleuniformtrials2train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta0styleuniformtrials2train_r80test_r10seed10.pk
+69K ./data/ERO/p5K5N350eta0styleuniformtrials2train_r80test_r10seed20.pk
+68K ./data/ERO/p5K5N350eta0styleuniformtrials2train_r80test_r10seed30.pk
+67K ./data/ERO/p5K5N350eta0styleuniformtrials2train_r80test_r10seed40.pk
+69K ./data/ERO/p5K5N350eta0styleuniformtrials2train_r80test_r10seed50.pk
+69K ./data/ERO/p5K5N350eta10stylegammatrials10train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta10stylegammatrials2train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta10stylegammatrials2train_r80test_r10seed10.pk
+69K ./data/ERO/p5K5N350eta10stylegammatrials2train_r80test_r10seed20.pk
+69K ./data/ERO/p5K5N350eta10stylegammatrials2train_r80test_r10seed30.pk
+69K ./data/ERO/p5K5N350eta10stylegammatrials2train_r80test_r10seed40.pk
+69K ./data/ERO/p5K5N350eta10stylegammatrials2train_r80test_r10seed50.pk
+69K ./data/ERO/p5K5N350eta10styleuniformtrials10train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta10styleuniformtrials1train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta10styleuniformtrials2train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta10styleuniformtrials2train_r80test_r10seed10.pk
+69K ./data/ERO/p5K5N350eta10styleuniformtrials2train_r80test_r10seed20.pk
+68K ./data/ERO/p5K5N350eta10styleuniformtrials2train_r80test_r10seed30.pk
+67K ./data/ERO/p5K5N350eta10styleuniformtrials2train_r80test_r10seed40.pk
+69K ./data/ERO/p5K5N350eta10styleuniformtrials2train_r80test_r10seed50.pk
+69K ./data/ERO/p5K5N350eta20stylegammatrials10train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta20stylegammatrials2train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta20stylegammatrials2train_r80test_r10seed10.pk
+69K ./data/ERO/p5K5N350eta20stylegammatrials2train_r80test_r10seed20.pk
+69K ./data/ERO/p5K5N350eta20stylegammatrials2train_r80test_r10seed30.pk
+69K ./data/ERO/p5K5N350eta20stylegammatrials2train_r80test_r10seed40.pk
+69K ./data/ERO/p5K5N350eta20stylegammatrials2train_r80test_r10seed50.pk
+69K ./data/ERO/p5K5N350eta20styleuniformtrials10train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta20styleuniformtrials2train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta20styleuniformtrials2train_r80test_r10seed10.pk
+69K ./data/ERO/p5K5N350eta20styleuniformtrials2train_r80test_r10seed20.pk
+68K ./data/ERO/p5K5N350eta20styleuniformtrials2train_r80test_r10seed30.pk
+67K ./data/ERO/p5K5N350eta20styleuniformtrials2train_r80test_r10seed40.pk
+69K ./data/ERO/p5K5N350eta20styleuniformtrials2train_r80test_r10seed50.pk
+69K ./data/ERO/p5K5N350eta30stylegammatrials2train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta30stylegammatrials2train_r80test_r10seed10.pk
+69K ./data/ERO/p5K5N350eta30stylegammatrials2train_r80test_r10seed20.pk
+69K ./data/ERO/p5K5N350eta30stylegammatrials2train_r80test_r10seed30.pk
+69K ./data/ERO/p5K5N350eta30stylegammatrials2train_r80test_r10seed40.pk
+69K ./data/ERO/p5K5N350eta30stylegammatrials2train_r80test_r10seed50.pk
+69K ./data/ERO/p5K5N350eta30styleuniformtrials2train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta30styleuniformtrials2train_r80test_r10seed10.pk
+69K ./data/ERO/p5K5N350eta30styleuniformtrials2train_r80test_r10seed20.pk
+68K ./data/ERO/p5K5N350eta30styleuniformtrials2train_r80test_r10seed30.pk
+67K ./data/ERO/p5K5N350eta30styleuniformtrials2train_r80test_r10seed40.pk
+69K ./data/ERO/p5K5N350eta30styleuniformtrials2train_r80test_r10seed50.pk
+69K ./data/ERO/p5K5N350eta40stylegammatrials2train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta40stylegammatrials2train_r80test_r10seed10.pk
+69K ./data/ERO/p5K5N350eta40stylegammatrials2train_r80test_r10seed20.pk
+69K ./data/ERO/p5K5N350eta40stylegammatrials2train_r80test_r10seed30.pk
+69K ./data/ERO/p5K5N350eta40stylegammatrials2train_r80test_r10seed40.pk
+69K ./data/ERO/p5K5N350eta40stylegammatrials2train_r80test_r10seed50.pk
+69K ./data/ERO/p5K5N350eta40styleuniformtrials2train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta40styleuniformtrials2train_r80test_r10seed10.pk
+69K ./data/ERO/p5K5N350eta40styleuniformtrials2train_r80test_r10seed20.pk
+68K ./data/ERO/p5K5N350eta40styleuniformtrials2train_r80test_r10seed30.pk
+67K ./data/ERO/p5K5N350eta40styleuniformtrials2train_r80test_r10seed40.pk
+69K ./data/ERO/p5K5N350eta40styleuniformtrials2train_r80test_r10seed50.pk
+69K ./data/ERO/p5K5N350eta50stylegammatrials2train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta50stylegammatrials2train_r80test_r10seed10.pk
+69K ./data/ERO/p5K5N350eta50stylegammatrials2train_r80test_r10seed20.pk
+69K ./data/ERO/p5K5N350eta50stylegammatrials2train_r80test_r10seed30.pk
+69K ./data/ERO/p5K5N350eta50stylegammatrials2train_r80test_r10seed40.pk
+69K ./data/ERO/p5K5N350eta50stylegammatrials2train_r80test_r10seed50.pk
+69K ./data/ERO/p5K5N350eta50styleuniformtrials2train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta50styleuniformtrials2train_r80test_r10seed10.pk
+69K ./data/ERO/p5K5N350eta50styleuniformtrials2train_r80test_r10seed20.pk
+68K ./data/ERO/p5K5N350eta50styleuniformtrials2train_r80test_r10seed30.pk
+67K ./data/ERO/p5K5N350eta50styleuniformtrials2train_r80test_r10seed40.pk
+69K ./data/ERO/p5K5N350eta50styleuniformtrials2train_r80test_r10seed50.pk
+69K ./data/ERO/p5K5N350eta60stylegammatrials2train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta60stylegammatrials2train_r80test_r10seed10.pk
+69K ./data/ERO/p5K5N350eta60stylegammatrials2train_r80test_r10seed20.pk
+69K ./data/ERO/p5K5N350eta60stylegammatrials2train_r80test_r10seed30.pk
+69K ./data/ERO/p5K5N350eta60stylegammatrials2train_r80test_r10seed40.pk
+69K ./data/ERO/p5K5N350eta60stylegammatrials2train_r80test_r10seed50.pk
+69K ./data/ERO/p5K5N350eta60styleuniformtrials2train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta60styleuniformtrials2train_r80test_r10seed10.pk
+69K ./data/ERO/p5K5N350eta60styleuniformtrials2train_r80test_r10seed20.pk
+68K ./data/ERO/p5K5N350eta60styleuniformtrials2train_r80test_r10seed30.pk
+67K ./data/ERO/p5K5N350eta60styleuniformtrials2train_r80test_r10seed40.pk
+69K ./data/ERO/p5K5N350eta60styleuniformtrials2train_r80test_r10seed50.pk
+69K ./data/ERO/p5K5N350eta70stylegammatrials2train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta70stylegammatrials2train_r80test_r10seed10.pk
+69K ./data/ERO/p5K5N350eta70stylegammatrials2train_r80test_r10seed20.pk
+69K ./data/ERO/p5K5N350eta70stylegammatrials2train_r80test_r10seed30.pk
+69K ./data/ERO/p5K5N350eta70stylegammatrials2train_r80test_r10seed40.pk
+69K ./data/ERO/p5K5N350eta70stylegammatrials2train_r80test_r10seed50.pk
+69K ./data/ERO/p5K5N350eta70styleuniformtrials2train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta70styleuniformtrials2train_r80test_r10seed10.pk
+69K ./data/ERO/p5K5N350eta70styleuniformtrials2train_r80test_r10seed20.pk
+68K ./data/ERO/p5K5N350eta70styleuniformtrials2train_r80test_r10seed30.pk
+67K ./data/ERO/p5K5N350eta70styleuniformtrials2train_r80test_r10seed40.pk
+69K ./data/ERO/p5K5N350eta70styleuniformtrials2train_r80test_r10seed50.pk
+69K ./data/ERO/p5K5N350eta80stylegammatrials2train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta80stylegammatrials2train_r80test_r10seed10.pk
+69K ./data/ERO/p5K5N350eta80stylegammatrials2train_r80test_r10seed20.pk
+69K ./data/ERO/p5K5N350eta80stylegammatrials2train_r80test_r10seed30.pk
+69K ./data/ERO/p5K5N350eta80stylegammatrials2train_r80test_r10seed40.pk
+69K ./data/ERO/p5K5N350eta80stylegammatrials2train_r80test_r10seed50.pk
+69K ./data/ERO/p5K5N350eta80styleuniformtrials2train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta80styleuniformtrials2train_r80test_r10seed10.pk
+69K ./data/ERO/p5K5N350eta80styleuniformtrials2train_r80test_r10seed20.pk
+68K ./data/ERO/p5K5N350eta80styleuniformtrials2train_r80test_r10seed30.pk
+67K ./data/ERO/p5K5N350eta80styleuniformtrials2train_r80test_r10seed40.pk
+69K ./data/ERO/p5K5N350eta80styleuniformtrials2train_r80test_r10seed50.pk
+69K ./data/ERO/p5K5N350eta90stylegammatrials2train_r80test_r10.pk
+69K ./data/ERO/p5K5N350eta90styleuniformtrials2train_r80test_r10.pk
+27K ./data/FacultyHiringNetworks/Business/Business_F_All.csv
+26K ./data/FacultyHiringNetworks/Business/Business_F_Assoc.csv
+26K ./data/FacultyHiringNetworks/Business/Business_F_Asst.csv
+26K ./data/FacultyHiringNetworks/Business/Business_F_Full.csv
+28K ./data/FacultyHiringNetworks/Business/Business_FM_All.csv
+27K ./data/FacultyHiringNetworks/Business/Business_FM_Assoc.csv
+27K ./data/FacultyHiringNetworks/Business/Business_FM_Asst.csv
+31K ./data/FacultyHiringNetworks/Business/Business_FM_Full_500_100_100_1000.pk
+31K ./data/FacultyHiringNetworks/Business/Business_FM_Full_500_100_100_200.pk
+3.8K ./data/FacultyHiringNetworks/Business/Business_FM_Full_adj.npz
+27K ./data/FacultyHiringNetworks/Business/Business_FM_Full.csv
+31K ./data/FacultyHiringNetworks/Business/Business_FM_Full_trials10train_r100test_r100.pk
+31K ./data/FacultyHiringNetworks/Business/Business_FM_Full_trials2train_r100test_r100.pk
+28K ./data/FacultyHiringNetworks/Business/Business_M_All.csv
+27K ./data/FacultyHiringNetworks/Business/Business_M_Assoc.csv
+26K ./data/FacultyHiringNetworks/Business/Business_M_Asst.csv
+27K ./data/FacultyHiringNetworks/Business/Business_M_Full.csv
+84K ./data/FacultyHiringNetworks/ComputerScience/ComputerScience_F_All.csv
+84K ./data/FacultyHiringNetworks/ComputerScience/ComputerScience_F_Assoc.csv
+84K ./data/FacultyHiringNetworks/ComputerScience/ComputerScience_F_Asst.csv
+84K ./data/FacultyHiringNetworks/ComputerScience/ComputerScience_F_Full.csv
+86K ./data/FacultyHiringNetworks/ComputerScience/ComputerScience_FM_All.csv
+85K ./data/FacultyHiringNetworks/ComputerScience/ComputerScience_FM_Assoc.csv
+84K ./data/FacultyHiringNetworks/ComputerScience/ComputerScience_FM_Asst.csv
+47K ./data/FacultyHiringNetworks/ComputerScience/ComputerScience_FM_Full_900_100_100_1000.pk
+47K ./data/FacultyHiringNetworks/ComputerScience/ComputerScience_FM_Full_900_100_100_200.pk
+3.7K ./data/FacultyHiringNetworks/ComputerScience/ComputerScience_FM_Full_adj.npz
+85K ./data/FacultyHiringNetworks/ComputerScience/ComputerScience_FM_Full.csv
+47K ./data/FacultyHiringNetworks/ComputerScience/ComputerScience_FM_Full_trials10train_r100test_r100.pk
+47K ./data/FacultyHiringNetworks/ComputerScience/ComputerScience_FM_Full_trials2train_r100test_r100.pk
+86K ./data/FacultyHiringNetworks/ComputerScience/ComputerScience_M_All.csv
+84K ./data/FacultyHiringNetworks/ComputerScience/ComputerScience_M_Assoc.csv
+84K ./data/FacultyHiringNetworks/ComputerScience/ComputerScience_M_Asst.csv
+85K ./data/FacultyHiringNetworks/ComputerScience/ComputerScience_M_Full.csv
+63K ./data/FacultyHiringNetworks/faculty_hiring_K.ipynb
+16K ./data/FacultyHiringNetworks/faculty_hiring_preprocess.ipynb
+43K ./data/FacultyHiringNetworks/History/History_F_All.csv
+42K ./data/FacultyHiringNetworks/History/History_F_Assoc.csv
+42K ./data/FacultyHiringNetworks/History/History_F_Asst.csv
+42K ./data/FacultyHiringNetworks/History/History_F_Full.csv
+44K ./data/FacultyHiringNetworks/History/History_FM_All.csv
+43K ./data/FacultyHiringNetworks/History/History_FM_Assoc.csv
+42K ./data/FacultyHiringNetworks/History/History_FM_Asst.csv
+43K ./data/FacultyHiringNetworks/History/History_FM_Full_1200_100_100_1000.pk
+43K ./data/FacultyHiringNetworks/History/History_FM_Full_1200_100_100_200.pk
+3.1K ./data/FacultyHiringNetworks/History/History_FM_Full_adj.npz
+43K ./data/FacultyHiringNetworks/History/History_FM_Full.csv
+43K ./data/FacultyHiringNetworks/History/History_FM_Full_trials10train_r100test_r100.pk
+43K ./data/FacultyHiringNetworks/History/History_FM_Full_trials2train_r100test_r100.pk
+43K ./data/FacultyHiringNetworks/History/History_M_All.csv
+42K ./data/FacultyHiringNetworks/History/History_M_Assoc.csv
+42K ./data/FacultyHiringNetworks/History/History_M_Asst.csv
+43K ./data/FacultyHiringNetworks/History/History_M_Full.csv
+13M ./data/finance/adj.npz
+57M ./data/finance/finance_data.csv
+32M ./data/finance/finance_data.npy
+24K ./data/finance/finance_K_F.ipynb
+19K ./data/finance/finance_preprocess.ipynb
+26K ./data/finance/node_list.npy
+21M ./data/finance/trials10train_r100test_r100.pk
+21M ./data/finance/trials1train_r100test_r100.pk
+21M ./data/finance/trials2train_r100test_r100.pk
+1.4K ./data/Football_data_England_Premier_League/England_2009_2010adj.npz
+8.0K ./data/Football_data_England_Premier_League/England_2009_2010.csv
+1008 ./data/Football_data_England_Premier_League/England_2009_2010node_list.npy
+6.1K ./data/Football_data_England_Premier_League/England_2009_2010trials10train_r100test_r100.pk
+1.4K ./data/Football_data_England_Premier_League/England_2010_2011adj.npz
+8.2K ./data/Football_data_England_Premier_League/England_2010_2011.csv
+1008 ./data/Football_data_England_Premier_League/England_2010_2011node_list.npy
+6.1K ./data/Football_data_England_Premier_League/England_2010_2011trials10train_r100test_r100.pk
+1.4K ./data/Football_data_England_Premier_League/England_2011_2012adj.npz
+7.8K ./data/Football_data_England_Premier_League/England_2011_2012.csv
+1008 ./data/Football_data_England_Premier_League/England_2011_2012node_list.npy
+6.2K ./data/Football_data_England_Premier_League/England_2011_2012trials10train_r100test_r100.pk
+6.2K ./data/Football_data_England_Premier_League/England_2011_2012trials2train_r100test_r100.pk
+1.4K ./data/Football_data_England_Premier_League/England_2012_2013adj.npz
+8.0K ./data/Football_data_England_Premier_League/England_2012_2013.csv
+1008 ./data/Football_data_England_Premier_League/England_2012_2013node_list.npy
+6.1K ./data/Football_data_England_Premier_League/England_2012_2013trials10train_r100test_r100.pk
+1.4K ./data/Football_data_England_Premier_League/England_2013_2014adj.npz
+8.4K ./data/Football_data_England_Premier_League/England_2013_2014.csv
+1.3K ./data/Football_data_England_Premier_League/England_2013_2014node_list.npy
+6.2K ./data/Football_data_England_Premier_League/England_2013_2014trials10train_r100test_r100.pk
+1.2K ./data/Football_data_England_Premier_League/England_2014_2015adj.npz
+38K ./data/Football_data_England_Premier_League/England_2014_2015.csv
+1.3K ./data/Football_data_England_Premier_League/England_2014_2015node_list.npy
+4.8K ./data/Football_data_England_Premier_League/England_2014_2015trials10train_r100test_r100.pk
+1.6K ./data/Football_data_England_Premier_League/finerEngland_2009_2010adj.npz
+1008 ./data/Football_data_England_Premier_League/finerEngland_2009_2010node_list.npy
+8.0K ./data/Football_data_England_Premier_League/finerEngland_2009_2010trials10train_r100test_r100.pk
+8.0K ./data/Football_data_England_Premier_League/finerEngland_2009_2010trials2train_r100test_r100.pk
+1.5K ./data/Football_data_England_Premier_League/finerEngland_2010_2011adj.npz
+1008 ./data/Football_data_England_Premier_League/finerEngland_2010_2011node_list.npy
+8.0K ./data/Football_data_England_Premier_League/finerEngland_2010_2011trials10train_r100test_r100.pk
+1.6K ./data/Football_data_England_Premier_League/finerEngland_2011_2012adj.npz
+1008 ./data/Football_data_England_Premier_League/finerEngland_2011_2012node_list.npy
+8.0K ./data/Football_data_England_Premier_League/finerEngland_2011_2012trials10train_r100test_r100.pk
+1.5K ./data/Football_data_England_Premier_League/finerEngland_2012_2013adj.npz
+1008 ./data/Football_data_England_Premier_League/finerEngland_2012_2013node_list.npy
+8.0K ./data/Football_data_England_Premier_League/finerEngland_2012_2013trials10train_r100test_r100.pk
+1.6K ./data/Football_data_England_Premier_League/finerEngland_2013_2014adj.npz
+1.3K ./data/Football_data_England_Premier_League/finerEngland_2013_2014node_list.npy
+8.0K ./data/Football_data_England_Premier_League/finerEngland_2013_2014trials10train_r100test_r100.pk
+1.5K ./data/Football_data_England_Premier_League/finerEngland_2014_2015adj.npz
+1.3K ./data/Football_data_England_Premier_League/finerEngland_2014_2015node_list.npy
+7.0K ./data/Football_data_England_Premier_League/finerEngland_2014_2015trials10train_r100test_r100.pk
+83K ./data/Football_data_England_Premier_League/finer_football_K_F.ipynb
+43K ./data/Football_data_England_Premier_League/finer_football_preprocess.ipynb
+83K ./data/Football_data_England_Premier_League/football_K_F.ipynb
+53K ./data/Football_data_England_Premier_League/football_preprocess.ipynb
+14K ./data/Halo2BetaData/adj.npz
+36K ./data/Halo2BetaData/Halo2Beta_preprocess.ipynb
+23K ./data/Halo2BetaData/HeadToHead_K_F.ipynb
+4.9K ./data/Halo2BetaData/HeadToHeadnode_list.npy
+354K ./data/Halo2BetaData/HeadToHead_Slim.csv
+268K ./data/Halo2BetaData/HeadToHeadtrials10train_r100test_r100.pk
+268K ./data/Halo2BetaData/HeadToHeadtrials2train_r100test_r100.pk
+66K ./data/Halo2BetaData/trials1train_r100test_r100.pk
+
+===== RESULT ARRAYS STRUCTURE =====
+./result_arrays/Halo2BetaData/HeadToHead/upset/mvr/trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/SpringRanksyncRankserialRankbtldavidScoreeigenvectorCentralityPageRankrankCentralitySVD_RSSVD_NRS/trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10usesyncRankpreinnerproduct50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe0withproximal_innerproductFiedler5sigma100alpha100train_alphaTruehid16lr10useSpringRankpreinnerproduct50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe0withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10useSVD_NRSpredist50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe0withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10usePageRankpredist50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe0margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10useSVD_NRSpreserial_similarity50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe0margin_coe100margin1withproximal_innerproductFiedler5sigma100alpha100train_alphaTruehid16lr10useSpringRankpreinnerproduct50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe0withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10usePageRankpreserial_similarity50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe0withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10useserialRankpreserial_similarity50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe0margin_coe100margin1withproximal_innerproductFiedler5sigma100alpha100train_alphaTruehid16lr10useSpringRankpredist50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe0withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10usebtlpreserial_similarity50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe0withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10usebtlpredist50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe0margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10usePageRankpreserial_similarity50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe0withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10usePageRankpreinnerproduct50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe0margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10usesyncRankpreinnerproduct50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10useeigenvectorCentralitypredist50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe0margin_coe100margin1withproximal_distFiedler5sigma100alpha100train_alphaTruehid16lr10useSpringRankpreserial_similarity50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe0withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10useeigenvectorCentralitypredist50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10usebtlpreinnerproduct50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe0margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10useSVD_NRSpredist50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe0withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10useeigenvectorCentralitypreserial_similarity50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe0margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10useSpringRankpreinnerproduct50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe0withproximal_innerproductFiedler5sigma100alpha100train_alphaTruehid16lr10useSpringRankpreserial_similarity50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe100margin1withproximal_innerproductFiedler5sigma100alpha100train_alphaTruehid16lr10useSpringRankpredist50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10usePageRankpreinnerproduct50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe0margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10useeigenvectorCentralitypredist50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10useSpringRankpreserial_similarity50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe0margin_coe100margin1withdistFiedler5sigma100alpha100hid16lr10useSpringRanktrials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe0margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10usebtlpreinnerproduct50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe0withproximal_distFiedler5sigma100alpha100train_alphaTruehid16lr10useSpringRankpreserial_similarity50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe0margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10useSVD_NRSpreinnerproduct50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10useserialRankpreinnerproduct50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10useSpringRankpredist50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe0margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10usePageRankpreinnerproduct50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe0withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10usesyncRankpredist50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe100margin1withproximal_distFiedler5sigma100alpha100train_alphaTruehid16lr10useSpringRankpreserial_similarity50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe0withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10useSVD_NRSpreserial_similarity50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe0withproximal_innerproductFiedler5sigma100alpha100train_alphaTruehid16lr10useSpringRankpredist50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10usebtlpreserial_similarity50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10usebtlpredist50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe0withproximal_distFiedler5sigma100alpha100train_alphaTruehid16lr10useSpringRankpredist50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10useeigenvectorCentralitypreinnerproduct50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe0margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10useserialRankpreinnerproduct50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe0margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10useSpringRankpreserial_similarity50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10usePageRankpredist50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10useSpringRankpreinnerproduct50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe0withinnerproductFiedler5sigma100alpha100hid16lr10useSpringRanktrials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe100margin_coe100margin1withproximal_baselineFiedler5sigma100alpha100train_alphaTruehid16lr10usePageRankpreserial_similarity50trials10train_r100test_r100AllTrue.npy
+./result_arrays/Halo2BetaData/HeadToHead/upset/DIGRACib/K48dropout50ratio_coe0margin_coe100margin1withproximal_innerproductFiedler5sigma100alpha100train_alphaTruehid16lr10useSpringRankpreserial_similarity50trials10train_r100test_r100AllTrue.npy
+
+===== LOGS DIRECTORY SIZE =====
+28M	./logs
+12K	./debug_logs
+
+===== STALE/UNNECESSARY FILES =====
+./slurm_logs/.ipynb_checkpoints
+./.ipynb_checkpoints
+./src/__pycache__
+./src/__pycache__/DiGCN_Inception_Block.cpython-311.pyc
+./src/__pycache__/DiGCNConv.cpython-311.pyc
+./src/__pycache__/extract_network.cpython-311.pyc
+./src/__pycache__/param_parser.cpython-311.pyc
+./src/__pycache__/train.cpython-311.pyc
+./src/__pycache__/preprocess.cpython-311.pyc
+./src/__pycache__/get_adj.cpython-311.pyc
+./src/__pycache__/metrics.cpython-311.pyc
+./src/__pycache__/comparison.cpython-311.pyc
+./src/__pycache__/SpringRank.cpython-311.pyc
+./src/__pycache__/GNN_models.cpython-311.pyc
+./src/__pycache__/RankingGNNBase.cpython-311.pyc
+./src/__pycache__/utils.cpython-311.pyc
+./src/__pycache__/generate_data.cpython-311.pyc
+./src/__pycache__/ours_mfas.cpython-311.pyc
+
+===== SLURM OUTPUT FILES =====
+-rw-r--r-- 1 sv96 sv96  26K Feb 21 23:50 results_831288.err
+-rw-r--r-- 1 sv96 sv96  22K Feb 21 23:51 results_831288.out
+-rw-r--r-- 1 sv96 sv96 5.3K Feb 22 13:58 results_831517.err
+-rw-r--r-- 1 sv96 sv96  795 Feb 22 13:58 results_831517.out
+-rw-r--r-- 1 sv96 sv96  49K Feb 22 15:32 results_831571.err
+-rw-r--r-- 1 sv96 sv96  795 Feb 22 15:32 results_831571.out
+-rw-r--r-- 1 sv96 sv96 9.8K Feb 22 16:24 results_831629.err
+-rw-r--r-- 1 sv96 sv96  795 Feb 22 16:24 results_831629.out
+-rw-r--r-- 1 sv96 sv96  27K Feb 22 16:52 results_831655.err
+-rw-r--r-- 1 sv96 sv96  795 Feb 22 16:52 results_831655.out
+-rw-r--r-- 1 sv96 sv96  27K Feb 22 17:06 results_831680.err
+-rw-r--r-- 1 sv96 sv96  795 Feb 22 17:06 results_831680.out
+-rw-r--r-- 1 sv96 sv96  45K Feb 22 20:03 results_831851.err
+-rw-r--r-- 1 sv96 sv96 1.3K Feb 22 20:03 results_831851.out
+-rw-r--r-- 1 sv96 sv96 4.8K Feb 22 20:51 results_831885.err
+-rw-r--r-- 1 sv96 sv96  795 Feb 22 20:51 results_831885.out
+-rw-r--r-- 1 sv96 sv96  56K Feb 22 21:14 results_831915.err
+-rw-r--r-- 1 sv96 sv96  21K Feb 22 21:14 results_831915.out
+-rw-r--r-- 1 sv96 sv96  66K Feb 23 10:41 results_831923.err
+-rw-r--r-- 1 sv96 sv96 310K Feb 22 21:39 results_831923.out
+
+===== CONDA ENV PACKAGES (key ones) =====
+networkx                  3.1             py311h06a4308_0  
+numpy                     1.24.3          py311h08b1b3b_1  
+numpy-base                1.24.3          py311hf175353_1  
+numpydoc                  1.5.0           py311h06a4308_0  
+scikit-image              0.20.0          py311h6a678d5_0  
+scikit-learn              1.3.0           py311ha02d727_0  
+scikit-learn-intelex      2023.1.1        py311h06a4308_0  
+scipy                     1.11.1          py311h08b1b3b_0  

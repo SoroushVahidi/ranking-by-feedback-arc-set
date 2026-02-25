@@ -1,0 +1,171 @@
+============================================
+DRY RUN: btl on animal
+============================================
+Loading existing data!
+Final results for btl:
+upset simple:,0.452830,upset ratio:,0.221363,upset naive:,0.113208,
+Final results for btl:
+upset simple:,0.452830,upset ratio:,0.221363,upset naive:,0.113208,
++--------+---+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+--------+-------+
+| Parame | K | traina | Fiedle | num_tr | alpha | dropou | upset_ | upset_ | margin | train_ | baseli | pretra | pretr |
+|  ter   |   | ble_al | r_laye |  ials  |       |   t    | ratio_ | margin |        |  with  |   ne   |   in   | ain e |
+|        |   |  pha   | r_num  |        |       |        | coeff  | _coeff |        |        |        |  with  | pochs |
++========+===+========+========+========+=======+========+========+========+========+========+========+========+=======+
+| Values | 3 | False  | 5      | 2      | 1     | 0.500  | 1      | 0      | 0.010  | dist   | Spring | dist   | 1     |
+|        |   |        |        |        |       |        |        |        |        |        | Rank   |        |       |
++--------+---+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+--------+-------+
+Dryad_animal_society/_latestMetric/Method        btl     
+=========================================================
+test kendall tau                            nan$\pm$nan  
+test kendall p                              nan$\pm$nan  
+val kendall tau                             nan$\pm$nan  
+val kendall p                               nan$\pm$nan  
+all kendall tau                             nan$\pm$nan  
+all kendall p                               nan$\pm$nan  
+upset_simple                                0.45$\pm$0.00
+upset_ratio                                 0.22$\pm$0.00
+upset_naive                                 0.11$\pm$0.00
+
+
+Dryad_animal_society/_bestMetric/Method        btl     
+=======================================================
+test kendall tau                          nan$\pm$nan  
+test kendall p                            nan$\pm$nan  
+val kendall tau                           nan$\pm$nan  
+val kendall p                             nan$\pm$nan  
+all kendall tau                           nan$\pm$nan  
+all kendall p                             nan$\pm$nan  
+upset_simple                              0.45$\pm$0.00
+upset_ratio                               0.22$\pm$0.00
+upset_naive                               0.11$\pm$0.00
+Exit code for btl: 0
+
+============================================
+DRY RUN: SpringRank on animal
+============================================
+Loading existing data!
+Final results for SpringRank:
+upset simple:,0.503145,upset ratio:,0.416645,upset naive:,0.125786,
+Final results for SpringRank:
+upset simple:,0.503145,upset ratio:,0.416645,upset naive:,0.125786,
++--------+---+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+--------+-------+
+| Parame | K | traina | Fiedle | num_tr | alpha | dropou | upset_ | upset_ | margin | train_ | baseli | pretra | pretr |
+|  ter   |   | ble_al | r_laye |  ials  |       |   t    | ratio_ | margin |        |  with  |   ne   |   in   | ain e |
+|        |   |  pha   | r_num  |        |       |        | coeff  | _coeff |        |        |        |  with  | pochs |
++========+===+========+========+========+=======+========+========+========+========+========+========+========+=======+
+| Values | 3 | False  | 5      | 2      | 1     | 0.500  | 1      | 0      | 0.010  | dist   | Spring | dist   | 1     |
+|        |   |        |        |        |       |        |        |        |        |        | Rank   |        |       |
++--------+---+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+--------+-------+
+Dryad_animal_society/_latestMetric/Method    SpringRank  
+=========================================================
+test kendall tau                            nan$\pm$nan  
+test kendall p                              nan$\pm$nan  
+val kendall tau                             nan$\pm$nan  
+val kendall p                               nan$\pm$nan  
+all kendall tau                             nan$\pm$nan  
+all kendall p                               nan$\pm$nan  
+upset_simple                                0.50$\pm$0.00
+upset_ratio                                 0.42$\pm$0.00
+upset_naive                                 0.13$\pm$0.00
+
+
+Dryad_animal_society/_bestMetric/Method    SpringRank  
+=======================================================
+test kendall tau                          nan$\pm$nan  
+test kendall p                            nan$\pm$nan  
+val kendall tau                           nan$\pm$nan  
+val kendall p                             nan$\pm$nan  
+all kendall tau                           nan$\pm$nan  
+all kendall p                             nan$\pm$nan  
+upset_simple                              0.50$\pm$0.00
+upset_ratio                               0.42$\pm$0.00
+upset_naive                               0.13$\pm$0.00
+Exit code for SpringRank: 0
+
+============================================
+DRY RUN: OURS_MFAS_INS1 on animal
+============================================
+Loading existing data!
+Final results for OURS_MFAS_INS1:
+upset simple:,0.377358,upset ratio:,0.399096,upset naive:,0.094340,
+Final results for OURS_MFAS_INS1:
+upset simple:,0.377358,upset ratio:,0.399096,upset naive:,0.094340,
++--------+---+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+--------+-------+
+| Parame | K | traina | Fiedle | num_tr | alpha | dropou | upset_ | upset_ | margin | train_ | baseli | pretra | pretr |
+|  ter   |   | ble_al | r_laye |  ials  |       |   t    | ratio_ | margin |        |  with  |   ne   |   in   | ain e |
+|        |   |  pha   | r_num  |        |       |        | coeff  | _coeff |        |        |        |  with  | pochs |
++========+===+========+========+========+=======+========+========+========+========+========+========+========+=======+
+| Values | 3 | False  | 5      | 2      | 1     | 0.500  | 1      | 0      | 0.010  | dist   | Spring | dist   | 1     |
+|        |   |        |        |        |       |        |        |        |        |        | Rank   |        |       |
++--------+---+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+--------+-------+
+Dryad_animal_society/_latestMetric/Method   OURS_MFAS_INS1
+==========================================================
+test kendall tau                            nan$\pm$nan   
+test kendall p                              nan$\pm$nan   
+val kendall tau                             nan$\pm$nan   
+val kendall p                               nan$\pm$nan   
+all kendall tau                             nan$\pm$nan   
+all kendall p                               nan$\pm$nan   
+upset_simple                                0.38$\pm$0.00 
+upset_ratio                                 0.40$\pm$0.00 
+upset_naive                                 0.09$\pm$0.00 
+
+
+Dryad_animal_society/_bestMetric/Method   OURS_MFAS_INS1
+========================================================
+test kendall tau                          nan$\pm$nan   
+test kendall p                            nan$\pm$nan   
+val kendall tau                           nan$\pm$nan   
+val kendall p                             nan$\pm$nan   
+all kendall tau                           nan$\pm$nan   
+all kendall p                             nan$\pm$nan   
+upset_simple                              0.38$\pm$0.00 
+upset_ratio                               0.40$\pm$0.00 
+upset_naive                               0.09$\pm$0.00 
+Exit code for OURS_MFAS_INS1: 0
+
+============================================
+DRY RUN: OURS_MFAS_INS3 on animal
+============================================
+Loading existing data!
+Final results for OURS_MFAS_INS3:
+upset simple:,0.377358,upset ratio:,0.399096,upset naive:,0.094340,
+Final results for OURS_MFAS_INS3:
+upset simple:,0.377358,upset ratio:,0.399096,upset naive:,0.094340,
++--------+---+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+--------+-------+
+| Parame | K | traina | Fiedle | num_tr | alpha | dropou | upset_ | upset_ | margin | train_ | baseli | pretra | pretr |
+|  ter   |   | ble_al | r_laye |  ials  |       |   t    | ratio_ | margin |        |  with  |   ne   |   in   | ain e |
+|        |   |  pha   | r_num  |        |       |        | coeff  | _coeff |        |        |        |  with  | pochs |
++========+===+========+========+========+=======+========+========+========+========+========+========+========+=======+
+| Values | 3 | False  | 5      | 2      | 1     | 0.500  | 1      | 0      | 0.010  | dist   | Spring | dist   | 1     |
+|        |   |        |        |        |       |        |        |        |        |        | Rank   |        |       |
++--------+---+--------+--------+--------+-------+--------+--------+--------+--------+--------+--------+--------+-------+
+Dryad_animal_society/_latestMetric/Method   OURS_MFAS_INS3
+==========================================================
+test kendall tau                            nan$\pm$nan   
+test kendall p                              nan$\pm$nan   
+val kendall tau                             nan$\pm$nan   
+val kendall p                               nan$\pm$nan   
+all kendall tau                             nan$\pm$nan   
+all kendall p                               nan$\pm$nan   
+upset_simple                                0.38$\pm$0.00 
+upset_ratio                                 0.40$\pm$0.00 
+upset_naive                                 0.09$\pm$0.00 
+
+
+Dryad_animal_society/_bestMetric/Method   OURS_MFAS_INS3
+========================================================
+test kendall tau                          nan$\pm$nan   
+test kendall p                            nan$\pm$nan   
+val kendall tau                           nan$\pm$nan   
+val kendall p                             nan$\pm$nan   
+all kendall tau                           nan$\pm$nan   
+all kendall p                             nan$\pm$nan   
+upset_simple                              0.38$\pm$0.00 
+upset_ratio                               0.40$\pm$0.00 
+upset_naive                               0.09$\pm$0.00 
+Exit code for OURS_MFAS_INS3: 0
+
+============================================
+Dry run completed.
+============================================

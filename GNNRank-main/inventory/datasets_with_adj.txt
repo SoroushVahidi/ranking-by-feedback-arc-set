@@ -1,0 +1,3 @@
+=== DATASETS WITH adj.npz ===
+Dryad_animal_society
+finance

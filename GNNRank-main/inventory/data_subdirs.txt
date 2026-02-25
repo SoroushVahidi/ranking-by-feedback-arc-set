@@ -1,0 +1,9 @@
+=== ALL DATA SUBDIRS (depth 1) ===
+Basketball_temporal
+Dryad_animal_society
+DSBM
+ERO
+FacultyHiringNetworks
+finance
+Football_data_England_Premier_League
+Halo2BetaData

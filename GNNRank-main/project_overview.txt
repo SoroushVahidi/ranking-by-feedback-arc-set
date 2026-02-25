@@ -1,0 +1,704 @@
+=== ./src/comparison.py (first 30 lines) ===
+# comparison.py
+import numpy as np
+import scipy.sparse as sp
+from scipy.stats import rankdata
+from scipy.sparse.linalg import svds
+from scipy.linalg import orth
+from sklearn.preprocessing import normalize
+
+# --- OURS (MFAS local-ratio + desc-weight add-back + optional ratio-refine) ---
+# Updated to use the new implementation in ours_mfas.py
+from ours_mfas import ours_mfas_rmfa
+
+### convention: the larger the score/rank, the better
+
+
+def syncRank(A):
+    # update the meaning of a directed edge by transpose, edited 20210725
+    A = A.transpose()
+    N = A.shape[1]
+
+    # 1. Form C
+    C = (A - A.transpose()).sign()
+
+    # 2. Form Theta
+    T = np.pi * C / (N - 1)
+
+    # 3. Form H
+    H = sp.lil_matrix((N, N), dtype=complex)
+    H[T != 0] = np.exp(1j * T[T != 0])
+
+
+=== ./src/DiGCNConv.py (first 30 lines) ===
+import torch
+from torch.nn.parameter import Parameter
+from torch_geometric.nn.conv import MessagePassing
+from torch_geometric.nn.inits import glorot, zeros
+
+class DiGCNConv(MessagePassing):
+    r"""The graph convolutional operator from the
+    `Digraph Inception Convolutional Networks" 
+    <https://papers.nips.cc/paper/2020/file/cffb6e2288a630c2a787a64ccc67097c-Paper.pdf>`_ paper.
+    The spectral operation is the same with Kipf's GCN.
+    DiGCN preprocesses the adjacency matrix and does not require a norm operation during the convolution operation.
+    Args:
+        in_channels (int): Size of each input sample.
+        out_channels (int): Size of each output sample.
+        cached (bool, optional): If set to :obj:`True`, the layer will cache
+            the adj matrix on first execution, and will use the
+            cached version for further executions.
+            Please note that, all the normalized adj matrices (including undirected)
+            are calculated in the dataset preprocessing to reduce time comsume.
+            This parameter should only be set to :obj:`True` in transductive
+            learning scenarios. (default: :obj:`False`)
+        bias (bool, optional): If set to :obj:`False`, the layer will not learn
+            an additive bias. (default: :obj:`True`)
+        **kwargs (optional): Additional arguments of
+            :class:`torch_geometric.nn.conv.MessagePassing`.
+    """
+    def __init__(self, in_channels: int, out_channels: int, improved: bool=False, cached: bool=True,
+                 bias: bool=True, **kwargs):
+        super(DiGCNConv, self).__init__(aggr='add', **kwargs)
+
+
+=== ./src/DiGCN_Inception_Block.py (first 30 lines) ===
+from typing import Tuple
+
+import torch
+from torch.nn import Linear
+
+from DiGCNConv import DiGCNConv
+
+
+class DiGCN_InceptionBlock(torch.nn.Module):
+    r"""An implementation of the inception block model from the
+    `Digraph Inception Convolutional Networks" 
+    <https://papers.nips.cc/paper/2020/file/cffb6e2288a630c2a787a64ccc67097c-Paper.pdf>`_ paper.
+    Args:
+        in_dim (int): Dimention of input.
+        out_dim (int): Dimention of output.
+    """
+    def __init__(self, in_dim, out_dim):
+        super(DiGCN_InceptionBlock, self).__init__()
+        self.ln = Linear(in_dim, out_dim)
+        self.conv1 = DiGCNConv(in_dim, out_dim)
+        self.conv2 = DiGCNConv(in_dim, out_dim)
+        self.reset_parameters()
+
+    def reset_parameters(self):
+        self.ln.reset_parameters()
+        self.conv1.reset_parameters()
+        self.conv2.reset_parameters()
+
+    def forward(self, x: torch.FloatTensor, edge_index: torch.LongTensor, \
+        edge_weight: torch.FloatTensor, edge_index2: torch.LongTensor, \
+
+=== ./src/extract_network.py (first 30 lines) ===
+from typing import Tuple, Union
+
+import numpy as np
+import scipy.sparse as sp
+import networkx as nx
+from torch import LongTensor
+
+
+def extract_network(A: sp.spmatrix, labels: Union[np.array, LongTensor, list, None]=None, lowest_degree: int=2, max_iter=10) -> Tuple[sp.spmatrix, np.array]:
+    """Find the largest connected component and iteratively only include nodes with degree at least lowest_degree, 
+    for at most max_iter iterations, from the
+    `DIGRAC: Digraph Clustering Based on Flow Imbalance" <https://arxiv.org/pdf/2106.05194.pdf>`_ paper.
+    Args:
+        A: (scipy sparse matrix) Adjacency matrix.
+        labels: (numpy array or torch.LongTensor, optional) Node labels, default None.
+        lowest_degree: (int, optional) The lowest degree for the output network, default 2.
+        max_iter: (int, optional) The maximum number of iterations.
+    Returns:
+        A: (scipy sparse matrix) Adjacency matrix after fixing degrees and obtaining a connected netework.
+        labels: (numpy array) Node labels after fixing degrees and obtaining a connected netework.
+    """
+    G = nx.from_scipy_sparse_matrix(A, create_using=nx.DiGraph)
+    largest_cc = max(nx.weakly_connected_components(G))
+    A_new = A[list(largest_cc)][:, list(largest_cc)]
+    labels_new = None
+    if labels is not None:
+        labels_new = labels[list(largest_cc)]
+    G0 = nx.from_scipy_sparse_matrix(A_new, create_using=nx.DiGraph)
+    flag = True
+    iter_num = 0
+
+=== ./src/generate_data.py (first 30 lines) ===
+import os
+import pickle as pk
+
+import scipy.sparse as sp
+from torch_geometric.data import Data
+
+from utils import hermitian_feature
+
+
+def to_dataset_no_label(A, num_clusters, save_path, load_only=False, features=None):
+    if features is None:
+        features = hermitian_feature(A, num_clusters)
+
+    data = Data(x=features, y=None,A=sp.csr_matrix(A))
+    if not load_only:
+        if os.path.isdir(os.path.dirname(save_path)) == False:
+            try:
+                os.makedirs(os.path.dirname(save_path))
+            except FileExistsError:
+                print('Folder exists for best {}!'.format(os.path.dirname(save_path)))
+        pk.dump(data, open(save_path, 'wb'))
+    return data
+
+def to_dataset_no_split(A, num_clusters, label, save_path, load_only=False, features=None):
+    if features is None:
+        features = hermitian_feature(A, num_clusters)
+
+    data = Data(x=features, y=label,A=sp.csr_matrix(A))
+    if not load_only:
+        if os.path.isdir(os.path.dirname(save_path)) == False:
+
+=== ./src/get_adj.py (first 30 lines) ===
+# from https://github.com/flyingtango/DiGCN/blob/main/code/get_adj.py
+import torch
+from torch_geometric.utils import add_self_loops
+from torch_scatter import scatter_add
+import scipy
+
+
+def get_undirected_adj(edge_index, num_nodes, dtype):
+    edge_weight = torch.ones((edge_index.size(1), ), dtype=dtype,
+                                    device=edge_index.device)
+    fill_value = 1
+    edge_index, edge_weight = add_self_loops(
+        edge_index, edge_weight, fill_value, num_nodes)
+
+    row, col = edge_index
+    deg = scatter_add(edge_weight, row, dim=0, dim_size=num_nodes)
+    deg_inv_sqrt = deg.pow(-0.5)
+    deg_inv_sqrt[deg_inv_sqrt == float('inf')] = 0
+
+    return edge_index, deg_inv_sqrt[row] * edge_weight * deg_inv_sqrt[col]
+
+
+def get_pr_directed_adj(alpha, edge_index, num_nodes, dtype, edge_weight = None):
+    if edge_weight is None:
+        edge_weight = torch.ones((edge_index.size(1), ), dtype=dtype,
+                                     device=edge_index.device)
+    else:
+        edge_weight = torch.FloatTensor(edge_weight).to(edge_index.device)
+    fill_value = 1
+    edge_index, edge_weight = add_self_loops(
+
+=== ./src/GNN_models.py (first 30 lines) ===
+from typing import Tuple, Optional, Union
+
+import torch
+import torch.nn.functional as F
+from torch.nn.parameter import Parameter
+
+from RankingGNNBase import RankingGNNBase
+from DiGCN_Inception_Block import DiGCN_InceptionBlock as InceptionBlock
+
+import torch
+from torch.nn.parameter import Parameter
+
+class DIMPA(torch.nn.Module):
+    r"""The directed mixed-path aggregation model.
+
+    Args:
+        hop (int): Number of hops to consider.
+    """
+
+    def __init__(self, hop: int):
+        super(DIMPA, self).__init__()
+        self._hop = hop
+        self._w_s = Parameter(torch.FloatTensor(hop + 1, 1))
+        self._w_t = Parameter(torch.FloatTensor(hop + 1, 1))
+
+        self._reset_parameters()
+
+    def _reset_parameters(self):
+        self._w_s.data.fill_(1.0)
+        self._w_t.data.fill_(1.0)
+
+=== ./src/.ipynb_checkpoints/comparison-checkpoint.py (first 30 lines) ===
+# comparison.py
+import numpy as np
+import scipy.sparse as sp
+from scipy.stats import rankdata
+from scipy.sparse.linalg import svds
+from scipy.linalg import orth
+from sklearn.preprocessing import normalize
+
+# --- OURS (MFAS local-ratio + desc-weight add-back + optional ratio-refine) ---
+# Updated to use the new implementation in ours_mfas.py
+from ours_mfas import ours_mfas_rmfa
+
+### convention: the larger the score/rank, the better
+
+
+def syncRank(A):
+    # update the meaning of a directed edge by transpose, edited 20210725
+    A = A.transpose()
+    N = A.shape[1]
+
+    # 1. Form C
+    C = (A - A.transpose()).sign()
+
+    # 2. Form Theta
+    T = np.pi * C / (N - 1)
+
+    # 3. Form H
+    H = sp.lil_matrix((N, N), dtype=complex)
+    H[T != 0] = np.exp(1j * T[T != 0])
+
+
+=== ./src/.ipynb_checkpoints/metrics-checkpoint.py (first 30 lines) ===
+import numpy as np
+import torch
+from texttable import Texttable
+import latextable
+
+
+default_compare_names_all = ['DIGRAC']
+default_metric_names = ['test kendall tau', 'test kendall p', 'val kendall tau', 'val kendall p', 'all kendall tau', 'all kendall p']
+def print_performance_mean_std(dataset:str, results:np.array, compare_names_all:list=default_compare_names_all,
+                               metric_names:list=default_metric_names, print_latex:bool=True, print_std:bool=True):
+    r"""Prints performance table (and possibly with latex) with mean and standard deviations.
+        The best two performing methods are highlighted in \red and \blue respectively.
+
+    Args:
+        dataset: (string) Name of the data set considered.
+        results: (np.array) Results with shape (num_trials, num_methods, num_metrics).
+        compare_names_all: (list of strings, optional) Methods names to compare.
+        metric_names: (list of strings, optional) Metrics to use (deemed better with larger values).
+        print_latex: (bool, optional) Whether to print latex table also. Default True.
+        print_std: (bool, optinoal) Whether to print standard deviations or just mean. Default False.
+    """
+    t = Texttable(max_width=120)
+    t.set_deco(Texttable.HEADER)
+    final_res_show = np.chararray(
+        [len(metric_names)+1, len(compare_names_all)+1], itemsize=100)
+    final_res_show[0, 0] = dataset+'Metric/Method'
+    final_res_show[0, 1:] = compare_names_all
+    final_res_show[1:, 0] = metric_names
+    std = np.chararray(
+        [len(metric_names), len(compare_names_all)], itemsize=20)
+
+=== ./src/.ipynb_checkpoints/ours_mfas-checkpoint.py (first 30 lines) ===
+# ours_mfas.py
+# RMFA / OURS_MFAS with:
+#  (A) local-ratio MFAS cycle breaking (edge-accurate, fast)
+#  (B) add-back in descending weight order with INS passes (1/2/3)
+#  (C) optional ratio-upset postprocessing using ternary-search while preserving order
+#
+# Designed to be fast, deterministic, and time-limit friendly.
+
+from __future__ import annotations
+
+import time
+from collections import deque
+from typing import Dict, List, Tuple, Optional, Sequence
+
+import numpy as np
+import scipy.sparse as sp
+
+
+# =============================================================================
+# Helpers: build edges and adjacency (EDGE-ID based)
+# =============================================================================
+
+def _csr_to_edges(A: sp.spmatrix) -> Tuple[int, np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Return (n, src, dst, w) for all directed edges with w>0.
+    """
+    A = A.tocsr()
+    A.eliminate_zeros()
+    n = int(A.shape[0])
+    src, dst = A.nonzero()
+
+=== ./src/.ipynb_checkpoints/param_parser-checkpoint.py (first 30 lines) ===
+import argparse
+import os
+
+import torch
+
+def parameter_parser():
+    """
+    A method to parse up command line parameters.
+    """
+    parser = argparse.ArgumentParser(description="Ranking.")
+
+    parser.add_argument('--no-cuda', action='store_true', default=False,
+                        help='Disables CUDA training.')
+    parser.add_argument('--debug', '-D',action='store_true', default=False,
+                        help='Debugging mode, minimal setting.')
+    parser.add_argument('--seed', type=int, default=31, help='Random seed.')
+    parser.add_argument('--epochs', type=int, default=1000,
+                        help='Number of epochs to train.')
+    parser.add_argument('--lr', type=float, default=0.01, #default = 0.01
+                        help='Initial learning rate.')
+    parser.add_argument('--weight_decay', type=float, default=5e-4,
+                        help='Weight decay (L2 loss on parameters).')
+    parser.add_argument('--hidden', type=int, default=32,
+                        help='Number of hidden units.')
+    parser.add_argument('--dropout', type=float, default=0.5,
+                        help='Dropout rate (1 - keep probability).')
+    parser.add_argument('--sigma', type=float, default=1.0,
+                        help='(Initial) Sigma in the Gaussian kernel, actual sigma is this times sqrt(num_nodes), default 1.')
+    parser.add_argument('--alpha', type=float, default=1.0,
+                        help='(Initial) learning rate for proximal gradient step.')
+
+=== ./src/.ipynb_checkpoints/train-checkpoint.py (first 30 lines) ===
+import os
+import time
+from datetime import datetime
+
+import numpy as np
+import torch
+import torch.optim as optim
+from texttable import Texttable
+from scipy.stats import kendalltau, rankdata
+
+# internal files
+from utils import write_log, scipy_sparse_to_torch_sparse, get_powers_sparse
+from metrics import print_performance_mean_std, calculate_upsets
+from GNN_models import DIGRAC_Ranking, DiGCN_Inception_Block_Ranking
+from param_parser import parameter_parser
+from preprocess import load_data
+from get_adj import get_second_directed_adj
+from SpringRank import SpringRank
+from comparison import syncRank_angle, syncRank, serialRank, btl, davidScore, eigenvectorCentrality, PageRank, rankCentrality, mvr, ours_MFAS, ours_MFAS_INS1, ours_MFAS_INS2, ours_MFAS_INS3
+from comparison import SVD_RS, SVD_NRS, serialRank_matrix
+
+GNN_variant_names = ['dist', 'innerproduct', 'proximal_dist', 'proximal_innerproduct', 'proximal_baseline']
+NUM_GNN_VARIANTS = len(GNN_variant_names) # number of GNN variants for each architecture
+
+upset_choices = ['upset_simple', 'upset_ratio', 'upset_naive']
+NUM_UPSET_CHOICES = len(upset_choices)
+args = parameter_parser()
+torch.manual_seed(args.seed)
+device = args.device
+if args.cuda:
+
+=== ./src/.ipynb_checkpoints/utils-checkpoint.py (first 30 lines) ===
+import csv
+import numpy as np
+import scipy.sparse as sp
+import torch
+from texttable import Texttable
+import latextable
+from sklearn.preprocessing import normalize, StandardScaler
+from scipy.stats import rankdata
+
+
+def write_log(args, path):
+    with open(path+'/settings.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        for para in args:
+            writer.writerow([para, args[para]])
+    return
+
+
+def ERO(n: int, p: float, eta: float, style: str = 'uniform') -> sp.csr_matrix:
+    """A Erdos-Renyi Outliers (ERO) model graph generator.
+    Args:
+        n: (int) Number of nodes.
+        p: (float) Sparsity value, edge probability.
+        eta: (float) Noise level, between 0 and 1.
+        style: (string) How to generate ratings:
+            'uniform': Uniform.
+            'gamma': Gamma distribution with shape 0.5 and scale 1.
+    Returns:
+        R: (sp.csr_matrix) a sparse n by n matrix of pairwise comparisons.
+        labels: (np.array) ground-truth ranking.
+
+=== ./src/metrics.py (first 30 lines) ===
+import numpy as np
+import torch
+from texttable import Texttable
+import latextable
+
+
+default_compare_names_all = ['DIGRAC']
+default_metric_names = ['test kendall tau', 'test kendall p', 'val kendall tau', 'val kendall p', 'all kendall tau', 'all kendall p']
+def print_performance_mean_std(dataset:str, results:np.array, compare_names_all:list=default_compare_names_all,
+                               metric_names:list=default_metric_names, print_latex:bool=True, print_std:bool=True):
+    r"""Prints performance table (and possibly with latex) with mean and standard deviations.
+        The best two performing methods are highlighted in \red and \blue respectively.
+
+    Args:
+        dataset: (string) Name of the data set considered.
+        results: (np.array) Results with shape (num_trials, num_methods, num_metrics).
+        compare_names_all: (list of strings, optional) Methods names to compare.
+        metric_names: (list of strings, optional) Metrics to use (deemed better with larger values).
+        print_latex: (bool, optional) Whether to print latex table also. Default True.
+        print_std: (bool, optinoal) Whether to print standard deviations or just mean. Default False.
+    """
+    t = Texttable(max_width=120)
+    t.set_deco(Texttable.HEADER)
+    final_res_show = np.chararray(
+        [len(metric_names)+1, len(compare_names_all)+1], itemsize=100)
+    final_res_show[0, 0] = dataset+'Metric/Method'
+    final_res_show[0, 1:] = compare_names_all
+    final_res_show[1:, 0] = metric_names
+    std = np.chararray(
+        [len(metric_names), len(compare_names_all)], itemsize=20)
+
+=== ./src/ours_mfas.py (first 30 lines) ===
+# ours_mfas.py
+# RMFA / OURS_MFAS with:
+#  (A) local-ratio MFAS cycle breaking (edge-accurate, fast)
+#  (B) add-back in descending weight order with INS passes (1/2/3)
+#  (C) optional ratio-upset postprocessing using ternary-search while preserving order
+#
+# Designed to be fast, deterministic, and time-limit friendly.
+
+from __future__ import annotations
+
+import time
+from collections import deque
+from typing import Dict, List, Tuple, Optional, Sequence
+
+import numpy as np
+import scipy.sparse as sp
+
+
+# =============================================================================
+# Helpers: build edges and adjacency (EDGE-ID based)
+# =============================================================================
+
+def _csr_to_edges(A: sp.spmatrix) -> Tuple[int, np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Return (n, src, dst, w) for all directed edges with w>0.
+    """
+    A = A.tocsr()
+    A.eliminate_zeros()
+    n = int(A.shape[0])
+    src, dst = A.nonzero()
+
+=== ./src/param_parser.py (first 30 lines) ===
+import argparse
+import os
+
+import torch
+
+def parameter_parser():
+    """
+    A method to parse up command line parameters.
+    """
+    parser = argparse.ArgumentParser(description="Ranking.")
+
+    parser.add_argument('--no-cuda', action='store_true', default=False,
+                        help='Disables CUDA training.')
+    parser.add_argument('--debug', '-D',action='store_true', default=False,
+                        help='Debugging mode, minimal setting.')
+    parser.add_argument('--seed', type=int, default=31, help='Random seed.')
+    parser.add_argument('--epochs', type=int, default=1000,
+                        help='Number of epochs to train.')
+    parser.add_argument('--lr', type=float, default=0.01, #default = 0.01
+                        help='Initial learning rate.')
+    parser.add_argument('--weight_decay', type=float, default=5e-4,
+                        help='Weight decay (L2 loss on parameters).')
+    parser.add_argument('--hidden', type=int, default=32,
+                        help='Number of hidden units.')
+    parser.add_argument('--dropout', type=float, default=0.5,
+                        help='Dropout rate (1 - keep probability).')
+    parser.add_argument('--sigma', type=float, default=1.0,
+                        help='(Initial) Sigma in the Gaussian kernel, actual sigma is this times sqrt(num_nodes), default 1.')
+    parser.add_argument('--alpha', type=float, default=1.0,
+                        help='(Initial) learning rate for proximal gradient step.')
+
+=== ./src/preprocess.py (first 30 lines) ===
+# standard libaries
+import os
+import random
+import pickle as pk
+
+# third-party libraries
+import torch
+import scipy.sparse as sp
+import numpy.random as rnd
+
+# internel
+from utils import  ERO
+from extract_network import extract_network
+from generate_data import to_dataset_no_label, to_dataset_no_split
+
+
+
+def load_data_from_memory(root, name=None):
+    data = pk.load(open(root, 'rb'))
+    if os.path.isdir(root) == False:
+        try:
+            os.makedirs(root)
+        except FileExistsError:
+            pass
+    return [data]
+
+def load_real_data(dataset):
+    A = sp.load_npz(os.path.join(os.path.dirname(os.path.realpath(
+    __file__)), '../data/'+dataset+'adj.npz'))
+    return A
+
+=== ./src/RankingGNNBase.py (first 30 lines) ===
+from typing import Optional
+
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+from torch.nn.parameter import Parameter
+torch.autograd.set_detect_anomaly(True)
+
+
+class RankingGNNBase(nn.Module):
+    r"""The ranking GNN base model.
+
+    Args:
+        * **embedding_dim** (int) - Embedding dimension.
+        * **Fiedler_layer_num** (int, optional) - The number of single Filder calculation layers, default 3.
+        * **alpha** (float, optional) - (Initial) learning rate for the Fiedler step, default 0.01.
+        * **trainable_alpha** (bool, optional) - Whether alpha is trainable, default False.
+        * **initial_score** (torch.FloatTensor, optional) - Initial guess of scores, default None.
+        * **prob_dim** (int, optionial) - Dimension of the probability matrix, default 5.
+        * **sigma** (float, optionial) -  (Initial) Sigma in the Gaussian kernel, actual sigma is this times sqrt(num_nodes), default 1.
+        * **kwargs (optional): Additional arguments of
+            :class:`RankingGNNBase`.
+    """
+
+    def __init__(self, embedding_dim: int, Fiedler_layer_num: int=3, alpha: float=0.01, trainable_alpha: bool=False, 
+                initial_score: Optional[torch.FloatTensor]=None, prob_dim: int=5, sigma: float=1.0, **kwargs):
+        super(RankingGNNBase, self).__init__()
+        
+        self._anchor_vec = Parameter(torch.FloatTensor(1, embedding_dim).fill_(0))
+        self.Q = None
+
+=== ./src/SpringRank.py (first 30 lines) ===
+""" modified from https://github.com/cdebacco/SpringRank
+New version developed by Nicolò Ruggeri, Max Planck Institute for Intelligent Systems, Tuebingen, Germany, March-2020
+It forces to use sparse matrices when possible, results in much more efficent implementation, especially for large matrices
+"""
+
+import warnings
+
+import numpy as np
+import scipy.sparse
+import scipy.sparse.linalg
+import sparse
+
+def build_from_dense(A, alpha, l0, l1):
+    """
+    Given as input a 2d numpy array, build the matrices A and B to feed to the linear system solver for SpringRank.
+    """
+    n = A.shape[0]
+    k_in = np.sum(A, 0)
+    k_out = np.sum(A, 1)
+
+    D1 = k_in + k_out           # to be seen as diagonal matrix, stored as 1d array
+    D2 = l1 * (k_out - k_in)    # to be seen as diagonal matrix, stored as 1d array
+
+    if alpha != 0.:
+        B = np.ones(n) * (alpha * l0) + D2
+        A = - (A + A.T)
+        A[np.arange(n), np.arange(n)] = alpha + D1 + np.diagonal(A)
+    else:
+        last_row_plus_col = (A[n - 1, :] + A[:, n - 1]).reshape((1, n))
+        A = A + A.T
+
+=== ./src/train_inductive_finer_basketball.py (first 30 lines) ===
+# external files
+from __future__ import division
+from __future__ import print_function
+
+import os
+import time
+from datetime import datetime
+
+import numpy as np
+import torch
+import torch.optim as optim
+from texttable import Texttable
+from scipy.stats import kendalltau, rankdata
+
+# internal files
+from utils import write_log, scipy_sparse_to_torch_sparse, get_powers_sparse
+from metrics import print_performance_mean_std, calculate_upsets
+from GNN_models import DIGRAC_Ranking, DiGCN_Inception_Block_Ranking
+from param_parser import parameter_parser
+from preprocess import load_data
+from get_adj import get_second_directed_adj
+from SpringRank import SpringRank
+from comparison import syncRank_angle, syncRank, serialRank, btl, davidScore, eigenvectorCentrality, PageRank, rankCentrality, mvr
+from comparison import SVD_RS, SVD_NRS, serialRank_matrix
+
+GNN_variant_names = ['dist', 'innerproduct', 'proximal_dist', 'proximal_innerproduct', 'proximal_baseline']
+NUM_GNN_VARIANTS = len(GNN_variant_names) # number of GNN variants for each architecture
+
+upset_choices = ['upset_simple', 'upset_ratio', 'upset_naive']
+NUM_UPSET_CHOICES = len(upset_choices)
+
+=== ./src/train.py (first 30 lines) ===
+import os
+import time
+from datetime import datetime
+
+import numpy as np
+import torch
+import torch.optim as optim
+from texttable import Texttable
+from scipy.stats import kendalltau, rankdata
+
+# internal files
+from utils import write_log, scipy_sparse_to_torch_sparse, get_powers_sparse
+from metrics import print_performance_mean_std, calculate_upsets
+from GNN_models import DIGRAC_Ranking, DiGCN_Inception_Block_Ranking
+from param_parser import parameter_parser
+from preprocess import load_data
+from get_adj import get_second_directed_adj
+from SpringRank import SpringRank
+from comparison import syncRank_angle, syncRank, serialRank, btl, davidScore, eigenvectorCentrality, PageRank, rankCentrality, mvr, ours_MFAS, ours_MFAS_INS1, ours_MFAS_INS2, ours_MFAS_INS3
+from comparison import SVD_RS, SVD_NRS, serialRank_matrix
+
+GNN_variant_names = ['dist', 'innerproduct', 'proximal_dist', 'proximal_innerproduct', 'proximal_baseline']
+NUM_GNN_VARIANTS = len(GNN_variant_names) # number of GNN variants for each architecture
+
+upset_choices = ['upset_simple', 'upset_ratio', 'upset_naive']
+NUM_UPSET_CHOICES = len(upset_choices)
+args = parameter_parser()
+torch.manual_seed(args.seed)
+device = args.device
+if args.cuda:
+
+=== ./src/utils.py (first 30 lines) ===
+import csv
+import numpy as np
+import scipy.sparse as sp
+import torch
+from texttable import Texttable
+import latextable
+from sklearn.preprocessing import normalize, StandardScaler
+from scipy.stats import rankdata
+
+
+def write_log(args, path):
+    with open(path+'/settings.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        for para in args:
+            writer.writerow([para, args[para]])
+    return
+
+
+def ERO(n: int, p: float, eta: float, style: str = 'uniform') -> sp.csr_matrix:
+    """A Erdos-Renyi Outliers (ERO) model graph generator.
+    Args:
+        n: (int) Number of nodes.
+        p: (float) Sparsity value, edge probability.
+        eta: (float) Noise level, between 0 and 1.
+        style: (string) How to generate ratings:
+            'uniform': Uniform.
+            'gamma': Gamma distribution with shape 0.5 and scale 1.
+    Returns:
+        R: (sp.csr_matrix) a sparse n by n matrix of pairwise comparisons.
+        labels: (np.array) ground-truth ranking.
+
