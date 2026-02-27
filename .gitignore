@@ -1,2 +1,16 @@
+# Large outputs (GitHub file limit 100MB)
 GNNRank-main/full_*.out
 GNNRank-main/*.err
+GNNRank-main/dryrun_*.out
+GNNRank-main/dryrun_*.err
+
+# Experiment outputs (regenerate by running experiments on wulver)
+GNNRank-main/result_arrays/
+GNNRank-main/slurm_logs/
+GNNRank-main/logs_suite/
+
+# Large data files (keep repo clone-friendly; regenerate or download separately)
+GNNRank-main/data/finance/finance_data.csv
+GNNRank-main/data/finance/finance_data.npy
+GNNRank-main/data/finance/*.pk
+GNNRank-main/full_833614_metrics_best.csv

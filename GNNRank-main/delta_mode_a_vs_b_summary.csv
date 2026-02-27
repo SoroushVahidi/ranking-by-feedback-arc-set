@@ -1,0 +1,5 @@
+metric,wins,ties,losses,median_gap_simple,mean_gap_simple,median_gap_ratio,mean_gap_ratio,result_simple,result_ratio,gap_simple,gap_ratio,wins_simple,losses_simple
+Mode_B_ours_vs_best_classical,3.0,37.0,37.0,0.0,0.14350649350649347,0.08999999999999997,0.08506493506493505,,,,,,
+Mode_A_Basketball_30,,,,,,,,win,loss,-0.0006666666666665932,0.048666666666666414,,
+Mode_A_Football_6,,,,,,,,tie,loss,1.1102230246251565e-16,0.02833333333333332,,
+OURS_vs_DIGRACib,,,,-0.5289704259729184,-0.5289704259729184,,,,,,,1.0,0.0

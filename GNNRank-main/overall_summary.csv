@@ -1,4 +1,0 @@
-comparison,win,tie,loss,total
-OURS_vs_best_non_ours,3,37,37,77
-OURS_vs_best_gnn,35,0,42,77
-best_non_ours_vs_best_gnn,39,0,39,78

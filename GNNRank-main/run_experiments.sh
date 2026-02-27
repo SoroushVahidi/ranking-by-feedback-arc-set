@@ -8,7 +8,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=48
 #SBATCH --partition=general
-#SBATCH --qos=standard  # Added this line for the correct QOS
+# #SBATCH --qos=standard   # Uncomment and set to your cluster's QOS if needed
 
 # Set environment variables
 export PATH=/apps/easybuild/software/Anaconda3/2023.09-0/bin:$PATH

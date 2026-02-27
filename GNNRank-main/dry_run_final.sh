@@ -18,7 +18,7 @@
 
 #SBATCH --partition=general
 
-#SBATCH --qos=standard
+# #SBATCH --qos=standard   # Uncomment and set to your cluster's QOS if needed
 
 
 

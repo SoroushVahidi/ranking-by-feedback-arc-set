@@ -412,12 +412,17 @@ def ours_MFAS(
         # richer meta (useful for CSV)
         "n": int(meta.get("n", A.shape[0])),
         "m": int(meta.get("m", -1)),
+        "phase1_iterations": int(meta.get("phase1_iterations", -1)),
         "removed_phaseA": int(meta.get("removed_phaseA", -1)),
         "kept_after_phaseA": int(meta.get("kept_after_phaseA", -1)),
         "kept_final": int(meta.get("kept_final", -1)),
+        "reinserted_per_pass": list(meta.get("reinserted_per_pass", [])),
         "executed_passes": int(meta.get("executed_passes", insertion_passes)),
         "refine_ratio": bool(meta.get("refine_ratio", refine_ratio)),
         "time_limit_sec": float(meta.get("time_limit_sec", time_limit_sec)),
+        "time_phase1_sec": float(meta.get("time_phase1_sec", np.nan)),
+        "time_phase2_sec": float(meta.get("time_phase2_sec", np.nan)),
+        "time_phaseC_sec": float(meta.get("time_phaseC_sec", np.nan)),
     }
     return np.asarray(score_vec, dtype=float), extra
 

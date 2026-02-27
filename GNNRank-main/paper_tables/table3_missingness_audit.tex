@@ -1,0 +1,27 @@
+% tab:missingness-audit
+\begin{tabular}{llllll}
+\toprule
+Method & Method Family & Valid Metrics & Valid Runtime & Timeouts & Finance Like Exclusions \\
+\midrule
+DIGRAC & GNN & 157 & 156 & 1 & finance:included \\
+ib & GNN & 157 & 156 & 2 & finance:included \\
+OURS\_MFAS & OURS & 77 & 77 & 1 & finance:timeout \\
+OURS\_MFAS\_INS1 & OURS & 80 & 80 & 1 & finance:included \\
+OURS\_MFAS\_INS2 & OURS & 80 & 80 & 1 & finance:included \\
+OURS\_MFAS\_INS3 & OURS & 80 & 80 & 1 & finance:included \\
+PageRank & classical & 81 & 81 & 0 & finance:included \\
+SVD\_NRS & classical & 82 & 82 & 0 & finance:included \\
+SVD\_RS & classical & 82 & 82 & 0 & finance:included \\
+SpringRank & classical & 82 & 82 & 0 & finance:included \\
+btl & classical & 81 & 81 & 0 & finance:included \\
+davidScore & classical & 81 & 81 & 0 & finance:included \\
+eigenvectorCentrality & classical & 81 & 81 & 0 & finance:included \\
+mvr & classical & 16 & 16 & 3 & finance:timeout \\
+rankCentrality & classical & 81 & 81 & 0 & finance:included \\
+serialRank & classical & 81 & 81 & 0 & finance:included \\
+syncRank & classical & 80 & 80 & 1 & finance:included \\
+btlDIGRAC & other & 1 & 0 & 1 & finance:no\_data \\
+\bottomrule
+\end{tabular}
+% caption: Missingness and timeout audit per method (valid\_metrics, valid\_runtime, timeouts; Finance exclusions).
+% label: tab:missingness-audit

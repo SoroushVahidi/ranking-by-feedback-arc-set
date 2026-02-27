@@ -7,8 +7,7 @@
 #SBATCH --partition=general
 
 #SBATCH --account=ikoutis
-
-#SBATCH --qos=standard
+#SBATCH --qos=low
 
 #SBATCH --nodes=1
 
@@ -112,7 +111,7 @@ for ds in "${DATASETS[@]}"; do
 
     echo "RUN dataset=$ds method=$m  $(date)"
 
-    python -u src/train.py --dataset "$ds" --all_methods "$m" --num_trials "$NUM_TRIALS" --seeds $SEEDS -SavePred \
+    python -u src/train.py --dataset "$ds" --all_methods "$m" --num_trials "$NUM_TRIALS" --seeds $SEEDS --SavePred \
 
       > "logs_suite/${safe_ds}__${m}.log" 2>&1 || echo "FAILED dataset=$ds method=$m (see logs_suite/${safe_ds}__${m}.log)"
 

@@ -1,0 +1,5 @@
+method_family,valid_metrics,valid_runtime,timeouts
+GNN,314,312,3
+OURS,317,317,4
+classical,828,828,4
+other,1,0,1

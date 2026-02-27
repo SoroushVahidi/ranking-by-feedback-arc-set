@@ -83,6 +83,7 @@ def _find_one_cycle_edges(
     src: np.ndarray,
     dst: np.ndarray,
     adj_e: List[List[int]],
+    alive: np.ndarray,
 ) -> Optional[List[int]]:
     """
     Find one directed cycle in the current graph and return it as a list of EDGE IDs:
@@ -107,6 +108,10 @@ def _find_one_cycle_edges(
             u, it = stack[-1]
             if color[u] == WHITE:
                 color[u] = GRAY
+
+            # advance to next still-alive outgoing edge
+            while it < len(adj_e[u]) and not alive[adj_e[u][it]]:
+                it += 1
 
             if it >= len(adj_e[u]):
                 color[u] = BLACK
@@ -150,7 +155,7 @@ def _local_ratio_break_cycles(
     time_limit_sec: float,
     t0: float,
     zero_tol: float = 1e-15,
-) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+) -> Tuple[np.ndarray, np.ndarray, np.ndarray, int]:
     """
     Local-ratio style:
       - maintain residual weights r
@@ -159,11 +164,17 @@ def _local_ratio_break_cycles(
     Returns:
       kept_phaseA (bool over edges kept after reduction),
       removed_phaseA (bool over edges removed in Phase A),
-      residual (final residual weights for all edges)
+      residual (final residual weights for all edges),
+      num_iterations (number of cycle-peel steps, for complexity/bottleneck logging)
     """
     m = int(len(w))
     residual = w.copy()
     alive = np.ones(m, dtype=bool)
+    # static adjacency over all edges; we skip dead edges via `alive` mask in cycle search
+    adj_e = [[] for _ in range(n)]
+    for ei in range(m):
+        adj_e[int(src[ei])].append(int(ei))
+    num_iterations = 0
 
     # To keep deterministic behavior, we rebuild adj from alive each iteration.
     # This is okay with the global time limit; edge-level reconstruction avoids O(m) scans.
@@ -171,10 +182,10 @@ def _local_ratio_break_cycles(
         if time.time() - t0 > time_limit_sec:
             break
 
-        adj_e = _build_adj_edges(n, src, dst, alive)
-        cyc_e = _find_one_cycle_edges(n, src, dst, adj_e)
+        cyc_e = _find_one_cycle_edges(n, src, dst, adj_e, alive)
         if cyc_e is None:
             break
+        num_iterations += 1
 
         # subtract delta = min residual on the cycle edges
         delta = float(np.min(residual[cyc_e]))
@@ -196,7 +207,7 @@ def _local_ratio_break_cycles(
             residual[ei_min] = 0.0
 
     removed = ~alive
-    return alive, removed, residual
+    return alive, removed, residual, num_iterations
 
 
 # =============================================================================
@@ -212,7 +223,7 @@ def _addback_desc_weight_multi(
     insertion_passes: int,         # INS1/2/3 -> 1/2/3 passes
     time_limit_sec: float,
     t0: float,
-) -> Tuple[np.ndarray, List[np.ndarray]]:
+) -> Tuple[np.ndarray, List[np.ndarray], List[int], List[int], str]:
     """
     Add-back edges in descending weight order, but only if they keep the graph acyclic.
 
@@ -223,20 +234,26 @@ def _addback_desc_weight_multi(
     Returns:
       kept_final,
       kept_after_each_pass: list of kept masks after pass1, pass2, ...
+      reinserted_per_pass: list of #edges reinserted in each pass (for bottleneck logging)
     """
     kept = kept_initial.copy()
     order = np.argsort(-w, kind="mergesort")  # stable descending by weight
 
     kept_after: List[np.ndarray] = []
+    reinserted_per_pass: List[int] = []
+    changed_edges_per_pass: List[int] = []
     passes = max(1, int(insertion_passes))
+    break_reason: str = "max_passes"
 
     for _p in range(passes):
         if time.time() - t0 > time_limit_sec:
+            break_reason = "time_limit"
             break
 
         topo = _toposort_kahn_from_edges(n, src, dst, kept)
         if topo is None:
             # should not happen if kept is a DAG
+            break_reason = "topo_failure"
             break
 
         pos = np.empty(n, dtype=np.int64)
@@ -246,6 +263,7 @@ def _addback_desc_weight_multi(
         changed = 0
         for ei in order:
             if time.time() - t0 > time_limit_sec:
+                break_reason = "time_limit"
                 break
             if kept[ei]:
                 continue
@@ -254,12 +272,14 @@ def _addback_desc_weight_multi(
             if pos[u] < pos[v]:
                 kept[ei] = True
                 changed += 1
-
         kept_after.append(kept.copy())
+        reinserted_per_pass.append(changed)
+        changed_edges_per_pass.append(changed)
         if changed == 0:
+            break_reason = "no_change"
             break
 
-    return kept, kept_after
+    return kept, kept_after, reinserted_per_pass, changed_edges_per_pass, break_reason
 
 
 # =============================================================================
@@ -283,6 +303,97 @@ def _scores_from_kept_edges(n: int, kept: np.ndarray, src: np.ndarray, dst: np.n
     # keep strictly positive
     scores = np.maximum(scores, 1.0)
     return scores
+
+
+# =============================================================================
+# Optional naive-upset refinement via adjacent swaps
+# =============================================================================
+
+def _weighted_naive_upset(
+    src: np.ndarray,
+    dst: np.ndarray,
+    w: np.ndarray,
+    scores: np.ndarray,
+) -> float:
+    """
+    Weighted naive upset loss: sum of weights of edges that go against the ordering
+    induced by 'scores' (larger score = better rank).
+    """
+    si = scores[src.astype(np.int64)]
+    sj = scores[dst.astype(np.int64)]
+    mask = si <= sj  # edge points "backwards" or ties
+    if not np.any(mask):
+        return 0.0
+    return float(np.sum(w[mask]))
+
+
+def _refine_order_naive_swaps(
+    n: int,
+    src: np.ndarray,
+    dst: np.ndarray,
+    w: np.ndarray,
+    scores: np.ndarray,
+    time_limit_sec: float,
+    t0: float,
+    local_budget_sec: float = 2.0,
+    max_passes: int = 2,
+) -> np.ndarray:
+    """
+    Simple local search over the ordering: try adjacent swaps in the current
+    ranking and accept those that strictly reduce weighted naive upset loss.
+
+    This preserves a total order and is kept very lightweight, both via a
+    small number of passes and an explicit local time budget.
+    """
+    if n <= 1 or local_budget_sec <= 0.0:
+        return scores
+
+    start = time.time()
+    s = scores.astype(np.float64).copy()
+
+    # Work in terms of an explicit order array (higher score => earlier in order).
+    order = np.argsort(-s, kind="mergesort")
+    base_scores = np.empty_like(s)
+    base_scores[order] = np.arange(n, 0, -1, dtype=np.float64)
+
+    best_loss = _weighted_naive_upset(src, dst, w, base_scores)
+
+    for _ in range(max_passes):
+        improved = False
+        # left-to-right sweep of adjacent pairs
+        for i in range(n - 1):
+            now = time.time()
+            if (now - start) > local_budget_sec or (now - t0) > time_limit_sec:
+                # Out of local or global time; stop refinement.
+                scores_out = np.empty_like(s)
+                scores_out[order] = np.arange(n, 0, -1, dtype=np.float64)
+                scores_out = np.maximum(scores_out, 1.0)
+                return scores_out
+
+            u = int(order[i])
+            v = int(order[i + 1])
+
+            # Try swapping u and v in the order.
+            order[i], order[i + 1] = v, u
+            trial_scores = np.empty_like(s)
+            trial_scores[order] = np.arange(n, 0, -1, dtype=np.float64)
+            loss_new = _weighted_naive_upset(src, dst, w, trial_scores)
+
+            if loss_new + 1e-12 < best_loss:
+                best_loss = loss_new
+                improved = True
+                base_scores = trial_scores
+            else:
+                # Revert swap.
+                order[i], order[i + 1] = u, v
+
+        if not improved:
+            break
+
+    # Return scores consistent with the best found ordering.
+    scores_out = base_scores
+    scores_out = np.maximum(scores_out, 1.0)
+    return scores_out
 
 
 # =============================================================================
@@ -463,6 +574,9 @@ def ours_mfas_rmfa(
     A: sp.spmatrix,
     insertion_passes: int = 3,          # INS1=1, INS2=2, INS3=3
     time_limit_sec: float = 900.0,
+    refine_naive: bool = True,
+    naive_refine_time_sec: float = 2.0,
+    naive_refine_passes: int = 2,
     refine_ratio: bool = True,
     refine_time_sec: float = 20.0,
     refine_passes: int = 2,
@@ -481,14 +595,15 @@ def ours_mfas_rmfa(
     n, src, dst, w = _csr_to_edges(A)
 
     # Phase A: local-ratio cycle breaking
-    keptA, removedA, residual = _local_ratio_break_cycles(
+    keptA, removedA, residual, phase1_iterations = _local_ratio_break_cycles(
         n, src, dst, w,
         time_limit_sec=float(time_limit_sec),
         t0=t0
     )
+    t_after_phase1 = time.time()
 
     # Phase B: add-back (desc weight) with INS passes
-    kept_final, kept_after_pass = _addback_desc_weight_multi(
+    kept_final, kept_after_pass, reinserted_per_pass, changed_edges_per_pass, break_reason = _addback_desc_weight_multi(
         n=n,
         kept_initial=keptA,
         src=src,
@@ -498,15 +613,43 @@ def ours_mfas_rmfa(
         time_limit_sec=float(time_limit_sec),
         t0=t0,
     )
+    t_after_phase2 = time.time()
 
     # Scores from DAG after final kept
     scores_final = _scores_from_kept_edges(n, kept_final, src, dst)
+
+    # Optional naive-upset local refinement (order-only swaps) before ratio refinement.
+    if refine_naive and naive_refine_time_sec > 0.0:
+        scores_final = _refine_order_naive_swaps(
+            n=n,
+            src=src,
+            dst=dst,
+            w=w,
+            scores=scores_final,
+            time_limit_sec=float(time_limit_sec),
+            t0=t0,
+            local_budget_sec=float(naive_refine_time_sec),
+            max_passes=int(naive_refine_passes),
+        )
 
     # If requested, build scores after each pass (INS1/INS2/INS3)
     pass_scores: List[np.ndarray] = []
     if return_all_pass_scores:
         for kept_mask in kept_after_pass:
-            pass_scores.append(_scores_from_kept_edges(n, kept_mask, src, dst))
+            s_pass = _scores_from_kept_edges(n, kept_mask, src, dst)
+            if refine_naive and naive_refine_time_sec > 0.0:
+                s_pass = _refine_order_naive_swaps(
+                    n=n,
+                    src=src,
+                    dst=dst,
+                    w=w,
+                    scores=s_pass,
+                    time_limit_sec=float(time_limit_sec),
+                    t0=t0,
+                    local_budget_sec=float(max(naive_refine_time_sec * 0.5, 0.1)),
+                    max_passes=int(naive_refine_passes),
+                )
+            pass_scores.append(s_pass)
 
         # If fewer passes executed (timeouts / early stop), still include final as last
         if len(pass_scores) == 0:
@@ -538,24 +681,37 @@ def ours_mfas_rmfa(
         scores_final = pass_scores[min(len(pass_scores), int(insertion_passes)) - 1].copy()
     else:
         scores_final = _maybe_refine(scores_final)
+    t_after_phaseC = time.time()
 
     if not return_meta:
         if return_all_pass_scores:
             return scores_final, pass_scores
         return scores_final
 
+    R = int(np.sum(~keptA))
     meta = {
         "n": int(n),
         "m": int(len(w)),
-        "removed_phaseA": int(np.sum(~keptA)),
+        "phase1_iterations": int(phase1_iterations),
+        "removed_phaseA": R,
         "kept_after_phaseA": int(np.sum(keptA)),
         "kept_final": int(np.sum(kept_final)),
+        "reinserted_per_pass": [int(x) for x in reinserted_per_pass],
+        "changed_edges_per_pass": [int(x) for x in changed_edges_per_pass],
         "insertion_passes": int(insertion_passes),
         "executed_passes": int(len(kept_after_pass)),
+        "break_reason": str(break_reason),
         "refine_ratio": bool(refine_ratio),
         "runtime_sec": float(time.time() - t0),
         "time_limit_sec": float(time_limit_sec),
+        "time_phase1_sec": float(t_after_phase1 - t0),
+        "time_phase2_sec": float(t_after_phase2 - t_after_phase1),
+        "time_phaseC_sec": float(t_after_phaseC - t_after_phase2),
+        "kept_final_mask": kept_final.astype(bool).tolist(),
     }
+
+    # Uncomment the next line to log bottleneck counters to stdout (I, R, reinserted per pass, phase times):
+    # print(f"OURS_MFAS bottleneck: I={meta['phase1_iterations']} R={meta['removed_phaseA']} reinserted_per_pass={meta['reinserted_per_pass']} t_phase1={meta['time_phase1_sec']:.3f}s t_phase2={meta['time_phase2_sec']:.3f}s t_phaseC={meta['time_phaseC_sec']:.3f}s")
 
     if return_all_pass_scores:
         return scores_final, pass_scores, meta
