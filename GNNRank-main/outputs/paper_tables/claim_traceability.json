@@ -1,0 +1,75 @@
+{
+  "best_in_suite_claims": {
+    "canonical_output_file": "outputs/paper_tables/table7_best_in_suite.csv",
+    "generation_script": "scripts/paper/rebuild_experiment_tables.py",
+    "row_key": [
+      "dataset"
+    ],
+    "upstream_sources": [
+      "paper_csv/results_from_result_arrays.csv"
+    ]
+  },
+  "claims_master": {
+    "canonical_output_file": "outputs/paper_tables/paper_claims_master.json",
+    "generation_script": "scripts/paper/rebuild_experiment_tables.py",
+    "key": "top_level_fields",
+    "upstream_sources": [
+      "outputs/paper_tables/table6_missingness.csv",
+      "outputs/paper_tables/table7_best_in_suite.csv",
+      "outputs/paper_tables/table8_runtime_tradeoff.csv"
+    ]
+  },
+  "dataset_count_claim": {
+    "canonical_output_file": "outputs/audits/canonical_dataset_inventory_summary.json",
+    "generation_script": "scripts/paper/rebuild_experiment_tables.py",
+    "key": "canonical_dataset_count",
+    "upstream_sources": [
+      "paper_csv/leaderboard_per_method.csv",
+      "paper_csv/results_from_result_arrays.csv"
+    ]
+  },
+  "missingness_claims": {
+    "canonical_output_file": "outputs/paper_tables/table6_missingness.csv",
+    "generation_script": "scripts/paper/rebuild_experiment_tables.py",
+    "row_key": [
+      "method",
+      "config"
+    ],
+    "upstream_sources": [
+      "paper_csv/results_from_result_arrays.csv"
+    ]
+  },
+  "runtime_pareto_claims": {
+    "canonical_output_file": "outputs/paper_tables/table8_runtime_tradeoff.csv",
+    "generation_script": "scripts/paper/rebuild_experiment_tables.py",
+    "row_key": [
+      "dataset"
+    ],
+    "upstream_sources": [
+      "paper_csv/results_from_result_arrays.csv"
+    ]
+  },
+  "table4_full_suite_claims": {
+    "canonical_output_file": "outputs/paper_tables/table4_full_suite.csv",
+    "generation_script": "scripts/paper/rebuild_experiment_tables.py",
+    "row_key": [
+      "method",
+      "config"
+    ],
+    "upstream_sources": [
+      "paper_csv/results_from_result_arrays.csv"
+    ]
+  },
+  "table5_compute_matched_claims": {
+    "canonical_output_file": "outputs/paper_tables/table5_compute_matched.csv",
+    "filter": "runtime_sec_mean <= 1800",
+    "generation_script": "scripts/paper/rebuild_experiment_tables.py",
+    "row_key": [
+      "method",
+      "config"
+    ],
+    "upstream_sources": [
+      "paper_csv/results_from_result_arrays.csv"
+    ]
+  }
+}

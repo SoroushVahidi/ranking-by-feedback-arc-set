@@ -1,0 +1,31 @@
+{
+  "dataset_count_policy": "Canonical dataset count is fixed by the suite manifest in paper_csv/leaderboard_per_method.csv and must equal 81.",
+  "filtering_policy": {
+    "compute_matched": "runtime_sec_mean <= 1800",
+    "dataset_filter": "dataset in canonical suite manifest",
+    "finance_timeout_claim": "reported per method+config, never globally assumed",
+    "metrics_rows": "which == upset"
+  },
+  "generated_at_utc": "2026-03-31T20:28:07.848218+00:00",
+  "generated_outputs": [
+    "outputs/audits/canonical_dataset_inventory.csv",
+    "outputs/audits/canonical_dataset_inventory_summary.json",
+    "outputs/audits/method_name_canonicalization.json",
+    "outputs/paper_tables/table4_full_suite.csv",
+    "outputs/paper_tables/table5_compute_matched.csv",
+    "outputs/paper_tables/table6_missingness.csv",
+    "outputs/paper_tables/table7_best_in_suite.csv",
+    "outputs/paper_tables/table8_runtime_tradeoff.csv",
+    "outputs/paper_tables/paper_claims_master.json",
+    "outputs/paper_tables/claim_traceability.json",
+    "outputs/paper_tables/canonical_artifacts_summary.md"
+  ],
+  "generator_script": "scripts/paper/rebuild_experiment_tables.py",
+  "git_commit": "52ea26fd39dc56de64009b80f2f7f226f39dbb5d",
+  "upstream_sources": [
+    "paper_csv/results_from_result_arrays.csv",
+    "paper_csv/leaderboard_per_method.csv",
+    "data/**/adj.npz",
+    "data/_AUTO/**/adj.npz"
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "canonical_dataset_count": 81,
+  "dataset_count_policy": "Canonical suite equals unique dataset list in paper_csv/leaderboard_per_method.csv; current expected count is 81.",
+  "families": {
+    "Basketball_temporal": {
+      "dataset_count": 60,
+      "m_edges_range": [
+        2904,
+        7650
+      ],
+      "n_nodes_range": [
+        282,
+        351
+      ]
+    },
+    "Dryad_animal_society": {
+      "dataset_count": 1,
+      "m_edges_range": [
+        193,
+        193
+      ],
+      "n_nodes_range": [
+        21,
+        21
+      ]
+    },
+    "ERO": {
+      "dataset_count": 1,
+      "m_edges_range": null,
+      "n_nodes_range": null
+    },
+    "FacultyHiringNetworks": {
+      "dataset_count": 3,
+      "m_edges_range": [
+        1204,
+        1787
+      ],
+      "n_nodes_range": [
+        113,
+        206
+      ]
+    },
+    "Football_data_England_Premier_League": {
+      "dataset_count": 12,
+      "m_edges_range": [
+        107,
+        380
+      ],
+      "n_nodes_range": [
+        20,
+        20
+      ]
+    },
+    "Halo2BetaData": {
+      "dataset_count": 2,
+      "m_edges_range": [
+        5010,
+        5010
+      ],
+      "n_nodes_range": [
+        602,
+        602
+      ]
+    },
+    "_AUTO": {
+      "dataset_count": 1,
+      "m_edges_range": [
+        2904,
+        2904
+      ],
+      "n_nodes_range": [
+        282,
+        282
+      ]
+    },
+    "finance": {
+      "dataset_count": 1,
+      "m_edges_range": [
+        1729225,
+        1729225
+      ],
+      "n_nodes_range": [
+        1315,
+        1315
+      ]
+    }
+  },
+  "special_cases": {
+    "auto_generated_count": 1,
+    "singleton_special_dataset": "ERO/p5K5N350eta10styleuniform"
+  }
+}
