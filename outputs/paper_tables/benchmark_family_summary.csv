@@ -1,0 +1,10 @@
+family,n_datasets,n_min,n_max,m_min,m_max
+Animal,1,21.0,21.0,193.0,193.0
+Basketball_coarse,30,282.0,351.0,2904.0,4196.0
+Basketball_finer,30,282.0,351.0,4814.0,7650.0
+ERO,1,,,,
+Faculty,3,113.0,206.0,1204.0,1787.0
+Finance,1,1315.0,1315.0,1729225.0,1729225.0
+Football_coarse,6,20.0,20.0,107.0,226.0
+Football_finer,6,20.0,20.0,300.0,380.0
+Halo,2,602.0,602.0,5010.0,5010.0
