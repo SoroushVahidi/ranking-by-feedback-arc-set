@@ -14,3 +14,5 @@ GNNRank-main/data/finance/finance_data.csv
 GNNRank-main/data/finance/finance_data.npy
 GNNRank-main/data/finance/*.pk
 GNNRank-main/full_833614_metrics_best.csv
+__pycache__/
+.pytest_cache/

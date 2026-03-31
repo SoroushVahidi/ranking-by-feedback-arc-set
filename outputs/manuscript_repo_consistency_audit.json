@@ -1,0 +1,851 @@
+{
+  "audit_metadata": {
+    "date": "2026-03-31",
+    "repository": "SoroushVahidi/ranking-by-feedback-arc-set",
+    "branch": "copilot/audit-repository-consistency-manuscript-claims",
+    "auditor": "automated-copilot-agent",
+    "key_evidence_files": [
+      "GNNRank-main/paper_tables/table1_main_leaderboard.csv",
+      "GNNRank-main/paper_tables/table2_compute_matched.csv",
+      "GNNRank-main/paper_tables/table3_missingness_audit.csv",
+      "GNNRank-main/paper_tables/table3_missingness_audit_by_family.csv",
+      "GNNRank-main/paper_csv/leaderboard_per_method.csv",
+      "GNNRank-main/paper_csv/leaderboard_compute_matched.csv",
+      "GNNRank-main/paper_csv/missingness_audit.csv",
+      "GNNRank-main/paper_csv/unified_comparison.csv",
+      "GNNRank-main/paper_csv/contribution_stats.csv",
+      "GNNRank-main/paper_csv/contribution_report.md",
+      "GNNRank-main/full_833614_datasets.csv",
+      "GNNRank-main/src/ours_mfas.py",
+      "GNNRank-main/src/train.py",
+      "GNNRank-main/run_full.sh",
+      "GNNRank-main/data/*/adj.npz"
+    ]
+  },
+  "summary": {
+    "total_claims": 71,
+    "verified": 30,
+    "partially_verified": 11,
+    "not_verified": 2,
+    "contradicted": 17,
+    "uncheckable": 3
+  },
+  "claims": [
+    {
+      "id": "A1",
+      "claim": "Paper title is 'Scalable and Training-Free Ranking from Pairwise Comparisons via Acyclic Graph Construction'",
+      "status": "UNCHECKABLE",
+      "evidence_files": [],
+      "repo_values": {},
+      "manuscript_values": {"title": "Scalable and Training-Free Ranking from Pairwise Comparisons via Acyclic Graph Construction"},
+      "notes": "No paper PDF or title declaration found in repository artifacts"
+    },
+    {
+      "id": "A2",
+      "claim": "Method is scalable, deterministic, training-free pipeline based on MFAS viewpoint",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/src/ours_mfas.py"],
+      "repo_values": {"description": "designed to be fast, deterministic, and time-limit friendly; no learnable parameters"},
+      "manuscript_values": {"description": "scalable, deterministic, training-free"},
+      "notes": "Source code header and implementation confirm all three properties"
+    },
+    {
+      "id": "A3",
+      "claim": "Method family includes OURS-MFAS, OURS-MFAS-INS1, OURS-MFAS-INS2, OURS-MFAS-INS3",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_csv/leaderboard_per_method.csv", "GNNRank-main/paper_tables/table1_main_leaderboard.csv"],
+      "repo_values": {"methods": ["OURS_MFAS", "OURS_MFAS_INS1", "OURS_MFAS_INS2", "OURS_MFAS_INS3"]},
+      "manuscript_values": {"methods": ["OURS-MFAS", "OURS-MFAS-INS1", "OURS-MFAS-INS2", "OURS-MFAS-INS3"]},
+      "notes": "All four methods confirmed in leaderboard CSVs"
+    },
+    {
+      "id": "A4",
+      "claim": "Pipeline: Phase 1 local-ratio-style cycle breaking, Phase 2 stable weight-prioritized add-back with up to 3 passes, optional score refinement",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/src/ours_mfas.py"],
+      "repo_values": {"phases": ["Phase A: local-ratio MFAS cycle breaking", "Phase B: add-back in descending weight order with INS passes (1/2/3)", "Phase C: optional ratio-upset postprocessing"]},
+      "manuscript_values": {"phases": ["Phase 1 local-ratio-style cycle breaking", "Phase 2 stable weight-prioritized add-back with up to 3 passes", "optional score refinement"]},
+      "notes": "Code structure in ours_mfas.py exactly matches claimed pipeline"
+    },
+    {
+      "id": "A5",
+      "claim": "INS1/INS2/INS3 correspond to 1/2/3 add-back passes",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/src/ours_mfas.py"],
+      "repo_values": {"insertion_passes": "parameter passed as 1, 2, or 3 to _addback_desc_weight_multi"},
+      "manuscript_values": {"INS1": 1, "INS2": 2, "INS3": 3},
+      "notes": "Function signature and call sites confirm pass count mapping"
+    },
+    {
+      "id": "B6",
+      "claim": "Benchmark suite has 80 weighted directed comparison-graph instances",
+      "status": "CONTRADICTED",
+      "evidence_files": ["GNNRank-main/paper_csv/leaderboard_per_method.csv", "GNNRank-main/full_833614_datasets.csv"],
+      "repo_values": {"total_datasets": 81, "datasets_in_full_csv": 78, "extra_datasets": ["_AUTO/Basketball_temporal__1985adj", "ERO/p5K5N350eta10styleuniform", "Halo2BetaData"]},
+      "manuscript_values": {"total_datasets": 80},
+      "notes": "Repo has 81 unique datasets in leaderboard CSVs. The _AUTO/Basketball_temporal__1985adj is an automatically generated variant not in the manuscript's 80-dataset description. This causes systematic +1 discrepancy in all coverage denominators."
+    },
+    {
+      "id": "B7",
+      "claim": "Composition: 60 basketball, 12 football, 3 faculty hiring, 1 animal, 2 head-to-head, 1 finance, 1 ERO-style",
+      "status": "PARTIALLY_VERIFIED",
+      "evidence_files": ["GNNRank-main/full_833614_datasets.csv", "GNNRank-main/paper_csv/leaderboard_per_method.csv"],
+      "repo_values": {"basketball": 60, "football": 12, "faculty": 3, "animal": 1, "head_to_head": 2, "finance": 1, "ERO": 1, "AUTO": 1, "total": 81},
+      "manuscript_values": {"basketball": 60, "football": 12, "faculty": 3, "animal": 1, "head_to_head": 2, "finance": 1, "ERO": 1, "total": 80},
+      "notes": "Composition totals to 80 and matches manuscript if _AUTO dataset excluded. Two head-to-head datasets are Halo2BetaData and Halo2BetaData/HeadToHead, both n=602 m=5010."
+    },
+    {
+      "id": "B8",
+      "claim": "Vertex counts range n=20 to n=1315",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/data/football/*/adj.npz", "GNNRank-main/data/finance/adj.npz"],
+      "repo_values": {"n_min": 20, "n_max": 1315, "n_min_source": "Football_data_England_Premier_League/England_*", "n_max_source": "finance"},
+      "manuscript_values": {"n_min": 20, "n_max": 1315},
+      "notes": "All English Premier League datasets have n=20; finance has n=1315"
+    },
+    {
+      "id": "B9",
+      "claim": "Edge counts range m=107 to about 1.73e6",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/data/Football_data_England_Premier_League/England_2014_2015adj.npz", "GNNRank-main/data/finance/adj.npz"],
+      "repo_values": {"m_min": 107, "m_max": 1729225, "m_min_source": "England_2014_2015", "m_max_source": "finance"},
+      "manuscript_values": {"m_min": 107, "m_max": "~1.73e6"},
+      "notes": "Exact values: England_2014_2015 m=107, finance m=1,729,225"
+    },
+    {
+      "id": "B10",
+      "claim": "Basketball 60 n=282-351 m=2904-7650; Football 12 n range 20-107; Faculty Business n=113 m=1787; CS n=206 m=1407; History n=145 m=1204; Animal n=21 m=193; Head-to-head 2 instances n=602 m=5010; Finance n=1315 m=1729225",
+      "status": "PARTIALLY_VERIFIED",
+      "evidence_files": ["GNNRank-main/data/*/adj.npz"],
+      "repo_values": {
+        "basketball_n_range": "282-351",
+        "basketball_m_range": "2904-7650",
+        "football_n_range": "20-20",
+        "football_m_range": "107-380",
+        "faculty_business": {"n": 113, "m": 1787},
+        "faculty_cs": {"n": 206, "m": 1407},
+        "faculty_history": {"n": 145, "m": 1204},
+        "animal": {"n": 21, "m": 193},
+        "head_to_head": {"n": 602, "m": 5010},
+        "finance": {"n": 1315, "m": 1729225}
+      },
+      "manuscript_values": {"football_n_range": "20-107"},
+      "notes": "CONTRADICTED for football: manuscript claims n range 20-107 but ALL 12 football datasets (English Premier League) have exactly n=20. All other sub-claims verified."
+    },
+    {
+      "id": "B11",
+      "claim": "Classical baselines: SpringRank, SyncRank, SerialRank, BTL, DavidScore, EigenvectorCentrality, PageRank, RankCentrality, SVD-RS, SVD-NRS",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/src/train.py", "GNNRank-main/model_selection_output.txt"],
+      "repo_values": {"classical_methods": ["SpringRank", "syncRank", "serialRank", "btl", "davidScore", "eigenvectorCentrality", "PageRank", "rankCentrality", "SVD_RS", "SVD_NRS"]},
+      "manuscript_values": {"classical_methods": ["SpringRank", "SyncRank", "SerialRank", "BTL", "DavidScore", "EigenvectorCentrality", "PageRank", "RankCentrality", "SVD-RS", "SVD-NRS"]},
+      "notes": "All 10 methods confirmed in source code method list"
+    },
+    {
+      "id": "B12",
+      "claim": "GNN baselines include DIGRAC and ib backbones",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/result_arrays/", "GNNRank-main/paper_csv/leaderboard_per_method.csv"],
+      "repo_values": {"gnn_backbones": ["DIGRAC", "ib"]},
+      "manuscript_values": {"gnn_backbones": ["DIGRAC", "ib"]},
+      "notes": "Both backbones appear in result arrays and all leaderboard CSVs"
+    },
+    {
+      "id": "B13",
+      "claim": "For each GNN backbone there are two fixed benchmark configurations",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_tables/table1_main_leaderboard.csv"],
+      "repo_values": {"digrac_configs": ["withdist", "withproximal_baseline"], "ib_configs": ["withdist", "withproximal_baseline"]},
+      "manuscript_values": {"configs_per_backbone": 2},
+      "notes": "Two config templates confirmed; multiple K values exist but the two main architectural configs are dist and proximal_baseline"
+    },
+    {
+      "id": "B14",
+      "claim": "Non-GNN methods: timeout 1800s",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/src/train.py"],
+      "repo_values": {"DEFAULT_METHOD_TIMEOUT": 1800},
+      "manuscript_values": {"non_gnn_timeout": 1800},
+      "notes": "Source code line 37: DEFAULT_METHOD_TIMEOUT = 1800"
+    },
+    {
+      "id": "B15",
+      "claim": "GNN methods: timeout 7200s",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/src/train.py"],
+      "repo_values": {"GNN_METHOD_TIMEOUT": 7200},
+      "manuscript_values": {"gnn_timeout": 7200},
+      "notes": "Source code line 38: GNN_METHOD_TIMEOUT = 7200"
+    },
+    {
+      "id": "B16",
+      "claim": "TRIALS=10 repeated runs",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/run_full.sh"],
+      "repo_values": {"TRIALS": 10},
+      "manuscript_values": {"trials": 10},
+      "notes": "run_full.sh explicitly sets TRIALS=10"
+    },
+    {
+      "id": "B17",
+      "claim": "Real datasets use fixed internal seed(s) = [10]",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/run_full.sh", "GNNRank-main/src/param_parser.py"],
+      "repo_values": {"seeds": [10]},
+      "manuscript_values": {"seeds": [10]},
+      "notes": "run_full.sh passes --seeds 10 for all real datasets; param_parser sets args.seeds=[10] for real data"
+    },
+    {
+      "id": "B18",
+      "claim": "Timed-out runs produce NaN, excluded via NaN-robust averaging",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/src/train.py"],
+      "repo_values": {"mechanism": "signal.SIGALRM timeout handler stores NaN; aggregation uses dropna()"},
+      "manuscript_values": {"mechanism": "NaN on timeout, NaN-robust averaging"},
+      "notes": "Mechanism confirmed in source code"
+    },
+    {
+      "id": "B19",
+      "claim": "There is a compute-matched view under shared 1800s budget",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_tables/table2_compute_matched.csv"],
+      "repo_values": {"file_exists": true, "filter": "runtime_sec <= 1800"},
+      "manuscript_values": {"compute_matched_budget": 1800},
+      "notes": "table2_compute_matched.csv exists and is populated"
+    },
+    {
+      "id": "B20",
+      "claim": "Compute-matched dataset set has 79 datasets (ERO-style doesn't complete within 1800s)",
+      "status": "CONTRADICTED",
+      "evidence_files": ["GNNRank-main/paper_tables/table2_compute_matched.csv"],
+      "repo_values": {"compute_matched_total": 80},
+      "manuscript_values": {"compute_matched_total": 79},
+      "notes": "Coverage denominators in table2_compute_matched.csv show /80 not /79. Same systematic +1 discrepancy as B6."
+    },
+    {
+      "id": "C21",
+      "claim": "OURS-MFAS Table 4: median_simple=0.878049 mean=0.887880; median_ratio=0.505748 mean=0.381891; median_naive=0.219512 mean=0.221970; coverage 77/80",
+      "status": "PARTIALLY_VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_tables/table1_main_leaderboard.csv", "GNNRank-main/paper_csv/leaderboard_per_method.csv"],
+      "repo_values": {
+        "median_simple": 0.8780487775802612, "mean_simple": 0.8878800739328583,
+        "median_ratio": 0.5057481527328491, "mean_ratio": 0.38189074697045,
+        "median_naive": 0.2195121943950653, "mean_naive": 0.2219700184832145,
+        "coverage": "77/81"
+      },
+      "manuscript_values": {
+        "median_simple": 0.878049, "mean_simple": 0.887880,
+        "median_ratio": 0.505748, "mean_ratio": 0.381891,
+        "median_naive": 0.219512, "mean_naive": 0.221970,
+        "coverage": "77/80"
+      },
+      "notes": "All metric values match to 6 significant figures. Coverage numerator (77) matches; denominator is 81 in repo vs 80 in manuscript due to _AUTO dataset."
+    },
+    {
+      "id": "C22",
+      "claim": "OURS-MFAS-INS3 Table 4: same as C21; coverage 77/80",
+      "status": "PARTIALLY_VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_tables/table1_main_leaderboard.csv"],
+      "repo_values": {
+        "median_simple": 0.8780487775802612, "mean_simple": 0.8878800739328583,
+        "coverage": "77/81"
+      },
+      "manuscript_values": {"same_as": "C21", "coverage": "77/80"},
+      "notes": "INS3 identical to OURS_MFAS on all 77 datasets (confirmed). Coverage denominator off by 1."
+    },
+    {
+      "id": "C23",
+      "claim": "OURS-MFAS-INS2 Table 4: median_simple=0.878049 mean=0.887914; median_ratio=0.505748 mean=0.381874; median_naive=0.219512 mean=0.221979; coverage 77/80",
+      "status": "PARTIALLY_VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_tables/table1_main_leaderboard.csv"],
+      "repo_values": {
+        "median_simple": 0.8780487775802612, "mean_simple": 0.8879140052315476,
+        "median_ratio": 0.5057481527328491, "mean_ratio": 0.3818741853941571,
+        "median_naive": 0.2195121943950653, "mean_naive": 0.22197850130788688,
+        "coverage": "77/81"
+      },
+      "manuscript_values": {
+        "mean_simple": 0.887914, "mean_ratio": 0.381874, "mean_naive": 0.221979,
+        "coverage": "77/80"
+      },
+      "notes": "All values verified; INS2 differs from INS3 only in mean values (3rd decimal), as expected."
+    },
+    {
+      "id": "C24",
+      "claim": "OURS-MFAS-INS1 Table 4: median_simple=0.880927 mean=0.888633; median_ratio=0.502815 mean=0.381915; median_naive=0.220232 mean=0.222158; coverage 77/80",
+      "status": "PARTIALLY_VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_tables/table1_main_leaderboard.csv"],
+      "repo_values": {
+        "median_simple": 0.8809272646903992, "mean_simple": 0.8886325937973989,
+        "median_ratio": 0.502814531326294, "mean_ratio": 0.3819149758715134,
+        "median_naive": 0.2202318161725998, "mean_naive": 0.22215814844934967,
+        "coverage": "77/81"
+      },
+      "manuscript_values": {
+        "median_simple": 0.880927, "mean_simple": 0.888633,
+        "median_ratio": 0.502815, "mean_ratio": 0.381915,
+        "median_naive": 0.220232, "mean_naive": 0.222158,
+        "coverage": "77/80"
+      },
+      "notes": "All metric values match to 6 significant figures. Coverage denominator off by 1."
+    },
+    {
+      "id": "C25",
+      "claim": "BTL Table 4: median_simple=0.825000 mean=0.835385; median_ratio=0.631922 mean=0.575385; median_naive=0.206250 mean=0.208718; coverage 78/80",
+      "status": "CONTRADICTED",
+      "evidence_files": ["GNNRank-main/paper_tables/table1_main_leaderboard.csv", "GNNRank-main/paper_csv/leaderboard_per_method.csv"],
+      "repo_values": {
+        "median_simple": 0.9843852490186691, "mean_simple": 1.0936155564891987,
+        "median_ratio": 0.30655481964349746, "mean_ratio": 0.2975845307947542,
+        "median_naive": 0.24609631225466727, "mean_naive": 0.2734038891222996,
+        "coverage": "78/81"
+      },
+      "manuscript_values": {
+        "median_simple": 0.825000, "mean_simple": 0.835385,
+        "median_ratio": 0.631922, "mean_ratio": 0.575385,
+        "median_naive": 0.206250, "mean_naive": 0.208718,
+        "coverage": "78/80"
+      },
+      "notes": "MAJOR DISCREPANCY. Manuscript BTL mean_simple=0.835385 matches repo davidScore mean_simple=0.835393 to 5 decimal places — possible method-label swap between BTL and DavidScore."
+    },
+    {
+      "id": "C26",
+      "claim": "RankCentrality Table 4: median_simple=1.000000 mean=1.010641; median_ratio=0.646415 mean=0.573846; median_naive=0.250000 mean=0.252949; coverage 78/80",
+      "status": "CONTRADICTED",
+      "evidence_files": ["GNNRank-main/paper_tables/table1_main_leaderboard.csv"],
+      "repo_values": {
+        "median_simple": 1.9440121054649353, "mean_simple": 1.934443631233313,
+        "median_ratio": 1.1674498319625854, "mean_ratio": 0.9734307306699262,
+        "coverage": "78/81"
+      },
+      "manuscript_values": {"median_simple": 1.000000, "mean_simple": 1.010641, "coverage": "78/80"},
+      "notes": "Repo value ~2x manuscript value for median_simple"
+    },
+    {
+      "id": "C27",
+      "claim": "SerialRank Table 4: median_simple=1.075000 mean=1.093333; median_ratio=0.307267 mean=0.296795; median_naive=0.268750 mean=0.273333; coverage 78/80",
+      "status": "CONTRADICTED",
+      "evidence_files": ["GNNRank-main/paper_tables/table1_main_leaderboard.csv"],
+      "repo_values": {
+        "median_simple": 1.9516178965568542, "mean_simple": 1.8333781833832081,
+        "coverage": "78/81"
+      },
+      "manuscript_values": {"median_simple": 1.075000, "mean_simple": 1.093333, "coverage": "78/80"},
+      "notes": "Manuscript SerialRank median=1.075 ≈ repo PageRank median=1.075982 — possible label confusion"
+    },
+    {
+      "id": "C28",
+      "claim": "SpringRank Table 4: median_simple=1.675000 mean=1.679615; median_ratio=0.476411 mean=0.491154; median_naive=0.418750 mean=0.420256; coverage 78/80",
+      "status": "CONTRADICTED",
+      "evidence_files": ["GNNRank-main/paper_tables/table1_main_leaderboard.csv"],
+      "repo_values": {
+        "median_simple": 0.8027240633964539, "mean_simple": 0.8117569998288766,
+        "median_ratio": 0.5698624551296234, "mean_ratio": 0.3852070743421045,
+        "coverage": "78/81"
+      },
+      "manuscript_values": {"median_simple": 1.675000, "mean_simple": 1.679615, "coverage": "78/80"},
+      "notes": "Directions reversed: repo shows SpringRank BETTER than OURS (0.802 < 0.878), manuscript shows it WORSE (1.675 > 0.878)"
+    },
+    {
+      "id": "C29",
+      "claim": "SyncRank Table 4: median_simple=1.825000 mean=1.833462; median_ratio=0.476411 mean=0.490641; median_naive=0.456250 mean=0.461795; coverage 78/80",
+      "status": "CONTRADICTED",
+      "evidence_files": ["GNNRank-main/paper_tables/table1_main_leaderboard.csv"],
+      "repo_values": {
+        "median_simple": 1.7164626121520996, "mean_simple": 1.680405949462544,
+        "coverage": "77/81"
+      },
+      "manuscript_values": {"median_simple": 1.825000, "mean_simple": 1.833462, "coverage": "78/80"},
+      "notes": "Roughly same order of magnitude but values differ by ~6%; coverage numerator also differs (77 vs 78)"
+    },
+    {
+      "id": "C30",
+      "claim": "PageRank Table 4: median_simple=1.925000 mean=1.934615; median_ratio=0.960686 mean=0.973974; median_naive=0.481250 mean=0.488846; coverage 78/80",
+      "status": "CONTRADICTED",
+      "evidence_files": ["GNNRank-main/paper_tables/table1_main_leaderboard.csv"],
+      "repo_values": {
+        "median_simple": 1.0759820938110352, "mean_simple": 1.0203616382219853,
+        "coverage": "78/81"
+      },
+      "manuscript_values": {"median_simple": 1.925000, "mean_simple": 1.934615, "coverage": "78/80"},
+      "notes": "Manuscript PageRank values match repo serialRank more closely"
+    },
+    {
+      "id": "C31",
+      "claim": "DavidScore Table 4: median_simple=0.925000 mean=0.939103; median_ratio=0.632356 mean=0.578957; median_naive=0.231250 mean=0.234615; coverage 78/80",
+      "status": "CONTRADICTED",
+      "evidence_files": ["GNNRank-main/paper_tables/table1_main_leaderboard.csv"],
+      "repo_values": {
+        "median_simple": 0.8241382241249084, "mean_simple": 0.8353933084469575,
+        "median_ratio": 0.5532494187355042, "mean_ratio": 0.575075510984812,
+        "coverage": "78/81"
+      },
+      "manuscript_values": {"median_simple": 0.925000, "mean_simple": 0.939103, "coverage": "78/80"},
+      "notes": "Repo DavidScore mean=0.835393 ≈ manuscript BTL mean=0.835385 — same swap pattern as C25"
+    },
+    {
+      "id": "C32",
+      "claim": "EigenvectorCentrality Table 4: median_simple=1.825000 mean=1.833077; median_ratio=0.960686 mean=0.973623; median_naive=0.456250 mean=0.461603; coverage 78/80",
+      "status": "CONTRADICTED",
+      "evidence_files": ["GNNRank-main/paper_tables/table1_main_leaderboard.csv"],
+      "repo_values": {
+        "median_simple": 1.0060606002807617, "mean_simple": 1.0316529169296607,
+        "coverage": "78/81"
+      },
+      "manuscript_values": {"median_simple": 1.825000, "mean_simple": 1.833077, "coverage": "78/80"},
+      "notes": "Off by ~0.82 for median_simple"
+    },
+    {
+      "id": "C33",
+      "claim": "SVD-RS Table 4: median_simple=0.880927 mean=0.890513; median_ratio=0.790599 mean=0.550128; median_naive=0.220232 mean=0.222949; coverage 78/80",
+      "status": "CONTRADICTED",
+      "evidence_files": ["GNNRank-main/paper_tables/table1_main_leaderboard.csv"],
+      "repo_values": {
+        "median_simple": 0.9870696663856506, "mean_simple": 1.0109546176898174,
+        "median_ratio": 0.5686889886856079, "mean_ratio": 0.5741088542418602,
+        "coverage": "78/81"
+      },
+      "manuscript_values": {"median_simple": 0.880927, "mean_simple": 0.890513, "coverage": "78/80"},
+      "notes": "Manuscript SVD-RS median=0.880927 is the exact same value as OURS_MFAS_INS1 — possible copy-paste error"
+    },
+    {
+      "id": "C34",
+      "claim": "SVD-NRS Table 4: median_simple=0.882925 mean=0.898333; median_ratio=0.489421 mean=0.380128; median_naive=0.220732 mean=0.224744; coverage 78/80",
+      "status": "CONTRADICTED",
+      "evidence_files": ["GNNRank-main/paper_tables/table1_main_leaderboard.csv"],
+      "repo_values": {
+        "median_simple": 0.8915640711784363, "mean_simple": 0.890535213932013,
+        "median_ratio": 0.5217003226280212, "mean_ratio": 0.5498474519986373,
+        "coverage": "78/81"
+      },
+      "manuscript_values": {"median_simple": 0.882925, "mean_simple": 0.898333, "coverage": "78/80"},
+      "notes": "Closest match among classical methods (~1% off for simple) but ratio values differ substantially"
+    },
+    {
+      "id": "D35",
+      "claim": "OURS-MFAS compute-matched coverage 77/79",
+      "status": "PARTIALLY_VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_tables/table2_compute_matched.csv"],
+      "repo_values": {"coverage": "77/80"},
+      "manuscript_values": {"coverage": "77/79"},
+      "notes": "Numerator 77 matches; denominator off by 1 (same systematic discrepancy)"
+    },
+    {
+      "id": "D36",
+      "claim": "OURS-MFAS-INS3 compute-matched coverage 77/79",
+      "status": "PARTIALLY_VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_tables/table2_compute_matched.csv"],
+      "repo_values": {"coverage": "77/80"},
+      "manuscript_values": {"coverage": "77/79"},
+      "notes": "Same as D35"
+    },
+    {
+      "id": "D37",
+      "claim": "OURS-MFAS-INS2 compute-matched coverage 77/79",
+      "status": "PARTIALLY_VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_tables/table2_compute_matched.csv"],
+      "repo_values": {"coverage": "77/80"},
+      "manuscript_values": {"coverage": "77/79"},
+      "notes": "Same as D35"
+    },
+    {
+      "id": "D38",
+      "claim": "OURS-MFAS-INS1 compute-matched coverage 77/79",
+      "status": "PARTIALLY_VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_tables/table2_compute_matched.csv"],
+      "repo_values": {"coverage": "77/80"},
+      "manuscript_values": {"coverage": "77/79"},
+      "notes": "Same as D35"
+    },
+    {
+      "id": "D39",
+      "claim": "SpringRank compute-matched: median_simple=0.802724 mean=0.811757; median_ratio=0.569862 mean=0.385207; median_naive=0.200681 mean=0.202939; coverage 78/79",
+      "status": "PARTIALLY_VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_tables/table2_compute_matched.csv"],
+      "repo_values": {
+        "median_simple": 0.8027240633964539, "mean_simple": 0.8117569998288766,
+        "median_ratio": 0.5698624551296234, "mean_ratio": 0.3852070743421045,
+        "median_naive": 0.2006810158491134, "mean_naive": 0.2029392499572191,
+        "coverage": "78/80"
+      },
+      "manuscript_values": {
+        "median_simple": 0.802724, "mean_simple": 0.811757,
+        "median_ratio": 0.569862, "mean_ratio": 0.385207,
+        "median_naive": 0.200681, "mean_naive": 0.202939,
+        "coverage": "78/79"
+      },
+      "notes": "All metric values verified to 6 significant figures. Coverage numerator (78) matches; denominator off by 1."
+    },
+    {
+      "id": "D40",
+      "claim": "BTL compute-matched same as Table 4; coverage 78/79",
+      "status": "CONTRADICTED",
+      "evidence_files": ["GNNRank-main/paper_tables/table2_compute_matched.csv"],
+      "repo_values": {"same_as_table1": true, "coverage": "78/80"},
+      "manuscript_values": {"same_as_table4": true, "coverage": "78/79"},
+      "notes": "Table 4 BTL values are contradicted (C25), so this is also contradicted. Coverage denominator off by 1."
+    },
+    {
+      "id": "D41",
+      "claim": "SVD-RS compute-matched same as Table 4; coverage 78/79",
+      "status": "CONTRADICTED",
+      "evidence_files": ["GNNRank-main/paper_tables/table2_compute_matched.csv"],
+      "repo_values": {"coverage": "78/80"},
+      "manuscript_values": {"same_as_table4": true, "coverage": "78/79"},
+      "notes": "Table 4 SVD-RS values are contradicted (C33)"
+    },
+    {
+      "id": "D42",
+      "claim": "SVD-NRS compute-matched same as Table 4; coverage 78/79",
+      "status": "CONTRADICTED",
+      "evidence_files": ["GNNRank-main/paper_tables/table2_compute_matched.csv"],
+      "repo_values": {"coverage": "78/80"},
+      "manuscript_values": {"same_as_table4": true, "coverage": "78/79"},
+      "notes": "Table 4 SVD-NRS values are off from repo"
+    },
+    {
+      "id": "D43",
+      "claim": "RankCentrality compute-matched same as Table 4; coverage 78/79",
+      "status": "CONTRADICTED",
+      "evidence_files": ["GNNRank-main/paper_tables/table2_compute_matched.csv"],
+      "repo_values": {"coverage": "78/80"},
+      "manuscript_values": {"coverage": "78/79"},
+      "notes": "Table 4 RankCentrality values contradicted (C26)"
+    },
+    {
+      "id": "D44",
+      "claim": "SerialRank compute-matched same as Table 4; coverage 78/79",
+      "status": "CONTRADICTED",
+      "evidence_files": ["GNNRank-main/paper_tables/table2_compute_matched.csv"],
+      "repo_values": {"coverage": "78/80"},
+      "manuscript_values": {"coverage": "78/79"},
+      "notes": "Table 4 SerialRank values contradicted (C27)"
+    },
+    {
+      "id": "D45",
+      "claim": "DavidScore compute-matched same as Table 4; coverage 78/79",
+      "status": "CONTRADICTED",
+      "evidence_files": ["GNNRank-main/paper_tables/table2_compute_matched.csv"],
+      "repo_values": {"coverage": "78/80"},
+      "manuscript_values": {"coverage": "78/79"},
+      "notes": "Table 4 DavidScore values contradicted (C31)"
+    },
+    {
+      "id": "D46",
+      "claim": "PageRank compute-matched same as Table 4; coverage 78/79",
+      "status": "CONTRADICTED",
+      "evidence_files": ["GNNRank-main/paper_tables/table2_compute_matched.csv"],
+      "repo_values": {"coverage": "78/80"},
+      "manuscript_values": {"coverage": "78/79"},
+      "notes": "Table 4 PageRank values contradicted (C30)"
+    },
+    {
+      "id": "D47",
+      "claim": "SyncRank compute-matched same as Table 4; coverage 78/79",
+      "status": "CONTRADICTED",
+      "evidence_files": ["GNNRank-main/paper_tables/table2_compute_matched.csv"],
+      "repo_values": {"coverage": "77/80"},
+      "manuscript_values": {"coverage": "78/79"},
+      "notes": "Table 4 SyncRank values contradicted (C29); also numerator differs (77 vs 78)"
+    },
+    {
+      "id": "E48",
+      "claim": "OURS family: datasets with metrics 77, runtime 77, any timeout 1",
+      "status": "PARTIALLY_VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_csv/missingness_audit.csv"],
+      "repo_values": {
+        "OURS_MFAS": {"metrics": 77, "runtime": 77, "timeouts": 1},
+        "OURS_MFAS_INS1": {"metrics": 80, "runtime": 80, "timeouts": 1},
+        "OURS_MFAS_INS2": {"metrics": 80, "runtime": 80, "timeouts": 1},
+        "OURS_MFAS_INS3": {"metrics": 80, "runtime": 80, "timeouts": 1}
+      },
+      "manuscript_values": {"family_metrics": 77, "family_runtime": 77, "family_timeouts": 1},
+      "notes": "Claim matches OURS_MFAS specifically. The INS variants each have 80 datasets with valid metrics (not 77). Family aggregate is 317 total, not 77."
+    },
+    {
+      "id": "E49",
+      "claim": "Classical family: datasets with metrics 79, runtime 79, any timeout 2",
+      "status": "NOT_VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_csv/missingness_audit.csv", "GNNRank-main/paper_tables/table3_missingness_audit_by_family.csv"],
+      "repo_values": {
+        "family_aggregate": {"metrics": 828, "runtime": 828, "timeouts": 4},
+        "per_method_range": "78-82 datasets per method"
+      },
+      "manuscript_values": {"family_metrics": 79, "family_runtime": 79, "family_timeouts": 2},
+      "notes": "No individual classical method or family aggregate matches the claimed 79/79/2 values"
+    },
+    {
+      "id": "E50",
+      "claim": "GNN family: datasets with metrics 78, runtime 78, any timeout 2",
+      "status": "NOT_VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_csv/missingness_audit.csv"],
+      "repo_values": {
+        "DIGRAC": {"metrics": 157, "runtime": 156, "timeouts": 1},
+        "ib": {"metrics": 157, "runtime": 156, "timeouts": 2}
+      },
+      "manuscript_values": {"family_metrics": 78, "family_runtime": 78, "family_timeouts": 2},
+      "notes": "ib has 2 timeouts matching claim, but metrics count (157 each) doesn't match 78"
+    },
+    {
+      "id": "E51",
+      "claim": "Other family: datasets with metrics 1, runtime 0, any timeout 1",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_csv/missingness_audit.csv"],
+      "repo_values": {"btlDIGRAC": {"metrics": 1, "runtime": 0, "timeouts": 1, "finance": "no_data"}},
+      "manuscript_values": {"family_metrics": 1, "family_runtime": 0, "family_timeouts": 1},
+      "notes": "btlDIGRAC (other family) exactly matches: 1 metric, 0 runtime, 1 timeout"
+    },
+    {
+      "id": "F52",
+      "claim": "OURS means OURS-MFAS-INS3 in headline summaries",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/compute_wtl_by_metric.py", "GNNRank-main/paper_csv/contribution_report.md"],
+      "repo_values": {"ours_method": "OURS_MFAS_INS3"},
+      "manuscript_values": {"ours_method": "OURS-MFAS-INS3"},
+      "notes": "compute_wtl_by_metric.py docstring: 'OURS method: OURS_MFAS_INS3'"
+    },
+    {
+      "id": "F53",
+      "claim": "OURS vs classical: W/T/L = 38/0/39 upset-simple; 45/0/32 upset-ratio; within 10% = 42/77 simple, 47/77 ratio",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_csv/contribution_stats.csv"],
+      "repo_values": {
+        "vs_classical_upset_simple_W": 38, "vs_classical_upset_simple_T": 0, "vs_classical_upset_simple_L": 39,
+        "vs_classical_upset_ratio_W": 45, "vs_classical_upset_ratio_T": 0, "vs_classical_upset_ratio_L": 32,
+        "vs_classical_within_10pct": 42, "vs_classical_ratio_within_10pct": 47
+      },
+      "manuscript_values": {
+        "simple_WTL": "38/0/39", "ratio_WTL": "45/0/32",
+        "within_10pct_simple": 42, "within_10pct_ratio": 47
+      },
+      "notes": "Exact match across all W/T/L and within-10% statistics"
+    },
+    {
+      "id": "F54",
+      "claim": "OURS vs GNN: W/T/L = 45/1/31 upset-simple; 47/0/30 upset-ratio; within 10% = 48/77, 47/77",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_csv/contribution_stats.csv"],
+      "repo_values": {
+        "vs_gnn_upset_simple_W": 45, "vs_gnn_upset_simple_T": 1, "vs_gnn_upset_simple_L": 31,
+        "vs_gnn_upset_ratio_W": 47, "vs_gnn_upset_ratio_T": 0, "vs_gnn_upset_ratio_L": 30,
+        "vs_gnn_within_10pct": 48, "vs_gnn_ratio_within_10pct": 47
+      },
+      "manuscript_values": {
+        "simple_WTL": "45/1/31", "ratio_WTL": "47/0/30",
+        "within_10pct_simple": 48, "within_10pct_ratio": 47
+      },
+      "notes": "Exact match"
+    },
+    {
+      "id": "F55",
+      "claim": "Ties defined as |delta| <= 1e-6",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_csv/contribution_stats.csv"],
+      "repo_values": {"tie_threshold": "1e-6 (W_1e6 columns identical to W_1e3 columns for this dataset)"},
+      "manuscript_values": {"tie_threshold": 1e-6},
+      "notes": "contribution_stats.csv has both _1e6 and _1e3 suffixed columns; manuscript uses 1e-6"
+    },
+    {
+      "id": "G56",
+      "claim": "Runtime comparison on 76 datasets with both runtimes",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_csv/contribution_stats.csv"],
+      "repo_values": {"runtime_count": 76.0},
+      "manuscript_values": {"runtime_count": 76},
+      "notes": "Exact match"
+    },
+    {
+      "id": "G57",
+      "claim": "Speedup S = t_GNN / t_OURS",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_csv/contribution_report.md"],
+      "repo_values": {"formula": "best_gnn_runtime / ours_runtime"},
+      "manuscript_values": {"formula": "t_GNN / t_OURS"},
+      "notes": "Formula confirmed in contribution_report.md"
+    },
+    {
+      "id": "G58",
+      "claim": "P25/median/P75 speedup = 4.72x / 10.16x / 18.18x",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_csv/contribution_stats.csv"],
+      "repo_values": {"speedup_P25": 4.72431269828904, "speedup_median": 10.16066108641186, "speedup_P75": 18.17685403317617},
+      "manuscript_values": {"P25": 4.72, "median": 10.16, "P75": 18.18},
+      "notes": "Values match to 4 significant figures"
+    },
+    {
+      "id": "G59",
+      "claim": "Mean speedup = 62.69x",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_csv/contribution_stats.csv"],
+      "repo_values": {"speedup_mean": 62.69333769448464},
+      "manuscript_values": {"mean_speedup": 62.69},
+      "notes": "Exact match to 4 significant figures"
+    },
+    {
+      "id": "G60",
+      "claim": "Datasets with speedup >= 10x / 50x / 100x = 38 / 17 / 13",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_csv/contribution_stats.csv"],
+      "repo_values": {"speedup_ge10x": 38, "speedup_ge50x": 17, "speedup_ge100x": 13},
+      "manuscript_values": {"ge10x": 38, "ge50x": 17, "ge100x": 13},
+      "notes": "Exact match"
+    },
+    {
+      "id": "G61",
+      "claim": "Pareto under upset-simple: better+faster=45, better+slower=0, worse+faster=31, worse+slower=0",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_csv/contribution_stats.csv"],
+      "repo_values": {
+        "Pareto_better_faster": 45, "Pareto_better_slower": 0,
+        "Pareto_worse_faster": 31, "Pareto_worse_slower": 0
+      },
+      "manuscript_values": {
+        "better_faster": 45, "better_slower": 0,
+        "worse_faster": 31, "worse_slower": 0
+      },
+      "notes": "Exact match; confirms OURS never slower than GNN"
+    },
+    {
+      "id": "H62",
+      "claim": "Finance times out for all OURS variants under 1800s budget",
+      "status": "PARTIALLY_VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_csv/missingness_audit.csv"],
+      "repo_values": {
+        "OURS_MFAS": "finance:timeout",
+        "OURS_MFAS_INS1": "finance:included",
+        "OURS_MFAS_INS2": "finance:included",
+        "OURS_MFAS_INS3": "finance:included"
+      },
+      "manuscript_values": {"all_ours_variants_timeout": true},
+      "notes": "Only OURS_MFAS times out on finance. INS1/2/3 complete within 1800s (finance:included). Claim is only partially correct."
+    },
+    {
+      "id": "H63",
+      "claim": "Accuracy tail concentrated in finer basketball instances",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_csv/contribution_report.md"],
+      "repo_values": {"top20_worst_datasets": "all Basketball_temporal/finer* instances"},
+      "manuscript_values": {"tail_location": "finer basketball instances"},
+      "notes": "All 20 worst-case datasets by rel_gap_simple vs best GNN are Basketball_temporal/finer* instances"
+    },
+    {
+      "id": "H64",
+      "claim": "OURS never slower than GNN",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_csv/contribution_stats.csv"],
+      "repo_values": {"Pareto_better_slower": 0, "Pareto_worse_slower": 0},
+      "manuscript_values": {"never_slower": true},
+      "notes": "0 datasets where OURS is slower in either better or worse outcome"
+    },
+    {
+      "id": "H65",
+      "claim": "Comparisons only on datasets with valid outputs",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/compute_wtl_by_metric.py"],
+      "repo_values": {"nan_exclusion": "Datasets with NaN for either side on a metric are excluded"},
+      "manuscript_values": {"valid_outputs_only": true},
+      "notes": "Source code confirms NaN exclusion in comparisons"
+    },
+    {
+      "id": "H66",
+      "claim": "Tables generated from saved per-trial arrays when available",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_csv/leaderboard_per_method.csv"],
+      "repo_values": {"source_column_value": "result_arrays"},
+      "manuscript_values": {"source_priority": "per-trial arrays"},
+      "notes": "source column in leaderboard_per_method.csv shows 'result_arrays' for most datasets"
+    },
+    {
+      "id": "H67",
+      "claim": "Fallback to per-dataset summaries from logs if arrays unavailable",
+      "status": "PARTIALLY_VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_csv/results_table_clean.csv"],
+      "repo_values": {"fallback_datasets": ["Dryad_animal_society", "finance"], "count": 2},
+      "manuscript_values": {"fallback_mechanism": "per-dataset log summaries"},
+      "notes": "results_table_clean.csv contains 2 datasets (Dryad and finance) that appear to use log-based fallback. Mechanism confirmed but limited usage."
+    },
+    {
+      "id": "H68",
+      "claim": "Fallback usage recorded in missingness audit",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_csv/missingness_audit.csv"],
+      "repo_values": {"finance_like_exclusions_column": "present; values: finance:timeout, finance:included, finance:no_data"},
+      "manuscript_values": {"fallback_recorded": true},
+      "notes": "finance_like_exclusions column in missingness_audit.csv records data source status per method"
+    },
+    {
+      "id": "H69",
+      "claim": "Tables/figures from common per-method CSV artifacts",
+      "status": "VERIFIED",
+      "evidence_files": ["GNNRank-main/paper_tables/README.md"],
+      "repo_values": {"pipeline": "paper_tables generated from paper_csv by tools/build_paper_tables.py"},
+      "manuscript_values": {"artifact_source": "per-method CSV artifacts"},
+      "notes": "README.md documents artifact generation pipeline"
+    },
+    {
+      "id": "H70",
+      "claim": "Internal validation checks confirm consistency",
+      "status": "PARTIALLY_VERIFIED",
+      "evidence_files": ["GNNRank-main/delta_mode_a_vs_b_summary.csv"],
+      "repo_values": {"validation_files": ["delta_mode_a_vs_b_summary.csv", "diagnose_ins_passes.py present"]},
+      "manuscript_values": {"internal_validation": true},
+      "notes": "Some validation infrastructure exists but no comprehensive test suite found"
+    },
+    {
+      "id": "H71",
+      "claim": "Rerun on two tight-margin football instances showed no change",
+      "status": "UNCHECKABLE",
+      "evidence_files": [],
+      "repo_values": {},
+      "manuscript_values": {"specific_rerun": "two tight-margin football instances"},
+      "notes": "No specific rerun log or result file found documenting this claim"
+    }
+  ],
+  "required_fixes": [
+    {
+      "priority": "CRITICAL",
+      "claim_ids": ["B6"],
+      "description": "Benchmark count should be 81 (repo) not 80 (manuscript), or the _AUTO/Basketball_temporal__1985adj dataset should be explicitly excluded from the benchmark definition and all CSVs updated."
+    },
+    {
+      "priority": "CRITICAL",
+      "claim_ids": ["B20"],
+      "description": "Compute-matched suite has 80 datasets (repo), not 79. Update manuscript Table 5 denominator to 80 or exclude _AUTO from all analyses."
+    },
+    {
+      "priority": "CRITICAL",
+      "claim_ids": ["C25", "C26", "C27", "C28", "C29", "C30", "C31", "C32", "C33", "C34"],
+      "description": "All classical method Table 4 values are contradicted by repo. Regenerate from leaderboard_per_method.csv (trials10). Correct values: SpringRank median_simple=0.802724; BTL=0.984385; DavidScore=0.824138; SyncRank=1.716463; RankCentrality=1.944012; SerialRank=1.951618; PageRank=1.075982; EigenvectorCentrality=1.006061; SVD_RS=0.987070; SVD_NRS=0.891564. Note potential label swap between BTL and DavidScore."
+    },
+    {
+      "priority": "CRITICAL",
+      "claim_ids": ["D40", "D41", "D42", "D43", "D44", "D45", "D46", "D47"],
+      "description": "Classical method Table 5 (compute-matched) values inherit the same error from Table 4. Regenerate from table2_compute_matched.csv."
+    },
+    {
+      "priority": "CRITICAL",
+      "claim_ids": ["B10"],
+      "description": "Football 12 instances n range should be 20-20 (all n=20), not 20-107. All English Premier League datasets have exactly 20 teams."
+    },
+    {
+      "priority": "MINOR",
+      "claim_ids": ["C21", "C22", "C23", "C24", "D35", "D36", "D37", "D38", "D39"],
+      "description": "Coverage denominators should be /81 (Table 4) and /80 (Table 5). Manuscript says /80 and /79 respectively. Resolve by either excluding _AUTO dataset from analyses or updating manuscript."
+    },
+    {
+      "priority": "MINOR",
+      "claim_ids": ["E49", "E50"],
+      "description": "Classical family (E49) and GNN family (E50) missingness claim values do not match repo aggregates. Clarify whether claims are about individual methods or family totals."
+    },
+    {
+      "priority": "MINOR",
+      "claim_ids": ["H62"],
+      "description": "Finance times out only for OURS_MFAS, not for OURS_MFAS_INS1/2/3. Qualify the claim accordingly."
+    },
+    {
+      "priority": "MINOR",
+      "claim_ids": ["H71"],
+      "description": "The rerun claim for two tight-margin football instances is uncheckable. Either cite a specific log file or remove the claim."
+    }
+  ]
+}
