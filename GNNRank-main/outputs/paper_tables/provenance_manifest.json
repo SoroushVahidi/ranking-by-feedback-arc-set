@@ -6,7 +6,7 @@
     "finance_timeout_claim": "reported per method+config, never globally assumed",
     "metrics_rows": "which == upset"
   },
-  "generated_at_utc": "2026-03-31T20:28:07.848218+00:00",
+  "generated_at_utc": "deterministic-build",
   "generated_outputs": [
     "outputs/audits/canonical_dataset_inventory.csv",
     "outputs/audits/canonical_dataset_inventory_summary.json",
@@ -21,7 +21,7 @@
     "outputs/paper_tables/canonical_artifacts_summary.md"
   ],
   "generator_script": "scripts/paper/rebuild_experiment_tables.py",
-  "git_commit": "52ea26fd39dc56de64009b80f2f7f226f39dbb5d",
+  "git_commit": "deterministic-build",
   "upstream_sources": [
     "paper_csv/results_from_result_arrays.csv",
     "paper_csv/leaderboard_per_method.csv",

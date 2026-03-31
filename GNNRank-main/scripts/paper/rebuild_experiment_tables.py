@@ -7,11 +7,9 @@ Uses only stdlib so it can run in minimal environments.
 from __future__ import annotations
 
 import csv
-import datetime
 import json
 import math
 import statistics
-import subprocess
 import zipfile
 from ast import literal_eval
 from collections import Counter, defaultdict
@@ -433,15 +431,6 @@ def main() -> None:
     ]
     (OUTPUT_TABLES / "canonical_artifacts_summary.md").write_text("\n".join(lines) + "\n")
 
-    ts = datetime.datetime.now(datetime.timezone.utc).isoformat()
-    git_commit = ""
-    try:
-        git_commit = (
-            subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=str(REPO_ROOT), text=True)
-            .strip()
-        )
-    except Exception:
-        git_commit = "unknown"
     output_files = [
         "outputs/audits/canonical_dataset_inventory.csv",
         "outputs/audits/canonical_dataset_inventory_summary.json",
@@ -457,8 +446,8 @@ def main() -> None:
     ]
     provenance = {
         "generator_script": "scripts/paper/rebuild_experiment_tables.py",
-        "generated_at_utc": ts,
-        "git_commit": git_commit,
+        "generated_at_utc": "deterministic-build",
+        "git_commit": "deterministic-build",
         "upstream_sources": [
             "paper_csv/results_from_result_arrays.csv",
             "paper_csv/leaderboard_per_method.csv",
