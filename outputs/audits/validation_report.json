@@ -1,0 +1,172 @@
+{
+  "n_pass": 33,
+  "n_fail": 0,
+  "n_warn": 0,
+  "checks": [
+    {
+      "name": "exists:table4_full_suite.csv",
+      "status": "PASS",
+      "message": "found at /home/runner/work/ranking-by-feedback-arc-set/ranking-by-feedback-arc-set/outputs/paper_tables/table4_full_suite.csv"
+    },
+    {
+      "name": "exists:table5_compute_matched.csv",
+      "status": "PASS",
+      "message": "found at /home/runner/work/ranking-by-feedback-arc-set/ranking-by-feedback-arc-set/outputs/paper_tables/table5_compute_matched.csv"
+    },
+    {
+      "name": "exists:table6_missingness.csv",
+      "status": "PASS",
+      "message": "found at /home/runner/work/ranking-by-feedback-arc-set/ranking-by-feedback-arc-set/outputs/paper_tables/table6_missingness.csv"
+    },
+    {
+      "name": "exists:table7_best_in_suite.csv",
+      "status": "PASS",
+      "message": "found at /home/runner/work/ranking-by-feedback-arc-set/ranking-by-feedback-arc-set/outputs/paper_tables/table7_best_in_suite.csv"
+    },
+    {
+      "name": "exists:table8_runtime_tradeoff.csv",
+      "status": "PASS",
+      "message": "found at /home/runner/work/ranking-by-feedback-arc-set/ranking-by-feedback-arc-set/outputs/paper_tables/table8_runtime_tradeoff.csv"
+    },
+    {
+      "name": "exists:benchmark_composition.csv",
+      "status": "PASS",
+      "message": "found at /home/runner/work/ranking-by-feedback-arc-set/ranking-by-feedback-arc-set/outputs/paper_tables/benchmark_composition.csv"
+    },
+    {
+      "name": "exists:paper_metrics_master.csv",
+      "status": "PASS",
+      "message": "found at /home/runner/work/ranking-by-feedback-arc-set/ranking-by-feedback-arc-set/outputs/paper_tables/paper_metrics_master.csv"
+    },
+    {
+      "name": "exists:paper_claims_master.json",
+      "status": "PASS",
+      "message": "found at /home/runner/work/ranking-by-feedback-arc-set/ranking-by-feedback-arc-set/outputs/paper_tables/paper_claims_master.json"
+    },
+    {
+      "name": "exists:dataset_inventory.csv",
+      "status": "PASS",
+      "message": "found at /home/runner/work/ranking-by-feedback-arc-set/ranking-by-feedback-arc-set/outputs/derived/dataset_inventory.csv"
+    },
+    {
+      "name": "table4_coverage_denominator",
+      "status": "PASS",
+      "message": "All 2 coverage values use /80 denominator"
+    },
+    {
+      "name": "table4_expected_methods",
+      "status": "PASS",
+      "message": "All 16 expected methods present"
+    },
+    {
+      "name": "table4_OURS_MFAS_coverage",
+      "status": "PASS",
+      "message": "OURS_MFAS n_datasets=77 (expected 77, finance times out)"
+    },
+    {
+      "name": "table4_OURS_MFAS_INS1_coverage",
+      "status": "PASS",
+      "message": "OURS_MFAS_INS1 n_datasets=77 (77 in trials10: finance NaN, Halo+ERO absent)"
+    },
+    {
+      "name": "table4_OURS_MFAS_INS2_coverage",
+      "status": "PASS",
+      "message": "OURS_MFAS_INS2 n_datasets=77 (77 in trials10: finance NaN, Halo+ERO absent)"
+    },
+    {
+      "name": "table4_OURS_MFAS_INS3_coverage",
+      "status": "PASS",
+      "message": "OURS_MFAS_INS3 n_datasets=77 (77 in trials10: finance NaN, Halo+ERO absent)"
+    },
+    {
+      "name": "table4_OURS_MFAS_median_matches_source",
+      "status": "PASS",
+      "message": "OURS_MFAS median_upset_simple=0.878049 matches source"
+    },
+    {
+      "name": "table4_OURS_MFAS_INS1_median_matches_source",
+      "status": "PASS",
+      "message": "OURS_MFAS_INS1 median_upset_simple=0.880927 matches source"
+    },
+    {
+      "name": "table5_max_n_datasets_le_80",
+      "status": "PASS",
+      "message": "Max n_datasets in table5 = 78 (\u226480)"
+    },
+    {
+      "name": "table5_coverage_consistent",
+      "status": "PASS",
+      "message": "Coverage denominators consistent: {'79'}"
+    },
+    {
+      "name": "table5_OURS_coverage_lt_table4",
+      "status": "PASS",
+      "message": "Table5 OURS_MFAS n_datasets=77 (\u226477, ERO excluded)"
+    },
+    {
+      "name": "inventory_total_81",
+      "status": "PASS",
+      "message": "Total datasets = 81"
+    },
+    {
+      "name": "inventory_suite_80",
+      "status": "PASS",
+      "message": "In-80-suite count = 80"
+    },
+    {
+      "name": "inventory_excluded_1",
+      "status": "PASS",
+      "message": "Excluded datasets = 1 (_AUTO)"
+    },
+    {
+      "name": "inventory_excluded_is_AUTO",
+      "status": "PASS",
+      "message": "Excluded = ['_AUTO/Basketball_temporal__1985adj']"
+    },
+    {
+      "name": "football_all_n20",
+      "status": "PASS",
+      "message": "All 12 football datasets have n=20"
+    },
+    {
+      "name": "basketball_coarse_n_ge_200",
+      "status": "PASS",
+      "message": "Basketball coarse min n=282 (\u2265200)"
+    },
+    {
+      "name": "json_has_meta",
+      "status": "PASS",
+      "message": "_meta block present"
+    },
+    {
+      "name": "json_total_datasets_81",
+      "status": "PASS",
+      "message": "total_datasets=81"
+    },
+    {
+      "name": "json_suite_80_datasets",
+      "status": "PASS",
+      "message": "suite_80_datasets=80"
+    },
+    {
+      "name": "json_has_table4",
+      "status": "PASS",
+      "message": "table4_full_suite block present"
+    },
+    {
+      "name": "json_has_OURS_MFAS",
+      "status": "PASS",
+      "message": "OURS_MFAS present in table4 claims"
+    },
+    {
+      "name": "json_football_note",
+      "status": "PASS",
+      "message": "Football n-range correction note present"
+    },
+    {
+      "name": "json_finance_note",
+      "status": "PASS",
+      "message": "Finance timeout note present"
+    }
+  ]
+}

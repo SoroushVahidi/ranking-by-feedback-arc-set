@@ -14,3 +14,29 @@ These files were historical CSV/LaTeX table exports (for example leaderboard, co
 
 - Keep these files only for historical reference.
 - Prefer regenerating manuscript artifacts from the canonical pipeline instead of editing or merging legacy table files by hand.
+Use the tabulars inside a `table` (or `longtable`) environment and add `\caption{...}` and `\label{...}` as in the comments at the bottom of each file.
+
+## ⚠️ Status: Legacy (superseded)
+
+These files use **`/81` denominators** (including the extra `_AUTO/Basketball_temporal__1985adj` dataset
+that is NOT part of the 80-dataset manuscript benchmark).
+
+**For manuscript submission, use `outputs/paper_tables/` instead:**
+
+| Legacy file (here) | Canonical replacement |
+|--------------------|-----------------------|
+| table1_main_leaderboard.csv | `outputs/paper_tables/table4_full_suite.csv` |
+| table2_compute_matched.csv | `outputs/paper_tables/table5_compute_matched.csv` |
+| table3_missingness_audit.csv | `outputs/paper_tables/table6_missingness.csv` |
+
+Additional corrections documented in `docs/audits/REPO_ORGANIZATION_AND_REPAIR_REPORT.md`:
+- btl and davidScore values in early draft were swapped and numerically wrong
+- Football n-range claim (20–107) was incorrect; n=20 for all 12 football instances
+- All `outputs/paper_tables/` files are regenerated directly from
+  `GNNRank-main/paper_csv/leaderboard_per_method.csv`
+
+To regenerate:
+```bash
+python scripts/paper/generate_paper_tables.py
+```
+

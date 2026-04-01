@@ -1,0 +1,436 @@
+{
+  "_meta": {
+    "description": "Canonical numerical claims for the manuscript. All values derived from GNNRank-main/paper_csv/leaderboard_per_method.csv.",
+    "total_datasets": 81,
+    "suite_80_datasets": 80,
+    "extra_dataset_excluded": "_AUTO/Basketball_temporal__1985adj",
+    "compute_matched_datasets": 78
+  },
+  "football_n_range_note": "All 12 football instances (6 coarse + 6 finer) have n=20. The manuscript claim of n-range 20-107 is INCORRECT; m ranges from 107-380.",
+  "finance_timeout_note": "In the trials10 config (primary benchmark), finance has NaN upset_simple for ALL four OURS methods, giving each coverage=77/80. The missingness_audit.csv reports a different view (across all trial configs): OURS_MFAS times out on finance in all configs (77/80 overall), while INS1/INS2/INS3 complete on finance in non-trials10 configs (80/80 overall). Table 4 uses only the trials10 config, so all OURS methods show coverage 77/80.",
+  "table4_full_suite": {
+    "SpringRank": {
+      "coverage": "78/80",
+      "n_datasets": 78,
+      "median_upset_simple": 0.8027240633964539,
+      "mean_upset_simple": 0.8117569998288766,
+      "median_upset_ratio": 0.5698624551296234,
+      "mean_upset_ratio": 0.3852070743421045,
+      "median_upset_naive": 0.2006810158491134,
+      "mean_upset_naive": 0.20293924995721915
+    },
+    "davidScore": {
+      "coverage": "78/80",
+      "n_datasets": 78,
+      "median_upset_simple": 0.8241382241249084,
+      "mean_upset_simple": 0.8353933084469575,
+      "median_upset_ratio": 0.5532494187355042,
+      "mean_upset_ratio": 0.575075510984812,
+      "median_upset_naive": 0.2060345560312271,
+      "mean_upset_naive": 0.20898119799601725
+    },
+    "OURS_MFAS_INS3": {
+      "coverage": "77/80",
+      "n_datasets": 77,
+      "median_upset_simple": 0.8780487775802612,
+      "mean_upset_simple": 0.8878800739328583,
+      "median_upset_ratio": 0.5057481527328491,
+      "mean_upset_ratio": 0.3818907469704554,
+      "median_upset_naive": 0.2195121943950653,
+      "mean_upset_naive": 0.22197001848321457
+    },
+    "OURS_MFAS": {
+      "coverage": "77/80",
+      "n_datasets": 77,
+      "median_upset_simple": 0.8780487775802612,
+      "mean_upset_simple": 0.8878800739328583,
+      "median_upset_ratio": 0.5057481527328491,
+      "mean_upset_ratio": 0.3818907469704554,
+      "median_upset_naive": 0.2195121943950653,
+      "mean_upset_naive": 0.22197001848321457
+    },
+    "OURS_MFAS_INS2": {
+      "coverage": "77/80",
+      "n_datasets": 77,
+      "median_upset_simple": 0.8780487775802612,
+      "mean_upset_simple": 0.8879140052315476,
+      "median_upset_ratio": 0.5057481527328491,
+      "mean_upset_ratio": 0.3818741853941571,
+      "median_upset_naive": 0.2195121943950653,
+      "mean_upset_naive": 0.2219785013078869
+    },
+    "OURS_MFAS_INS1": {
+      "coverage": "77/80",
+      "n_datasets": 77,
+      "median_upset_simple": 0.8809272646903992,
+      "mean_upset_simple": 0.8886325937973989,
+      "median_upset_ratio": 0.502814531326294,
+      "mean_upset_ratio": 0.3819149758715134,
+      "median_upset_naive": 0.2202318161725998,
+      "mean_upset_naive": 0.22215814844934972
+    },
+    "SVD_NRS": {
+      "coverage": "78/80",
+      "n_datasets": 78,
+      "median_upset_simple": 0.8915640711784363,
+      "mean_upset_simple": 0.890535213932013,
+      "median_upset_ratio": 0.5217003226280212,
+      "mean_upset_ratio": 0.5498474519986373,
+      "median_upset_naive": 0.22289101779460904,
+      "mean_upset_naive": 0.22263380348300324
+    },
+    "SVD_RS": {
+      "coverage": "78/80",
+      "n_datasets": 78,
+      "median_upset_simple": 0.9870696663856506,
+      "mean_upset_simple": 1.0109546176898174,
+      "median_upset_ratio": 0.5686889886856079,
+      "mean_upset_ratio": 0.5741088542418602,
+      "median_upset_naive": 0.2467674165964126,
+      "mean_upset_naive": 0.25273865442245436
+    },
+    "PageRank": {
+      "coverage": "78/80",
+      "n_datasets": 78,
+      "median_upset_simple": 1.0759820938110352,
+      "mean_upset_simple": 1.0203616382219853,
+      "median_upset_ratio": 0.41858974099159235,
+      "mean_upset_ratio": 0.324354758599582,
+      "median_upset_naive": 0.2689955234527588,
+      "mean_upset_naive": 0.25509040955549633
+    },
+    "eigenvectorCentrality": {
+      "coverage": "78/80",
+      "n_datasets": 78,
+      "median_upset_simple": 1.0060606002807617,
+      "mean_upset_simple": 1.0316529169296607,
+      "median_upset_ratio": 0.585718135535717,
+      "mean_upset_ratio": 0.39048338989631676,
+      "median_upset_naive": 0.2515151500701904,
+      "mean_upset_naive": 0.25791322923241516
+    },
+    "DIGRAC": {
+      "coverage": "78/80",
+      "n_datasets": 78,
+      "median_upset_simple": 1.0117817956209183,
+      "mean_upset_simple": 1.0348127908202316,
+      "median_upset_ratio": 0.7283334824442864,
+      "mean_upset_ratio": 0.4341628033660638,
+      "median_upset_naive": 0.2529454489052295,
+      "mean_upset_naive": 0.258705235159932
+    },
+    "btl": {
+      "coverage": "78/80",
+      "n_datasets": 78,
+      "median_upset_simple": 0.9843852490186691,
+      "mean_upset_simple": 1.0936155564891983,
+      "median_upset_ratio": 0.30655481964349746,
+      "mean_upset_ratio": 0.2975845307947542,
+      "median_upset_naive": 0.24609631225466727,
+      "mean_upset_naive": 0.27340388912229957
+    },
+    "ib": {
+      "coverage": "78/80",
+      "n_datasets": 78,
+      "median_upset_simple": 1.113342043161392,
+      "mean_upset_simple": 1.1127401306843145,
+      "median_upset_ratio": 0.7501625037193298,
+      "mean_upset_ratio": 0.5191185896963072,
+      "median_upset_naive": 0.7382592725753785,
+      "mean_upset_naive": 0.6884535592163986
+    },
+    "syncRank": {
+      "coverage": "77/80",
+      "n_datasets": 77,
+      "median_upset_simple": 1.7164626121520996,
+      "mean_upset_simple": 1.680405949462544,
+      "median_upset_ratio": 0.8020096242427825,
+      "mean_upset_ratio": 0.4942390607972327,
+      "median_upset_naive": 0.4291156530380249,
+      "mean_upset_naive": 0.42013291372107225
+    },
+    "serialRank": {
+      "coverage": "78/80",
+      "n_datasets": 78,
+      "median_upset_simple": 1.9516178965568542,
+      "mean_upset_simple": 1.833378183383208,
+      "median_upset_ratio": 0.7289576709270478,
+      "mean_upset_ratio": 0.4910841789669715,
+      "median_upset_naive": 0.4911873936653137,
+      "mean_upset_naive": 0.46183570703634846
+    },
+    "rankCentrality": {
+      "coverage": "78/80",
+      "n_datasets": 78,
+      "median_upset_simple": 1.9440121054649353,
+      "mean_upset_simple": 1.934443631233313,
+      "median_upset_ratio": 1.1674498319625854,
+      "mean_upset_ratio": 0.9734307306699267,
+      "median_upset_naive": 0.49025584757328033,
+      "mean_upset_naive": 0.48869306250260425
+    }
+  },
+  "table5_compute_matched": {
+    "SpringRank": {
+      "coverage": "78/79",
+      "n_datasets": 78,
+      "median_upset_simple": 0.8027240633964539,
+      "mean_upset_simple": 0.8117569998288766,
+      "median_upset_ratio": 0.5698624551296234,
+      "mean_upset_ratio": 0.3852070743421045,
+      "median_upset_naive": 0.2006810158491134,
+      "mean_upset_naive": 0.20293924995721915
+    },
+    "davidScore": {
+      "coverage": "78/79",
+      "n_datasets": 78,
+      "median_upset_simple": 0.8241382241249084,
+      "mean_upset_simple": 0.8353933084469575,
+      "median_upset_ratio": 0.5532494187355042,
+      "mean_upset_ratio": 0.575075510984812,
+      "median_upset_naive": 0.2060345560312271,
+      "mean_upset_naive": 0.20898119799601725
+    },
+    "OURS_MFAS_INS3": {
+      "coverage": "77/79",
+      "n_datasets": 77,
+      "median_upset_simple": 0.8780487775802612,
+      "mean_upset_simple": 0.8878800739328583,
+      "median_upset_ratio": 0.5057481527328491,
+      "mean_upset_ratio": 0.3818907469704554,
+      "median_upset_naive": 0.2195121943950653,
+      "mean_upset_naive": 0.22197001848321457
+    },
+    "OURS_MFAS": {
+      "coverage": "77/79",
+      "n_datasets": 77,
+      "median_upset_simple": 0.8780487775802612,
+      "mean_upset_simple": 0.8878800739328583,
+      "median_upset_ratio": 0.5057481527328491,
+      "mean_upset_ratio": 0.3818907469704554,
+      "median_upset_naive": 0.2195121943950653,
+      "mean_upset_naive": 0.22197001848321457
+    },
+    "OURS_MFAS_INS2": {
+      "coverage": "77/79",
+      "n_datasets": 77,
+      "median_upset_simple": 0.8780487775802612,
+      "mean_upset_simple": 0.8879140052315476,
+      "median_upset_ratio": 0.5057481527328491,
+      "mean_upset_ratio": 0.3818741853941571,
+      "median_upset_naive": 0.2195121943950653,
+      "mean_upset_naive": 0.2219785013078869
+    },
+    "OURS_MFAS_INS1": {
+      "coverage": "77/79",
+      "n_datasets": 77,
+      "median_upset_simple": 0.8809272646903992,
+      "mean_upset_simple": 0.8886325937973989,
+      "median_upset_ratio": 0.502814531326294,
+      "mean_upset_ratio": 0.3819149758715134,
+      "median_upset_naive": 0.2202318161725998,
+      "mean_upset_naive": 0.22215814844934972
+    },
+    "SVD_NRS": {
+      "coverage": "78/79",
+      "n_datasets": 78,
+      "median_upset_simple": 0.8915640711784363,
+      "mean_upset_simple": 0.890535213932013,
+      "median_upset_ratio": 0.5217003226280212,
+      "mean_upset_ratio": 0.5498474519986373,
+      "median_upset_naive": 0.22289101779460904,
+      "mean_upset_naive": 0.22263380348300324
+    },
+    "SVD_RS": {
+      "coverage": "78/79",
+      "n_datasets": 78,
+      "median_upset_simple": 0.9870696663856506,
+      "mean_upset_simple": 1.0109546176898174,
+      "median_upset_ratio": 0.5686889886856079,
+      "mean_upset_ratio": 0.5741088542418602,
+      "median_upset_naive": 0.2467674165964126,
+      "mean_upset_naive": 0.25273865442245436
+    },
+    "PageRank": {
+      "coverage": "78/79",
+      "n_datasets": 78,
+      "median_upset_simple": 1.0759820938110352,
+      "mean_upset_simple": 1.0203616382219853,
+      "median_upset_ratio": 0.41858974099159235,
+      "mean_upset_ratio": 0.324354758599582,
+      "median_upset_naive": 0.2689955234527588,
+      "mean_upset_naive": 0.25509040955549633
+    },
+    "eigenvectorCentrality": {
+      "coverage": "78/79",
+      "n_datasets": 78,
+      "median_upset_simple": 1.0060606002807617,
+      "mean_upset_simple": 1.0316529169296607,
+      "median_upset_ratio": 0.585718135535717,
+      "mean_upset_ratio": 0.39048338989631676,
+      "median_upset_naive": 0.2515151500701904,
+      "mean_upset_naive": 0.25791322923241516
+    },
+    "DIGRAC": {
+      "coverage": "78/79",
+      "n_datasets": 78,
+      "median_upset_simple": 1.0117817956209183,
+      "mean_upset_simple": 1.0348127908202316,
+      "median_upset_ratio": 0.7283334824442864,
+      "mean_upset_ratio": 0.4341628033660638,
+      "median_upset_naive": 0.2529454489052295,
+      "mean_upset_naive": 0.258705235159932
+    },
+    "btl": {
+      "coverage": "78/79",
+      "n_datasets": 78,
+      "median_upset_simple": 0.9843852490186691,
+      "mean_upset_simple": 1.0936155564891983,
+      "median_upset_ratio": 0.30655481964349746,
+      "mean_upset_ratio": 0.2975845307947542,
+      "median_upset_naive": 0.24609631225466727,
+      "mean_upset_naive": 0.27340388912229957
+    },
+    "ib": {
+      "coverage": "78/79",
+      "n_datasets": 78,
+      "median_upset_simple": 1.113342043161392,
+      "mean_upset_simple": 1.116583657371692,
+      "median_upset_ratio": 0.7501625037193298,
+      "mean_upset_ratio": 0.5187114105913311,
+      "median_upset_naive": 0.738118553161621,
+      "mean_upset_naive": 0.6852909633192498
+    },
+    "syncRank": {
+      "coverage": "77/79",
+      "n_datasets": 77,
+      "median_upset_simple": 1.7164626121520996,
+      "mean_upset_simple": 1.680405949462544,
+      "median_upset_ratio": 0.8020096242427825,
+      "mean_upset_ratio": 0.4942390607972327,
+      "median_upset_naive": 0.4291156530380249,
+      "mean_upset_naive": 0.42013291372107225
+    },
+    "serialRank": {
+      "coverage": "78/79",
+      "n_datasets": 78,
+      "median_upset_simple": 1.9516178965568542,
+      "mean_upset_simple": 1.833378183383208,
+      "median_upset_ratio": 0.7289576709270478,
+      "mean_upset_ratio": 0.4910841789669715,
+      "median_upset_naive": 0.4911873936653137,
+      "mean_upset_naive": 0.46183570703634846
+    },
+    "rankCentrality": {
+      "coverage": "78/79",
+      "n_datasets": 78,
+      "median_upset_simple": 1.9440121054649353,
+      "mean_upset_simple": 1.934443631233313,
+      "median_upset_ratio": 1.1674498319625854,
+      "mean_upset_ratio": 0.9734307306699267,
+      "median_upset_naive": 0.49025584757328033,
+      "mean_upset_naive": 0.48869306250260425
+    }
+  },
+  "benchmark_composition": {
+    "Animal": {
+      "n_datasets": 1,
+      "n_range": [
+        21.0,
+        21.0
+      ],
+      "m_range": [
+        193.0,
+        193.0
+      ]
+    },
+    "Basketball_coarse": {
+      "n_datasets": 30,
+      "n_range": [
+        282.0,
+        351.0
+      ],
+      "m_range": [
+        2904.0,
+        4196.0
+      ]
+    },
+    "Basketball_finer": {
+      "n_datasets": 30,
+      "n_range": [
+        282.0,
+        351.0
+      ],
+      "m_range": [
+        4814.0,
+        7650.0
+      ]
+    },
+    "ERO": {
+      "n_datasets": 1,
+      "n_range": [
+        NaN,
+        NaN
+      ],
+      "m_range": [
+        NaN,
+        NaN
+      ]
+    },
+    "Faculty": {
+      "n_datasets": 3,
+      "n_range": [
+        113.0,
+        206.0
+      ],
+      "m_range": [
+        1204.0,
+        1787.0
+      ]
+    },
+    "Finance": {
+      "n_datasets": 1,
+      "n_range": [
+        1315.0,
+        1315.0
+      ],
+      "m_range": [
+        1729225.0,
+        1729225.0
+      ]
+    },
+    "Football_coarse": {
+      "n_datasets": 6,
+      "n_range": [
+        20.0,
+        20.0
+      ],
+      "m_range": [
+        107.0,
+        226.0
+      ]
+    },
+    "Football_finer": {
+      "n_datasets": 6,
+      "n_range": [
+        20.0,
+        20.0
+      ],
+      "m_range": [
+        300.0,
+        380.0
+      ]
+    },
+    "Halo": {
+      "n_datasets": 2,
+      "n_range": [
+        602.0,
+        602.0
+      ],
+      "m_range": [
+        5010.0,
+        5010.0
+      ]
+    }
+  }
+}

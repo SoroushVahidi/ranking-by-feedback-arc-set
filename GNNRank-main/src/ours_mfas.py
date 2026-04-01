@@ -533,7 +533,7 @@ def refine_scores_ratio_ternary(
         if time.time() - tstart > time_limit_sec:
             break
 
-        order = np.argsort(s)  # ascending
+        order = np.argsort(s, kind="mergesort")  # ascending; stable for determinism
         for k in range(len(order)):
             if time.time() - tstart > time_limit_sec:
                 break
@@ -556,7 +556,7 @@ def refine_scores_ratio_ternary(
             s[idx] = newv
 
         # monotone repair
-        order = np.argsort(s)
+        order = np.argsort(s, kind="mergesort")  # stable for determinism
         for k in range(1, len(order)):
             a = int(order[k - 1])
             b = int(order[k])
