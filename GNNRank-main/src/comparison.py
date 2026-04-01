@@ -365,6 +365,8 @@ def SVD_NRS(A):
 def ours_MFAS(
     scores_matrix,
     variant: str = "INS3",
+    enable_phase_b: bool = True,
+    enable_phase_c: bool = True,
     time_limit_sec: float = 900.0,
     refine_ratio: bool = True,
     refine_time_sec: float = 20.0,
@@ -396,6 +398,8 @@ def ours_MFAS(
     score_vec, meta = ours_mfas_rmfa(
         A,
         insertion_passes=insertion_passes,
+        enable_phase_b=bool(enable_phase_b),
+        enable_phase_c=bool(enable_phase_c),
         time_limit_sec=float(time_limit_sec),
         refine_ratio=bool(refine_ratio),
         refine_time_sec=float(refine_time_sec),
@@ -409,6 +413,8 @@ def ours_MFAS(
         # compatibility fields (you had these keys in your old extra dict)
         "runtime_sec": float(meta.get("runtime_sec", np.nan)),
         "variant": variant,
+        "enable_phase_b": bool(enable_phase_b),
+        "enable_phase_c": bool(enable_phase_c),
         # richer meta (useful for CSV)
         "n": int(meta.get("n", A.shape[0])),
         "m": int(meta.get("m", -1)),
