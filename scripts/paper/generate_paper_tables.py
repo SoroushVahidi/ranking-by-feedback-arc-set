@@ -293,15 +293,23 @@ def build_table6(df_miss: pd.DataFrame, df: pd.DataFrame) -> pd.DataFrame:
 def build_table7(df_unified: pd.DataFrame, df: pd.DataFrame) -> pd.DataFrame:
     """
     Table 7 — Per-dataset OURS vs best-classical and best-GNN.
-    Uses unified_comparison.csv if available.
-    """
-    if not df_unified.empty:
-        # Filter to 80-dataset suite
-        result = df_unified[df_unified["dataset"] != AUTO_DATASET].copy()
-        result["family"] = result["dataset"].apply(assign_family)
-        return result
 
-    # Fallback: basic per-dataset best
+    Always recomputed from the canonical leaderboard (``df``) using the
+    trials10 config, so that:
+    - Only the 80-dataset paper suite is included (all _AUTO datasets removed).
+    - GNN best-in-suite is derived from trials10 configs only, consistent with
+      Table 4 and Table 5.
+
+    For each comparator group (classical, GNN), "best" means the single
+    method with the lowest ``upset_simple``; all its metrics are then
+    reported together.  This "same-method" convention is semantically
+    coherent: we compare OURS against whichever competitor a practitioner
+    would choose on the primary metric, and then report all that
+    competitor's metrics side-by-side.
+
+    ``df_unified`` is accepted for API compatibility but is NOT used.
+    """
+    # Always derive from the canonical leaderboard with consistent filters.
     df80 = filter_80_suite(df)
     df_t10 = filter_trials10(df80)
     best = pick_best_per_dataset(df_t10)
@@ -312,21 +320,52 @@ def build_table7(df_unified: pd.DataFrame, df: pd.DataFrame) -> pd.DataFrame:
     ]
     gnn_methods = [m for m in METHODS_TABLE4 if m in GNN_METHODS]
 
+    def _best_row(sub: pd.DataFrame, methods: list[str]) -> pd.Series:
+        """Return the row of the method with lowest upset_simple, or all-NaN."""
+        group = sub[sub["method"].isin(methods)].dropna(subset=["upset_simple"])
+        if group.empty:
+            return pd.Series({"upset_simple": float("nan"),
+                              "upset_ratio":  float("nan"),
+                              "upset_naive":  float("nan"),
+                              "runtime_sec":  float("nan")})
+        return group.loc[group["upset_simple"].idxmin()]
+
     rows = []
     for dataset in sorted(best["dataset"].unique()):
         sub = best[best["dataset"] == dataset]
-        ours_best_val = sub[sub["method"].isin(ours_methods)]["upset_simple"].min()
-        classical_best_val = sub[sub["method"].isin(classical_methods)]["upset_simple"].min()
-        gnn_best_val = sub[sub["method"].isin(gnn_methods)]["upset_simple"].min()
+        ours_sub = sub[sub["method"].isin(ours_methods)]
+
+        # OURS: best upset_simple variant; runtime from the canonical OURS_MFAS entry
+        ours_valid = ours_sub.dropna(subset=["upset_simple"])
+        if not ours_valid.empty:
+            ours_row = ours_valid.loc[ours_valid["upset_simple"].idxmin()]
+            ours_upset_simple = float(ours_row["upset_simple"])
+            ours_upset_ratio  = float(ours_row["upset_ratio"])  if pd.notna(ours_row["upset_ratio"])  else float("nan")
+            ours_upset_naive  = float(ours_row["upset_naive"])  if pd.notna(ours_row["upset_naive"])  else float("nan")
+        else:
+            ours_upset_simple = ours_upset_ratio = ours_upset_naive = float("nan")
+        mfas_rows = ours_sub[ours_sub["method"] == "OURS_MFAS"]
+        ours_runtime = float(mfas_rows["runtime_sec"].iloc[0]) if (len(mfas_rows) > 0 and pd.notna(mfas_rows["runtime_sec"].iloc[0])) else float("nan")
+
+        cl_row  = _best_row(sub, classical_methods)
+        gnn_row = _best_row(sub, gnn_methods)
+
         rows.append(
             {
                 "dataset": dataset,
+                "ours_upset_simple": ours_upset_simple,
+                "ours_upset_ratio":  ours_upset_ratio,
+                "ours_upset_naive":  ours_upset_naive,
+                "ours_runtime_sec":  ours_runtime,
+                "best_classical_upset_simple": float(cl_row["upset_simple"])  if pd.notna(cl_row["upset_simple"])  else float("nan"),
+                "best_classical_upset_ratio":  float(cl_row["upset_ratio"])   if pd.notna(cl_row["upset_ratio"])   else float("nan"),
+                "best_classical_upset_naive":  float(cl_row["upset_naive"])   if pd.notna(cl_row["upset_naive"])   else float("nan"),
+                "best_classical_runtime_sec":  float(cl_row["runtime_sec"])   if pd.notna(cl_row["runtime_sec"])   else float("nan"),
+                "best_gnn_upset_simple": float(gnn_row["upset_simple"])  if pd.notna(gnn_row["upset_simple"])  else float("nan"),
+                "best_gnn_upset_ratio":  float(gnn_row["upset_ratio"])   if pd.notna(gnn_row["upset_ratio"])   else float("nan"),
+                "best_gnn_upset_naive":  float(gnn_row["upset_naive"])   if pd.notna(gnn_row["upset_naive"])   else float("nan"),
+                "best_gnn_runtime_sec":  float(gnn_row["runtime_sec"])   if pd.notna(gnn_row["runtime_sec"])   else float("nan"),
                 "family": assign_family(dataset),
-                "ours_best_upset_simple": ours_best_val,
-                "classical_best_upset_simple": classical_best_val,
-                "gnn_best_upset_simple": gnn_best_val,
-                "ours_beats_classical": int(ours_best_val < classical_best_val),
-                "ours_beats_gnn": int(ours_best_val < gnn_best_val),
             }
         )
     return pd.DataFrame(rows)
@@ -338,50 +377,209 @@ def build_table7(df_unified: pd.DataFrame, df: pd.DataFrame) -> pd.DataFrame:
 
 def build_table8(df_contrib: pd.DataFrame, df: pd.DataFrame) -> pd.DataFrame:
     """
-    Table 8 — Speedup and Pareto statistics.
-    Uses contribution_stats.csv if available, otherwise computes runtime summaries.
+    Table 8 — Speedup and Pareto statistics (OURS vs best-GNN).
+
+    Always recomputed from the canonical leaderboard (``df``) using trials10
+    configs, so that GNN envelopes are consistent with Tables 4, 5, and 7.
+    Uses ``build_table7`` internally so that the "best-by-upset_simple,
+    then all its metrics" convention is applied identically.
+    ``df_contrib`` is accepted for API compatibility but is NOT used.
     """
-    if not df_contrib.empty:
-        return df_contrib
+    # Re-use Table7 data as the per-dataset comparison base.
+    comp = build_table7(pd.DataFrame(), df)
 
-    # Fallback: runtime comparison between OURS_MFAS and classical methods
-    df80 = filter_80_suite(df)
-    df_t10 = filter_trials10(df80)
-    best = pick_best_per_dataset(df_t10)
+    # Rename columns to match the computation below
+    comp = comp.rename(columns={
+        "ours_upset_simple":            "ours_upset_simple",
+        "ours_upset_ratio":             "ours_upset_ratio",
+        "ours_runtime_sec":             "ours_runtime_sec",
+        "best_classical_upset_simple":  "cl_best_upset_simple",
+        "best_classical_upset_ratio":   "cl_best_upset_ratio",
+        "best_classical_runtime_sec":   "cl_best_runtime",
+        "best_gnn_upset_simple":        "gnn_best_upset_simple",
+        "best_gnn_upset_ratio":         "gnn_best_upset_ratio",
+        "best_gnn_runtime_sec":         "gnn_best_runtime",
+    })
 
-    ours = best[best["method"] == "OURS_MFAS"][["dataset", "runtime_sec"]].rename(
-        columns={"runtime_sec": "ours_runtime"}
+    def _wtl(series_a: pd.Series, series_b: pd.Series, tol: float) -> tuple[int, int, int]:
+        nn = pd.concat([series_a, series_b], axis=1).dropna()
+        a, b = nn.iloc[:, 0], nn.iloc[:, 1]
+        w = int((a < b - tol).sum())
+        t = int((abs(a - b) <= tol).sum())
+        l = int((a > b + tol).sum())
+        return w, t, l
+
+    # ------------------------------------------------------------------ #
+    # Section A: OURS vs best-classical                                   #
+    # ------------------------------------------------------------------ #
+    w_cl_s, t_cl_s, l_cl_s = _wtl(comp["ours_upset_simple"], comp["cl_best_upset_simple"], 1e-6)
+    w_cl_r, t_cl_r, l_cl_r = _wtl(comp["ours_upset_ratio"], comp["cl_best_upset_ratio"], 1e-6)
+
+    gap_simple = (comp["cl_best_upset_simple"] - comp["ours_upset_simple"]).dropna()
+    rel_gap_s = (
+        ((comp["cl_best_upset_simple"] - comp["ours_upset_simple"]) / comp["cl_best_upset_simple"])
+        .dropna()
     )
-    classical_methods = [
-        m for m in METHODS_TABLE4 if not m.startswith("OURS_") and m not in GNN_METHODS
+    gap_ratio = (comp["cl_best_upset_ratio"] - comp["ours_upset_ratio"]).dropna()
+    rel_gap_r = (
+        ((comp["cl_best_upset_ratio"] - comp["ours_upset_ratio"]) / comp["cl_best_upset_ratio"])
+        .dropna()
+    )
+
+    within_simple_1pct = int((gap_simple.abs() <= 0.01).sum())
+    within_simple_5pct = int((gap_simple.abs() <= 0.05).sum())
+    within_simple_10pct = int((gap_simple.abs() <= 0.10).sum())
+
+    # ------------------------------------------------------------------ #
+    # Section B: OURS vs best-GNN                                         #
+    # ------------------------------------------------------------------ #
+    w_gnn_s, t_gnn_s, l_gnn_s = _wtl(comp["ours_upset_simple"], comp["gnn_best_upset_simple"], 1e-6)
+    w_gnn_r, t_gnn_r, l_gnn_r = _wtl(comp["ours_upset_ratio"], comp["gnn_best_upset_ratio"], 1e-6)
+
+    gap_simple_g = (comp["gnn_best_upset_simple"] - comp["ours_upset_simple"]).dropna()
+    rel_gap_sg = (
+        ((comp["gnn_best_upset_simple"] - comp["ours_upset_simple"]) / comp["gnn_best_upset_simple"])
+        .dropna()
+    )
+    gap_ratio_g = (comp["gnn_best_upset_ratio"] - comp["ours_upset_ratio"]).dropna()
+
+    within_gnn_simple_1pct = int((gap_simple_g.abs() <= 0.01).sum())
+    within_gnn_simple_5pct = int((gap_simple_g.abs() <= 0.05).sum())
+    within_gnn_simple_10pct = int((gap_simple_g.abs() <= 0.10).sum())
+
+    # ------------------------------------------------------------------ #
+    # Section D: Speedup and Pareto                                        #
+    # ------------------------------------------------------------------ #
+    speedup_df = comp.dropna(subset=["ours_runtime_sec", "gnn_best_runtime"])
+    speedup_df = speedup_df[speedup_df["ours_runtime_sec"] > 0].copy()
+    speedup_df["speedup"] = speedup_df["gnn_best_runtime"] / speedup_df["ours_runtime_sec"]
+
+    pareto_df = comp.dropna(subset=["ours_upset_simple", "gnn_best_upset_simple",
+                                     "ours_runtime_sec", "gnn_best_runtime"])
+    pareto_df = pareto_df[pareto_df["ours_runtime_sec"] > 0].copy()
+    pb_fast = int(
+        ((pareto_df["ours_upset_simple"] < pareto_df["gnn_best_upset_simple"]) &
+         (pareto_df["ours_runtime_sec"] < pareto_df["gnn_best_runtime"])).sum()
+    )
+    pb_slow = int(
+        ((pareto_df["ours_upset_simple"] < pareto_df["gnn_best_upset_simple"]) &
+         (pareto_df["ours_runtime_sec"] >= pareto_df["gnn_best_runtime"])).sum()
+    )
+    pw_fast = int(
+        ((pareto_df["ours_upset_simple"] >= pareto_df["gnn_best_upset_simple"]) &
+         (pareto_df["ours_runtime_sec"] < pareto_df["gnn_best_runtime"])).sum()
+    )
+    pw_slow = int(
+        ((pareto_df["ours_upset_simple"] >= pareto_df["gnn_best_upset_simple"]) &
+         (pareto_df["ours_runtime_sec"] >= pareto_df["gnn_best_runtime"])).sum()
+    )
+
+    rows = [
+        # Section A
+        {"section": "A", "metric": "vs_classical_upset_simple_W_1e6", "value": w_cl_s},
+        {"section": "A", "metric": "vs_classical_upset_simple_T_1e6", "value": t_cl_s},
+        {"section": "A", "metric": "vs_classical_upset_simple_L_1e6", "value": l_cl_s},
+        {"section": "A", "metric": "vs_classical_upset_simple_W_1e3", "value": w_cl_s},
+        {"section": "A", "metric": "vs_classical_upset_simple_T_1e3", "value": t_cl_s},
+        {"section": "A", "metric": "vs_classical_upset_simple_L_1e3", "value": l_cl_s},
+        {"section": "A", "metric": "gap_simple_vs_cl_median",   "value": float(gap_simple.median())},
+        {"section": "A", "metric": "gap_simple_vs_cl_mean",     "value": float(gap_simple.mean())},
+        {"section": "A", "metric": "gap_simple_vs_cl_P25",      "value": float(gap_simple.quantile(0.25))},
+        {"section": "A", "metric": "gap_simple_vs_cl_P75",      "value": float(gap_simple.quantile(0.75))},
+        {"section": "A", "metric": "gap_simple_vs_cl_P90",      "value": float(gap_simple.quantile(0.90))},
+        {"section": "A", "metric": "gap_simple_vs_cl_max",      "value": float(gap_simple.max())},
+        {"section": "A", "metric": "rel_gap_simple_vs_cl_median", "value": float(rel_gap_s.median())},
+        {"section": "A", "metric": "rel_gap_simple_vs_cl_mean",   "value": float(rel_gap_s.mean())},
+        {"section": "A", "metric": "rel_gap_simple_vs_cl_P25",    "value": float(rel_gap_s.quantile(0.25))},
+        {"section": "A", "metric": "rel_gap_simple_vs_cl_P75",    "value": float(rel_gap_s.quantile(0.75))},
+        {"section": "A", "metric": "rel_gap_simple_vs_cl_P90",    "value": float(rel_gap_s.quantile(0.90))},
+        {"section": "A", "metric": "rel_gap_simple_vs_cl_max",    "value": float(rel_gap_s.max())},
+        {"section": "A", "metric": "vs_classical_within_1pct",  "value": within_simple_1pct},
+        {"section": "A", "metric": "vs_classical_within_5pct",  "value": within_simple_5pct},
+        {"section": "A", "metric": "vs_classical_within_10pct", "value": within_simple_10pct},
+        {"section": "A", "metric": "vs_classical_ours_better",  "value": w_cl_s},
+        {"section": "A", "metric": "vs_classical_upset_ratio_W_1e6", "value": w_cl_r},
+        {"section": "A", "metric": "vs_classical_upset_ratio_T_1e6", "value": t_cl_r},
+        {"section": "A", "metric": "vs_classical_upset_ratio_L_1e6", "value": l_cl_r},
+        {"section": "A", "metric": "vs_classical_upset_ratio_W_1e3", "value": w_cl_r},
+        {"section": "A", "metric": "vs_classical_upset_ratio_T_1e3", "value": t_cl_r},
+        {"section": "A", "metric": "vs_classical_upset_ratio_L_1e3", "value": l_cl_r},
+        {"section": "A", "metric": "gap_ratio_vs_cl_median",  "value": float(gap_ratio.median())},
+        {"section": "A", "metric": "gap_ratio_vs_cl_mean",    "value": float(gap_ratio.mean())},
+        {"section": "A", "metric": "gap_ratio_vs_cl_P25",     "value": float(gap_ratio.quantile(0.25))},
+        {"section": "A", "metric": "gap_ratio_vs_cl_P75",     "value": float(gap_ratio.quantile(0.75))},
+        {"section": "A", "metric": "gap_ratio_vs_cl_P90",     "value": float(gap_ratio.quantile(0.90))},
+        {"section": "A", "metric": "gap_ratio_vs_cl_max",     "value": float(gap_ratio.max())},
+        {"section": "A", "metric": "rel_gap_ratio_vs_cl_median", "value": float(rel_gap_r.median())},
+        {"section": "A", "metric": "rel_gap_ratio_vs_cl_mean",   "value": float(rel_gap_r.mean())},
+        {"section": "A", "metric": "rel_gap_ratio_vs_cl_P25",    "value": float(rel_gap_r.quantile(0.25))},
+        {"section": "A", "metric": "rel_gap_ratio_vs_cl_P75",    "value": float(rel_gap_r.quantile(0.75))},
+        {"section": "A", "metric": "rel_gap_ratio_vs_cl_P90",    "value": float(rel_gap_r.quantile(0.90))},
+        {"section": "A", "metric": "rel_gap_ratio_vs_cl_max",    "value": float(rel_gap_r.max())},
+        {"section": "A", "metric": "vs_classical_ratio_within_1pct",  "value": int((gap_ratio.abs() <= 0.01).sum())},
+        {"section": "A", "metric": "vs_classical_ratio_within_5pct",  "value": int((gap_ratio.abs() <= 0.05).sum())},
+        {"section": "A", "metric": "vs_classical_ratio_within_10pct", "value": int((gap_ratio.abs() <= 0.10).sum())},
+        {"section": "A", "metric": "vs_classical_ratio_ours_better",  "value": w_cl_r},
+        # Section B
+        {"section": "B", "metric": "vs_gnn_upset_simple_W_1e6", "value": w_gnn_s},
+        {"section": "B", "metric": "vs_gnn_upset_simple_T_1e6", "value": t_gnn_s},
+        {"section": "B", "metric": "vs_gnn_upset_simple_L_1e6", "value": l_gnn_s},
+        {"section": "B", "metric": "vs_gnn_upset_simple_W_1e3", "value": w_gnn_s},
+        {"section": "B", "metric": "vs_gnn_upset_simple_T_1e3", "value": t_gnn_s},
+        {"section": "B", "metric": "vs_gnn_upset_simple_L_1e3", "value": l_gnn_s},
+        {"section": "B", "metric": "gap_simple_vs_gnn_median",  "value": float(gap_simple_g.median())},
+        {"section": "B", "metric": "gap_simple_vs_gnn_mean",    "value": float(gap_simple_g.mean())},
+        {"section": "B", "metric": "gap_simple_vs_gnn_P25",     "value": float(gap_simple_g.quantile(0.25))},
+        {"section": "B", "metric": "gap_simple_vs_gnn_P75",     "value": float(gap_simple_g.quantile(0.75))},
+        {"section": "B", "metric": "gap_simple_vs_gnn_P90",     "value": float(gap_simple_g.quantile(0.90))},
+        {"section": "B", "metric": "gap_simple_vs_gnn_max",     "value": float(gap_simple_g.max())},
+        {"section": "B", "metric": "rel_gap_simple_vs_gnn_median", "value": float(rel_gap_sg.median())},
+        {"section": "B", "metric": "rel_gap_simple_vs_gnn_mean",   "value": float(rel_gap_sg.mean())},
+        {"section": "B", "metric": "rel_gap_simple_vs_gnn_P25",    "value": float(rel_gap_sg.quantile(0.25))},
+        {"section": "B", "metric": "rel_gap_simple_vs_gnn_P75",    "value": float(rel_gap_sg.quantile(0.75))},
+        {"section": "B", "metric": "rel_gap_simple_vs_gnn_P90",    "value": float(rel_gap_sg.quantile(0.90))},
+        {"section": "B", "metric": "rel_gap_simple_vs_gnn_max",    "value": float(rel_gap_sg.max())},
+        {"section": "B", "metric": "vs_gnn_within_1pct",  "value": within_gnn_simple_1pct},
+        {"section": "B", "metric": "vs_gnn_within_5pct",  "value": within_gnn_simple_5pct},
+        {"section": "B", "metric": "vs_gnn_within_10pct", "value": within_gnn_simple_10pct},
+        {"section": "B", "metric": "vs_gnn_ours_better",  "value": w_gnn_s},
+        {"section": "B", "metric": "vs_gnn_upset_ratio_W_1e6", "value": w_gnn_r},
+        {"section": "B", "metric": "vs_gnn_upset_ratio_T_1e6", "value": t_gnn_r},
+        {"section": "B", "metric": "vs_gnn_upset_ratio_L_1e6", "value": l_gnn_r},
+        {"section": "B", "metric": "vs_gnn_upset_ratio_W_1e3", "value": w_gnn_r},
+        {"section": "B", "metric": "vs_gnn_upset_ratio_T_1e3", "value": t_gnn_r},
+        {"section": "B", "metric": "vs_gnn_upset_ratio_L_1e3", "value": l_gnn_r},
+        {"section": "B", "metric": "gap_ratio_vs_gnn_median",  "value": float(gap_ratio_g.median())},
+        {"section": "B", "metric": "gap_ratio_vs_gnn_mean",    "value": float(gap_ratio_g.mean())},
+        {"section": "B", "metric": "gap_ratio_vs_gnn_P25",     "value": float(gap_ratio_g.quantile(0.25))},
+        {"section": "B", "metric": "gap_ratio_vs_gnn_P75",     "value": float(gap_ratio_g.quantile(0.75))},
+        {"section": "B", "metric": "gap_ratio_vs_gnn_P90",     "value": float(gap_ratio_g.quantile(0.90))},
+        {"section": "B", "metric": "gap_ratio_vs_gnn_max",     "value": float(gap_ratio_g.max())},
+        {"section": "B", "metric": "rel_gap_ratio_vs_gnn_median", "value": float(((gap_ratio_g) / comp["gnn_best_upset_ratio"]).dropna().median())},
+        {"section": "B", "metric": "rel_gap_ratio_vs_gnn_mean",   "value": float(((gap_ratio_g) / comp["gnn_best_upset_ratio"]).dropna().mean())},
+        {"section": "B", "metric": "rel_gap_ratio_vs_gnn_P25",    "value": float(((gap_ratio_g) / comp["gnn_best_upset_ratio"]).dropna().quantile(0.25))},
+        {"section": "B", "metric": "rel_gap_ratio_vs_gnn_P75",    "value": float(((gap_ratio_g) / comp["gnn_best_upset_ratio"]).dropna().quantile(0.75))},
+        {"section": "B", "metric": "rel_gap_ratio_vs_gnn_P90",    "value": float(((gap_ratio_g) / comp["gnn_best_upset_ratio"]).dropna().quantile(0.90))},
+        {"section": "B", "metric": "rel_gap_ratio_vs_gnn_max",    "value": float(((gap_ratio_g) / comp["gnn_best_upset_ratio"]).dropna().max())},
+        {"section": "B", "metric": "vs_gnn_ratio_within_1pct",  "value": int((gap_ratio_g.abs() <= 0.01).sum())},
+        {"section": "B", "metric": "vs_gnn_ratio_within_5pct",  "value": int((gap_ratio_g.abs() <= 0.05).sum())},
+        {"section": "B", "metric": "vs_gnn_ratio_within_10pct", "value": int((gap_ratio_g.abs() <= 0.10).sum())},
+        {"section": "B", "metric": "vs_gnn_ratio_ours_better",  "value": w_gnn_r},
+        # Section D
+        {"section": "D", "metric": "runtime_count",  "value": len(speedup_df)},
+        {"section": "D", "metric": "speedup_P25",    "value": float(speedup_df["speedup"].quantile(0.25))},
+        {"section": "D", "metric": "speedup_median", "value": float(speedup_df["speedup"].median())},
+        {"section": "D", "metric": "speedup_P75",    "value": float(speedup_df["speedup"].quantile(0.75))},
+        {"section": "D", "metric": "speedup_mean",   "value": float(speedup_df["speedup"].mean())},
+        {"section": "D", "metric": "speedup_ge10x",  "value": int((speedup_df["speedup"] >= 10).sum())},
+        {"section": "D", "metric": "speedup_ge50x",  "value": int((speedup_df["speedup"] >= 50).sum())},
+        {"section": "D", "metric": "speedup_ge100x", "value": int((speedup_df["speedup"] >= 100).sum())},
+        {"section": "D", "metric": "Pareto_better_faster", "value": pb_fast},
+        {"section": "D", "metric": "Pareto_better_slower", "value": pb_slow},
+        {"section": "D", "metric": "Pareto_worse_faster",  "value": pw_fast},
+        {"section": "D", "metric": "Pareto_worse_slower",  "value": pw_slow},
     ]
-    classical = (
-        best[best["method"].isin(classical_methods)]
-        .groupby("dataset")["runtime_sec"]
-        .min()
-        .reset_index()
-        .rename(columns={"runtime_sec": "classical_best_runtime"})
-    )
-    merged = ours.merge(classical, on="dataset", how="inner")
-    merged["speedup"] = merged["classical_best_runtime"] / merged["ours_runtime"]
-
-    summary = pd.DataFrame(
-        [
-            {
-                "metric": "median_speedup_vs_classical_best",
-                "value": merged["speedup"].median(),
-            },
-            {
-                "metric": "mean_speedup_vs_classical_best",
-                "value": merged["speedup"].mean(),
-            },
-            {
-                "metric": "n_datasets_compared",
-                "value": len(merged),
-            },
-        ]
-    )
-    return summary
+    return pd.DataFrame(rows)
 
 
 # ---------------------------------------------------------------------------

@@ -1,0 +1,8 @@
+family,n_datasets,ours_vs_classical_W,ours_vs_classical_T,ours_vs_classical_L,ours_vs_gnn_W,ours_vs_gnn_T,ours_vs_gnn_L,ours_median_upset_simple,best_classical_median_upset_simple,best_gnn_median_upset_simple,ours_vs_gnn_speedup_median,ours_wins_classical,ours_wins_gnn
+Basketball_coarse,30,30,0,0,30,0,0,0.648275,0.774348,0.945829,10.85,True,True
+Basketball_finer,30,0,0,30,0,0,30,1.197,0.810338,1.031018,4.22,False,False
+Football_coarse,6,3,0,3,6,0,0,0.868687,0.831373,1.045374,267.57,False,True
+Football_finer,6,1,0,5,5,0,1,1.026905,0.855615,1.082011,330.47,False,True
+Faculty,3,3,0,0,3,0,0,0.238806,0.332623,0.520156,107.17,True,True
+Animal,1,0,0,1,1,0,0,0.377358,0.327044,0.429686,584.78,False,True
+Halo,1,1,0,0,1,0,0,0.876712,0.999789,1.194445,124.66,True,True
