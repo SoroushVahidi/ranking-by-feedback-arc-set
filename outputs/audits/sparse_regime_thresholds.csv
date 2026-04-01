@@ -1,0 +1,13 @@
+comparator,bin_type,bin_label,sample_size,wins,ties,losses,mean_margin,median_margin,favorable
+SpringRank,threshold,density<=0.02,0,0,0,0,nan,nan,0
+SpringRank,threshold,density<=0.03,0,0,0,0,nan,nan,0
+SpringRank,threshold,density<=0.05,31,31,0,0,-0.13425217280464788,-0.13203883171081543,1
+SpringRank,threshold,density<=0.08,62,32,0,30,0.11684022002643155,-0.09009767323732376,1
+SpringRank,quantile,Q1,19,19,0,0,-0.1308686066614954,-0.13066869974136353,1
+SpringRank,quantile,Q2-Q4,57,21,0,36,0.16302348960909926,0.3212651014328003,0
+SpringRank,quantile,Q1-Q2,38,32,0,6,-0.04848749739559073,-0.1279999017715454,1
+SpringRank,quantile,Q3-Q4,38,8,0,30,0.22758842847849192,0.3505191504955292,0
+SpringRank,threshold,density<=0.05,31,31,0,0,-0.13425217280464788,-0.13203883171081543,1
+davidScore,threshold,density<=0.05,31,31,0,0,-0.14419771923172858,-0.13303101062774658,1
+SVD_NRS,threshold,density<=0.05,31,31,0,0,-0.24360272336390712,-0.24404925107955933,1
+btl,threshold,density<=0.05,31,31,0,0,-0.25926272013495044,-0.2792605459690094,1
