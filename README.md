@@ -88,11 +88,12 @@ From the **repository root** (parent of `GNNRank-main/`):
    ```
    Outputs go to `GNNRank-main/paper_csv/` (see `GNNRank-main/paper_csv/README_leaderboard_outputs.md`).
 
-3. **Paper tables** (LaTeX):
+3. **Canonical manuscript-facing paper artifacts** (tables + audits + provenance):
    ```bash
-   python GNNRank-main/tools/build_paper_tables.py
+   python GNNRank-main/scripts/paper/run_all_paper_artifacts.py
    ```
-   Outputs in `GNNRank-main/paper_tables/`.
+   Canonical outputs are written under `GNNRank-main/outputs/paper_tables/` and `GNNRank-main/outputs/audits/`.
+   Legacy exports under `GNNRank-main/paper_tables/` are historical/non-canonical and should not be used for current manuscript numbers.
 
 4. **Validate artifacts** (dataset counts, coverage, missing runtime):
    ```bash
@@ -121,7 +122,7 @@ From the **repository root** (parent of `GNNRank-main/`):
 │   │   ├── validate_paper_artifacts.py
 │   │   └── ...
 │   ├── paper_csv/            # leaderboards, unified comparison, missingness
-│   ├── paper_tables/         # LaTeX tables
+│   ├── paper_tables/         # legacy historical table exports (non-canonical)
 │   ├── paper_figs/           # figures
 │   ├── docs/                 # status, audits, evidence
 │   ├── execution/            # example shell scripts for batches

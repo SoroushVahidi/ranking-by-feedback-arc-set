@@ -1,0 +1,38 @@
+{
+  "canonical_dataset_count": 81,
+  "finance_status_by_ours_variant": {
+    "OURS_MFAS_INS1|trials10train_r100test_r100AllTrue": "timeout_or_missing",
+    "OURS_MFAS_INS1|trials1train_r100test_r100AllTrue": "completed",
+    "OURS_MFAS_INS2|trials10train_r100test_r100AllTrue": "timeout_or_missing",
+    "OURS_MFAS_INS2|trials1train_r100test_r100AllTrue": "completed",
+    "OURS_MFAS_INS3|trials10train_r100test_r100AllTrue": "timeout_or_missing",
+    "OURS_MFAS_INS3|trials1train_r100test_r100AllTrue": "completed",
+    "OURS_MFAS|trials10train_r100test_r100AllTrue": "timeout_or_missing"
+  },
+  "method_dataset_coverage": {
+    "DIGRAC": 78,
+    "OURS_MFAS": 78,
+    "OURS_MFAS_INS1": 79,
+    "OURS_MFAS_INS2": 79,
+    "OURS_MFAS_INS3": 79,
+    "PageRank": 79,
+    "SVD_NRS": 80,
+    "SVD_RS": 80,
+    "SpringRank": 80,
+    "btl": 79,
+    "btlDIGRAC": 1,
+    "davidScore": 79,
+    "eigenvectorCentrality": 79,
+    "ib": 78,
+    "mvr": 18,
+    "rankCentrality": 79,
+    "serialRank": 79,
+    "syncRank": 79
+  },
+  "ours_vs_best_classical_denominator": 79,
+  "ours_vs_best_classical_wins": 39,
+  "ours_vs_best_gnn_denominator": 78,
+  "ours_vs_best_gnn_wins": 46,
+  "pareto_denominator": 79,
+  "pareto_ours_not_dominated": 69
+}

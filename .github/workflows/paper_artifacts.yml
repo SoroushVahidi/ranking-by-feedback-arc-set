@@ -1,0 +1,37 @@
+name: Canonical Paper Artifacts
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  rebuild-validate-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: GNNRank-main
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install test dependency
+        run: python -m pip install --upgrade pip pytest
+
+      - name: Rebuild canonical artifacts
+        run: python scripts/paper/rebuild_experiment_tables.py
+
+      - name: Validate canonical artifacts
+        run: python scripts/paper/validate_experiment_tables.py
+
+      - name: Run consistency tests
+        run: python -m pytest tests/test_experiment_table_consistency.py
+
+      - name: Ensure repository is clean after rebuild
+        run: |
+          git update-index -q --refresh
+          git diff --exit-code

@@ -573,6 +573,8 @@ def refine_scores_ratio_ternary(
 def ours_mfas_rmfa(
     A: sp.spmatrix,
     insertion_passes: int = 3,          # INS1=1, INS2=2, INS3=3
+    enable_phase_b: bool = True,
+    enable_phase_c: bool = True,
     time_limit_sec: float = 900.0,
     refine_naive: bool = True,
     naive_refine_time_sec: float = 2.0,
@@ -603,16 +605,23 @@ def ours_mfas_rmfa(
     t_after_phase1 = time.time()
 
     # Phase B: add-back (desc weight) with INS passes
-    kept_final, kept_after_pass, reinserted_per_pass, changed_edges_per_pass, break_reason = _addback_desc_weight_multi(
-        n=n,
-        kept_initial=keptA,
-        src=src,
-        dst=dst,
-        w=w,
-        insertion_passes=int(insertion_passes),
-        time_limit_sec=float(time_limit_sec),
-        t0=t0,
-    )
+    if enable_phase_b:
+        kept_final, kept_after_pass, reinserted_per_pass, changed_edges_per_pass, break_reason = _addback_desc_weight_multi(
+            n=n,
+            kept_initial=keptA,
+            src=src,
+            dst=dst,
+            w=w,
+            insertion_passes=int(insertion_passes),
+            time_limit_sec=float(time_limit_sec),
+            t0=t0,
+        )
+    else:
+        kept_final = keptA.copy()
+        kept_after_pass = [kept_final.copy()]
+        reinserted_per_pass = [0]
+        changed_edges_per_pass = [0]
+        break_reason = "phase_b_disabled"
     t_after_phase2 = time.time()
 
     # Scores from DAG after final kept
@@ -661,7 +670,7 @@ def ours_mfas_rmfa(
 
     # Phase C: optional ratio refinement (bounded by refine_time_sec, also never exceeding global limit)
     def _maybe_refine(s_in: np.ndarray) -> np.ndarray:
-        if not refine_ratio:
+        if (not enable_phase_c) or (not refine_ratio):
             return s_in
         remaining = max(0.0, float(time_limit_sec) - (time.time() - t0))
         budget = min(float(refine_time_sec), remaining)
@@ -699,6 +708,8 @@ def ours_mfas_rmfa(
         "reinserted_per_pass": [int(x) for x in reinserted_per_pass],
         "changed_edges_per_pass": [int(x) for x in changed_edges_per_pass],
         "insertion_passes": int(insertion_passes),
+        "enable_phase_b": bool(enable_phase_b),
+        "enable_phase_c": bool(enable_phase_c),
         "executed_passes": int(len(kept_after_pass)),
         "break_reason": str(break_reason),
         "refine_ratio": bool(refine_ratio),
