@@ -7,19 +7,39 @@ Paper: *Scalable and Training-Free Ranking from Pairwise Comparisons via Acyclic
 
 ---
 
+> **Pipeline locations — which one is canonical?**
+>
+> There are two parallel pipeline locations in this repository, both reading from
+> `GNNRank-main/paper_csv/` but writing to different output directories:
+>
+> | | Canonical pipeline | Root-level pipeline (this doc) |
+> |---|---|---|
+> | Entrypoint | `python GNNRank-main/scripts/paper/run_all_paper_artifacts.py` | `python scripts/paper/generate_paper_tables.py` |
+> | Outputs | `GNNRank-main/outputs/paper_tables/` | `outputs/paper_tables/` |
+> | Tests | `GNNRank-main/tests/test_experiment_table_consistency.py` | `tests/test_paper_artifacts.py` |
+>
+> **The canonical pipeline is `GNNRank-main/scripts/paper/run_all_paper_artifacts.py`**
+> (as documented in the root `README.md`).  The root-level scripts and this README
+> describe an alternative pipeline that produces equivalent outputs under the
+> top-level `outputs/` directory.  Both pipelines read from the same source of
+> truth (`GNNRank-main/paper_csv/leaderboard_per_method.csv`) and should produce
+> identical numbers.  When in doubt, prefer the canonical pipeline.
+
+---
+
 ## Quick reference: which files to use
 
-| Purpose | File |
-|---------|------|
-| **Table 4** (full 80-dataset suite) | `outputs/paper_tables/table4_full_suite.csv` |
-| **Table 5** (compute-matched, 79 datasets) | `outputs/paper_tables/table5_compute_matched.csv` |
-| **Table 6** (missingness audit) | `outputs/paper_tables/table6_missingness.csv` |
-| **Table 7** (best-in-suite comparison) | `outputs/paper_tables/table7_best_in_suite.csv` |
-| **Table 8** (runtime trade-off) | `outputs/paper_tables/table8_runtime_tradeoff.csv` |
-| Benchmark composition (n/m ranges) | `outputs/paper_tables/benchmark_composition.csv` |
-| All key numbers in JSON | `outputs/paper_tables/paper_claims_master.json` |
-| Master CSV (Tables 4+5 combined) | `outputs/paper_tables/paper_metrics_master.csv` |
-| Dataset inventory (all 81) | `outputs/derived/dataset_inventory.csv` |
+| Purpose | File (root-level pipeline) | Canonical equivalent |
+|---------|------|------|
+| **Table 4** (full 80-dataset suite) | `outputs/paper_tables/table4_full_suite.csv` | `GNNRank-main/outputs/paper_tables/table4_full_suite.csv` |
+| **Table 5** (compute-matched, 79 datasets) | `outputs/paper_tables/table5_compute_matched.csv` | `GNNRank-main/outputs/paper_tables/table5_compute_matched.csv` |
+| **Table 6** (missingness audit) | `outputs/paper_tables/table6_missingness.csv` | `GNNRank-main/outputs/paper_tables/table6_missingness.csv` |
+| **Table 7** (best-in-suite comparison) | `outputs/paper_tables/table7_best_in_suite.csv` | `GNNRank-main/outputs/paper_tables/table7_best_in_suite.csv` |
+| **Table 8** (runtime trade-off) | `outputs/paper_tables/table8_runtime_tradeoff.csv` | `GNNRank-main/outputs/paper_tables/table8_runtime_tradeoff.csv` |
+| Benchmark composition (n/m ranges) | `outputs/paper_tables/benchmark_composition.csv` | — (root-level pipeline only) |
+| All key numbers in JSON | `outputs/paper_tables/paper_claims_master.json` | `GNNRank-main/outputs/paper_tables/paper_claims_master.json` |
+| Master CSV (Tables 4+5 combined) | `outputs/paper_tables/paper_metrics_master.csv` | — (root-level pipeline only) |
+| Dataset inventory (all 81) | `outputs/derived/dataset_inventory.csv` | — (root-level pipeline only) |
 | **Canonical data source** | `GNNRank-main/paper_csv/leaderboard_per_method.csv` |
 
 ---
@@ -41,6 +61,9 @@ Columns:
 ---
 
 ## How to regenerate all tables
+
+> **Canonical pipeline:** `python GNNRank-main/scripts/paper/run_all_paper_artifacts.py` (see root `README.md`).  
+> The commands below use the root-level pipeline B and produce equivalent outputs under `outputs/paper_tables/`.
 
 ```bash
 # From the repository root:
