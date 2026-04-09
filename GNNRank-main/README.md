@@ -1,5 +1,7 @@
 # GNNRank
 
+**This fork is used in the "Ranking by Feedback Arc Set" project.** For a high-level overview, dataset list, and pipeline (OURS + baselines + GNNs), see the [root README](../README.md) (one level up).
+
 This is the official code repo for the ICML 2022 paper -- [GNNRank: Learning Global Rankings from Pairwise Comparisons via Directed Graph Neural Networks](https://arxiv.org/pdf/2202.00211.pdf). A recorded video for the live talk at ICML 2022 is provided [via this link](https://slideslive.com/38984112/gnnrank-learning-global-rankings-from-pairwise-comparisons-via-directed-graph-neural-networks). You are also welcome to read our [poster](https://github.com/SherylHYX/GNNRank/blob/main/ICML2022_GNNRank_poster.pdf).
 
 --------------------------------------------------------------------------------

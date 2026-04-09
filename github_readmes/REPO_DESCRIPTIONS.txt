@@ -1,0 +1,29 @@
+# One line per repo: reponame|description (paste into GitHub About or use set_descriptions.sh with GITHUB_TOKEN)
+# GitHub About has 350 char limit. Paper links included where applicable.
+ranking-by-feedback-arc-set|Ranking by minimum feedback arc set (MFAS) vs classical and GNN rankers. Extends GNNRank with OURS method and evaluation pipeline.
+A-new-approach-for-denoising-salt-and-pepper-noise|Simple method to remove salt-and-pepper noise from images.
+A-new-approach-for-Image-resize-implemented-in-matlab|Alternative image resizing method implemented in MATLAB.
+bfsbased_node_classification|Interpretable node classification on heterophilic graphs. Paper: https://arxiv.org/abs/2512.22221 PyTorch implementation.
+Code-for-minimum-distance-linear-codes-problem|Genetic algorithm for minimum distance of linear codes. C++ and MiniZinc. AI course project.
+combinatorial-opt-agent|AI agent: natural language to ILP/LP formulations and solver code. Data: NL4Opt, Gurobi examples.
+Computing-the-Margin-of-Victory-in-IRV-Elections|MoV for IRV elections. Paper: https://www.cs.cornell.edu/~tmagrino/papers/evt11.pdf
+CS301-004-Spring-2021-NJIT-Introduction-to-data-science-|NJIT Intro to Data Science (Spring 2021) homework and solutions.
+Design-exploration-for-Graph-partitioning-into-triangles-problem|Graph Partition Into Triangles. Paper: https://link.springer.com/article/10.1007/s00224-012-9412-5
+diameter-of-polygon|Parallel diameter of convex polygon. C++ and OpenMP. Algorithm from Goodrich et al.
+Fairness-Maximization-among-Offline-Agents-in-Online-Matching-Markets|Fairness for offline agents in online matching. Paper: https://arxiv.org/abs/2109.08934
+Hybrid-Interval-Based-Refinement-for-Large-Scale-Weighted-Feedback-Arc-Set|Hybrid interval-based refinement for weighted feedback arc set at scale.
+IRV_Fairness|Fairness in Instant Runoff Voting. Metrics and analysis.
+Jigsaw-puzzle-game-solver|MATLAB jigsaw puzzle solver. Main: Start.m.
+LeetCode_Solutions|My LeetCode solutions by topic. Data structures and algorithms.
+Maximum-weight-connected-subgraph-problem|Max weight connected subgraph. C++ and CPLEX.
+Meta-coding-puzzles|Solutions for Meta career profile coding puzzles.
+minimum-feedback-challenge|MFAS challenge. FlyWire Codex: https://codex.flywire.ai/app/mfas_challenge With Ioannis Koutis, NJIT.
+njit_scheduling|Scheduling models and solvers (NJIT context).
+parallel-longest-common-subsequence|Parallel LCS in Chapel. O(log³ n) time, O(mn) processors. Paper: https://ieeexplore.ieee.org/abstract/document/10363472/
+Ranking_with_MWFAS|Ranking with MWFAS. Paper: https://arxiv.org/html/2412.16181 Data from GNNRank (edge-list format).
+Scheduling-problem|Scheduling problem formulations and solvers.
+STVPoll-Soroush|Fork of STVPoll for Single Transferable Vote. Upstream: https://github.com/VoteIT/STVPoll
+sudoku-example|SAT-based Sudoku solver in C++ with MiniSat. Blog: https://codingnest.com/modern-sat-solvers-fast-neat-underused-part-1-of-n/
+tropical-connected|Tropical geometry and connectivity. Code and examples.
+uva|Solutions to UVa Online Judge problems.
+weighted-minfas-codes|Local-ratio heuristic for minimal feedback arc set. DIMACS graph benchmarks.

@@ -39,6 +39,25 @@ git push origin main
 
 Git will not add ignored paths; your GitHub repo will match wulver except for the ignored entries.
 
+## Do everything from the terminal
+
+From the repo root you can run:
+
+```bash
+cd "/path/to/ranking by feedback arc set"
+chmod +x do_everything_from_terminal.sh github_readmes/push_readmes_to_github.sh
+./do_everything_from_terminal.sh sync     # sync this repo to GitHub (exclude big files)
+./do_everything_from_terminal.sh readmes # push READMEs to all other GitHub repos
+./do_everything_from_terminal.sh all     # run sync then readmes
+```
+
+- **sync:** Runs `GNNRank-main/sync_to_github.sh`, then prompts to commit and push this repo.
+- **readmes:** Clones (or pulls) each of your other GitHub repos into `../github_repos_to_update`, copies the README from `github_readmes/`, commits and pushes. Set `REPOS_DIR` to use a different clone directory.
+- **all:** Runs sync then readmes.
+
+For a dry run of the README push (no clone/commit/push):  
+`./github_readmes/push_readmes_to_github.sh --dry-run`
+
 ## Remote
 
 - **GitHub:** https://github.com/SoroushVahidi/ranking-by-feedback-arc-set
