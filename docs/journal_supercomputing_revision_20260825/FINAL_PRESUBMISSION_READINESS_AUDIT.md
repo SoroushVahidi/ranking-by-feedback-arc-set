@@ -12,6 +12,7 @@ Scientific, editorial, package, and three-document consistency checks are comple
 Dataset denominator accounting corrected (intended 80 / loadable 78; coverage 77/78, 78/78, 61/78).
 Publication-tone cleanup completed; no unsupported supplement references.
 Cover letter personalized to Prof. Arabnia with manuscript ID (author-attested metadata).
+Response-letter singular voice + coverage denominators finalized.
 The only optional author-side hygiene step is a final visual overlay of the publisher decision email against the response letter (verbatim email file is still not stored locally). That check does not block scientific readiness of the revision package.
 
 ## Completed gates
@@ -25,6 +26,10 @@ The only optional author-side hygiene step is a final visual overlay of the publ
 | `DATASET_DENOMINATOR_CONSISTENCY` | Pass |
 | `NO_INAPPROPRIATE_REVISION_HISTORY_LANGUAGE` | Pass |
 | `NO_UNSUPPORTED_SUPPLEMENT_REFERENCES` | Pass |
+| `NOVELTY_RESPONSE_TONE` | Pass |
+| `NO_INTERNAL_DEBUG_WORDING` | Pass |
+| `SINGLE_AUTHOR_VOICE` | Pass |
+| `RESPONSE_COVERAGE_DENOMINATORS` | Pass |
 | `NO_MATERIAL_REDUNDANT_PASSAGES` | Pass |
 | Reviewer coverage | 25/25 (R1 5/5, R2 9/9, R3 4/4, R4 7/7) |
 | Acknowledgments + AI disclosure | Pass |
@@ -37,10 +42,10 @@ The only optional author-side hygiene step is a final visual overlay of the publ
 
 | Artifact | Pages | SHA256 |
 |---|---:|---|
-| Manuscript PDF | 17 | `c0d1e86dd340f950780ee72aaeb904d50421815906b8a939c933fc6335181ca7` |
-| Response PDF | 6 | `248a0f34f299f692b90312277a64120fe712ccd9581499c31de5767b38fd7c7c` |
-| Cover letter PDF | 1 | `c74da219622792bc6e42ff82ffacd9fb7b2b0bf549c3163452b9c14631858378` |
-| Package ZIP | — | `d07ad3617de4c2a41d5c75775503ee9dcbac4b9d33e36fce9a8ba19ffe75bf4a` |
+| Manuscript PDF | 17 | `b5a7bf7359c74619470373cf7d4a82087d23b415a39b4764307766dd046e5912` |
+| Response PDF | 6 | `b2d361e35c80b208e594865b90ca5319b362708ec3e5d35c764d3beba27825b2` |
+| Cover letter PDF | 1 | `d225d4e8ac9620c479268951c3c6c3ba614f49afa6efb1cf4268f7a346ec07ca` |
+| Package ZIP | — | `` |
 
 ## Author-optional overlay
 
