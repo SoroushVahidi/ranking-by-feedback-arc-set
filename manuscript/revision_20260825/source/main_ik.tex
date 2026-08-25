@@ -593,10 +593,10 @@ Figure~\ref{fig:ablation} shows unpaired Layer median trajectories for context; 
 \label{fig:ablation}
 \end{figure}
 
-Table~\ref{tab:reviewer1_stage_ablation} reports the three requested pipeline stages, with all three upset losses and mean runtime, on matched dataset support.
-The legacy fixed-topological/\textsc{ins} reinsertion used in the submitted manuscript (A1) and its refined full pipeline (A3) were run on a smaller $n=33$ scope than the revised canonical stages; comparing them against a Phase~A row computed on the larger $77$-dataset scope would confound the stage effect with a change in dataset composition.
+Table~\ref{tab:reviewer1_stage_ablation} reports \texttt{upset\_simple}, \texttt{upset\_naive}, \texttt{upset\_ratio}, and mean runtime across three pipeline stages, on matched dataset support.
+The legacy fixed-topological/\textsc{ins} reinsertion (A1) and its refined full pipeline (A3) were run on a smaller $n=33$ scope than the canonical reachability stages ($n=77$); comparing them against a Phase~A row computed on the larger scope would confound the stage effect with a change in dataset composition.
 We therefore report two panels, each internally on one exact common-completion dataset set: Panel~(a) compares Phase~A only, legacy reinsertion, and the legacy refined pipeline on their shared $n=33$ scope; Panel~(b) compares Phase~A only, exact reachability reinsertion, and refinement (\textsc{OURS-Reach}) on their shared $n=77$ scope.
-Within each panel, mean \texttt{upset\_simple}, \texttt{upset\_naive}, and \texttt{upset\_ratio} decrease monotonically from Phase~A only to the full pipeline, and mean runtime increases monotonically with pipeline depth; the significant paired improvement of exact reachability add-back over Phase~A only and over the submitted proxy is already quantified in Table~\ref{tab:ablation_primary}, which these per-panel means complement rather than replace.
+Within each panel, mean \texttt{upset\_simple}, \texttt{upset\_naive}, and \texttt{upset\_ratio} decrease monotonically from Phase~A only to the full pipeline, and mean runtime increases monotonically with pipeline depth; the significant paired improvement of exact reachability add-back over Phase~A only and over the legacy proxy is already quantified in Table~\ref{tab:ablation_primary}, which these per-panel means complement rather than replace.
 
 \begin{table}[H]
 \centering
@@ -607,9 +607,9 @@ Within each panel, mean \texttt{upset\_simple}, \texttt{upset\_naive}, and \text
 \toprule
 \textbf{Stage} & \texttt{upset\_simple} & \texttt{upset\_naive} & \texttt{upset\_ratio} & Mean runtime (s) \\
 \midrule
-A0 (Phase~A only) & 0.2571 & 93621.2 & 0.3762 & 0.148 \\
-A1 (+ legacy topo/\textsc{ins} add-back) & 0.2555 & 93589.0 & 0.3760 & 0.276 \\
-A3 (+ legacy refinement, full pipeline) & 0.2521 & 93548.8 & 0.3462 & 0.378 \\
+Phase~A only (A0) & 0.2571 & 93621.2 & 0.3762 & 0.148 \\
++ legacy fixed-topological/\textsc{ins} reinsertion (A1) & 0.2555 & 93589.0 & 0.3760 & 0.276 \\
++ legacy refinement, full pipeline (A3) & 0.2521 & 93548.8 & 0.3462 & 0.378 \\
 \bottomrule
 \end{tabular}
 
@@ -619,12 +619,12 @@ A3 (+ legacy refinement, full pipeline) & 0.2521 & 93548.8 & 0.3462 & 0.378 \\
 \toprule
 \textbf{Stage} & \texttt{upset\_simple} & \texttt{upset\_naive} & \texttt{upset\_ratio} & Mean runtime (s) \\
 \midrule
-A0 (Phase~A only) & 0.2853 & 120842.9 & 0.3498 & 0.174 \\
-A2 (+ exact reachability add-back) & 0.2728 & 118788.6 & 0.3410 & 0.427 \\
-A4 (+ refinement, \textsc{OURS-Reach}) & 0.2724 & 118722.0 & 0.3178 & 0.542 \\
+Phase~A only (A0) & 0.2853 & 120842.9 & 0.3498 & 0.174 \\
++ exact reachability reinsertion (A2) & 0.2728 & 118788.6 & 0.3410 & 0.427 \\
++ refinement, \textsc{OURS-Reach} (A4) & 0.2724 & 118722.0 & 0.3178 & 0.542 \\
 \bottomrule
 \end{tabular}
-\caption{Stage-wise ablation on matched dataset support. Panel~(a) reports the legacy fixed-topological/\textsc{ins} progression (submitted manuscript) on its exact common-completion subset ($n=33$); Panel~(b) reports the revised reachability-based progression on its exact common-completion subset ($n=77$). All entries are means over the panel's indicated common support (mean runtime specifically answers the reviewer's request for average runtime; primary runtime comparisons elsewhere use the median, as in Table~\ref{tab:runtime_wtl}). The two panels use different dataset scopes (Panel~(a)'s $33$ datasets are a subset of Panel~(b)'s $77$) and are not intended for direct cross-panel comparison; directional significance is established by the paired tests in Table~\ref{tab:ablation_primary}.}
+\caption{Stage-wise ablation on matched dataset support. Panel~(a) reports the legacy fixed-topological/\textsc{ins} progression on its common-completion subset ($n=33$); Panel~(b) reports the canonical reachability-based progression on its common-completion subset ($n=77$). Entries are means over the indicated support; mean runtime is reported alongside the three upset losses (primary runtime comparisons elsewhere use the median, as in Table~\ref{tab:runtime_wtl}). The $33$ datasets in Panel~(a) are a subset of those in Panel~(b), so cross-panel numerical comparisons are not intended; paired significance is reported in Table~\ref{tab:ablation_primary}.}
 \label{tab:reviewer1_stage_ablation}
 \end{table}
 

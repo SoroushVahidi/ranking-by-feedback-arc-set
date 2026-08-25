@@ -16,13 +16,24 @@ one new manuscript table (Table 8); (2) the Introduction's informal feedback-arc
 statement was corrected to match Proposition 1 exactly (inequality in general, equality
 under inclusion-minimality). No new scientific experiments were run; the new table is
 derived entirely from already-completed structural-ablation outputs.
-A follow-up correction (this pass) fixed a mixed-dataset-support issue in Table 8: the
-legacy A1 row previously used a different ($n=33$) dataset scope than the A0/A2/A4 rows
-($n=77$) in the same table. Table 8 is now two panels, each internally on one exact
-common-completion dataset set (Panel (a): A0/A1/A3 legacy progression, $n=33$; Panel (b):
-A0/A2/A4 canonical progression, $n=77$), re-aggregated from the same underlying
-`structural_ablation.csv` with no new experiment and no re-run ranking algorithm. See
-`FINAL_R1_COMMON_SUPPORT_AUDIT.md` and the revised `FINAL_R1_ABLATION_NUMERICAL_AUDIT.md`.
+A follow-up correction fixed a mixed-dataset-support issue in Table 8: the legacy A1 row
+previously used a different ($n=33$) dataset scope than the A0/A2/A4 rows ($n=77$) in the
+same table. Table 8 is now two panels, each internally on one exact common-completion
+dataset set (Panel (a): A0/A1/A3 legacy progression, $n=33$; Panel (b): A0/A2/A4 canonical
+progression, $n=77$), re-aggregated from the same underlying `structural_ablation.csv`
+with no new experiment and no re-run ranking algorithm. See `FINAL_R1_COMMON_SUPPORT_AUDIT.md`
+and the revised `FINAL_R1_ABLATION_NUMERICAL_AUDIT.md`.
+A final editorial cleanup pass (this pass) found that the matched-support edit had
+reintroduced reviewer-attribution/submission-history phrasing into the published manuscript
+text itself (Table 8's caption and surrounding \S3.7 prose said "(submitted manuscript)"
+and "the reviewer's request for average runtime"). This was corrected: the manuscript now
+describes the two panels in scientifically neutral terms ("legacy" vs. "canonical"), with
+row labels reordered so the human-readable stage name is primary and the internal A0-A4
+code is parenthetical. The `NO_INAPPROPRIATE_REVISION_HISTORY_LANGUAGE` gate below was
+re-verified against this correction, not merely carried over from the prior pass. The
+response letter's own revision-history language (explaining what the submitted method did
+and how it changed) was intentionally left untouched, since that is appropriate and
+expected in a response-to-reviewers document.
 Dataset denominator accounting remains correct (intended 80 / loadable 78; coverage 77/78, 78/78, 61/78).
 Publication-tone cleanup completed; no unsupported supplement references.
 Cover letter personalized to Prof. Arabnia with manuscript ID (author-attested metadata).
@@ -40,6 +51,7 @@ The only optional author-side hygiene step is a final visual overlay of the publ
 | `NO_UNTRACEABLE_R1_ABLATION_VALUES` | Pass |
 | `LEGACY_PANEL_COMMON_SUPPORT` | Pass |
 | `CANONICAL_PANEL_COMMON_SUPPORT` | Pass |
+| `INTRO_FAS_THEORY_WORDING` | Pass |
 | `CANONICAL_METHOD_MATCHES_HEADLINE_TABLES` | Pass |
 | `NO_UNTRACEABLE_NUMERICAL_CLAIMS` | Pass |
 | `NO_DENOMINATOR_INCONSISTENCY` | Pass |
@@ -64,10 +76,10 @@ The only optional author-side hygiene step is a final visual overlay of the publ
 
 | Artifact | Pages | SHA256 |
 |---|---:|---|
-| Manuscript PDF | 18 | `fec7131399a70a3aa4dc7805cbfa02ca1d3139e241f29fc3315114c64def03af` |
-| Response PDF | 7 | `0949e658b24ffc5f0eeffb5d56fdd734b00a8103d3e5b6f65ed4d6c2b987583f` |
-| Cover letter PDF | 1 | `cd511ae2e122f1e883c2b8bc9d34339b28eb97678f307977edc6cdc54aa04f99` |
-| Package ZIP | — | `a177bac1a9cadef83ab13aaf769130edef2c0e15f6a35bad47f907f1a31f63f8` |
+| Manuscript PDF | 18 | `36ef048e3934a461c108627aaa010da79d8f3c87d4d8bd99fd6223fad1079e91` |
+| Response PDF | 7 | `d44504f6ce0af185394bafa3bbeb4350d1cf40d515011d0097838776ef440b15` |
+| Cover letter PDF | 1 | `9b28ed3177951f36593302708d292be3e8663c61d5edff572c6002cf8950420d` |
+| Package ZIP | — | `013cb9caa2d544009ac61be45b4c1107c109d7f90e325e32d2f931eb8a50385b` |
 
 ## Author-optional overlay
 
