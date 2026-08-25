@@ -38,7 +38,7 @@
 \renewcommand{\algorithmautorefname}{Algorithm}
 
 
-\title{Scalable and Training-Free Ranking from Pairwise Comparisons via Acyclic Graph Construction}
+\title{Training-Free Ranking from Pairwise Comparisons via Acyclic Graph Construction}
 
 
 
@@ -59,11 +59,7 @@ New Jersey Institute of Technology, Newark, NJ, USA\\
 \maketitle
 
 \begin{abstract}
-Deriving global rankings from noisy and incomplete pairwise comparisons is a fundamental problem with applications in sports analytics, preference aggregation, and evaluation. Many recent approaches rely on learning-based models, but in practice ranking systems are often required to operate under strict constraints on training cost, runtime, and reproducibility. We study a scalable, training-free alternative that constructs rankings directly from weighted directed comparison graphs.
-
-Our approach represents pairwise comparisons as a weighted digraph and leverages the connection between ranking inconsistency and feedback-arc-set removal to build an acyclic comparison backbone. The proposed pipeline is time-bounded and consists of three stages: a local-ratio-style cycle-breaking heuristic, a stable weight-prioritized add-back procedure with up to three passes while preserving acyclicity, and an optional bounded score-refinement stage under upset-based objectives used in recent ranking benchmarks. The resulting method outputs a real-valued score vector whose induced order is consistent with the recovered acyclic structure.
-
-Across the benchmark suite used in recent ranking-from-comparisons work, the proposed method is competitive with strong classical baselines and delivers substantial runtime advantages over training-based GNNRank configurations under fixed wall-clock budgets. These results position the method as a practical, deterministic, and scalable alternative for ranking on large pairwise-comparison graphs when training cost and deployment efficiency are important.
+Ranking from weighted pairwise comparisons asks for a global order that respects observed preferences as well as possible. We study a training-free, deterministic pipeline that builds an acyclic backbone on the comparison digraph using an MWFAS-inspired local-ratio heuristic, restores high-weight arcs under exact cycle-safe reinsertion, optionally applies a secondary weighted min-cut exchange, and extracts scores with optional order-preserving refinement. The local-ratio and exact add-back components follow prior lineage; this paper formalizes ranking--MWFAS optimum-value equivalence and practical guarantee boundaries, corrects a submitted topological-proxy weakening of add-back, and expands classical and GNN evaluation under timeout-aware common-completion analysis. Empirically, the method is strong on simple/naive upset metrics against several baselines, competitive rather than uniformly superior to SpringRank, DavidScore, and SVD\_NRS under family-aware analysis, and weaker than BTL on upset\_ratio. It is slower than lightweight classical estimators yet substantially faster than archived trained GNNRank runs under an end-to-end protocol; the near-complete Finance graph marks a large-dense scalability boundary.
 \end{abstract}
 \newcommand{\keywords}[1]{\textbf{Keywords:} #1}
 
@@ -74,7 +70,7 @@ Ranking from pairwise comparisons arises throughout statistics, machine learning
 
 Directed comparison graphs almost always contain cycles arising from noise, incompleteness, and local inconsistencies. A combinatorial response is to delete a set of directed arcs so that the remaining graph is acyclic, then read a ranking from a topological order of the resulting directed acyclic graph (DAG). This is the Minimum Weighted Feedback Arc Set (MWFAS) viewpoint: minimize the total weight of deleted comparisons subject to acyclicity. Related spectral and synchronization methods already note connections between ranking inconsistency and feedback structure \citet{SerialRank,SyncRank}. MWFAS is NP-hard \citet{K72}, so exact minimization is generally impractical, yet the formulation supplies a precise consistency-restoration objective for ranking.
 
-We emphasize at the outset that this paper does \emph{not} propose a new general approximation algorithm for MWFAS. Our objective is a practical, training-free, deterministic, and time-bounded ranking pipeline for weighted pairwise-comparison graphs. Prior work by \citet{VK25} already operationalized ranking via the local-ratio cycle-breaking heuristic of Demetrescu and Finocchi \citet{CI03}, together with weight-prioritized reinsertion of deleted arcs under an exact cycle-safety test and optional order-preserving score refinement. The present manuscript clarifies that lineage, corrects an implementation-fidelity gap, adds theory and a secondary structural repair, and expands empirical validation.
+This paper develops a practical, training-free, deterministic, and time-bounded ranking pipeline rather than a new general MWFAS approximation algorithm (\S\ref{sec:related}). Prior work by \citet{VK25} already used the local-ratio heuristic of Demetrescu and Finocchi \citet{CI03} with weight-prioritized exact cycle-safe reinsertion and optional refinement. We clarify that lineage, correct an implementation-fidelity gap, add theory and a secondary structural repair, and expand empirical validation.
 
 To make the ranking--MWFAS connection precise, we begin with formal definitions.
 
@@ -108,16 +104,14 @@ The pipeline studied here (\S\ref{sec:framework}) builds an acyclic backbone wit
 
 \begin{enumerate}
 \item \textbf{Formalization and guarantee boundaries.}
-We prove ranking--MWFAS optimum-value equivalence under the many-to-many correspondence above, restate implementation complexity carefully, and audit when the Demetrescu--Finocchi guarantee does and does not transfer. In particular, a practical timeout-bounded run does \emph{not} automatically inherit a nontrivial general approximation guarantee under early termination.
+Ranking--MWFAS optimum-value equivalence (Prop.~\ref{prop:rank_mwfas}), implementation complexity, and when the Demetrescu--Finocchi guarantee does and does not transfer (\S\ref{subsec:theory_df03}).
 \item \textbf{Implementation-fidelity correction.}
-The submitted codebase used a weaker fixed-topological-position proxy in place of the intended exact reachability test for cycle-safe reinsertion. Restoring exact reachability is fidelity to the established specification, not a newly invented mechanism; controlled ablations show that the correction materially improves ranking quality relative to the proxy.
+Restore exact reachability-aware reinsertion in place of the submitted topological-position proxy (\S\ref{subsec:framework_phaseB}); ablations quantify the effect (\S\ref{subsec:ablation}).
 \item \textbf{Secondary structural repair.}
-We introduce a conflict-triggered weighted min-cut exchange with proofs of acyclicity preservation, strict improvement of the weighted feedback objective, and finite termination under strict improvement. Empirically, its benefit is regime-specific rather than universal.
+A conflict-triggered weighted min-cut exchange with monotone objective improvement (Prop.~\ref{prop:mincut}), with regime-specific empirics (\S\ref{subsec:mincut_emp}).
 \item \textbf{Expanded empirical validation.}
-We compare against classical and GNNRank baselines under a common protocol with timeout-aware coverage, paired statistics, family-aware sensitivity (addressing Basketball-dominated suites), and a full ablation/sensitivity/scalability campaign. The modest expansion of the dataset suite relative to prior work is not presented as a primary novelty.
+Classical and GNN comparisons with timeout-aware common completions, paired statistics, family-aware sensitivity, and ablation/sensitivity analysis (\S\ref{sec:exp}). Dataset-count expansion is not treated as a primary novelty.
 \end{enumerate}
-
-Empirically, ranking quality shows strong gains against several classical and GNN methods, while remaining competitive---not uniformly superior---with \textsc{SpringRank}, \textsc{DavidScore}, and \textsc{SVD\_NRS} under family-aware analysis; \textsc{BTL} remains stronger on \texttt{upset\_ratio}. On runtime, the pipeline is slower than lightweight classical baselines and substantially faster than trained GNNRank models under the evaluated end-to-end training protocol. Scalability is strong on the evaluated sparse and moderately dense instances; the near-complete Finance graph is an explicit large-dense boundary case.
 
 \subsection{Related Work}
 \label{sec:related}
@@ -138,7 +132,9 @@ Learning-based methods infer ranking scores from directed comparison graphs. \te
 Demetrescu and Finocchi \citet{CI03} give a local-ratio cycle-breaking heuristic with an approximation guarantee parameterized by the length of a longest simple directed cycle, building on the local-ratio framework of \citet{BK04}. Their Phase~2 reinserts deleted arcs subject to an \emph{exact} cycle-safety test (equivalently: reinsert $(u,v)$ iff $v$ does not reach $u$ in the current DAG), and they remark that ordering candidates by decreasing weight can improve solution quality. Exact cycle-safe reinsertion and weight-prioritized ordering are therefore prior; they are not newly invented here.
 
 \subsubsection{Relation to \citet{VK25}}
-Prior work by \citet{VK25} operationalizes ranking via the \citet{CI03} local-ratio backbone, adopts descending-weight reinsertion under the exact cycle-safety test, and includes order-preserving ternary score refinement. The accompanying practical codebase later used a weaker fixed-topological-position proxy for reinsertion (accepting $(u,v)$ only if it is forward under one fixed topological order). That proxy is a sufficient but not necessary condition for cycle safety and can reject admissible arcs; multipass INS1/INS2/INS3 variants in the submitted manuscript compensate partially for this weakening and are retained only as historical comparison points. This revision restores exact reachability-aware reinsertion as an implementation-fidelity correction, adds formal ranking$\leftrightarrow$MWFAS analysis and guarantee/complexity qualifications, introduces a secondary conflict-triggered weighted min-cut exchange, and expands classical/GNN empirical validation.
+\citet{VK25} operationalizes ranking via the \citet{CI03} local-ratio backbone with descending-weight exact cycle-safe reinsertion and order-preserving ternary refinement.
+A later practical codebase weakened reinsertion to a fixed topological-position proxy; multipass INS variants partially compensate and are historical comparison points only.
+Table~\ref{tab:novelty_separation} summarizes what is prior, restored for fidelity, or newly analyzed here.
 
 \begin{table}[t]
 \centering
@@ -173,7 +169,7 @@ We describe a deterministic, training-free ranking pipeline for weighted pairwis
 \item \textbf{Optional secondary repair (new):} conflict-triggered weighted min-cut exchange.
 \item \textbf{Phase~C (prior lineage):} topological score extraction and optional order-preserving refinement \citet{VK25}.
 \end{enumerate}
-Legacy multipass topo-proxy variants (INS1/INS2/INS3) appear only as submitted-manuscript comparison points; they are not the revised method's central contribution. We do not claim a new general MWFAS approximation algorithm.
+Legacy multipass topo-proxy variants (INS1--3) are retained only as historical comparison points (\S\ref{sec:related}).
 
 \subsection{Problem Setting}
 \label{subsec:framework_problem}
@@ -377,13 +373,10 @@ O(mn+m^2),
 \]
 which is weaker than a textbook $O(nm)$ accounting that assumes compacted alive adjacency. A wall-clock budget caps completed iterations empirically; it is an execution policy, not an average-case complexity theorem.
 
-Exact reachability add-back costs $O(m\log m)$ for sorting plus, in the dense incremental-closure realization used for moderate $n$, initialization and per-acceptance updates polynomial in $n$ (or BFS queries in a sparse fallback mode). Optional min-cut repair adds per-candidate directed min-cut computations on the kept DAG and is budgeted by candidate/acceptance caps. Phase~C refinement is explicitly time-bounded; worst-case pairwise structures for ratio refinement can reach $O(n^2)$ memory. Empirically, sparse and moderately dense instances finish quickly under the experimental budgets, while the near-complete Finance graph is a large-dense boundary case for Phase~A.
+Exact reachability add-back costs $O(m\log m)$ for sorting plus polynomial-in-$n$ dense incremental updates (or BFS queries in a sparse fallback). Optional min-cut repair adds budgeted directed min-cut computations. Phase~C is time-bounded and may use up to $O(n^2)$ pairwise structures for ratio refinement. Empirical timing is reported in \S\ref{subsec:runtime_coverage}--\ref{subsec:scalability}.
 
 \section{Experimental Results}
 \label{sec:exp}
-
-% TODO(pass4): Abstract/Conclusion must reflect revised runtime (slower than classical;
-% ~8$\times$ vs trained GNN end-to-end), family-aware SpringRank caution, and BTL upset\_ratio.
 
 \subsection{Experimental Protocol}
 \label{subsec:exp_setup}
@@ -419,7 +412,7 @@ Finance & 1 & 1{,}315 & 1{,}729{,}225 \\
 \paragraph{Methods.}
 Baselines are ten classical methods (\textsc{SpringRank}, \textsc{SyncRank}, \textsc{SerialRank}, \textsc{BTL}, \textsc{DavidScore}, eigenvector/\textsc{PageRank}/\textsc{RankCentrality}, \textsc{SVD-RS}/\textsc{SVD-NRS}) and two GNNRank backbones (\textsc{DIGRAC}, \textsc{ib}) under fixed archived configurations (not post-hoc best-in-suite oracles).
 The \emph{canonical} revised method is the reachability-aware pipeline of \S\ref{sec:framework} (Phase~A + exact Phase~B + optional min-cut + Phase~C).
-Submitted multipass topo-proxy labels \textsc{OURS-MFAS}/\textsc{INS1--3} appear only for continuity with the submitted manuscript; in the archived leaderboard, \textsc{OURS-MFAS} and \textsc{INS3} are effectively duplicate labels of the same topo-proxy configuration.
+Archived \textsc{OURS-MFAS} and \textsc{INS3} labels are duplicate topo-proxy configurations; multipass INS variants are historical only.
 
 \paragraph{Determinism, repetitions, and timing.}
 Non-GNN methods are deterministic given fixed inputs and completed work: ranking outputs do not vary across the protocol's $10$ recorded trials except through wall-clock/timeout effects.
@@ -555,15 +548,13 @@ Figure~\ref{fig:runtime_vs_edges} shows empirical A4 runtimes versus $m$ for non
 Finance is reported separately, not averaged into quality macros.
 Under the archived $1800$\,s non-GNN protocol, leaderboard OURS and syncRank time out while lightweight classical methods finish in $<4$\,s and GNN end-to-end runs finish in $\sim 15$--$18$\,min.
 In the reviewer ablation stress configs (internal Phase~A budget $600$\,s): FINANCE\_A0 completes with wall $\approx 612.6$\,s (Phase~A $\approx 600.0$\,s); FINANCE\_A2/A4 hit \texttt{INTERNAL\_TIME\_LIMIT} at $\approx 1214.8$/$1214.6$\,s; FINANCE\_A6 hits \texttt{TIMEOUT\_HARD\_WALLCLOCK} at $\approx 1800.1$\,s without a finished ranking.
-This matches the Pass~2 $O(mn+m^{2})$ Phase~A discussion: Finance is a known large-dense boundary, not a typical sparse/moderate instance.
+This matches the $O(mn+m^{2})$ Phase~A discussion in \S\ref{subsec:framework_complexity}: Finance is a known large-dense boundary.
 
 \subsection{Scalability (Empirical)}
 \label{subsec:scalability}
 
-We claim empirical scalability across evaluated sparse and moderately dense comparison graphs, not universal scalability.
-On non-Finance ablation graphs, A4 runtimes are roughly $0.01$--$1.2$\,s (median $\approx 0.57$\,s) with $n\le 602$; enabling min-cut (A6) adds roughly $3$--$4$\,s median.
-No fitted complexity law is inferred from these timings; they illustrate practical behavior under the audited implementation bound of \S\ref{subsec:framework_complexity}.
-% TODO(pass4): consider qualifying or revising the title word ``Scalable'' given Finance.
+On non-Finance ablation graphs ($n\le 602$), A4 finishes in roughly $0.01$--$1.2$\,s (median $\approx 0.57$\,s); enabling min-cut (A6) adds about $3$--$4$\,s median.
+These timings illustrate the audited $O(mn+m^2)$ Phase~A bound (\S\ref{subsec:framework_complexity}) on sparse/moderate instances; the Finance boundary is in \S\ref{subsec:finance}. No fitted complexity law is claimed.
 
 \subsection{Structural Ablation (A0--A6)}
 \label{subsec:ablation}
@@ -585,7 +576,7 @@ A4$\to$A6 & removed weight$\downarrow$ & 77 & 66/11/0 & $-57$ & $4.9\times 10^{-
 A0$\to$A4 & upset\_simple$\downarrow$ & 77 & 76/0/1 & $-0.0169$ & $2.4\times 10^{-12}$ \\
 \bottomrule
 \end{tabular}
-\caption{Primary structural ablation paired tests (non-Finance). Exact reachability matters; topo-proxy is insufficient; min-cut improves the weighted FAS objective (ranking metrics need not improve monotonically---e.g., A4$\to$A6 can worsen upset\_ratio while reducing removed weight).}
+\caption{Primary structural ablation paired tests (non-Finance). Ranking metrics need not move monotonically with the weighted FAS objective (e.g., A4$\to$A6).}
 \label{tab:ablation_primary}
 \end{table}
 
@@ -604,29 +595,37 @@ Figure~\ref{fig:ablation} shows unpaired Layer median trajectories for context; 
 On Layer~1 ($n=33$): \texttt{zero\_tol} $\in\{10^{-12},10^{-15},10^{-18}\}$ is STABLE (almost all ties vs default).
 Cycle-selection changes are statistically detectable on the A4 path but small ($|\mathrm{med}\,\Delta|\approx 10^{-3}$).
 Refinement: R0 (off) is worse; R1$\approx$R2 and R3$\approx$R2 (saturation).
-Legacy multipass topo-proxy: P1 restores many edges; P2/P3 add little ranking quality---consistent with de-emphasizing INS2/INS3.
-Min-cut candidate budgets: K20$\to$K50 modest; K50$\to$K100 nearly flat.
-Detailed grids are deferred to the supplement.
+Legacy multipass topo-proxy: P1 restores many edges; P2/P3 add little ranking quality.
+Min-cut budgets: K20$\to$K50 modest; K50$\to$K100 nearly flat. Detailed grids are deferred to the supplement.
 
 \subsection{Min-Cut Empirical Regime}
 \label{subsec:mincut_emp}
+Under the predefined broad characterization (39 available of 40 datasets), the operator of \S\ref{subsec:framework_mincut} is active on $28/39$ graphs ($4/7$ families; $280$ accepted exchanges).
+On active graphs, \texttt{upset\_simple}/\texttt{upset\_naive} never worsened; \texttt{upset\_ratio} worsened on $7/28$ (Basketball only; small magnitude), confirming regime-specific rather than universal ranking benefit.
 
-Connecting to \S\ref{subsec:framework_mincut}, the predefined broad characterization (40 datasets; 39 available) finds the operator active on $28/39$ graphs across $4/7$ families with $280$ accepted exchanges.
-On active graphs, \texttt{upset\_simple}/\texttt{upset\_naive} never worsened; \texttt{upset\_ratio} worsened on $7/28$ (all Basketball; small magnitude).
-We classify min-cut as a useful regime-specific structural mechanism, not a universal ranking cure.
+\section{Limitations}
+\label{sec:limitations}
+Dense near-complete graphs remain difficult: Finance is the explicit boundary case documented in \S\ref{subsec:finance}.
+Finite-budget practical outputs need not inherit the idealized Demetrescu--Finocchi guarantee (\S\ref{subsec:theory_df03}), and identity-order fallback has no nontrivial general multiplicative error bound (Prop.~\ref{prop:fallback}).
+The optional min-cut repair improves the weighted feedback objective but not every upset metric, and its benefit is regime-specific (\S\ref{subsec:mincut_emp}).
+Relative to lightweight classical estimators the pipeline is slower (\S\ref{subsec:runtime_coverage}); GNN speedups refer to archived end-to-end training+evaluation under imperfect hardware comparability (\S\ref{subsec:exp_setup}).
+Family-aware analysis shows that SpringRank/davidScore/SVD\_NRS comparisons are cautious, and BTL remains stronger on \texttt{upset\_ratio} (\S\ref{subsec:family_aware}).
+Protocol repetitions for deterministic non-GNN methods characterize runtime/timeout variability rather than ranking uncertainty.
 
-\subsection{Legacy INS Labels}
-\label{subsec:legacy_ins}
-Submitted tables that list \textsc{OURS-MFAS} alongside INS1/2/3 reflect the topo-proxy codebase.
-Archived aggregates show INS3 numerically matching \textsc{OURS-MFAS}; INS2/INS3 are not headline algorithms in this revision.
-Ablation P2/P3 near-inertness further supports presenting exact reachability (A2) rather than multipass proxies as the corrected Phase~B.
+\section{Conclusion}
+\label{sec:conclusion}
+We addressed ranking from weighted pairwise comparisons with a training-free structural pipeline: local-ratio cycle breaking, exact reachability-aware reinsertion, optional weighted min-cut exchange, and score extraction/refinement.
+The algorithmic core follows Demetrescu--Finocchi and \citet{VK25}; the revised contributions are formal ranking--MWFAS clarification and guarantee boundaries, restoration of exact cycle-safe add-back after a topological-proxy weakening, a secondary monotone min-cut repair, and a broader timeout-aware empirical study.
 
-\section{Conclusion and Future Research}
-This paper presents a scalable, training-free ranking pipeline for weighted pairwise-comparison graphs based on the connection between ranking inconsistency and the Minimum Weighted Feedback Arc Set (MWFAS) formulation. The proposed method combines a local-ratio-style cycle-breaking stage to construct an acyclic backbone with a stable weight-prioritized add-back procedure (INS1/INS2/INS3 variants) that restores high-weight comparisons while preserving acyclicity. From the resulting graph, the pipeline produces real-valued scores whose induced order is evaluated under the same upset-based losses used in recent ranking benchmarks.
+On common completions the method is strong on simple/naive upset metrics against several classical and GNN baselines, competitive under family-aware scrutiny with SpringRank, DavidScore, and SVD\_NRS, and weaker than BTL on upset\_ratio.
+It is slower than lightweight classical methods and substantially faster than the evaluated trained GNN pipelines under the archived end-to-end protocol, with Finance exposing a large-dense limit.
 
-Across a benchmark suite of $80$ instances under fixed wall-clock budgets, the proposed method is competitive with strong classical baselines, including \textsc{BTL}, spectral methods, and centrality-based methods, while also providing a consistent runtime advantage over training-based GNNRank configurations on instances where both sides are recorded. These results support the broader practical message of the paper: combinatorial acyclicity-based structure can serve as an effective, deterministic, and deployable alternative for ranking from pairwise comparisons when training cost, reproducibility, and runtime efficiency are important.
-
-Several directions remain for future research. First, improved add-back and refinement strategies, such as reachability-aware insertion or targeted local search within strongly connected components, may reduce the remaining gap on the higher-resolution ``finer'' instances while preserving the time-bounded design. Second, better scalability on extremely dense graphs will likely require faster cycle detection, incremental maintenance of acyclicity constraints, and refinement procedures that avoid quadratic pair constructions. Third, it would be valuable to study principled tie-handling and uncertainty quantification when the comparison graph admits many valid topological orders or contains weakly connected components. Finally, an important direction is to design ranking objectives and calibration procedures that align more closely with downstream upset-based evaluation while retaining the computational advantages of acyclicity-based ranking.
+\section{Future Work}
+\label{sec:future}
+Theoretically, denser-graph cycle breaking, tighter analyses of time-bounded structural heuristics, and approximation results on restricted graph classes remain open.
+Engineering directions include SCC-aware or parallel cycle processing, more efficient reachability maintenance, and better min-cut candidate selection under budgets.
+Application settings such as preference aggregation, multi-source sensor comparisons, and industrial ranking are natural targets for the training-free pipeline but are not evaluated here.
+Deterministic uncertainty quantification over multiple valid topological orders is another concrete direction.
 
 \section*{Acknowledgments}
 Portions of this manuscript and the accompanying code were developed with the assistance of AI-based tools. In particular, ChatGPT (OpenAI) and Gemini were used to help draft and edit text and to support coding, and Cursor and GitHub Copilot were used to assist with software development. The author reviewed, verified, and takes full responsibility for the final manuscript and all reported results.
