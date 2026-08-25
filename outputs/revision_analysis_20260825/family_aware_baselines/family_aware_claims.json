@@ -1,0 +1,234 @@
+{
+  "orientation": "delta = OURS - baseline; negative favors OURS (lower upset)",
+  "principal_baselines": [
+    "SpringRank",
+    "davidScore",
+    "SVD_NRS",
+    "btl",
+    "PageRank",
+    "syncRank",
+    "rankCentrality",
+    "serialRank",
+    "DIGRAC",
+    "ib"
+  ],
+  "included_families": [
+    "Animal",
+    "Basketball_coarse",
+    "Basketball_finer",
+    "Faculty",
+    "Football_coarse",
+    "Football_finer",
+    "Halo"
+  ],
+  "per_baseline_upset_simple": {
+    "SpringRank": {
+      "per_dataset_n": 77,
+      "per_dataset_wtl": "41/0/36",
+      "per_dataset_median_delta": -0.07843136787414562,
+      "equal_family_mean_of_medians": -0.015138238668441792,
+      "equal_family_family_wtl": "5/0/2",
+      "hierarchical_ci_excludes_zero": false,
+      "hierarchical_mean": -0.016569748692214503
+    },
+    "davidScore": {
+      "per_dataset_n": 77,
+      "per_dataset_wtl": "40/1/36",
+      "per_dataset_median_delta": -0.02424246072769165,
+      "equal_family_mean_of_medians": -0.05025195223944528,
+      "equal_family_family_wtl": "4/0/3",
+      "hierarchical_ci_excludes_zero": false,
+      "hierarchical_mean": -0.04032163793700083
+    },
+    "SVD_NRS": {
+      "per_dataset_n": 77,
+      "per_dataset_wtl": "40/2/35",
+      "per_dataset_median_delta": -0.024844646453857422,
+      "equal_family_mean_of_medians": -0.10321185333388191,
+      "equal_family_family_wtl": "5/0/2",
+      "hierarchical_ci_excludes_zero": false,
+      "hierarchical_mean": -0.10944704941575015
+    },
+    "btl": {
+      "per_dataset_n": 77,
+      "per_dataset_wtl": "73/0/4",
+      "per_dataset_median_delta": -0.207151973247528,
+      "equal_family_mean_of_medians": -0.13218583890369962,
+      "equal_family_family_wtl": "6/0/1",
+      "hierarchical_ci_excludes_zero": true,
+      "hierarchical_mean": -0.13749945290024795
+    },
+    "PageRank": {
+      "per_dataset_n": 77,
+      "per_dataset_wtl": "53/0/24",
+      "per_dataset_median_delta": -0.17030733823776245,
+      "equal_family_mean_of_medians": -0.2082225297178541,
+      "equal_family_family_wtl": "6/0/1",
+      "hierarchical_ci_excludes_zero": true,
+      "hierarchical_mean": -0.2168205898702145
+    },
+    "syncRank": {
+      "per_dataset_n": 77,
+      "per_dataset_wtl": "77/0/0",
+      "per_dataset_median_delta": -0.7199999690055847,
+      "equal_family_mean_of_medians": -0.8222329505852289,
+      "equal_family_family_wtl": "7/0/0",
+      "hierarchical_ci_excludes_zero": true,
+      "hierarchical_mean": -0.8278591397238629
+    },
+    "rankCentrality": {
+      "per_dataset_n": 77,
+      "per_dataset_wtl": "77/0/0",
+      "per_dataset_median_delta": -0.9872727036476135,
+      "equal_family_mean_of_medians": -1.1768813954932347,
+      "equal_family_family_wtl": "7/0/0",
+      "hierarchical_ci_excludes_zero": true,
+      "hierarchical_mean": -1.1806611444111381
+    },
+    "serialRank": {
+      "per_dataset_n": 77,
+      "per_dataset_wtl": "75/0/2",
+      "per_dataset_median_delta": -0.8581241369247437,
+      "equal_family_mean_of_medians": -0.9843268743583135,
+      "equal_family_family_wtl": "7/0/0",
+      "hierarchical_ci_excludes_zero": true,
+      "hierarchical_mean": -0.9562436158561282
+    },
+    "DIGRAC": {
+      "per_dataset_n": 77,
+      "per_dataset_wtl": "47/0/30",
+      "per_dataset_median_delta": -0.2813503968715669,
+      "equal_family_mean_of_medians": -0.3048543322086334,
+      "equal_family_family_wtl": "6/0/1",
+      "hierarchical_ci_excludes_zero": true,
+      "hierarchical_mean": -0.30187685568988326
+    },
+    "ib": {
+      "per_dataset_n": 77,
+      "per_dataset_wtl": "68/0/9",
+      "per_dataset_median_delta": -0.3377277958393097,
+      "equal_family_mean_of_medians": -0.37865563239370076,
+      "equal_family_family_wtl": "7/0/0",
+      "hierarchical_ci_excludes_zero": true,
+      "hierarchical_mean": -0.3812822702645404
+    }
+  },
+  "survival": {
+    "SpringRank": {
+      "equal_family_favors_ours": true,
+      "per_dataset_favors_ours": true
+    },
+    "davidScore": {
+      "equal_family_favors_ours": true,
+      "per_dataset_favors_ours": true
+    },
+    "SVD_NRS": {
+      "equal_family_favors_ours": true,
+      "per_dataset_favors_ours": true
+    },
+    "btl": {
+      "equal_family_favors_ours": true,
+      "per_dataset_favors_ours": true
+    },
+    "PageRank": {
+      "equal_family_favors_ours": true,
+      "per_dataset_favors_ours": true
+    },
+    "syncRank": {
+      "equal_family_favors_ours": true,
+      "per_dataset_favors_ours": true
+    },
+    "rankCentrality": {
+      "equal_family_favors_ours": true,
+      "per_dataset_favors_ours": true
+    },
+    "serialRank": {
+      "equal_family_favors_ours": true,
+      "per_dataset_favors_ours": true
+    },
+    "DIGRAC": {
+      "equal_family_favors_ours": true,
+      "per_dataset_favors_ours": true
+    },
+    "ib": {
+      "equal_family_favors_ours": true,
+      "per_dataset_favors_ours": true
+    }
+  },
+  "basketball_dependence": {
+    "SpringRank": {
+      "with_basketball_equal_family_mean": -0.015138238668441792,
+      "without_any_basketball_equal_family_mean": -0.07246725559234622,
+      "n_families_without_basketball": 5,
+      "sign_flip": false
+    },
+    "davidScore": {
+      "with_basketball_equal_family_mean": -0.05025195223944528,
+      "without_any_basketball_equal_family_mean": -0.11123914122581482,
+      "n_families_without_basketball": 5,
+      "sign_flip": false
+    },
+    "SVD_NRS": {
+      "with_basketball_equal_family_mean": -0.10321185333388191,
+      "without_any_basketball_equal_family_mean": -0.15423058748245239,
+      "n_families_without_basketball": 5,
+      "sign_flip": false
+    },
+    "btl": {
+      "with_basketball_equal_family_mean": -0.13218583890369962,
+      "without_any_basketball_equal_family_mean": -0.08889664828777316,
+      "n_families_without_basketball": 5,
+      "sign_flip": false
+    },
+    "PageRank": {
+      "with_basketball_equal_family_mean": -0.2082225297178541,
+      "without_any_basketball_equal_family_mean": -0.2581647276878357,
+      "n_families_without_basketball": 5,
+      "sign_flip": false
+    },
+    "syncRank": {
+      "with_basketball_equal_family_mean": -0.8222329505852289,
+      "without_any_basketball_equal_family_mean": -0.8278712713718412,
+      "n_families_without_basketball": 5,
+      "sign_flip": false
+    },
+    "rankCentrality": {
+      "with_basketball_equal_family_mean": -1.1768813954932347,
+      "without_any_basketball_equal_family_mean": -1.2348286002874374,
+      "n_families_without_basketball": 5,
+      "sign_flip": false
+    },
+    "serialRank": {
+      "with_basketball_equal_family_mean": -0.9843268743583135,
+      "without_any_basketball_equal_family_mean": -0.958216644525528,
+      "n_families_without_basketball": 5,
+      "sign_flip": false
+    },
+    "DIGRAC": {
+      "with_basketball_equal_family_mean": -0.3048543322086334,
+      "without_any_basketball_equal_family_mean": -0.38416341340541843,
+      "n_families_without_basketball": 5,
+      "sign_flip": false
+    },
+    "ib": {
+      "with_basketball_equal_family_mean": -0.37865563239370076,
+      "without_any_basketball_equal_family_mean": -0.40068183159828197,
+      "n_families_without_basketball": 5,
+      "sign_flip": false
+    }
+  },
+  "btl_upset_ratio_equal_family": {
+    "baseline": "btl",
+    "metric": "upset_ratio",
+    "n_families": 7,
+    "mean_of_family_medians": 0.1024451238236257,
+    "median_of_family_medians": 0.04410074353218074,
+    "family_points_favor_ours": 0,
+    "family_points_tie": 0,
+    "family_points_favor_baseline": 7,
+    "ci_lo": 0.042797017214553694,
+    "ci_hi": 0.17405085455094063,
+    "ci_excludes_zero": true,
+    "families": "Animal|Basketball_coarse|Basketball_finer|Faculty|Football_coarse|Football_finer|Halo"
+  }
+}

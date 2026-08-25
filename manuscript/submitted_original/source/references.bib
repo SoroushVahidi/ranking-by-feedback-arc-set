@@ -1,0 +1,550 @@
+% =========================
+% UPDATED references.bib
+% - removed duplicate: fogel16 (SerialRank arXiv duplicate of NeurIPS paper)
+% - added missing baselines used in experiments: DavidScore, EigenvectorCentrality, PageRank, SVD_RS/SVD_NRS paper, DiGCN (ib backbone), DIGRAC
+% - kept existing keys (SerialRank, NS17, BTL, SpringRank, SyncRank, he22, etc.)
+% =========================
+
+@inproceedings{SerialRank,
+  author    = {Fogel, Fajwel and d\textquotesingle Aspremont, Alexandre and Vojnovic, Milan},
+  title     = {SerialRank: Spectral Ranking using Seriation},
+  booktitle = {Advances in Neural Information Processing Systems},
+  editor    = {Z. Ghahramani and M. Welling and C. Cortes and N. Lawrence and K.Q. Weinberger},
+  volume    = {27},
+  publisher = {Curran Associates, Inc.},
+  year      = {2014},
+  url       = {https://proceedings.neurips.cc/paper_files/paper/2014/file/f0e52b27a7a5d6a1a87373dffa53dbe5-Paper.pdf}
+}
+
+@InProceedings{EG95,
+  author    = {Even, Guy and Naor, Joseph (Seffi) and Schieber, Baruch and Sudan, Madhu},
+  editor    = {Balas, Egon and Clausen, Jens},
+  title     = {Approximating minimum feedback sets and multi-cuts in directed graphs},
+  booktitle = {Integer Programming and Combinatorial Optimization},
+  year      = {1995},
+  publisher = {Springer Berlin Heidelberg},
+  address   = {Berlin, Heidelberg},
+  pages     = {14--28},
+  isbn      = {978-3-540-49245-0}
+}
+
+@article{EG2000,
+  author    = {Even, Guy and Naor, Joseph Seffi and Rao, Satish and Schieber, Baruch},
+  title     = {Divide-and-conquer approximation algorithms via spreading metrics},
+  journal   = {J. ACM},
+  year      = {2000},
+  volume    = {47},
+  number    = {4},
+  pages     = {585--616},
+  month     = jul,
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  issn      = {0004-5411},
+  doi       = {10.1145/347476.347478},
+  url       = {https://doi.org/10.1145/347476.347478},
+  keywords  = {spreading metrics, multicut, linear arrangement, feedback set, divide and conquer, approximation algorithms}
+}
+
+@article{BA21,
+  author    = {Baharev, Ali and Schichl, Hermann and Neumaier, Arnold and Achterberg, Tobias},
+  title     = {An Exact Method for the Minimum Feedback Arc Set Problem},
+  journal   = {Journal of Experimental Algorithmics (JEA)},
+  year      = {2021},
+  volume    = {26},
+  articleno = {1.4},
+  month     = apr,
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  issn      = {1084-6654},
+  doi       = {10.1145/3446429},
+  url       = {https://doi.org/10.1145/3446429},
+  keywords  = {tearing, minimum feedback vertex set, minimum feedback arc set, maximum acyclic subgraph, Linear ordering problem}
+}
+
+@article{HM21,
+  author    = {Hecht, Michael and Gonciarz, Krzysztof and Horv\'{a}t, Szabolcs},
+  title     = {Tight Localizations of Feedback Sets},
+  journal   = {ACM J. Exp. Algorithmics},
+  year      = {2021},
+  volume    = {26},
+  articleno = {1.5},
+  month     = mar,
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  issn      = {1084-6654},
+  doi       = {10.1145/3447652},
+  url       = {https://doi.org/10.1145/3447652},
+  keywords  = {Minimum feedback arc set problem, approximation algorithm, maximum linear ordering problem, minimum feedback vertex set problem}
+}
+
+@article{CI03,
+  title   = {Combinatorial algorithms for feedback problems in directed graphs},
+  author  = {Demetrescu, Camil and Finocchi, Irene},
+  journal = {Inf. Process. Lett.},
+  year    = {2003},
+  volume  = {86},
+  pages   = {129--136},
+  url     = {https://api.semanticscholar.org/CorpusID:17211386}
+}
+
+@article{BK04,
+  author    = {Bar-Yehuda, Reuven and Bendel, Keren and Freund, Ari and Rawitz, Dror},
+  title     = {Local ratio: A unified framework for approximation algorithms. In Memoriam: Shimon Even 1935-2004},
+  journal   = {ACM Comput. Surv.},
+  year      = {2004},
+  volume    = {36},
+  number    = {4},
+  pages     = {422--463},
+  month     = dec,
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  issn      = {0360-0300},
+  doi       = {10.1145/1041680.1041683},
+  url       = {https://doi.org/10.1145/1041680.1041683},
+  keywords  = {local ratio technique, fractional local ratio, Approximation algorithms}
+}
+
+@misc{he22,
+  title         = {GNNRank: Learning Global Rankings from Pairwise Comparisons via Directed Graph Neural Networks},
+  author        = {He, Yixuan and Gan, Quan and Wipf, David and Reinert, Gesine and Yan, Junchi and Cucuringu, Mihai},
+  year          = {2022},
+  eprint        = {2202.00211},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG},
+  url           = {https://arxiv.org/abs/2202.00211}
+}
+
+@article{NS17,
+  author    = {Negahban, Sahand and Oh, Sewoong and Shah, Devavrat},
+  title     = {Rank Centrality: Ranking from Pairwise Comparisons},
+  journal   = {Oper. Res.},
+  year      = {2017},
+  volume    = {65},
+  number    = {1},
+  pages     = {266--287},
+  month     = feb,
+  publisher = {INFORMS},
+  address   = {Linthicum, MD, USA},
+  issn      = {0030-364X},
+  doi       = {10.1287/opre.2016.1534},
+  url       = {https://doi.org/10.1287/opre.2016.1534},
+  keywords  = {rank aggregation, rank centrality, Markov chain, random walk}
+}
+
+@misc{PA23,
+  title  = {Distinguishing Feature Model for Ranking From Pairwise Comparisons},
+  author = {Parhi, Elisha and Rajkumar, Arun},
+  year   = {2023},
+  url    = {https://openreview.net/forum?id=JyD-NobfNL_}
+}
+
+@INPROCEEDINGS{GR23,
+  author    = {Gharavian, Vida and Rahnamayan, Shahryar and Bidgoli, Azam Asilian and Makrehchi, Masoud},
+  booktitle = {2023 IEEE International Conference on Systems, Man, and Cybernetics (SMC)},
+  title     = {A Pairwise Surrogate Model using GNN for Evolutionary Optimization},
+  year      = {2023},
+  pages     = {3996--4002},
+  doi       = {10.1109/SMC53992.2023.10393938},
+  keywords  = {Costs;Computational modeling;Predictive models;Benchmark testing;Graph neural networks;Optimization;Cybernetics}
+}
+
+@article{FB24,
+  title     = {Bias-aware ranking from pairwise comparisons},
+  author    = {Ferrara, Antonio and Bonchi, Francesco and Fabbri, Francesco and Karimi, Fariba and Wagner, Claudia},
+  journal   = {Data Mining and Knowledge Discovery},
+  year      = {2024},
+  volume    = {38},
+  number    = {4},
+  pages     = {2062--2086},
+  month     = jul,
+  doi       = {10.1007/s10618-024-01024-z},
+  issn      = {1384-5810},
+  publisher = {Springer Science+Business Media}
+}
+
+@article{AW86,
+  author    = {Ali, Iqbal and Cook, Wade D. and Kress, Moshe},
+  title     = {On the Minimum Violations Ranking of a Tournament},
+  journal   = {Management Science},
+  year      = {1986},
+  volume    = {32},
+  number    = {6},
+  pages     = {660--672},
+  publisher = {INFORMS},
+  url       = {http://www.jstor.org/stable/2631621}
+}
+
+@misc{SW16,
+  title         = {Simple, Robust and Optimal Ranking from Pairwise Comparisons},
+  author        = {Shah, Nihar B. and Wainwright, Martin J.},
+  year          = {2016},
+  eprint        = {1512.08949},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG},
+  url           = {https://arxiv.org/abs/1512.08949}
+}
+
+@inproceedings{KCW07,
+  author    = {Kenyon-Mathieu, Claire and Schudy, Warren},
+  title     = {How to rank with few errors},
+  booktitle = {Proceedings of the Thirty-Ninth Annual ACM Symposium on Theory of Computing},
+  series    = {STOC '07},
+  year      = {2007},
+  pages     = {95--103},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  doi       = {10.1145/1250790.1250806},
+  url       = {https://doi.org/10.1145/1250790.1250806}
+}
+
+@Inbook{K72,
+  author    = {Karp, Richard M.},
+  title     = {Reducibility among Combinatorial Problems},
+  bookTitle = {Complexity of Computer Computations},
+  year      = {1972},
+  publisher = {Springer US},
+  address   = {Boston, MA},
+  pages     = {85--103},
+  doi       = {10.1007/978-1-4684-2001-2_9},
+  url       = {https://doi.org/10.1007/978-1-4684-2001-2_9}
+}
+
+@article{SS16,
+  author    = {Simpson, Michael and Srinivasan, Venkatesh and Thomo, Alex},
+  title     = {Efficient computation of feedback arc set at web-scale},
+  journal   = {Proc. VLDB Endow.},
+  year      = {2016},
+  volume    = {10},
+  number    = {3},
+  pages     = {133--144},
+  month     = nov,
+  publisher = {VLDB Endowment},
+  doi       = {10.14778/3021924.3021930},
+  url       = {https://doi.org/10.14778/3021924.3021930},
+  issn      = {2150-8097}
+}
+
+@article{KI19,
+  author  = {Kudeli{\'c}, Robert and Ivkovi{\'c}, Nikola},
+  title   = {Ant inspired Monte Carlo algorithm for minimum feedback arc set},
+  journal = {Expert Systems with Applications},
+  year    = {2019},
+  volume  = {122},
+  pages   = {108--117},
+  issn    = {0957-4174},
+  doi     = {10.1016/j.eswa.2018.12.021},
+  url     = {https://www.sciencedirect.com/science/article/pii/S0957417418307899},
+  keywords = {Minimum feedback arc set, Monte carlo, Randomization, Ant colony optimization, Arbitrary probability}
+}
+
+@Inbook{FPP20,
+  author    = {Festa, Paola and Pardalos, Panos M. and Resende, Mauricio G. C.},
+  title     = {Feedback Set Problems},
+  bookTitle = {Encyclopedia of Optimization},
+  year      = {2020},
+  publisher = {Springer International Publishing},
+  address   = {Cham},
+  pages     = {1--13},
+  doi       = {10.1007/978-3-030-54621-2_178-1},
+  url       = {https://doi.org/10.1007/978-3-030-54621-2_178-1}
+}
+
+@misc{CG21,
+  title         = {Vertex Ordering Problems in Directed Graph Streams},
+  author        = {Chakrabarti, Amit and Ghosh, Prantar and McGregor, Andrew and Vorotnikova, Sofya},
+  year          = {2021},
+  eprint        = {2105.08215},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DS},
+  url           = {https://arxiv.org/abs/2105.08215}
+}
+
+@article{BF12,
+  title   = {A Note on Exact Algorithms for Vertex Ordering Problems on Graphs},
+  author  = {Bodlaender, Hans L. and Fomin, F. and Koster, Arie M. C. A. and Kratsch, Dieter and Thilikos, Dimitrios M.},
+  journal = {Theory of Computing Systems},
+  year    = {2012},
+  volume  = {50},
+  pages   = {420--432},
+  url     = {https://api.semanticscholar.org/CorpusID:9967521}
+}
+
+@article{RS06,
+  author  = {Raman, Venkatesh and Saurabh, Saket},
+  title   = {Parameterized algorithms for feedback set problems and their duals in tournaments},
+  journal = {Theoretical Computer Science},
+  year    = {2006},
+  volume  = {351},
+  number  = {3},
+  pages   = {446--458},
+  issn    = {0304-3975},
+  doi     = {10.1016/j.tcs.2005.10.010},
+  url     = {https://www.sciencedirect.com/science/article/pii/S0304397505006365},
+  keywords = {Tournaments, Feedback vertex set, Feedback arc set, Parameterized complexity}
+}
+
+@inproceedings{SJ21,
+  title     = {Inspectable Incrementality in Minimum Feedback Arc Set Solving},
+  author    = {Shea-Blymyer, Colin and Young, Jeffrey M.},
+  booktitle = {Proceedings of ACM Conference},
+  year      = {2021},
+  pages     = {1--8},
+  publisher = {Association for Computing Machinery},
+  url       = {https://web.engr.oregonstate.edu/~sheablyc/assets/docs/incremental_mfas.pdf}
+}
+
+@article{HR94,
+  author  = {Hassin, Refael and Rubinstein, Shlomi},
+  title   = {Approximations for the maximum acyclic subgraph problem},
+  journal = {Information Processing Letters},
+  year    = {1994},
+  volume  = {51},
+  number  = {3},
+  pages   = {133--140},
+  issn    = {0020-0190},
+  doi     = {10.1016/0020-0190(94)00086-7},
+  url     = {https://www.sciencedirect.com/science/article/pii/0020019094000867}
+}
+
+@misc{FG24,
+  title         = {Graph Neural Re-Ranking via Corpus Graph},
+  author        = {Di Francesco, Andrea Giuseppe and Giannetti, Christian and Tonellotto, Nicola and Silvestri, Fabrizio},
+  year          = {2024},
+  eprint        = {2406.11720},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.IR},
+  url           = {https://arxiv.org/abs/2406.11720}
+}
+
+@misc{CGZ21,
+  title         = {Optimal Full Ranking from Pairwise Comparisons},
+  author        = {Chen, Pinhan and Gao, Chao and Zhang, Anderson Y.},
+  year          = {2021},
+  eprint        = {2101.08421},
+  archivePrefix = {arXiv},
+  primaryClass  = {math.ST},
+  url           = {https://arxiv.org/abs/2101.08421}
+}
+
+@misc{openai2023chatgpt,
+  author       = {OpenAI},
+  title        = {ChatGPT: {L}arge language model},
+  year         = {2023},
+  howpublished = {\url{https://openai.com/chatgpt}},
+  note         = {Accessed: Dec. 1, 2024}
+}
+
+@article{A08,
+  author    = {Ailon, Nir and Charikar, Moses and Newman, Alantha},
+  title     = {Aggregating inconsistent information: Ranking and clustering},
+  journal   = {J. ACM},
+  year      = {2008},
+  volume    = {55},
+  number    = {5},
+  articleno = {23},
+  month     = nov,
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  doi       = {10.1145/1411509.1411513},
+  url       = {https://doi.org/10.1145/1411509.1411513},
+  issn      = {0004-5411}
+}
+
+@misc{C23,
+  title         = {Fair Rank Aggregation},
+  author        = {Chakraborty, Diptarka and Das, Syamantak and Khan, Arindam and Subramanian, Aditya},
+  year          = {2023},
+  eprint        = {2308.10499},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DS},
+  url           = {https://arxiv.org/abs/2308.10499}
+}
+
+@article{H00,
+  author    = {Hochberg, Yosef and Rabinovitch, Ramon},
+  title     = {Ranking by Pairwise Comparisons with Special Reference to Ordering Portfolios},
+  journal   = {American Journal of Mathematical and Management Sciences},
+  volume    = {20},
+  number    = {3-4},
+  pages     = {231--253},
+  year      = {2000},
+  publisher = {Taylor \& Francis},
+  doi       = {10.1080/01966324.2000.10737515},
+  url       = {https://doi.org/10.1080/01966324.2000.10737515}
+}
+
+@article{c24,
+  author  = {Cavallaro, Claudia and Cutello, Vincenzo and Pavone, Mario},
+  title   = {Efficient heuristics to compute minimal and stable feedback arc sets},
+  journal = {Journal of Combinatorial Optimization},
+  year    = {2024},
+  volume  = {48},
+  number  = {4},
+  pages   = {30},
+  doi     = {10.1007/s10878-024-01209-8},
+  url     = {https://doi.org/10.1007/s10878-024-01209-8},
+  issn    = {1573-2886}
+}
+
+@article{c25,
+  author  = {Cavallaro, Claudia and Cutello, Vincenzo and Pavone, Mario},
+  title   = {Minimal and stable feedback arc sets and graph centrality measures},
+  journal = {Computers \& Operations Research},
+  year    = {2025},
+  volume  = {184},
+  pages   = {107247},
+  issn    = {0305-0548},
+  doi     = {10.1016/j.cor.2025.107247},
+  url     = {https://www.sciencedirect.com/science/article/pii/S030505482500276X},
+  keywords = {Directed graphs, Vertex linear arrangements, Feedback arc sets, Discrete optimization}
+}
+
+@article{BTL,
+  author    = {Bradley, Ralph Allan and Terry, Milton E.},
+  title     = {Rank Analysis of Incomplete Block Designs: I. The Method of Paired Comparisons},
+  journal   = {Biometrika},
+  year      = {1952},
+  volume    = {39},
+  number    = {3/4},
+  pages     = {324--345},
+  publisher = {Oxford University Press},
+  url       = {http://www.jstor.org/stable/2334029},
+  issn      = {0006-3444}
+}
+
+@article{SpringRank,
+  author  = {De Bacco, Caterina and Larremore, Daniel B. and Moore, Cristopher},
+  title   = {A physical model for efficient ranking in networks},
+  journal = {Science Advances},
+  year    = {2018},
+  volume  = {4},
+  number  = {7},
+  pages   = {eaar8260},
+  doi     = {10.1126/sciadv.aar8260},
+  url     = {https://www.science.org/doi/abs/10.1126/sciadv.aar8260}
+}
+
+@misc{SyncRank,
+  title         = {Sync-Rank: Robust Ranking, Constrained Ranking and Rank Aggregation via Eigenvector and Semidefinite Programming Synchronization},
+  author        = {Cucuringu, Mihai},
+  year          = {2015},
+  eprint        = {1504.01070},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG},
+  url           = {https://arxiv.org/abs/1504.01070}
+}
+
+% =========================
+% ADDED (missing experiment baselines)
+% =========================
+
+@article{DavidScore,
+  author  = {David, H. A.},
+  title   = {Ranking from unbalanced paired-comparison data},
+  journal = {Biometrika},
+  year    = {1987},
+  volume  = {74},
+  number  = {2},
+  pages   = {432--436},
+  doi     = {10.1093/biomet/74.2.432},
+  url     = {https://doi.org/10.1093/biomet/74.2.432}
+}
+
+@article{EigenvectorCentrality,
+  author  = {Bonacich, Phillip},
+  title   = {Power and Centrality: A Family of Measures},
+  journal = {American Journal of Sociology},
+  year    = {1987},
+  volume  = {92},
+  number  = {5},
+  pages   = {1170--1182},
+  doi     = {10.1086/228631},
+  url     = {https://doi.org/10.1086/228631}
+}
+
+@techreport{PageRank,
+  author      = {Page, Lawrence and Brin, Sergey and Motwani, Rajeev and Winograd, Terry},
+  title       = {The PageRank Citation Ranking: Bringing Order to the Web},
+  institution = {Stanford InfoLab},
+  year        = {1999},
+  number      = {1999-66},
+  url         = {https://ilpubs.stanford.edu/422/}
+}
+
+@article{SVD_RS_NRS,
+  author  = {d'Aspremont, Alexandre and Cucuringu, Mihai and Tyagi, Hemant},
+  title   = {Ranking and synchronization from pairwise measurements via {SVD}},
+  journal = {Journal of Machine Learning Research},
+  year    = {2021},
+  volume  = {22},
+  number  = {19},
+  pages   = {1--63},
+  url     = {https://jmlr.org/papers/v22/19-542.html}
+}
+
+@inproceedings{DiGCN,
+  author    = {Tong, Zekun and Liang, Yuxuan and Sun, Changyou and Li, Xinke and Rosenblum, David S. and Lim, Andrew},
+  title     = {Digraph Inception Convolutional Networks},
+  booktitle = {Advances in Neural Information Processing Systems},
+  volume    = {33},
+  year      = {2020},
+  pages     = {17907--17918},
+  url       = {https://proceedings.neurips.cc/paper_files/paper/2020/hash/cffb6e2288a630c2a787a64ccc67097c-Abstract.html}
+}
+
+@misc{DIGRAC,
+  title         = {DIGRAC: Digraph Clustering Based on Flow Imbalance},
+  author        = {He, Yixuan and Reinert, Gesine and Cucuringu, Mihai},
+  year          = {2021},
+  eprint        = {2106.05194},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG},
+  url           = {https://arxiv.org/abs/2106.05194}
+}
+
+
+@inproceedings{heckel2018approximate,
+  title     = {Approximate Ranking from Pairwise Comparisons},
+  author    = {Heckel, Reinhard and Simchowitz, Max and Ramchandran, Kannan and Wainwright, Martin},
+  booktitle = {Proceedings of the Twenty-First International Conference on Artificial Intelligence and Statistics},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {84},
+  pages     = {1057--1066},
+  year      = {2018},
+  publisher = {PMLR},
+  url       = {https://proceedings.mlr.press/v84/heckel18a.html}
+}
+
+@article{newman2023efficient,
+  title   = {Efficient Computation of Rankings from Pairwise Comparisons},
+  author  = {Newman, M. E. J.},
+  journal = {Journal of Machine Learning Research},
+  volume  = {24},
+  number  = {238},
+  pages   = {1--25},
+  year    = {2023},
+  url     = {https://jmlr.org/papers/v24/22-1086.html}
+}
+
+@article{hunter2004mm,
+  title   = {MM Algorithms for Generalized Bradley--Terry Models},
+  author  = {Hunter, David R.},
+  journal = {The Annals of Statistics},
+  volume  = {32},
+  number  = {1},
+  pages   = {384--406},
+  year    = {2004},
+  doi     = {10.1214/aos/1079120141}
+}
+
+@inproceedings{shah2015topology,
+  title     = {Estimation from Pairwise Comparisons: Sharp Minimax Bounds with Topology Dependence},
+  author    = {Shah, Nihar and Balakrishnan, Sivaraman and Bradley, Joseph and Parekh, Abhay and Ramchandran, Kannan and Wainwright, Martin},
+  booktitle = {Proceedings of the Eighteenth International Conference on Artificial Intelligence and Statistics},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {38},
+  pages     = {856--865},
+  year      = {2015},
+  publisher = {PMLR},
+  url       = {https://proceedings.mlr.press/v38/shah15.html}
+}

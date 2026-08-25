@@ -283,6 +283,169 @@ def _addback_desc_weight_multi(
 
 
 # =============================================================================
+# Phase B (alternative): exact reachability-aware add-back
+# =============================================================================
+#
+# The topological-order add-back above (_addback_desc_weight_multi) computes ONE
+# topological order of the Phase-A DAG and only accepts a removed edge (u,v) if it
+# is forward w.r.t. THAT order (pos[u] < pos[v]). This is a sufficient but not
+# necessary condition for "adding (u,v) keeps the graph acyclic": the graph stays
+# acyclic iff v cannot already reach u via kept edges, which is a strictly weaker
+# (i.e. more permissive) requirement than "forward in one arbitrarily fixed order".
+# Consequently topo-order add-back can reject edges that are perfectly safe to add
+# (they just happen to be backward in the one order that was picked), and it never
+# changes that order within a pass. Reachability add-back below tests the exact
+# necessary-and-sufficient condition directly.
+#
+# Correctness / one-pass-sufficiency argument (see docs for the full write-up):
+#   The procedure only ever ADDS edges to `kept`; it never removes one. Reachability
+#   is monotone non-decreasing under edge addition: once v can reach u, no future
+#   insertion (which only adds more edges) can make that path disappear. So if a
+#   removed edge (u,v) is rejected at some point in the single descending-weight
+#   scan because v already reaches u, it would still be rejected if it were
+#   reconsidered later (or in a hypothetical second pass) — nothing about that
+#   rejection is order-of-processing-dependent in a way a second pass could undo.
+#   Hence, unlike the topo variant (which benefits from multiple INS passes because
+#   later passes recompute a topo order compatible with newly added edges), a
+#   single descending-weight scan over reachability suffices: there is no INS2/INS3
+#   analogue.
+
+
+def _addback_reachability(
+    n: int,
+    kept_initial: np.ndarray,
+    src: np.ndarray,
+    dst: np.ndarray,
+    w: np.ndarray,
+    time_limit_sec: float,
+    t0: float,
+    dense_matrix_max_n: int = 4000,
+) -> Tuple[np.ndarray, dict]:
+    """
+    Add back removed edges in stable descending original-weight order, accepting
+    edge (u, v) iff v cannot currently reach u in the kept graph (exact reachability
+    test, not merely "forward in a fixed topological order").
+
+    Two implementations, chosen automatically by graph size:
+      - Dense mode (n <= dense_matrix_max_n): maintain an explicit n x n boolean
+        reachability matrix `reach` (reach[x, y] == True iff x == y or x can reach
+        y via kept edges) via incremental transitive-closure updates. Each
+        insertion of (u, v) does:
+            anc = {a : reach[a, u]} ∪ {u}      (ancestors of u, inclusive)
+            desc = {b : reach[v, b]} ∪ {v}      (descendants of v, inclusive)
+            reach[a, b] = True for all a in anc, b in desc
+        This is exact and, for the graph sizes in this benchmark suite (n <= ~350),
+        costs at most a few hundred KB of memory and is fast because updates are
+        vectorized numpy row/column operations.
+      - Sparse/BFS mode (n > dense_matrix_max_n): no O(n^2) matrix is built. Each
+        candidate edge (u, v) is checked via a bounded BFS/DFS from v over
+        currently-kept edges, stopping as soon as u is found or the frontier is
+        exhausted. This is the standard sparse-graph-friendly fallback and is
+        governed by the same global `time_limit_sec` budget as the rest of Phase B.
+
+    Returns:
+      kept_final: bool array over edges
+      stats: dict with counts and diagnostics (see keys below)
+    """
+    kept = kept_initial.copy()
+    m = int(len(w))
+    order = np.argsort(-w, kind="mergesort")  # stable descending by original weight
+
+    adj_e: List[List[int]] = [[] for _ in range(n)]
+    for ei in range(m):
+        adj_e[int(src[ei])].append(ei)
+
+    n_candidates = int(np.sum(~kept_initial))
+    n_checked = 0
+    n_inserted = 0
+    n_rejected_reachable = 0
+    break_reason = "exhausted"
+    dense_mode = bool(n <= dense_matrix_max_n)
+
+    if dense_mode:
+        # Build initial reach matrix from the Phase-A DAG via reverse topological order.
+        topo0 = _toposort_kahn_from_edges(n, src, dst, kept_initial)
+        if topo0 is None:
+            # Should not happen: Phase A always yields a DAG.
+            topo0 = list(range(n))
+        reach = np.zeros((n, n), dtype=bool)
+        for u in reversed(topo0):
+            for ei in adj_e[u]:
+                if not kept_initial[ei]:
+                    continue
+                v = int(dst[ei])
+                reach[u, v] = True
+                reach[u, :] |= reach[v, :]
+
+        for ei in order:
+            if time.time() - t0 > time_limit_sec:
+                break_reason = "time_limit"
+                break
+            if kept[ei]:
+                continue
+            u = int(src[ei])
+            v = int(dst[ei])
+            n_checked += 1
+            if reach[v, u]:
+                n_rejected_reachable += 1
+                continue
+            # Safe to insert: v cannot currently reach u.
+            kept[ei] = True
+            n_inserted += 1
+            anc_mask = reach[:, u].copy()
+            anc_mask[u] = True
+            desc_mask = reach[v, :].copy()
+            desc_mask[v] = True
+            idx_a = np.nonzero(anc_mask)[0]
+            reach[np.ix_(idx_a, np.arange(n))] |= desc_mask
+    else:
+        def _reaches(v_start: int, target: int) -> bool:
+            if v_start == target:
+                return True
+            visited = bytearray(n)
+            visited[v_start] = 1
+            stack = [v_start]
+            while stack:
+                x = stack.pop()
+                for ei in adj_e[x]:
+                    if not kept[ei]:
+                        continue
+                    y = int(dst[ei])
+                    if y == target:
+                        return True
+                    if not visited[y]:
+                        visited[y] = 1
+                        stack.append(y)
+            return False
+
+        for ei in order:
+            if time.time() - t0 > time_limit_sec:
+                break_reason = "time_limit"
+                break
+            if kept[ei]:
+                continue
+            u = int(src[ei])
+            v = int(dst[ei])
+            n_checked += 1
+            if _reaches(v, u):
+                n_rejected_reachable += 1
+                continue
+            kept[ei] = True
+            n_inserted += 1
+
+    stats = {
+        "addback_mode": "reach",
+        "reach_dense_matrix_used": dense_mode,
+        "reach_candidates": n_candidates,
+        "reach_checked": n_checked,
+        "reach_inserted": n_inserted,
+        "reach_rejected_reachable": n_rejected_reachable,
+        "reach_break_reason": break_reason,
+    }
+    return kept, stats
+
+
+# =============================================================================
 # Convert DAG -> scores (topo order)
 # =============================================================================
 
@@ -574,6 +737,7 @@ def ours_mfas_rmfa(
     A: sp.spmatrix,
     insertion_passes: int = 3,          # INS1=1, INS2=2, INS3=3
     enable_phase_b: bool = True,
+    addback_mode: str = "topo",         # "topo" (legacy, order-of-passes) or "reach" (exact reachability, single pass)
     enable_phase_c: bool = True,
     time_limit_sec: float = 900.0,
     refine_naive: bool = True,
@@ -604,8 +768,23 @@ def ours_mfas_rmfa(
     )
     t_after_phase1 = time.time()
 
-    # Phase B: add-back (desc weight) with INS passes
-    if enable_phase_b:
+    # Phase B: add-back (desc weight), either legacy topo-order passes or exact reachability
+    reach_stats: Optional[dict] = None
+    if enable_phase_b and addback_mode == "reach":
+        kept_final, reach_stats = _addback_reachability(
+            n=n,
+            kept_initial=keptA,
+            src=src,
+            dst=dst,
+            w=w,
+            time_limit_sec=float(time_limit_sec),
+            t0=t0,
+        )
+        kept_after_pass = [kept_final.copy()]
+        reinserted_per_pass = [int(reach_stats["reach_inserted"])]
+        changed_edges_per_pass = [int(reach_stats["reach_inserted"])]
+        break_reason = str(reach_stats["reach_break_reason"])
+    elif enable_phase_b:
         kept_final, kept_after_pass, reinserted_per_pass, changed_edges_per_pass, break_reason = _addback_desc_weight_multi(
             n=n,
             kept_initial=keptA,
@@ -710,6 +889,7 @@ def ours_mfas_rmfa(
         "insertion_passes": int(insertion_passes),
         "enable_phase_b": bool(enable_phase_b),
         "enable_phase_c": bool(enable_phase_c),
+        "addback_mode": str(addback_mode) if enable_phase_b else "disabled",
         "executed_passes": int(len(kept_after_pass)),
         "break_reason": str(break_reason),
         "refine_ratio": bool(refine_ratio),
@@ -720,6 +900,8 @@ def ours_mfas_rmfa(
         "time_phaseC_sec": float(t_after_phaseC - t_after_phase2),
         "kept_final_mask": kept_final.astype(bool).tolist(),
     }
+    if reach_stats is not None:
+        meta.update(reach_stats)
 
     # Uncomment the next line to log bottleneck counters to stdout (I, R, reinserted per pass, phase times):
     # print(f"OURS_MFAS bottleneck: I={meta['phase1_iterations']} R={meta['removed_phaseA']} reinserted_per_pass={meta['reinserted_per_pass']} t_phase1={meta['time_phase1_sec']:.3f}s t_phase2={meta['time_phase2_sec']:.3f}s t_phaseC={meta['time_phaseC_sec']:.3f}s")

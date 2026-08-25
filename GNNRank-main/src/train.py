@@ -19,7 +19,7 @@ from param_parser import parameter_parser
 from preprocess import load_data
 from get_adj import get_second_directed_adj
 from SpringRank import SpringRank
-from comparison import syncRank_angle, syncRank, serialRank, btl, davidScore, eigenvectorCentrality, PageRank, rankCentrality, mvr, ours_MFAS, ours_MFAS_INS1, ours_MFAS_INS2, ours_MFAS_INS3
+from comparison import syncRank_angle, syncRank, serialRank, btl, davidScore, eigenvectorCentrality, PageRank, rankCentrality, mvr, ours_MFAS, ours_MFAS_INS1, ours_MFAS_INS2, ours_MFAS_INS3, ours_MFAS_REACH
 from comparison import SVD_RS, SVD_NRS, serialRank_matrix
 
 
@@ -644,11 +644,13 @@ class Trainer(object):
                     score, _ = ours_MFAS_INS3(self.A)
                 elif model_name == 'OURS_MFAS':
                     score, _ = ours_MFAS(self.A)
+                elif model_name == 'OURS_MFAS_REACH':
+                    score, _ = ours_MFAS_REACH(self.A)
                 else:
                     raise NameError(f"Please input the correct model name from: \
                         SpringRank, syncRank, serialRank, btl, davidScore, eigenvectorCentrality,\
                         PageRank, rankCentrality, mvr, SVD_RS, SVD_NRS, \
-                        OURS_MFAS_INS1, OURS_MFAS_INS2, OURS_MFAS_INS3, OURS_MFAS instead of {model_name}!")
+                        OURS_MFAS_INS1, OURS_MFAS_INS2, OURS_MFAS_INS3, OURS_MFAS, OURS_MFAS_REACH instead of {model_name}!")
                 
                 t_elapsed = time.time() - t_start
                 runtime_full[split] = t_elapsed

@@ -1,0 +1,7 @@
+{
+  "n_target": 77,
+  "n_complete": 77,
+  "n_failed": 0,
+  "elapsed_sec": 27.375884294509888,
+  "out": "/tmp/ranking-jsuper-manuscript-major-revision/outputs/revision_analysis_20260825/canonical_reachability_baseline_comparison/a4_gnnrank_metrics.csv"
+}

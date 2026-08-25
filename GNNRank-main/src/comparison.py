@@ -443,3 +443,76 @@ def ours_MFAS_INS2(scores_matrix, **kwargs):
 
 def ours_MFAS_INS3(scores_matrix, **kwargs):
     return ours_MFAS(scores_matrix, variant="INS3", **kwargs)
+
+
+# ----------------------------
+# OURS_MFAS_REACH: MFAS local-ratio + exact reachability-aware add-back
+# (see ADDBACK_DIAGNOSIS.md / REACHABILITY_ADDBACK_DESIGN.md for the rationale).
+# This is a distinct algorithm from OURS_MFAS/OURS_MFAS_INS*: Phase B here accepts
+# a removed edge (u, v) iff v cannot reach u in the currently-kept DAG (an exact
+# cycle-safety test), rather than "forward in one fixed topological order". A single
+# descending-weight pass suffices (see docstring of _addback_reachability), so there
+# is no INS1/INS2/INS3 analogue for this variant.
+# ----------------------------
+def ours_MFAS_REACH(
+    scores_matrix,
+    enable_phase_b: bool = True,
+    enable_phase_c: bool = True,
+    time_limit_sec: float = 900.0,
+    refine_ratio: bool = True,
+    refine_time_sec: float = 20.0,
+    refine_passes: int = 2,
+    ternary_iters: int = 20,
+    log_every: int = 0,
+):
+    """
+    scores_matrix: NxN directed weight matrix (numpy array-like OR scipy sparse).
+    Returns: (score_vec, extra_dict)
+    """
+    W = scores_matrix
+    if sp.issparse(W):
+        A = W.tocsr()
+    else:
+        A = sp.csr_matrix(np.asarray(W))
+
+    score_vec, meta = ours_mfas_rmfa(
+        A,
+        insertion_passes=1,
+        enable_phase_b=bool(enable_phase_b),
+        addback_mode="reach",
+        enable_phase_c=bool(enable_phase_c),
+        time_limit_sec=float(time_limit_sec),
+        refine_ratio=bool(refine_ratio),
+        refine_time_sec=float(refine_time_sec),
+        refine_passes=int(refine_passes),
+        ternary_iters=int(ternary_iters),
+        return_meta=True,
+        return_all_pass_scores=False,
+    )
+
+    extra = {
+        "runtime_sec": float(meta.get("runtime_sec", np.nan)),
+        "variant": "REACH",
+        "enable_phase_b": bool(enable_phase_b),
+        "enable_phase_c": bool(enable_phase_c),
+        "n": int(meta.get("n", A.shape[0])),
+        "m": int(meta.get("m", -1)),
+        "phase1_iterations": int(meta.get("phase1_iterations", -1)),
+        "removed_phaseA": int(meta.get("removed_phaseA", -1)),
+        "kept_after_phaseA": int(meta.get("kept_after_phaseA", -1)),
+        "kept_final": int(meta.get("kept_final", -1)),
+        "reinserted_per_pass": list(meta.get("reinserted_per_pass", [])),
+        "executed_passes": int(meta.get("executed_passes", 1)),
+        "refine_ratio": bool(meta.get("refine_ratio", refine_ratio)),
+        "time_limit_sec": float(meta.get("time_limit_sec", time_limit_sec)),
+        "time_phase1_sec": float(meta.get("time_phase1_sec", np.nan)),
+        "time_phase2_sec": float(meta.get("time_phase2_sec", np.nan)),
+        "time_phaseC_sec": float(meta.get("time_phaseC_sec", np.nan)),
+        "reach_dense_matrix_used": meta.get("reach_dense_matrix_used"),
+        "reach_candidates": meta.get("reach_candidates"),
+        "reach_checked": meta.get("reach_checked"),
+        "reach_inserted": meta.get("reach_inserted"),
+        "reach_rejected_reachable": meta.get("reach_rejected_reachable"),
+        "reach_break_reason": meta.get("reach_break_reason"),
+    }
+    return np.asarray(score_vec, dtype=float), extra

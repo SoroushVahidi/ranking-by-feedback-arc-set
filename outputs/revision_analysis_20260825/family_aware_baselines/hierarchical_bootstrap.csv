@@ -1,0 +1,11 @@
+baseline,metric,n_families,hierarchical_mean,ci95_lo,ci95_hi,ci_excludes_zero,direction
+SpringRank,upset_simple,7,-0.016569748692214503,-0.11942974871822765,0.12792311555572913,False,negative_favors_ours
+davidScore,upset_simple,7,-0.04032163793700083,-0.19469906065080847,0.12020529167992708,False,negative_favors_ours
+SVD_NRS,upset_simple,7,-0.10944704941575015,-0.29900005855730594,0.06993315480649463,False,negative_favors_ours
+btl,upset_simple,7,-0.13749945290024795,-0.20949519095676294,-0.06140379757753445,True,negative_favors_ours
+PageRank,upset_simple,7,-0.2168205898702145,-0.3276728017521757,-0.10306217468210632,True,negative_favors_ours
+syncRank,upset_simple,7,-0.8278591397238629,-1.0173757311701774,-0.6420819777037416,True,negative_favors_ours
+rankCentrality,upset_simple,7,-1.1806611444111381,-1.4358946067201237,-0.9353386276108879,True,negative_favors_ours
+serialRank,upset_simple,7,-0.9562436158561282,-1.3651496454647607,-0.5570124879905161,True,negative_favors_ours
+DIGRAC,upset_simple,7,-0.30187685568988326,-0.49815918197376396,-0.10194612727633545,True,negative_favors_ours
+ib,upset_simple,7,-0.3812822702645404,-0.5462842684728759,-0.22199638974027977,True,negative_favors_ours

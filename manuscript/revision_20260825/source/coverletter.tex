@@ -1,0 +1,40 @@
+\documentclass[11pt]{letter}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\signature{Soroush Vahidi\\
+New Jersey Institute of Technology\\
+Newark, NJ, USA\\
+\texttt{sv96@njit.edu}}
+
+\address{Soroush Vahidi\\
+New Jersey Institute of Technology\\
+Newark, NJ, USA\\
+\texttt{sv96@njit.edu}}
+
+\begin{document}
+
+\begin{letter}{Editor-in-Chief\\
+The Journal of Supercomputing}
+
+\opening{Dear Editor,}
+
+Please consider our manuscript, \textit{``Scalable and Training-Free Ranking from Pairwise Comparisons via Acyclic Graph Construction,''} for publication in \textit{The Journal of Supercomputing}.
+
+This work addresses the problem of deriving global rankings from large, noisy, and incomplete pairwise-comparison graphs. Such ranking problems arise in settings such as competition analysis, preference aggregation, and large-scale networked data, where methods must often operate under strict constraints on computation time, reproducibility, and deployment cost. While recent approaches increasingly rely on training-based graph neural models, these methods can introduce substantial computational overhead, hyperparameter sensitivity, and reduced determinism. In contrast, our study develops a scalable, training-free alternative that constructs rankings directly from weighted directed comparison graphs.
+
+The proposed method is built around an acyclicity-based perspective: it interprets ranking inconsistency through the lens of feedback arc set removal and uses this viewpoint to construct an acyclic comparison backbone. The resulting pipeline combines a deterministic local-ratio-style cycle-breaking stage, a stable weight-prioritized add-back procedure that preserves acyclicity, and an optional bounded score-refinement stage. Across a benchmark suite used in recent ranking-from-comparisons research, the method is competitive with strong classical baselines and provides clear runtime advantages over training-based GNN ranking configurations under fixed wall-clock budgets.
+
+We believe this manuscript is appropriate for \textit{The Journal of Supercomputing} because its central contribution is not only methodological but also computational. The paper emphasizes scalable graph processing, explicit runtime-bounded execution, deterministic behavior, and practical performance on large weighted directed graphs. In this sense, the work aligns with the journal's interest in algorithms, performance methods, and computational approaches for demanding large-scale problems. We believe it will be of interest to readers concerned with efficient and reproducible computation for graph-structured and comparison-based data.
+
+This manuscript is original, has not been published previously, and is not under consideration for publication elsewhere. The author has approved the submission and has no competing interests to declare.
+
+Thank you for your consideration. I would be grateful for the opportunity to have the manuscript reviewed for publication in \textit{The Journal of Supercomputing}.
+
+\closing{Sincerely,}
+
+\end{letter}
+
+\end{document}
