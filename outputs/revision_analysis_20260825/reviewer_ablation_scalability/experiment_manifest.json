@@ -1,0 +1,50 @@
+{
+  "config_hash": "712779aad638f619",
+  "total_planned": 1009,
+  "layer1_count": 33,
+  "layer2_count": 45,
+  "finance_count": 1,
+  "structural_variants": [
+    "A0",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "A6"
+  ],
+  "cycle_configs": [
+    "C0_A0",
+    "C0_A4",
+    "C1_A0",
+    "C1_A4"
+  ],
+  "zero_tol_configs": [
+    "Z12_A4",
+    "Z15_A4",
+    "Z18_A4"
+  ],
+  "refinement_configs": [
+    "R0_A4",
+    "R1_A4",
+    "R2_A4",
+    "R3_A4"
+  ],
+  "legacy_pass_configs": [
+    "P0",
+    "P1",
+    "P2",
+    "P3"
+  ],
+  "mincut_budget_configs": [
+    "K20_A5",
+    "K50_A5",
+    "K100_A5"
+  ],
+  "finance_configs": [
+    "A0",
+    "A2",
+    "A4",
+    "A6"
+  ]
+}

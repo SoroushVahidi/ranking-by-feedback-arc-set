@@ -1,0 +1,5 @@
+dataset,config,n_copies,families,numerically_consistent,runtime_varies,max_abs_diff,max_rel_diff,disagree_fields,dedup_rule
+Basketball_temporal/finer2012,A0,2,Basketball_finer,true,true,0.010935068130493164,0.028220204349597048,runtime_total_sec,keep_first_raw_row_order; metrics must agree; runtime jitter ignored for consistency
+Basketball_temporal/finer2012,A2,2,Basketball_finer,true,true,0.019538164138793945,0.019618761750153757,runtime_total_sec,keep_first_raw_row_order; metrics must agree; runtime jitter ignored for consistency
+Basketball_temporal/finer2012,A4,2,Basketball_finer,true,true,0.03660321235656738,0.030163155114160248,runtime_total_sec,keep_first_raw_row_order; metrics must agree; runtime jitter ignored for consistency
+Basketball_temporal/finer2012,A6,2,Basketball_finer,true,true,0.010870933532714844,0.0006333279514254852,runtime_total_sec,keep_first_raw_row_order; metrics must agree; runtime jitter ignored for consistency
