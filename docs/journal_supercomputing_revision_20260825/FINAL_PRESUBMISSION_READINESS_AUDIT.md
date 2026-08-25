@@ -9,6 +9,7 @@ Worktree: `/tmp/ranking-jsuper-manuscript-major-revision`
 **READY_FOR_RESUBMISSION**
 
 Scientific, editorial, package, and three-document consistency checks are complete.
+Dataset denominator accounting corrected (intended 80 / loadable 78; coverage 77/78, 78/78, 61/78).
 The only optional author-side hygiene step is a final visual overlay of the publisher decision email against the response letter (verbatim email file is still not stored locally). That check does not block scientific readiness of the revision package.
 
 ## Completed gates
@@ -18,6 +19,8 @@ The only optional author-side hygiene step is a final visual overlay of the publ
 | Experiments / theory closed | Pass |
 | `CANONICAL_METHOD_MATCHES_HEADLINE_TABLES` | Pass |
 | `NO_UNTRACEABLE_NUMERICAL_CLAIMS` | Pass |
+| `NO_DENOMINATOR_INCONSISTENCY` | Pass |
+| `DATASET_DENOMINATOR_CONSISTENCY` | Pass |
 | `NO_MATERIAL_REDUNDANT_PASSAGES` | Pass |
 | Reviewer coverage | 25/25 (R1 5/5, R2 9/9, R3 4/4, R4 7/7) |
 | Acknowledgments + AI disclosure | Pass |
@@ -30,10 +33,10 @@ The only optional author-side hygiene step is a final visual overlay of the publ
 
 | Artifact | Pages | SHA256 |
 |---|---:|---|
-| Manuscript PDF | 17 | `bca2b2d0cbbd6eede4b4596ca9145844c36975326b6f47560ab3b47db5597ab2` |
-| Response PDF | 6 | `6b10c559626cc5244ccf52c1f3e44e9397fcf353320c78d0c7fa532a9a9d1bea` |
+| Manuscript PDF | 17 | `f1cf4ae0af1ad65b0b114672e291aa089fd6450fba804ef48d6ac08e42c104f6` |
+| Response PDF | 6 | `5219a3d04c9a0cd6e74bfdeef6d1740c81a46ebcd7725b0b10d52ab74c2eaff2` |
 | Cover letter PDF | 1 | `5b17b2bd265e91e40651ccdeb8925f81f2dfb6735b411a6d8cd545301cf826ec` |
-| Package ZIP | — | `6f5f61634757a4ac7004908b7e0f372a1c08148a3f3b010be03e9344cfd3e559` |
+| Package ZIP | — | `0defe58005f96e1d48fa0cb474bd85d72a55c901d0cb142de797a56ad6cae154` |
 
 ## Author-optional overlay
 

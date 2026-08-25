@@ -10,7 +10,7 @@ Date: 2026-08-25
 | R1.2 / R3.1 | A1→A2 upset_simple | same | n=33 | upset_simple ↓ | 32/0/1; med Δ −0.0159; Holm 1.5e−6 |
 | R1.2 | A4 runtime range | `structural_ablation.csv` A4 non-Finance | n=77 | runtime_sec | ≈0.01–1.2 s; med ≈0.57 s; n≤602 |
 | R1.2 / R2.8 | Finance boundary timings | `analysis_summary.json` finance[] | 4 configs | wall seconds | A0=612.55s SUCCESS; A2=1214.76s; A4=1214.57s INTERNAL_TIME_LIMIT; A6=1800.10s TIMEOUT_HARD_WALLCLOCK |
-| R2.4 | Coverage | `e2_coverage_matrix.csv` | 79 readable | success | OURS 77/79; classical ~78/79; GNN 61/79 |
+| R2.4 | Coverage | `e2_completion_matrix.csv` ∖ ERO | **78 loadable** | success | OURS 77/78; classical 78/78; GNN 61/78 |
 | R2.3 / R3.3 | GNN runtime | `e1_runtime_wtl.csv` | n=60 | runtime ratio | 60/60 faster; med ≈0.12× (~8×) |
 | R3.3 | Classical slower | `e1_runtime_wtl.csv` | n=77 | median ratio | syncRank 2.6× … PageRank 536× |
 | R3.2 | SpringRank canonical median | `table4_full_suite.csv` | suite export | median upset_simple | 0.802724 |

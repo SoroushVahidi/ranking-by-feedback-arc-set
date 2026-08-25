@@ -383,9 +383,10 @@ Exact reachability add-back costs $O(m\log m)$ for sorting plus polynomial-in-$n
 
 \paragraph{Dataset suite and denominators.}
 We use an $80$-dataset manuscript benchmark suite aligned with recent ranking-from-comparisons evaluations \citep{he22}, spanning basketball/football temporal graphs, faculty hiring networks, animal and head-to-head competition graphs, one ERO-style instance, and the near-complete Finance graph ($n=1315$, $m\approx 1.73\times 10^{6}$, density $\approx 1$).
-Two suite members lack loadable data files in the archived release (\texttt{ERO/p5K5N350eta10styleuniform}, \texttt{Halo2BetaData/HeadToHead}), so analyses that require readable graphs use an effective denominator of $79$ datasets with available data.
-An extra inventory entry \texttt{\_AUTO/Basketball\_temporal\_\_1985adj} is excluded from the manuscript suite.
-We never mix denominators: pairwise quality/runtime tables use method-pair common completions (typically $n=77$ for OURS vs classical; $n=60$ for OURS vs GNN), coverage uses $79$, and family-aware macros exclude Finance from quality aggregates.
+Two suite members lack loadable adjacency files in the archived release (\texttt{ERO/p5K5N350eta10styleuniform}, \texttt{Halo2BetaData/HeadToHead}), so analyses that require readable graphs use an effective denominator of $78$ loadable datasets ($80-2=78$).
+The loadable Halo family member is \texttt{Halo2BetaData}; \texttt{Halo2BetaData/HeadToHead} is a distinct suite ID without a resolvable \texttt{adj.npz} under the repository loader.
+An extra inventory entry \texttt{\_AUTO/Basketball\_temporal\_\_1985adj} is excluded from the manuscript suite (it is a duplicate adjacency variant of Basketball 1985 and would otherwise inflate a raw repository count to $81$).
+We never mix denominators: pairwise quality/runtime tables use method-pair common completions (typically $n=77$ for OURS vs classical; $n=60$ for OURS vs GNN), coverage uses the $78$ loadable graphs, and family-aware macros exclude Finance from quality aggregates.
 Table~\ref{tab:dataset_suite_summary} summarizes families; non-Finance ablation successes reach $n\le 602$.
 
 \begin{table}[H]
@@ -405,7 +406,7 @@ ERO-style & 1 & (suite range) & (suite range) \\
 Finance & 1 & 1{,}315 & 1{,}729{,}225 \\
 \bottomrule
 \end{tabular}
-\caption{Manuscript $80$-suite families (intended counts). Two missing files reduce readable graphs to $79$.}
+\caption{Manuscript $80$-suite families (intended counts). Two missing adjacency files reduce loadable graphs to $78$.}
 \label{tab:dataset_suite_summary}
 \end{table}
 
@@ -530,7 +531,7 @@ ib & 60 & 60 & 0 & 0 & $0.027\times$ ($\sim 37\times$ faster) \\
 \label{tab:runtime_wtl}
 \end{table}
 
-Coverage on $79$ readable datasets: \textsc{OURS-Reach} $77/79$ ($97.5\%$; Finance timeout); most classical methods $78/79$ ($98.7\%$); SyncRank $77/79$; DIGRAC/ib $61/79$ ($77.2\%$, primarily not-applicable rather than timeout).
+Coverage on $78$ loadable datasets: \textsc{OURS-Reach} $77/78$ ($98.7\%$; Finance timeout); most classical methods $78/78$ ($100\%$); SyncRank $77/78$ (Finance timeout); DIGRAC/ib $61/78$ ($78.2\%$, primarily not-applicable rather than timeout).
 A global $60$-dataset subset where all methods finish exists but is GNN-applicability biased; pairwise completion remains primary.
 Figure~\ref{fig:runtime_vs_edges} shows empirical A4 runtimes versus $m$ for non-Finance graphs.
 
