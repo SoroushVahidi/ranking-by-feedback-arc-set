@@ -134,27 +134,59 @@ def eigenvectorCentrality(A, regularization=1e-6):
 
 
 def rankCentrality(A):
-    A = sp.lil_matrix(A.transpose())
-    A.setdiag(0)
-    A = sp.csr_matrix(A)
-    A.eliminate_zeros()
+    """Negahban--Oh--Shah Rank Centrality (reference-faithful).
 
-    regularization = 1
-    A = sp.csr_matrix(A.toarray() + regularization)
+    Inherited GNNRank code constructed a Rank-Centrality-style normalized
+    transition matrix and then *overwrote* it with the regularized adjacency
+    before the eigenvector step, yielding a non-stochastic operator and
+    numerically pathological scores. This revision restores the standard
+    construction (Negahban, Oh, Shah): for comparison weights A, form win
+    fractions, scale by 1/d_max (max comparison-graph out-degree), fill the
+    diagonal so each row sums to one, and return the stationary distribution
+    (leading left eigenvector).
 
-    dout = A.sum(1)
-    dmax = max(dout)
+    Convention: A[i, j] is the directed comparison weight for i -> j (strength
+    of i over j). Transition mass from i to j is proportional to the fraction
+    of i--j comparisons won by j.
+    """
+    A = sp.csr_matrix(A, dtype=float)
+    n = int(A.shape[0])
+    if n == 0:
+        return np.zeros(0, dtype=float)
 
-    P = sp.lil_matrix(A / (A + A.transpose()) / dmax)
+    Ad = A.toarray().astype(float, copy=True)
+    np.fill_diagonal(Ad, 0.0)
 
-    P = sp.csr_matrix(A)
-    P.eliminate_zeros()
-    D = sp.diags(np.array(1 - P.sum(1)).flatten())
-    P = P + D
+    S = Ad + Ad.T
+    # frac[i, j] = share of i--j comparisons won by j (0 if never compared)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        frac = np.divide(Ad.T, S, out=np.zeros_like(Ad), where=S > 0)
 
-    _, V = sp.linalg.eigs(P.transpose(), 1, which='LM')
-    rc = V.flatten() / V.sum()
-    return np.real(rc)
+    compared = (S > 0).astype(float)
+    np.fill_diagonal(compared, 0.0)
+    degrees = compared.sum(axis=1)
+    dmax = float(max(degrees.max(), 1.0))
+
+    P = frac / dmax
+    np.fill_diagonal(P, 0.0)
+    row_sums = P.sum(axis=1)
+    # Numerical guard: row sums should be in [0, 1]
+    row_sums = np.clip(row_sums, 0.0, 1.0)
+    P = P + np.diag(1.0 - row_sums)
+
+    # Stationary distribution = leading left eigenvector of P.
+    w, V = np.linalg.eig(P.T)
+    idx = int(np.argmax(np.real(w)))
+    pi = np.real(V[:, idx])
+    if float(pi.sum()) < 0:
+        pi = -pi
+    pi = np.maximum(pi, 0.0)
+    s = float(pi.sum())
+    if s <= 0:
+        pi = np.ones(n, dtype=float) / float(n)
+    else:
+        pi = pi / s
+    return pi
 
 
 # minimum violation ranking below

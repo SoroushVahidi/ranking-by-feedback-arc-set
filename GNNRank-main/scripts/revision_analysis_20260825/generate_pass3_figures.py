@@ -51,27 +51,76 @@ def fig_runtime_vs_edges() -> None:
     plt.close()
 
 
+def _matched_medians(sa: pd.DataFrame, configs: list[str]) -> pd.DataFrame:
+    """Medians on the exact common-completion dataset set shared by configs."""
+    sets = []
+    for c in configs:
+        sub = sa[(sa["config"] == c) & (sa["status"] == "complete")]
+        sets.append(set(sub["dataset"].astype(str)))
+    common = set.intersection(*sets) if sets else set()
+    rows = []
+    for c in configs:
+        sub = sa[(sa["config"] == c) & (sa["dataset"].astype(str).isin(common))].copy()
+        rows.append(
+            {
+                "config": c,
+                "n_datasets": int(sub["dataset"].nunique()),
+                "median_upset_simple": float(sub["upset_simple"].median()),
+                "median_removed_final_weight": float(sub["removed_final_weight"].median()),
+                "median_runtime_algorithm_sec": float(sub["runtime_algorithm_sec"].median()),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
 def fig_structural_ablation() -> None:
-    order = ["A0", "A1", "A2", "A3", "A4", "A5", "A6"]
-    summ = pd.read_csv(AB / "structural_ablation_summary.csv")
-    summ = summ[summ["config"].isin(order)].copy()
-    summ["config"] = pd.Categorical(summ["config"], categories=order, ordered=True)
-    summ = summ.sort_values("config")
-    fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.2))
-    axes[0].plot(summ["config"].astype(str), summ["median_upset_simple"], "o-", color="#1f4e79")
-    axes[0].set_ylabel("Median upset_simple (↓ better)")
-    axes[0].set_title("Ranking metric")
-    axes[1].plot(summ["config"].astype(str), summ["median_removed_final_weight"], "s-", color="#8b4513")
-    axes[1].set_ylabel("Median removed weight (↓ better)")
-    axes[1].set_title("Structural objective")
-    for ax in axes:
-        ax.set_xlabel("Config")
+    """Two matched-support panels (analogous to Table 8); A5/A6 omitted.
+
+    A continuous A0–A6 median trajectory mixes n=33 (legacy) and n=77
+    (canonical) supports and would present dataset-composition changes as
+    stage effects. Panel (a)/(b) each use one exact common-completion set.
+    Optional min-cut configs A5/A6 are excluded from this trajectory figure
+    because their support/purpose differs; their structural paired tests are
+    in Table 7.
+    """
+    sa = pd.read_csv(AB / "structural_ablation.csv")
+    legacy = _matched_medians(sa, ["A0", "A1", "A3"])
+    canon = _matched_medians(sa, ["A0", "A2", "A4"])
+
+    fig, axes = plt.subplots(1, 2, figsize=(7.4, 3.3), sharey=False)
+    panel_specs = [
+        (axes[0], legacy, "Panel (a): legacy fixed-topo/INS (common $n=33$)"),
+        (axes[1], canon, "Panel (b): canonical reachability (common $n=77$)"),
+    ]
+    for ax, df, title in panel_specs:
+        xs = list(df["config"].astype(str))
+        ax.plot(xs, df["median_upset_simple"], "o-", color="#1f4e79", label="median upset_simple")
+        ax.set_xlabel("Stage")
+        ax.set_title(title, fontsize=9)
         ax.grid(True, ls=":", alpha=0.4)
-    fig.suptitle("Structural ablation (unpaired medians; paired tests authoritative)", fontsize=10)
+        ax.set_ylabel("Median upset_simple (↓ better)")
+        ax2 = ax.twinx()
+        ax2.plot(
+            xs,
+            df["median_removed_final_weight"],
+            "s--",
+            color="#8b4513",
+            alpha=0.85,
+            label="median removed weight",
+        )
+        ax2.set_ylabel("Median removed weight (↓ better)", fontsize=8, color="#8b4513")
+        ax2.tick_params(axis="y", labelsize=8, colors="#8b4513")
+
+    fig.suptitle(
+        "Matched-support stage ablation (unpaired medians; paired tests in Table 7)",
+        fontsize=10,
+    )
     fig.tight_layout()
     fig.savefig(FIG / "fig_structural_ablation.pdf", bbox_inches="tight")
     fig.savefig(FIG / "fig_structural_ablation.png", dpi=150, bbox_inches="tight")
     plt.close()
+    print("legacy support", int(legacy["n_datasets"].iloc[0]), legacy.to_dict("records"))
+    print("canon support", int(canon["n_datasets"].iloc[0]), canon.to_dict("records"))
 
 
 if __name__ == "__main__":

@@ -59,7 +59,7 @@ New Jersey Institute of Technology, Newark, NJ, USA\\
 \maketitle
 
 \begin{abstract}
-Ranking from weighted pairwise comparisons asks for a global order that respects observed preferences as well as possible. We study a training-free, deterministic pipeline that builds an acyclic backbone on the comparison digraph using an MWFAS-inspired local-ratio heuristic, restores high-weight arcs under exact cycle-safe reinsertion, optionally applies a secondary weighted min-cut exchange, and extracts scores with optional order-preserving refinement. The local-ratio and exact add-back components follow prior lineage; this paper formalizes ranking--MWFAS optimum-value equivalence and practical guarantee boundaries, corrects a fixed-topological-position proxy weakening of add-back, and expands classical and GNN evaluation under timeout-aware common-completion analysis. Empirically, the canonical reachability-aware method (\textsc{OURS-Reach}) is strong on simple/naive upset metrics against several baselines, remains competitive rather than uniformly superior to SpringRank on family-aware checks, and is weaker than BTL on upset\_ratio. It is slower than most lightweight classical estimators yet substantially faster than archived trained GNNRank runs under an end-to-end protocol; the near-complete Finance graph marks a large-dense scalability boundary.
+Ranking from weighted pairwise comparisons asks for a global order that respects observed preferences as well as possible. We study a training-free, deterministic pipeline that builds an acyclic backbone on the comparison digraph using an MWFAS-inspired local-ratio heuristic, restores high-weight arcs under exact cycle-safe reinsertion, optionally applies a secondary weighted min-cut exchange, and extracts scores with optional Phase~C refinement (adjacent-swap order updates followed by order-preserving ternary magnitude search). The local-ratio and exact add-back components follow prior lineage; this paper formalizes ranking--MWFAS optimum-value equivalence and practical guarantee boundaries, corrects a fixed-topological-position proxy weakening of add-back, and expands classical and GNN evaluation under timeout-aware common-completion analysis. Empirically, the canonical reachability-aware method (\textsc{OURS-Reach}) is strong on simple/naive upset metrics against several baselines, remains competitive rather than uniformly superior to SpringRank on family-aware checks, and is weaker than BTL and corrected RankCentrality on upset\_ratio. It is slower than most lightweight classical estimators yet substantially faster than archived trained GNNRank runs under an end-to-end protocol; the near-complete Finance graph marks a large-dense scalability boundary.
 \end{abstract}
 \newcommand{\keywords}[1]{\textbf{Keywords:} #1}
 
@@ -100,7 +100,7 @@ The MWFAS problem is
 The ranking objective~\eqref{eq:ranking_obj} and MWFAS~\eqref{eq:mwfas} share the same optimum \emph{value}: the backward edges of any ranking form a feedback arc set of equal weight, and any feedback arc set induces a DAG whose topological orders have ranking disagreement no greater than the deleted weight, with equality for an inclusion-minimal (in particular, optimal positive-weight) feedback arc set. The correspondence between optimal rankings and optimal feedback arc sets is many-to-many rather than one-to-one; we treat this equivalence as a formal claim to be stated and proved, not merely asserted.
 
 \subsection{Scope, lineage, and contributions}
-The pipeline studied here (\S\ref{sec:framework}) builds an acyclic backbone with the local-ratio heuristic of \citet{CI03}, reinserts high-weight arcs while preserving acyclicity, extracts scores from the resulting DAG, and optionally applies order-preserving refinement. Several components are \emph{prior}: local-ratio Phase~A, exact cycle-safe add-back (including weight ordering), and ternary/refinement ideas already appear in \citet{CI03,VK25}. What this paper contributes is therefore not a reinvention of that core, but the following.
+The pipeline studied here (\S\ref{sec:framework}) builds an acyclic backbone with the local-ratio heuristic of \citet{CI03}, reinserts high-weight arcs while preserving acyclicity, extracts scores from the resulting DAG, and optionally applies Phase~C refinement (adjacent swaps that may change the order, then order-preserving ternary magnitude search). Several components are \emph{prior}: local-ratio Phase~A, exact cycle-safe add-back (including weight ordering), and ternary/refinement ideas already appear in \citet{CI03,VK25}. What this paper contributes is therefore not a reinvention of that core, but the following.
 
 \begin{enumerate}
 \item \textbf{Formalization and guarantee boundaries.}
@@ -148,7 +148,7 @@ Local-ratio backbone & yes & yes & prior (used) \\
 Exact cycle-safe reinsertion & yes & yes (spec.) & fidelity restore \\
 Weight-ordered reinsertion & suggested & yes & prior (used) \\
 Time-bounded practical impl.\ & -- & partial & audited \\
-Order-preserving refinement & -- & yes & prior (used) \\
+Phase~C refinement (swap + ternary) & -- & ternary & prior (used) \\
 Formal ranking$\leftrightarrow$MWFAS & -- & asserted & proved \\
 DF03 guarantee under timeout & N/A & not audited & qualified (no) \\
 Weighted min-cut exchange & -- & -- & secondary new \\
@@ -167,7 +167,7 @@ We describe a deterministic, training-free ranking pipeline for weighted pairwis
 \item \textbf{Phase~A (prior):} local-ratio-style cycle breaking \citet{CI03,VK25}.
 \item \textbf{Phase~B (fidelity correction):} exact weight-prioritized reachability-aware reinsertion \citet{CI03,VK25}.
 \item \textbf{Optional secondary repair (new):} conflict-triggered weighted min-cut exchange.
-\item \textbf{Phase~C (prior lineage):} topological score extraction and optional order-preserving refinement \citet{VK25}.
+\item \textbf{Phase~C (prior lineage):} topological score extraction and optional refinement (adjacent-swap then order-preserving ternary) \citet{VK25}.
 \end{enumerate}
 Fixed-topological-position multipass variants (INS1--3) are retained only as ablation contrasts (\S\ref{subsec:ablation}).
 
@@ -228,15 +228,18 @@ $t_0\leftarrow\mathrm{now}()$;\ $r_e\leftarrow w_e$,\ $\mathrm{alive}_e\leftarro
   }
 }
 $\mathrm{kept}\leftarrow\mathrm{alive}$\tcp*{Phase~A output}
+$\mathrm{acyclicFlag}\leftarrow(\mathrm{kept}\ \mathrm{is\ a\ DAG})$\;
 sort excluded arcs by descending $w$, stable ties by edge id\;
 \ForEach{excluded arc $e=(u,v)$ in that order}{
   \If{$\mathrm{now}()-t_0>T$}{\textbf{break}}
-  \If{$v\not\rightarrow^\star u$ in current kept DAG}{$\mathrm{kept}[e]\leftarrow\mathrm{true}$}
+  \If{$v\not\rightarrow^\star u$ in current kept digraph}{$\mathrm{kept}[e]\leftarrow\mathrm{true}$}
 }
-\If{min-cut repair enabled}{apply Alg.~\ref{alg:mincut_exchange} under remaining budget}\;
+\tcp*{Prop.~\ref{prop:reachability_addback} is claimed only when $\mathrm{acyclicFlag}$ held after Phase~A}
+\If{min-cut repair enabled \textbf{and} $\mathrm{kept}$ is a DAG}{apply Alg.~\ref{alg:mincut_exchange} under remaining budget}\;
+\tcp*{if Phase~A exited cyclic, skip min-cut: Prop.~\ref{prop:mincut} assumes a DAG}
 $\pi\leftarrow\mathrm{TopoSort}(\mathrm{kept})$;\ \If{$\pi=\mathrm{None}$}{$\pi\leftarrow(1,\dots,n)$\tcp*{identity fallback}}
 $s_v\leftarrow\max\{1,n-\mathrm{pos}_\pi(v)\}$\;
-optionally apply order-preserving refinement under remaining budget\;
+optionally apply adjacent-swap refinement, then order-preserving ternary refinement, under remaining budget\;
 \Return{$s$}
 \end{algorithm}
 
@@ -246,7 +249,7 @@ Phase~A follows the local-ratio reduction of \citet{CI03}: maintain residuals, f
 
 \subsection{Phase~B: Exact Reachability-Aware Reinsertion (Fidelity Correction)}
 \label{subsec:framework_phaseB}
-After Phase~A, excluded arcs are scanned once in stable descending original weight. Arc $(u,v)$ is reinserted iff there is no directed path $v\rightarrow^\star u$ in the current kept DAG. This is the exact cycle-safety test of \citet{CI03,VK25}. A fixed-topological-position proxy (accept iff $\mathrm{pos}(u)<\mathrm{pos}(v)$ for one fixed topological order) is weaker and is retained only as an ablation baseline (INS multipass variants).
+After Phase~A, excluded arcs are scanned once in stable descending original weight. Arc $(u,v)$ is reinserted iff there is no directed path $v\rightarrow^\star u$ in the current kept digraph. When Phase~A left a DAG, this is the exact cycle-safety test of \citet{CI03,VK25} and Prop.~\ref{prop:reachability_addback} applies; after a premature cyclic Phase~A exit the same scan is still attempted under the remaining budget, but the proposition's DAG hypotheses need not hold. A fixed-topological-position proxy (accept iff $\mathrm{pos}(u)<\mathrm{pos}(v)$ for one fixed topological order) is weaker and is retained only as an ablation baseline (INS multipass variants).
 
 \begin{proposition}[Exact add-back correctness]
 \label{prop:reachability_addback}
@@ -317,17 +320,17 @@ From a kept DAG we compute a deterministic topological order (Kahn's algorithm w
 \toprule
 \textbf{Parameter} & \textbf{Role} & \textbf{Notes} \\
 \midrule
-$T$ (\texttt{time\_limit\_sec}) & Global wall-clock budget & Shared by Phases~A--C; early exit may leave cycles \\
-$\tau$ (\texttt{zero\_tol}) & Residual kill threshold & Default $10^{-15}$; numerical, not a modeling knob \\
-DFS / Kahn order & Deterministic traversal & Vertices $1..n$; stable edge order \\
+$T$ (\texttt{time\_limit\_sec}) & Global wall-clock budget & Canonical non-GNN: $1800$\,s; shared by Phases~A--C; early exit may leave cycles \\
+$\tau$ (\texttt{zero\_tol}) & Residual kill threshold & Default $10^{-15}$; sensitivity Z12/Z15/Z18 in \S\ref{subsec:sensitivity} \\
+DFS / Kahn order & Deterministic traversal & Vertices $1..n$; stable edge order; C0/C1 cycle-selection in \S\ref{subsec:sensitivity} \\
 Add-back order & Descending $w$, stable ties & Exact reachability test (canonical) \\
-Legacy $P\in\{1,2,3\}$ & Fixed-topological-position passes & INS1/2/3 ablation baselines; not canonical \\
-Min-cut budgets & Optional repair caps & Secondary; regime-specific benefit \\
-Refinement budgets & Phase~C time/passes & Order-preserving ternary from prior lineage \\
+Legacy $P\in\{1,2,3\}$ (P1/P2/P3) & Fixed-topological-position passes & INS1/2/3 ablation baselines; not canonical \\
+Min-cut budgets K20/K50/K100 & Optional repair caps & Candidate attempt caps in \S\ref{subsec:sensitivity}; secondary \\
+Refinement R0--R3 & Phase~C budgets & R0~=~off; R1/R2/R3 scale adjacent-swap + ternary passes/time (canonical R2) \\
 Identity fallback & Score extraction if cyclic & No nontrivial general error bound (\S\ref{subsec:theory_fallback}) \\
 \bottomrule
 \end{tabular}
-\caption{Consolidated parameters and termination behavior.}
+\caption{Consolidated parameters and termination behavior. Canonical \textsc{OURS-Reach} uses exact reachability add-back, R2 refinement (adjacent-swap then ternary), and min-cut off.}
 \label{tab:parameters}
 \end{table}
 
@@ -373,7 +376,7 @@ O(mn+m^2),
 \]
 which is weaker than a textbook $O(nm)$ accounting that assumes compacted alive adjacency. A wall-clock budget caps completed iterations empirically; it is an execution policy, not an average-case complexity theorem.
 
-Exact reachability add-back costs $O(m\log m)$ for sorting plus polynomial-in-$n$ dense incremental updates (or BFS queries in a sparse fallback). Optional min-cut repair adds budgeted directed min-cut computations. Phase~C is time-bounded and may use up to $O(n^2)$ pairwise structures for ratio refinement. Empirical timing is reported in \S\ref{subsec:runtime_coverage}--\ref{subsec:scalability}.
+Exact reachability add-back sorts the $m$ candidate arcs once ($O(m\log m)$) and, in the dense implementation used for suite graphs with $n\le 4000$, maintains an $n\times n$ reachability matrix with an $O(n^{2})$ incremental update per accepted insertion (at most $m$ insertions), i.e.\ $O(m\log m+mn^{2})$ in the worst case; a sparse BFS/DFS fallback is used only for larger $n$. Optional min-cut repair adds budgeted directed min-cut computations. Phase~C is time-bounded and may use up to $O(n^2)$ pairwise structures for ratio refinement. Empirical timing is reported in \S\ref{subsec:runtime_coverage}--\ref{subsec:scalability}.
 
 \section{Experimental Results}
 \label{sec:exp}
@@ -411,8 +414,11 @@ Finance & 1 & 1{,}315 & 1{,}729{,}225 \\
 \end{table}
 
 \paragraph{Methods.}
-Baselines are ten classical methods (\textsc{SpringRank}, \textsc{SyncRank}, \textsc{SerialRank}, \textsc{BTL}, \textsc{DavidScore}, eigenvector/\textsc{PageRank}/\textsc{RankCentrality}, \textsc{SVD-RS}/\textsc{SVD-NRS}) and two GNNRank backbones (\textsc{DIGRAC}, \textsc{ib}) under fixed archived configurations (not post-hoc best-in-suite oracles).
-The \emph{canonical} method reported in the principal quality/runtime tables is \textsc{OURS-Reach}: Phase~A + exact reachability-aware reinsertion + Phase~C refinement (\S\ref{sec:framework}), \emph{without} the optional min-cut exchange.
+Baselines evaluated in the archived suite protocol are ten classical methods (\textsc{SpringRank}, \textsc{SyncRank}, \textsc{SerialRank}, \textsc{BTL}, \textsc{DavidScore}, eigenvector centrality, \textsc{PageRank}, \textsc{RankCentrality}, \textsc{SVD-RS}, \textsc{SVD-NRS}) and two GNNRank backbones (\textsc{DIGRAC}, \textsc{ib}) under fixed archived configurations (not post-hoc best-in-suite oracles).
+Principal Tables~\ref{tab:pairwise_quality_simple}--\ref{tab:runtime_wtl} report a \emph{prespecified} principal subset of eight classical methods---\textsc{SpringRank}, \textsc{SyncRank}, \textsc{SerialRank}, \textsc{BTL}, \textsc{DavidScore}, \textsc{PageRank}, \textsc{RankCentrality}, \textsc{SVD-NRS}---plus the two GNN backbones.
+\textsc{SVD-RS} and eigenvector centrality were evaluated in the same suite export but omitted from these principal tables as near-duplicate spectral companions of \textsc{SVD-NRS} and \textsc{PageRank}, respectively (selection fixed before headline regeneration; not a post-hoc cull by effect size).
+An inherited GNNRank implementation bug in \textsc{RankCentrality} (normalized transition matrix overwritten before the eigenvector step) was corrected to the Negahban--Oh--Shah construction before regenerating that baseline's rows; other baselines were left unchanged.
+The \emph{canonical} method reported in the principal quality/runtime tables is \textsc{OURS-Reach}: Phase~A + exact reachability-aware reinsertion + Phase~C refinement (adjacent-swap then order-preserving ternary; \S\ref{sec:framework}), \emph{without} the optional min-cut exchange.
 Optional min-cut remains a secondary structural operator evaluated in ablation/empirics (\S\ref{subsec:ablation}, \S\ref{subsec:mincut_emp}).
 Archived \textsc{OURS-MFAS}/\textsc{INS3} labels correspond to duplicate fixed-topological-position configurations retained only as ablation contrasts.
 
@@ -454,13 +460,14 @@ BTL & 77 & 76/0/1 & $-0.422$ & $<10^{-11}$ \\
 PageRank & 77 & 76/0/1 & $-0.349$ & $<10^{-11}$ \\
 SyncRank & 77 & 77/0/0 & $-1.008$ & $<10^{-11}$ \\
 SerialRank & 77 & 77/0/0 & $-1.247$ & $<10^{-11}$ \\
-RankCentrality & 77 & 77/0/0 & $-1.254$ & $<10^{-11}$ \\
+RankCentrality & 77 & 71/0/6 & $-0.299$ & $<10^{-11}$ \\
 DIGRAC & 60 & 60/0/0 & $-0.316$ & $4.9\times 10^{-11}$ \\
 ib & 60 & 60/0/0 & $-0.620$ & $4.9\times 10^{-11}$ \\
 \bottomrule
 \end{tabular}
 \caption{\texttt{upset\_simple} (lower better) on pairwise common completions for \textsc{OURS-Reach}.
-$\Delta=$ \textsc{OURS-Reach} $-$ baseline (negative favors \textsc{OURS-Reach}). Holm $p$ within this table's primary family.}
+$\Delta=$ \textsc{OURS-Reach} $-$ baseline (negative favors \textsc{OURS-Reach}). Holm $p$ within this table's primary family.
+RankCentrality uses the corrected Negahban--Oh--Shah implementation (\S\ref{subsec:exp_setup}).}
 \label{tab:pairwise_quality_simple}
 \end{table}
 
@@ -479,19 +486,20 @@ BTL & 77 & 3/0/74 & $+0.081$ & BTL stronger \\
 PageRank & 77 & 14/0/63 & $+0.029$ & PageRank stronger \\
 SyncRank & 77 & 47/0/30 & $-0.210$ & \\
 SerialRank & 77 & 47/0/30 & $-0.125$ & \\
-RankCentrality & 77 & 77/0/0 & $-0.593$ & \\
+RankCentrality & 77 & 9/0/68 & $+0.098$ & RC stronger \\
 DIGRAC & 60 & 30/0/30 & $-0.039$ & \\
 ib & 60 & 30/0/30 & $-0.149$ & \\
 \bottomrule
 \end{tabular}
 \caption{\texttt{upset\_ratio} (lower better) on the same common completions for \textsc{OURS-Reach}.
-Oracle best-in-suite envelopes are not headline competitors.}
+Oracle best-in-suite envelopes are not headline competitors.
+Corrected RankCentrality is stronger on this metric (as are BTL and PageRank).}
 \label{tab:pairwise_quality_ratio}
 \end{table}
 
 On \texttt{upset\_simple}, \textsc{OURS-Reach} records large W/T/L margins and significant Holm-adjusted Wilcoxon advantages against all listed classical and GNN baselines in Table~\ref{tab:pairwise_quality_simple}.
-On \texttt{upset\_naive}, the same directional pattern holds (e.g., $46/0/31$ vs SpringRank; $76/0/1$ vs BTL; $60/0/0$ vs \textsc{ib}).
-On \texttt{upset\_ratio}, BTL remains clearly stronger ($3/0/74$) and PageRank also wins more often ($14/0/63$); SpringRank is competitive ($42/0/35$).
+On \texttt{upset\_naive}, the same directional pattern holds (e.g., $46/0/31$ vs SpringRank; $76/0/1$ vs BTL; $60/0/0$ vs \textsc{ib}; $47/0/30$ vs corrected RankCentrality).
+On \texttt{upset\_ratio}, BTL remains clearly stronger ($3/0/74$), PageRank also wins more often ($14/0/63$), and corrected RankCentrality is stronger still ($9/0/68$); SpringRank is competitive ($42/0/35$).
 We do not claim universal dominance on any metric.
 
 \subsection{Family-Aware Robustness}
@@ -516,7 +524,7 @@ Family-level $n$ is too small for heavy per-family significance testing; we trea
 SyncRank & 77 & 48 & 0 & 29 & $0.80\times$ ($\sim 1.2\times$ faster) \\
 SpringRank & 77 & 15 & 0 & 62 & $5.7\times$ \\
 BTL & 77 & 19 & 0 & 58 & $7.9\times$ \\
-RankCentrality & 77 & 0 & 0 & 77 & $17\times$ \\
+RankCentrality & 77 & 38 & 0 & 39 & $1.03\times$ (comparable) \\
 SerialRank & 77 & 0 & 0 & 77 & $32\times$ \\
 SVD\_NRS & 77 & 0 & 0 & 77 & $60\times$ \\
 DavidScore & 77 & 0 & 0 & 77 & $108\times$ \\
@@ -526,7 +534,7 @@ ib & 60 & 60 & 0 & 0 & $0.027\times$ ($\sim 37\times$ faster) \\
 \bottomrule
 \end{tabular}
 \caption{Paired runtime W/T/L on common completions for \textsc{OURS-Reach}.
-\textsc{OURS-Reach} is slower than most lightweight classical methods (comparable to SyncRank) and faster than archived trained-GNN end-to-end runs.}
+\textsc{OURS-Reach} is slower than most lightweight classical methods (comparable to SyncRank and corrected RankCentrality) and faster than archived trained-GNN end-to-end runs.}
 \label{tab:runtime_wtl}
 \end{table}
 
@@ -580,16 +588,17 @@ A4$\to$A6 & removed weight$\downarrow$ & 77 & 66/11/0 & $-57$ & $4.9\times 10^{-
 A0$\to$A4 & upset\_simple$\downarrow$ & 77 & 76/0/1 & $-0.0169$ & $2.4\times 10^{-12}$ \\
 \bottomrule
 \end{tabular}
-\caption{Primary structural ablation paired tests (non-Finance). Ranking metrics need not move monotonically with the weighted FAS objective (e.g., A4$\to$A6).}
+\caption{Primary structural ablation paired tests (non-Finance). Ranking metrics need not move monotonically with the weighted FAS objective (e.g., A4$\to$A6).
+A2$\to$A5 and A4$\to$A6 report \emph{structural} removed-weight improvement from the min-cut operator on the retained graph; Phase~C refinement does not alter kept arcs, so these FAS-weight claims do not depend on score-refinement order.}
 \label{tab:ablation_primary}
 \end{table}
 
-Figure~\ref{fig:ablation} shows unpaired Layer median trajectories for context; paired tests above are authoritative.
+Figure~\ref{fig:ablation} shows unpaired matched-support median trajectories for the legacy and canonical stage progressions (analogous to Table~\ref{tab:reviewer1_stage_ablation}); paired tests above are authoritative. Optional min-cut configs A5/A6 are omitted from the figure because they are secondary structural operators with different support/purpose; their paired FAS-weight tests appear in Table~\ref{tab:ablation_primary}.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\linewidth]{fig_structural_ablation.pdf}
-\caption{Unpaired median upset\_simple and removed weight across A0--A6 (descriptive).}
+\caption{Matched-support unpaired medians for (a) legacy A0$\to$A1$\to$A3 on common $n=33$ and (b) canonical A0$\to$A2$\to$A4 on common $n=77$. Dual axes show median \texttt{upset\_simple} and median removed weight within each panel. Cross-panel numerical comparisons are not intended; A5/A6 are excluded from this trajectory.}
 \label{fig:ablation}
 \end{figure}
 
@@ -640,8 +649,12 @@ Min-cut budgets: K20$\to$K50 modest; K50$\to$K100 nearly flat. The main sensitiv
 
 \subsection{Min-Cut Empirical Regime}
 \label{subsec:mincut_emp}
+The optional min-cut exchange is a \emph{secondary} structural contribution: it is not part of \textsc{OURS-Reach} (Tables~\ref{tab:pairwise_quality_simple}--\ref{tab:runtime_wtl}).
+In the ablation harness, A5 applies min-cut after reachability without Phase~C; A6 runs Phase~C refinement before the exchange and then extracts post-exchange topological scores for upset reporting (so A6 upset deltas are not ``A4 scores plus min-cut'').
+Phase~C does not modify the retained arc set, so the A2$\to$A5 and A4$\to$A6 \emph{removed-weight} improvements in Table~\ref{tab:ablation_primary} remain valid structural evidence for Proposition~\ref{prop:mincut}.
 Under the predefined broad characterization (39 available of 40 datasets), the operator of \S\ref{subsec:framework_mincut} is active on $28/39$ graphs ($4/7$ families; $280$ accepted exchanges).
 On active graphs, \texttt{upset\_simple}/\texttt{upset\_naive} never worsened; \texttt{upset\_ratio} worsened on $7/28$ (Basketball only; small magnitude), confirming regime-specific rather than universal ranking benefit.
+We therefore claim monotone weighted-FAS improvement where exchanges are accepted, not uniform ranking dominance from min-cut.
 
 \section{Limitations}
 \label{sec:limitations}
@@ -649,16 +662,16 @@ Dense near-complete graphs remain difficult: Finance is the explicit boundary ca
 Finite-budget practical outputs need not inherit the idealized Demetrescu--Finocchi guarantee (\S\ref{subsec:theory_df03}), and identity-order fallback has no nontrivial general multiplicative error bound (Prop.~\ref{prop:fallback}).
 The optional min-cut repair improves the weighted feedback objective but not every upset metric, and its benefit is regime-specific (\S\ref{subsec:mincut_emp}).
 Relative to most lightweight classical estimators \textsc{OURS-Reach} is slower (\S\ref{subsec:runtime_coverage}); GNN speedups refer to archived end-to-end training+evaluation under imperfect hardware comparability (\S\ref{subsec:exp_setup}).
-Family-aware analysis shows that SpringRank comparisons remain family-sensitive, and BTL remains stronger on \texttt{upset\_ratio} (\S\ref{subsec:family_aware}).
+Family-aware analysis shows that SpringRank comparisons remain family-sensitive, and BTL (and corrected RankCentrality) remain stronger on \texttt{upset\_ratio} (\S\ref{subsec:family_aware}).
 Protocol repetitions for deterministic non-GNN methods characterize runtime/timeout variability rather than ranking uncertainty.
 
 \section{Conclusion}
 \label{sec:conclusion}
-We addressed ranking from weighted pairwise comparisons with a training-free structural pipeline: local-ratio cycle breaking, exact reachability-aware reinsertion, optional weighted min-cut exchange, and score extraction/refinement.
+We addressed ranking from weighted pairwise comparisons with a training-free structural pipeline: local-ratio cycle breaking, exact reachability-aware reinsertion, optional weighted min-cut exchange, and score extraction with optional Phase~C refinement (adjacent-swap then order-preserving ternary).
 The algorithmic core follows Demetrescu--Finocchi and \citet{VK25}; the contributions of this paper are formal ranking--MWFAS clarification and guarantee boundaries, restoration of exact cycle-safe add-back relative to a weaker fixed-topological-position rule, a secondary monotone min-cut repair, and a broader timeout-aware empirical study.
 
-On common completions, \textsc{OURS-Reach} is strong on simple/naive upset metrics against the listed classical and GNN baselines, remains weaker than BTL on upset\_ratio, and is family-sensitive versus SpringRank despite a significant pairwise Holm test on upset\_simple.
-It is slower than most lightweight classical methods (comparable to SyncRank), substantially faster than the evaluated trained GNN pipelines under the archived end-to-end protocol, and encounters a large-dense limit on Finance.
+On common completions, \textsc{OURS-Reach} is strong on simple/naive upset metrics against the listed classical and GNN baselines, remains weaker than BTL and corrected RankCentrality on upset\_ratio, and is family-sensitive versus SpringRank despite a significant pairwise Holm test on upset\_simple.
+It is slower than most lightweight classical methods (comparable to SyncRank and corrected RankCentrality), substantially faster than the evaluated trained GNN pipelines under the archived end-to-end protocol, and encounters a large-dense limit on Finance.
 
 \section{Future Work}
 \label{sec:future}
@@ -691,7 +704,7 @@ Not applicable.
 Not applicable.
 
 \textbf{Availability of Data and Materials}
-The datasets used in the experiments originate from prior benchmarks cited in the manuscript (e.g., \cite{he22}). For reproducibility, the processed versions used in this study are provided as text files containing weighted directed edge lists in the public repository linked below.
+The datasets used in the experiments originate from prior benchmarks cited in the manuscript (e.g., \cite{he22}). For reproducibility, the processed suite graphs used in this study are provided in the public repository linked below, primarily as sparse adjacency matrices in \texttt{.npz} form (with some families also retaining text edge-list sources). Two intended suite members lack loadable adjacency files in the archived release (\texttt{ERO/p5K5N350eta10styleuniform}, \texttt{Halo2BetaData/HeadToHead}), so loadable analyses use the $78$-graph denominator stated in \S\ref{subsec:exp_setup}.
 
 \textbf{Code Availability}
 All source code, processed data, and scripts required to reproduce the experiments are publicly available at \url{https://github.com/SoroushVahidi/ranking-by-feedback-arc-set}. The repository contains the implementation of the proposed method, the benchmark drivers, and the materials needed to reproduce the reported results. Implementations of the non-proposed baselines and the GNNRank training and evaluation pipeline are based on the public GNNRank codebase of \citet{he22}, with the corresponding adaptations documented in the repository.

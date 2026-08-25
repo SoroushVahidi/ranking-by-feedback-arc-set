@@ -1,0 +1,63 @@
+{
+  "n_loadable_attempted": 78,
+  "n_complete": 78,
+  "pairwise_rankcentrality": [
+    {
+      "baseline": "rankCentrality",
+      "metric": "upset_simple",
+      "n_common": 77,
+      "ours_wins": 71,
+      "ties": 0,
+      "ours_loses": 6,
+      "mean_delta": -0.21601407868525724,
+      "median_delta": -0.2990654706954966,
+      "wilcoxon_p": 4.417489723238669e-12,
+      "bootstrap_median_CI_lo": -0.33853739500054025,
+      "bootstrap_median_CI_hi": -0.07828283309931372,
+      "median_ours": 0.670828104019,
+      "median_baseline": 0.8660923838615417,
+      "holm_p": ""
+    },
+    {
+      "baseline": "rankCentrality",
+      "metric": "upset_naive",
+      "n_common": 77,
+      "ours_wins": 47,
+      "ties": 0,
+      "ours_loses": 30,
+      "mean_delta": -0.0931874219957042,
+      "median_delta": -0.05787180364167638,
+      "wilcoxon_p": 1.7054491259527996e-06,
+      "bootstrap_median_CI_lo": -0.06701222062145143,
+      "bootstrap_median_CI_hi": 0.01581357419466009,
+      "median_ours": 0.177570089698,
+      "median_baseline": 0.21652309596538544,
+      "holm_p": ""
+    },
+    {
+      "baseline": "rankCentrality",
+      "metric": "upset_ratio",
+      "n_common": 77,
+      "ours_wins": 9,
+      "ties": 0,
+      "ours_loses": 68,
+      "mean_delta": 0.05383717591640532,
+      "median_delta": 0.09760263562166516,
+      "wilcoxon_p": 1.3424854279107838e-07,
+      "bootstrap_median_CI_lo": 0.08907014131501412,
+      "bootstrap_median_CI_hi": 0.1052249073980217,
+      "median_ours": 0.503461658955,
+      "median_baseline": 0.46015074849128723,
+      "holm_p": ""
+    }
+  ],
+  "runtime_wtl": {
+    "baseline": "rankCentrality",
+    "n_common": 77,
+    "ours_faster": 38,
+    "ties": 0,
+    "ours_slower": 39,
+    "median_ratio_ours_over_base": 1.0300511629063889
+  },
+  "note": "Inherited GNNRank RankCentrality overwrite bug corrected; only RC recomputed."
+}

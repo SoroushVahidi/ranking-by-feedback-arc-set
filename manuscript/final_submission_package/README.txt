@@ -1,15 +1,7 @@
-Journal: The Journal of Supercomputing
-
-Manuscript ID:
-feb25704-187e-4f95-8640-5e8c1ca26a94
-
-Title:
-Training-Free Ranking from Pairwise Comparisons via Acyclic Graph Construction
-
-Author:
-Soroush Vahidi
-
+Journal of Supercomputing major revision package
 Contents:
-1. Revised manuscript
-2. Point-by-point response to reviewers
-3. Revision cover letter
+  manuscript/          main_ik.tex/.pdf + references.bib
+  response_to_reviewers/
+  cover_letter/
+  figures/             fig_runtime_vs_edges.pdf, fig_structural_ablation.pdf
+Build note: figures are also referenced from manuscript/ via \graphicspath or relative copy as used in source.
