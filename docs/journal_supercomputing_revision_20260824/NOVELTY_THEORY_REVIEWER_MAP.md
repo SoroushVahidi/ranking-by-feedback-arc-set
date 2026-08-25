@@ -29,18 +29,22 @@ roles, and a per-parameter sensitivity-study recommendation. Ready to adapt
 into the manuscript's methods section directly.
 
 **Issue 4 — Theory / complexity.**
-Classification: **A**, with one **E**. `RANKING_MWFAS_EQUIVALENCE.md`
-supplies the formal proposition + proof the manuscript needs (absent from
-[VK25]). `APPROXIMATION_GUARANTEE_AUDIT.md` and `COMPLEXITY_AUDIT.md` give
-precise, code-verified verdicts on the approximation-guarantee and
-complexity claims, including a worst-case construction proving the timeout
-fallback has no error bound, and a corrected O(mn+m²) worst-case time bound
-for Phase A (vs. the O(VE) claimed for the abstract algorithm). The **E**
-item: the primary-source theorem text of [DF03] itself was not extractable
-in this pass (only a secondary characterization was obtained) — flagged
-explicitly in `APPROXIMATION_GUARANTEE_AUDIT.md` §1 as needing direct
-verification before the exact λ-approximation language is finalized in the
-manuscript.
+Classification: **A** (fully — the former **E** item below is now resolved).
+`RANKING_MWFAS_EQUIVALENCE.md` supplies the formal proposition + proof the
+manuscript needs (absent from [VK25]). `APPROXIMATION_GUARANTEE_AUDIT.md` and
+`COMPLEXITY_AUDIT.md` give precise, code-verified verdicts on the
+approximation-guarantee and complexity claims, including a worst-case
+construction proving the timeout fallback has no error bound, and a corrected
+O(mn+m²) worst-case time bound for Phase A (vs. the O(VE) claimed for the
+abstract algorithm). **[RESOLVED during three-branch integration, 2026-08-24]**:
+the primary-source theorem text of [DF03] was originally not extractable in
+this pass (only a secondary characterization was obtained), flagged as an
+**E** item needing direct verification. The sibling
+`jsuper-prior-work-overlap-audit-20260824` branch subsequently obtained and
+read the full primary text (`DF03_PRIMARY_THEOREM_VERIFICATION.md`, now
+integrated), confirming the λ-approximation characterization and additionally
+sharpening the approximation-guarantee verdict — see that document and the
+update note added to `APPROXIMATION_GUARANTEE_AUDIT.md` §1/§4.
 
 ## Reviewer 2
 

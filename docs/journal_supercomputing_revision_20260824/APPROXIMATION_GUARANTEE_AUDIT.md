@@ -15,17 +15,15 @@ O(V E) heuristic based on the local ratio method [4]. This heuristic was
 shown to be efficient in practice, providing a λ-approximation, where λ is
 the length of the longest cycle in the graph."*
 
-**Important caveat, stated plainly**: the WebFetch tool could not extract
-[DF03]'s literal theorem text from the source PDF in this pass (it returned
-only compressed PDF structure). The characterization above is therefore
-**secondary-source**, not a direct quote of the primary theorem. Before this
-language goes into the manuscript, **the primary source should be obtained
-and the exact theorem statement quoted** (a local copy of the PDF from this
-session's WebFetch call may still be retrievable, or a library/institutional
-PDF access route used). This audit proceeds on the secondary characterization
-because it is corroborated independently by two sources (the general local-
-ratio web-search summary and [VK25]'s own citation), but flags it as
-**not independently primary-verified**.
+**UPDATE (three-branch integration, 2026-08-24): RESOLVED.** At the time this document was
+originally written, the WebFetch tool could not extract [DF03]'s literal theorem text from the
+source PDF, so the characterization above was secondary-source only. The sibling
+`jsuper-prior-work-overlap-audit-20260824` branch subsequently obtained and read the full primary
+text directly (Theorem 1, Theorem 2, Lemma 1, and their complete proofs) — see that branch's
+`DF03_PRIMARY_THEOREM_VERIFICATION.md`, now integrated alongside this file, which is the
+**authoritative source going forward**. The λ-approximation characterization above is confirmed
+correct by the primary text. That document additionally sharpens this audit's own verdict (§4
+below) into two separable claims — see the cross-reference added there.
 
 Taking the characterization as given: the algorithm guarantees that the
 total *original* weight of the removed edge set is at most **λ · OPT**,
@@ -224,6 +222,16 @@ carry that guarantee unconditionally: on any dataset where the wall-clock
 budget is exhausted before natural convergence (confirmed to occur on at
 least `finance` in this codebase), the guarantee does not apply at all, and
 the actual behavior (§3.1) has an unbounded worst-case error.
+
+**SHARPENED (three-branch integration, 2026-08-24)**: `DF03_PRIMARY_THEOREM_VERIFICATION.md` §6,
+having read DF03's actual proof, splits this verdict into two separable claims that should be
+used in the manuscript instead of the single verdict above: **(B-i)** the removed-FAS-weight
+λ-bound depends *only* on Phase 1 reaching convergence, independent of how Phase 2/add-back is
+implemented; **(B-ii)** the *ranking-cost*-equals-removed-weight equivalence (needed to make (B-i)
+meaningful for the ranking objective specifically) additionally requires Phase 2 to produce an
+inclusion-minimal residual set, which the shipped topo-order-proxy Phase 2 does not guarantee.
+Use `DF03_PRIMARY_THEOREM_VERIFICATION.md` §6's recommended manuscript language in place of this
+section's own recommendation.
 
 **Recommended manuscript language** (replacing any unconditional inheritance
 claim): *"Phase A is based on the local-ratio feedback-arc-set heuristic of

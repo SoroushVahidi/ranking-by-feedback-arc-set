@@ -53,7 +53,7 @@ UNKNOWN = not confirmed by any source consulted this pass.
 | Weighted directed graphs | ✓ | ✓ | UNKNOWN (search snippets suggest unweighted/weighted variants both discussed; not confirmed which is primary) | ✓ |
 | FAS/MWFAS backbone | ✓ (defines the algorithm class) | ✓ (explicit MWFAS definition + reduction from ranking) | ✓ | ✓ |
 | Local-ratio cycle breaking | ✓ (this is [DF03]'s contribution) | ✓ (explicitly "we chose to implement the heuristic algorithm from [10]"=[DF03]) | ✗ (different heuristic family — linear-arrangement/centrality-based, per [CCP24]/[CCP25] abstracts) | ✓ (via [VK25] via [DF03]) |
-| Exact / approximation guarantee | ✓ — **λ-approximation, λ = length of longest simple cycle** (per [DF03] as characterized in secondary literature found this pass; primary-source theorem text not extractable from the compressed PDF in this pass — see `APPROXIMATION_GUARANTEE_AUDIT.md` for the caveat) | ✗ (no formal theorem stated anywhere in [VK25]; purely empirical paper) | UNKNOWN | Inherited *in principle* from [DF03] only if Phase A runs to convergence unbudgeted — see `APPROXIMATION_GUARANTEE_AUDIT.md` |
+| Exact / approximation guarantee | ✓ — **λ-approximation, λ = length of longest simple cycle** (per [DF03]'s Theorem 2; **confirmed by direct primary-source read** — see `DF03_PRIMARY_THEOREM_VERIFICATION.md`, integrated from the sibling overlap-audit branch, superseding this row's original secondary-source caveat) | ✗ (no formal theorem stated anywhere in [VK25]; purely empirical paper) | UNKNOWN | Inherited *in principle* from [DF03] only if Phase A runs to convergence unbudgeted — see `APPROXIMATION_GUARANTEE_AUDIT.md` and `DF03_PRIMARY_THEOREM_VERIFICATION.md` §6 for the sharpened two-part verdict |
 | Deterministic | UNKNOWN (not addressed in secondary sources found) | ✓ (implicit; no randomization in Algorithm 1-3) | UNKNOWN | ✓ (explicitly tested, `tests/test_audit.py`) |
 | Training-free | ✓ (classical combinatorial algorithm) | ✓ (explicit selling point, contrasted with He et al. 2022's learned method) | ✓ | ✓ |
 | Explicit wall-clock budget | ✗ (not part of the original algorithm) | ✗ (no time budget in [VK25]'s Algorithm 1-3; only reports observed runtimes, 0.02-0.35s) | UNKNOWN | ✓ (added later; not present in [VK25]) |
@@ -70,15 +70,31 @@ UNKNOWN = not confirmed by any source consulted this pass.
 | Sparse-graph emphasis | UNKNOWN | Not explicitly framed as a regime study; datasets used are the same families (basketball/football/faculty/animal/head-to-head) but far fewer instances (Table 1-4 of [VK25]: ~6 football + 3 faculty + ~30 basketball-coarse + a handful of basketball-finer + 1 head-to-head + 1 animal ≈ same families, smaller per-family counts, and **no finance dataset** at all in [VK25]) | UNKNOWN | ✓ — current repo has an explicit sparse-vs-dense regime audit (`outputs/audits/sparse_regime_robustness.md`, pre-existing) — **new relative to [VK25]** |
 | Dense-graph behavior | ✗ (not addressed) | ✗ (no dense/near-complete graph in [VK25]'s dataset list) | UNKNOWN | Partial — `finance` (n=1315, near-complete) is in the current 80-suite but is known to time out (see sibling branch's `REVISION_RESULTS.md` §4) — **this is a genuinely new stress case relative to [VK25], but not yet a genuinely characterized one** |
 
+## RECONCILIATION NOTE (added during three-branch integration, 2026-08-24)
+
+The dataset-count claim in item 1 immediately below was **corrected** by a precise line-by-line
+recount performed on the sibling `jsuper-prior-work-overlap-audit-20260824` branch (see that
+branch's `EXPERIMENTAL_SCOPE_COMPARISON.md`, now integrated into this branch alongside this file).
+**[VK25]'s Tables 1-4 list exactly 77 dataset instances, not "~50."** The corrected comparison is
+77 ([VK25]) vs. 80 (current repo) — a **+3 (~4%)** delta, not a "substantial" expansion. The
+original (superseded) text of item 1 is preserved below for provenance, followed by the correction.
+**`EXPERIMENTAL_SCOPE_COMPARISON.md` and `REVISION_SOURCE_OF_TRUTH.md` are the authoritative
+sources for this figure going forward — do not cite "~50" from this file.**
+
 ## Reading the matrix: what changed between [VK25] (Jan 2025 preprint) and the current repo
 
-1. **Dataset suite**: [VK25] Table 1-4 lists on the order of ~50 dataset
-   instances across the same families (England football x6, faculty hiring
+1. **[SUPERSEDED — see reconciliation note above] Dataset suite**: [VK25] Table 1-4 lists on the
+   order of ~50 dataset instances across the same families (England football x6, faculty hiring
    x3, Basketball_1985-2014 x~28 coarse, a partial Basketball_finer subset,
    1 HeadToHead, 1 Animal) and explicitly has **no `finance` dataset**. The
    current repo's canonical suite is 80 datasets and includes `finance`
    (n=1315). This is a real, verifiable expansion (see
    `outputs/derived/dataset_inventory.csv`), not a re-novelty of the method.
+   **Correction: a precise recount gives 77 instances in [VK25], not ~50 — the true delta is
+   +3/77 (~4%), i.e. essentially flat. Do not describe this as a "real, verifiable expansion" in
+   dataset count; the real, verifiable expansion is the baseline set (item 2 below) and
+   infrastructure, not dataset count. See `EXPERIMENTAL_SCOPE_COMPARISON.md` for the full,
+   corrected accounting.**
 2. **Baseline set**: [VK25] compares only against GNNRank. The current repo's
    canonical tables compare against ten baselines (SpringRank, BTL,
    DavidScore, SVD-RS, SVD-NRS, PageRank, RankCentrality, SerialRank,

@@ -18,18 +18,30 @@ is the authors' own [VK25] (arXiv:2412.16181), not a third party:
 | 8 | Adjacent-swap refinement | **ADAPTATION** | Standard bubble-sort-style local search (adjacent transposition); order-changing, new relative to [VK25]'s Algorithm 2/3 (which are order-preserving) but not a novel technique in itself |
 | 9 | Ratio-score (ternary search) refinement | **KNOWN** | Directly inherited from [VK25]'s Algorithm 2/3; ternary search for unimodal 1-D optimization is textbook, and unimodality is asserted empirically in [VK25], not proved (still not proved here) |
 | 10 | The complete integrated pipeline (as an artifact) | **SYSTEM/PIPELINE CONTRIBUTION** | The specific combination, first-class phase-ablation toggles, determinism guarantees, and reproducibility/audit tooling are new relative to [VK25]'s codebase, and are a legitimate (if modest) contribution distinct from any single phase's algorithmic content |
-| 11 | Empirical sparse-regime behavior | **NEW (empirical) / SYSTEM CONTRIBUTION** | [VK25] has no dense/near-complete-graph case and a much smaller per-family dataset count; the current repo's sparse-vs-dense regime characterization (including the `finance` stress case) is genuinely new evidence, not present in [VK25] |
+| 11 | Empirical sparse-regime behavior | **NEW (empirical) / SYSTEM CONTRIBUTION** | [VK25] has no dense/near-complete-graph case at all (per-family dataset counts are otherwise nearly identical to the current suite — see RECONCILIATION NOTE below); the current repo's sparse-vs-dense regime characterization (including the `finance` stress case) is genuinely new evidence, not present in [VK25] |
 | 12 | Training-free vs. GNN comparison | **KNOWN framing / NEW scope** | [VK25] already runs exactly this comparison (vs. GNNRank only); what's new is the addition of ten classical-baseline comparisons alongside it — [VK25] has **zero** classical-ranking-method baselines (BTL, SpringRank, RankCentrality, etc.), only GNNRank |
+
+## RECONCILIATION NOTE (added during three-branch integration, 2026-08-24)
+
+Bullet 1 below originally described the dataset suite as "80 canonical datasets spanning more
+families and a wider size/density range" in a way that implied a large expansion over [VK25]. A
+precise recount on the sibling `jsuper-prior-work-overlap-audit-20260824` branch
+(`EXPERIMENTAL_SCOPE_COMPARISON.md`) established that **[VK25] already covers 77 of the current
+80 dataset instances** — the true delta is +3 datasets (`finance`, plain `Halo2BetaData`, and an
+`ERO` instance that could not even be loaded in this pass), not a broad expansion. Bullet 1 is
+corrected below (original wording preserved via git history in commit `e31323a5`); the emphasis
+is shifted to the baseline-set expansion, which remains fully accurate and is the stronger claim.
+See `REVISION_SOURCE_OF_TRUTH.md` for the authoritative figure.
 
 ## Strongest defensible contribution bullets (no marketing language)
 
-1. A substantially expanded and more rigorous empirical evaluation of the
-   local-ratio MWFAS-based ranking approach the authors introduced in
-   [VK25]: 80 canonical datasets spanning more families and a wider
-   size/density range (including a near-complete-graph stress case absent
-   from [VK25]), evaluated against ten classical ranking baselines in
-   addition to GNN-based methods (versus [VK25]'s GNNRank-only comparison),
-   with a documented, deterministic, reproducible pipeline.
+1. **[CORRECTED]** A more rigorous empirical evaluation of the local-ratio MWFAS-based ranking
+   approach the authors introduced in [VK25]: the same 77 dataset instances used by [VK25] plus 3
+   new ones (most notably a near-complete-graph stress case, `finance`, absent from [VK25]),
+   evaluated against ten classical ranking baselines in addition to GNN-based methods (versus
+   [VK25]'s GNNRank-only comparison — this baseline-set expansion, not dataset count, is the
+   primary empirical contribution), with a documented, deterministic, reproducible pipeline
+   including ablation and coverage tooling absent from [VK25].
 
 2. A precise, evidence-backed diagnosis of a fidelity gap between the
    add-back algorithm as specified in the authors' own prior publication
