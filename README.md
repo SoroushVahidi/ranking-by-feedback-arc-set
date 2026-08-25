@@ -27,6 +27,7 @@ This repository contains the implementation, experiments, and manuscript materia
 | 13 | **RankCentrality correction** | `outputs/revision_analysis_20260825/rankcentrality_correction_20260825/` |
 | 14 | **Runtime provenance audit** | `docs/journal_supercomputing_revision_20260825/RUNTIME_PROVENANCE_AUDIT.md` |
 | 15 | **Reproducibility / full build** | `GNNRank-main/README.md` + `GNNRank-main/scripts/paper/run_all_paper_artifacts.py` |
+| 16 | **Reproducibility guide** | `REPRODUCIBILITY.md` — quick verification, artifact regeneration, raw experiments |
 
 ---
 
