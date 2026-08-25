@@ -64,3 +64,14 @@ Comment boxes in `response_to_reviewers.tex` are concise restatements of those p
 ## Author action required
 
 Paste the JoS decision email beside the response letter once before upload to confirm no publisher-only sub-bullet was missed.
+
+
+## Author-provided verbatim Reviewer 3 text (decision-email correspondence)
+
+Source: **author-provided verbatim reviewer text from the decision-email correspondence** (not a file originally stored in this repository).
+
+> First, the weight-prioritized add-back stage (INS1/INS2/INS3) is the principal algorithmic increment over Demetrescu and Finocchi (2003), yet OURS-MFAS and OURS-MFAS-INS3 report digit-identical values across all six columns of Table 4, with INS1 slightly worse than no add-back at all. This is algorithmically explicable — accepting only arcs that are forward with respect to a fixed topological order cannot alter the set of rankings that order permits — but it means the paper's flagship contribution yields no measurable benefit in its present form.
+
+> if the author can reconcile the tables, adopt a reachability-aware insertion rule so that the add-back stage genuinely contributes, and add runtime comparisons against the training-free baselines, I think this work has every prospect of becoming a solid contribution
+
+Status after this pass: **CLOSED** in manuscript (OURS-Reach headline tables + ablation history + classical runtimes).

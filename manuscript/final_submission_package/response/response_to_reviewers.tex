@@ -27,7 +27,7 @@ Thank you for arranging this careful review. We have prepared a major revision a
 \item title revised to remove the word ``Scalable'';
 \item corrected add-back implementation using exact reachability-aware cycle safety (replacing the submitted fixed-topological proxy);
 \item secondary weighted min-cut structural exchange with proofs and regime-specific empirics;
-\item rebuilt baseline comparisons from a single canonical leaderboard source (resolving the submitted Table~4/5 inconsistency);
+\item rebuilt baseline comparisons from a single canonical source and replaced headline tables with \textsc{OURS-Reach} (resolving the submitted Table~4/5 inconsistency and the topo-proxy/add-back mismatch);
 \item direct classical runtime comparisons (showing that OURS is slower than lightweight classical methods);
 \item comprehensive structural ablation, parameter sensitivity, timeout/coverage analysis, and family-aware statistics;
 \item clarified ranking--MWFAS theory and DF03 guarantee boundaries;
@@ -63,7 +63,8 @@ We agree that the original positioning was insufficient. We completely rewrote t
 \noindent\textbf{Response.}
 We added a structural ablation with human-readable stage labels:
 A0~=~Phase~A only; A1~=~Phase~A + submitted topological-proxy add-back; A2~=~Phase~A + exact reachability add-back; A4~=~A2 + refinement; A5/A6~=~optional min-cut on top of A2/A4.
-On non-Finance common completions, exact reachability add-back (A2) improves \texttt{upset\_simple} versus Phase~A only (A0) with W/T/L $76/0/1$ ($n=77$; Holm $p=2.4\times 10^{-12}$), and versus the submitted topological proxy (A1) with $32/0/1$ ($n=33$). Legacy multipass topo-proxy passes P2/P3 add little beyond P1; \texttt{zero\_tol} is stable; refinement saturates quickly (R1$\approx$R2). Non-Finance A4 runtimes are roughly $0.01$--$1.2$\,s (median $\approx 0.57$\,s) for $n\le 602$; Finance is the large-dense boundary (Section~3.5). Direct baseline quality/runtime tables retain the archived \textsc{OURS\_MFAS} leaderboard column for archive continuity; reachability gains are reported in the ablation (Table~7).
+The principal empirical method is \textsc{OURS-Reach}~$=$~A4 (reachability + refinement; min-cut off).
+On non-Finance common completions, exact reachability add-back (A2) improves the ablation \texttt{upset\_simple} versus Phase~A only (A0) with W/T/L $76/0/1$ ($n=77$; Holm $p=2.4\times 10^{-12}$), and versus the submitted topological proxy (A1) with $32/0/1$ ($n=33$). Legacy multipass topo-proxy passes P2/P3 add little beyond P1; \texttt{zero\_tol} is stable; refinement saturates quickly (R1$\approx$R2). Non-Finance A4 runtimes are roughly $0.01$--$1.2$\,s (median $\approx 0.57$\,s) for $n\le 602$; Finance is the large-dense boundary (Section~3.5).
 
 \changes{Sections~3.1, 3.5--3.8; Table~7; Figures~1--2.}
 
@@ -105,7 +106,7 @@ As in our reply to Reviewer~1 (Comment~1), we now separate prior lineage, fideli
 \commentbox{The submitted add-back / INS variants do not appear to contribute clearly; please diagnose and strengthen this stage.}
 
 \noindent\textbf{Response.}
-We agree that the submitted fixed-topological proxy was too conservative and that multipass INS2/INS3 were not major quality innovations. Exact reachability restores the intended cycle-safety test and materially improves rankings in the ablation (A0$\to$A2: $76/0/1$; A1$\to$A2: $32/0/1$). INS multipass is retained only historically. As a secondary mechanism we added a weighted min-cut exchange with monotone weighted-FAS improvement (Proposition~3; Section~3.9). Direct baseline Tables~4--6 continue to report the archived topo-proxy \textsc{OURS\_MFAS} column for continuity; the revised canonical pipeline is the reachability-aware method of Section~2.
+We agree that the submitted fixed-topological proxy was too conservative and that multipass INS2/INS3 were not major quality innovations. Exact reachability restores the intended cycle-safety test and materially improves rankings in the ablation (A0$\to$A2: $76/0/1$; A1$\to$A2: $32/0/1$). The principal Tables~4--6 now report \textsc{OURS-Reach} (exact reachability + refinement), not the submitted topo-proxy. INS multipass is retained only historically. As a secondary mechanism we added a weighted min-cut exchange with monotone weighted-FAS improvement (Proposition~3; Section~3.9); min-cut is not part of the headline method.
 
 \changes{Sections~2.5--2.6, 3.7--3.9; Algorithms~1--2; Table~7.}
 
@@ -173,7 +174,7 @@ We consolidated the experimental protocol, separated Limitations from Conclusion
 \commentbox{OURS-MFAS and INS variants appear nearly identical; add-back does not seem to help.}
 
 \noindent\textbf{Response.}
-We agree with this diagnosis of the submitted manuscript: archived \textsc{OURS-MFAS} and \textsc{INS3} were effectively duplicate topo-proxy configurations, and the fixed-topological rule was too conservative. The revised Phase~B uses exact reachability-aware reinsertion. Empirically, A2 improves \texttt{upset\_simple} over Phase~A on $76/77$ datasets and over the legacy proxy on $32/33$. Multipass INS2/INS3 are de-emphasized; reachability (and optional min-cut) replace them as the corrected/structural path.
+We agree with this diagnosis of the submitted manuscript: archived \textsc{OURS-MFAS} and \textsc{INS3} were effectively duplicate topo-proxy configurations, and the fixed-topological rule was too conservative---so the submitted flagship add-back yielded no measurable ranking benefit. The revised Phase~B uses exact reachability-aware reinsertion, and the principal comparison tables now evaluate \textsc{OURS-Reach} (reachability + refinement) under the same GNNRank upset metrics as the baselines. Ablations show A2 improves the stage metric over Phase~A on $76/77$ datasets and over the legacy proxy on $32/33$. Multipass INS2/INS3 are historical only; optional min-cut remains secondary.
 
 \changes{Sections~2.5, 3.1, 3.7--3.8; Table~7.}
 
@@ -189,7 +190,7 @@ We agree and take responsibility for this error. Stale aggregation/pivot logic p
 \commentbox{Compare runtime directly against classical baselines, not only against GNNs.}
 
 \noindent\textbf{Response.}
-We now report paired runtime W/T/L against classical methods. OURS is slower than lightweight classical estimators (median ratios from about $2.6\times$ vs SyncRank to $>500\times$ vs PageRank). The runtime advantage is only relative to archived trained GNN end-to-end runs ($\sim 8\times$ faster on $60/60$ common completions vs DIGRAC/ib), with the protocol qualification noted above.
+We now report paired runtime W/T/L for \textsc{OURS-Reach} against classical methods. It is slower than most lightweight classical estimators (e.g., median ratios $\approx 5.7\times$ vs SpringRank and $\approx 170\times$ vs PageRank) and comparable to SyncRank (slightly faster on the median paired ratio). The runtime advantage is relative to archived trained GNN end-to-end runs (about $37$--$45\times$ faster on $60/60$ common completions vs DIGRAC/ib), with the protocol qualification noted above.
 
 \changes{Section~3.4; Table~6.}
 
@@ -197,7 +198,7 @@ We now report paired runtime W/T/L against classical methods. OURS is slower tha
 \commentbox{Claims of accuracy and runtime advantage need to be metric-specific and honest.}
 
 \noindent\textbf{Response.}
-We revised claims to be metric-specific: under the archived \textsc{OURS\_MFAS} column used for Tables~4--5, strong simple/naive upset performance against several baselines; competitive (not uniformly superior) with SpringRank/DavidScore/SVD\_NRS under family-aware analysis; BTL remains stronger on \texttt{upset\_ratio}. Ablations separately show that restoring exact reachability improves \texttt{upset\_simple} relative to Phase~A and the topo proxy. We do not claim universal dominance. Together with Comments~1--3, the three concrete requests---reconcile tables, fix/strengthen insertion, and add classical runtime comparisons---are implemented.
+We revised claims to be metric-specific for \textsc{OURS-Reach}: strong simple/naive upset performance against the listed baselines; SpringRank remains family-sensitive despite a significant pairwise Holm test on \texttt{upset\_simple}; BTL remains stronger on \texttt{upset\_ratio}. Ablations document why the submitted topo-proxy add-back failed and how exact reachability contributes. We do not claim universal dominance. Together with Comments~1--3, the three concrete requests---reconcile tables, adopt reachability-aware insertion in the flagship evaluation, and add classical runtime comparisons---are implemented.
 
 \changes{Abstract; Sections~3.2--3.4, 5; Tables~4--6.}
 

@@ -1,0 +1,8 @@
+baseline,metric,n_families,equal_family_mean_of_medians,family_W,family_L,family_T,families
+SpringRank,upset_simple,7,-0.0397237965042585,6,1,0,Animal;Basketball_coarse;Basketball_finer;Faculty;Football_coarse;Football_finer;Halo
+davidScore,upset_simple,7,-0.08354014158303112,6,1,0,Animal;Basketball_coarse;Basketball_finer;Faculty;Football_coarse;Football_finer;Halo
+SVD_NRS,upset_simple,7,-0.1281475756853788,6,1,0,Animal;Basketball_coarse;Basketball_finer;Faculty;Football_coarse;Football_finer;Halo
+btl,upset_simple,7,-0.15451349786402613,6,1,0,Animal;Basketball_coarse;Basketball_finer;Faculty;Football_coarse;Football_finer;Halo
+PageRank,upset_simple,7,-0.24087544424253912,6,1,0,Animal;Basketball_coarse;Basketball_finer;Faculty;Football_coarse;Football_finer;Halo
+DIGRAC,upset_simple,2,-0.36603965193011356,2,0,0,Basketball_coarse;Basketball_finer
+ib,upset_simple,2,-0.5846026512980013,2,0,0,Basketball_coarse;Basketball_finer

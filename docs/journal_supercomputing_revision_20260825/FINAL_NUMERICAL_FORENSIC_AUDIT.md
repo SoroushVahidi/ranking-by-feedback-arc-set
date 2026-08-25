@@ -42,3 +42,12 @@ Sources: `PASS3_NUMERICAL_SOURCE_MAP.md`, `PASS3_NUMERICAL_CLAIM_AUDIT.md`, `RES
 ## Fixes this pass
 
 None numerical removed; Abstract/Conclusion clarified that Tables 4–6 use archived `OURS_MFAS` while ablation quantifies reachability.
+
+## Canonical OURS-Reach update (2026-08-25)
+
+Headline Tables 4–6 now use `outputs/revision_analysis_20260825/canonical_reachability_baseline_comparison/`
+(`a4_gnnrank_metrics.csv`, `f_pairwise_common_completion.csv`, `e1_runtime_wtl.csv`).
+
+Key values: SpringRank upset_simple 64/0/13 med −0.157; BTL upset_ratio 3/0/74; DIGRAC runtime ratio ≈0.022 (~45×); ib ≈0.027 (~37×).
+
+**NO_UNTRACEABLE_NUMERICAL_CLAIMS** retained for the updated headline numbers.

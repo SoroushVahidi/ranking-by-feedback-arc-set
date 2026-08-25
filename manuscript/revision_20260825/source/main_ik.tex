@@ -59,7 +59,7 @@ New Jersey Institute of Technology, Newark, NJ, USA\\
 \maketitle
 
 \begin{abstract}
-Ranking from weighted pairwise comparisons asks for a global order that respects observed preferences as well as possible. We study a training-free, deterministic pipeline that builds an acyclic backbone on the comparison digraph using an MWFAS-inspired local-ratio heuristic, restores high-weight arcs under exact cycle-safe reinsertion, optionally applies a secondary weighted min-cut exchange, and extracts scores with optional order-preserving refinement. The local-ratio and exact add-back components follow prior lineage; this paper formalizes ranking--MWFAS optimum-value equivalence and practical guarantee boundaries, corrects a submitted topological-proxy weakening of add-back, and expands classical and GNN evaluation under timeout-aware common-completion analysis. Empirically, under the archived leaderboard configuration used for direct baseline tables, the pipeline is strong on simple/naive upset metrics against several baselines, competitive rather than uniformly superior to SpringRank, DavidScore, and SVD\_NRS under family-aware analysis, and weaker than BTL on upset\_ratio; structural ablations separately quantify the reachability correction. The method is slower than lightweight classical estimators yet substantially faster than archived trained GNNRank runs under an end-to-end protocol; the near-complete Finance graph marks a large-dense scalability boundary.
+Ranking from weighted pairwise comparisons asks for a global order that respects observed preferences as well as possible. We study a training-free, deterministic pipeline that builds an acyclic backbone on the comparison digraph using an MWFAS-inspired local-ratio heuristic, restores high-weight arcs under exact cycle-safe reinsertion, optionally applies a secondary weighted min-cut exchange, and extracts scores with optional order-preserving refinement. The local-ratio and exact add-back components follow prior lineage; this paper formalizes ranking--MWFAS optimum-value equivalence and practical guarantee boundaries, corrects a submitted topological-proxy weakening of add-back, and expands classical and GNN evaluation under timeout-aware common-completion analysis. Empirically, the canonical reachability-aware method (\textsc{OURS-Reach}) is strong on simple/naive upset metrics against several baselines, remains competitive rather than uniformly superior to SpringRank on family-aware checks, and is weaker than BTL on upset\_ratio. It is slower than most lightweight classical estimators yet substantially faster than archived trained GNNRank runs under an end-to-end protocol; the near-complete Finance graph marks a large-dense scalability boundary.
 \end{abstract}
 \newcommand{\keywords}[1]{\textbf{Keywords:} #1}
 
@@ -411,9 +411,9 @@ Finance & 1 & 1{,}315 & 1{,}729{,}225 \\
 
 \paragraph{Methods.}
 Baselines are ten classical methods (\textsc{SpringRank}, \textsc{SyncRank}, \textsc{SerialRank}, \textsc{BTL}, \textsc{DavidScore}, eigenvector/\textsc{PageRank}/\textsc{RankCentrality}, \textsc{SVD-RS}/\textsc{SVD-NRS}) and two GNNRank backbones (\textsc{DIGRAC}, \textsc{ib}) under fixed archived configurations (not post-hoc best-in-suite oracles).
-The \emph{canonical} revised method is the reachability-aware pipeline of \S\ref{sec:framework} (Phase~A + exact Phase~B + optional min-cut + Phase~C).
-Archived \textsc{OURS-MFAS} and \textsc{INS3} labels are duplicate topo-proxy configurations; multipass INS variants are historical only.
-Direct quality and classical/GNN runtime tables below reuse the archived \textsc{OURS\_MFAS} leaderboard column for continuity with the submitted evaluation archive; the incremental effect of restoring exact reachability (and of optional min-cut/refinement) is reported in the structural ablation (\S\ref{subsec:ablation}), not by silently replacing that archive column.
+The \emph{canonical} revised method reported in the principal quality/runtime tables is \textsc{OURS-Reach}: Phase~A + exact reachability-aware reinsertion + Phase~C refinement (\S\ref{sec:framework}), \emph{without} the optional min-cut exchange.
+Optional min-cut remains a secondary structural operator evaluated in ablation/empirics (\S\ref{subsec:ablation}, \S\ref{subsec:mincut_emp}).
+Archived \textsc{OURS-MFAS}/\textsc{INS3} labels are duplicate submitted topo-proxy configurations retained only as historical/ablation contrasts.
 
 \paragraph{Determinism, repetitions, and timing.}
 Non-GNN methods are deterministic given fixed inputs and completed work: ranking outputs do not vary across the protocol's $10$ recorded trials except through wall-clock/timeout effects.
@@ -425,20 +425,19 @@ Archived GNN timings measure the end-to-end trained pipeline (construction + tra
 \paragraph{Completion rules and statistics.}
 Timeouts, missing data, and GNN not-applicable cases are reported separately; we do not impute NaNs as scores.
 Primary comparisons use pairwise common completions.
-We report win/tie/loss (W/T/L) counts with ties $|\Delta|\le 10^{-6}$, median paired $\Delta$ (OURS $-$ baseline; for upset metrics, negative favors OURS), and---where precomputed---Wilcoxon signed-rank $p$-values with Holm adjustment and bootstrap CIs.
+We report win/tie/loss (W/T/L) counts with ties $|\Delta|\le 10^{-6}$, median paired $\Delta$ (\textsc{OURS-Reach} $-$ baseline; for upset metrics, negative favors \textsc{OURS-Reach}), and---where precomputed---Wilcoxon signed-rank $p$-values with Holm adjustment and bootstrap CIs.
 Because many basketball seasons are temporally related, we add a family-aware sensitivity analysis (\S\ref{subsec:family_aware}).
 
 \paragraph{Canonical numerical source.}
-All revised numbers below are recomputed from the archived per-method leaderboard
-and the revision-analysis CSV exports (runtime/coverage, family-aware, and
-ablation directories). Stale submitted Table~4/5 aggregates are not reused.
+Principal Tables~\ref{tab:pairwise_quality_simple}--\ref{tab:runtime_wtl} use \textsc{OURS-Reach} under the GNNRank upset metrics of \citet{he22}, paired against the archived baseline leaderboard.
+Ablation CSVs document stage contributions and the topo-proxy vs.\ reachability contrast.
+Stale submitted Table~4/5 aggregates are not reused.
 
 \subsection{Direct Ranking Quality on Common Completions}
 \label{subsec:main_quality}
 
 Table~\ref{tab:pairwise_quality_simple} and Table~\ref{tab:pairwise_quality_ratio}
-summarize archived \textsc{OURS\_MFAS} (topo-proxy leaderboard column; see protocol)
-against principal baselines on pairwise common completions.
+summarize \textsc{OURS-Reach} against principal baselines on pairwise common completions.
 
 \begin{table}[H]
 \centering
@@ -448,21 +447,20 @@ against principal baselines on pairwise common completions.
 \toprule
 \textbf{Baseline} & $n$ & W/T/L & med~$\Delta$ & Holm $p$ \\
 \midrule
-SpringRank & 77 & 41/0/36 & $-0.078$ & $0.11$ \\
-DavidScore & 77 & 40/1/36 & $-0.024$ & $0.11$ \\
-SVD\_NRS & 77 & 40/2/35 & $-0.025$ & $0.37$ \\
-BTL & 77 & 73/0/4 & $-0.207$ & $<10^{-11}$ \\
-PageRank & 77 & 53/0/24 & $-0.170$ & --- \\
-SyncRank & 77 & 77/0/0 & $-0.720$ & --- \\
-SerialRank & 77 & 75/0/2 & $-0.858$ & --- \\
-RankCentrality & 77 & 77/0/0 & $-0.987$ & --- \\
-DIGRAC & 60 & 30/0/30 & $-0.076$ & $0.013$ \\
-ib & 60 & 51/0/9 & $-0.408$ & $<10^{-8}$ \\
+SpringRank & 77 & 64/0/13 & $-0.157$ & $1.1\times 10^{-10}$ \\
+DavidScore & 77 & 75/0/2 & $-0.180$ & $<10^{-11}$ \\
+SVD\_NRS & 77 & 76/0/1 & $-0.165$ & $<10^{-11}$ \\
+BTL & 77 & 76/0/1 & $-0.422$ & $<10^{-11}$ \\
+PageRank & 77 & 76/0/1 & $-0.349$ & $<10^{-11}$ \\
+SyncRank & 77 & 77/0/0 & $-1.008$ & $<10^{-11}$ \\
+SerialRank & 77 & 77/0/0 & $-1.247$ & $<10^{-11}$ \\
+RankCentrality & 77 & 77/0/0 & $-1.254$ & $<10^{-11}$ \\
+DIGRAC & 60 & 60/0/0 & $-0.316$ & $4.9\times 10^{-11}$ \\
+ib & 60 & 60/0/0 & $-0.620$ & $4.9\times 10^{-11}$ \\
 \bottomrule
 \end{tabular}
-\caption{\texttt{upset\_simple} (lower better) on pairwise common completions for archived \textsc{OURS\_MFAS}.
-$\Delta=$ OURS $-$ baseline (negative favors OURS). Holm $p$ where present in the
-formal-statistics export; ``---'' means not in that Holm family.}
+\caption{\texttt{upset\_simple} (lower better) on pairwise common completions for \textsc{OURS-Reach}.
+$\Delta=$ \textsc{OURS-Reach} $-$ baseline (negative favors \textsc{OURS-Reach}). Holm $p$ within this table's primary family.}
 \label{tab:pairwise_quality_simple}
 \end{table}
 
@@ -474,43 +472,35 @@ formal-statistics export; ``---'' means not in that Holm family.}
 \toprule
 \textbf{Baseline} & $n$ & W/T/L & med~$\Delta$ & Note \\
 \midrule
-SpringRank & 77 & 44/0/33 & $-0.018$ & competitive \\
-DavidScore & 77 & 74/0/3 & $-0.131$ & \\
-SVD\_NRS & 77 & 72/0/5 & $-0.095$ & \\
-BTL & 77 & 1/0/76 & $+0.082$ & BTL stronger \\
-PageRank & 77 & 14/0/63 & $+0.030$ & PageRank stronger \\
-SyncRank & 77 & 47/0/30 & $-0.204$ & \\
-SerialRank & 77 & 47/0/30 & $-0.201$ & \\
-RankCentrality & 77 & 77/0/0 & $-0.612$ & \\
-DIGRAC & 60 & 30/0/30 & $-0.027$ & \\
-ib & 60 & 30/0/30 & $-0.134$ & \\
+SpringRank & 77 & 42/0/35 & $-0.030$ & competitive \\
+DavidScore & 77 & 74/0/3 & $-0.084$ & \\
+SVD\_NRS & 77 & 72/0/5 & $-0.089$ & \\
+BTL & 77 & 3/0/74 & $+0.081$ & BTL stronger \\
+PageRank & 77 & 14/0/63 & $+0.029$ & PageRank stronger \\
+SyncRank & 77 & 47/0/30 & $-0.210$ & \\
+SerialRank & 77 & 47/0/30 & $-0.125$ & \\
+RankCentrality & 77 & 77/0/0 & $-0.593$ & \\
+DIGRAC & 60 & 30/0/30 & $-0.039$ & \\
+ib & 60 & 30/0/30 & $-0.149$ & \\
 \bottomrule
 \end{tabular}
-\caption{\texttt{upset\_ratio} (lower better) on the same common completions for archived \textsc{OURS\_MFAS}.
+\caption{\texttt{upset\_ratio} (lower better) on the same common completions for \textsc{OURS-Reach}.
 Oracle best-in-suite envelopes are not headline competitors.}
 \label{tab:pairwise_quality_ratio}
 \end{table}
 
-On \texttt{upset\_simple}, archived OURS shows strong W/T/L margins against BTL,
-against SyncRank, SerialRank, and RankCentrality, and against \textsc{ib},
-with significant Holm-adjusted Wilcoxon advantages vs BTL, \textsc{DIGRAC}, and \textsc{ib}.
-Against \textsc{SpringRank}, \textsc{DavidScore}, and \textsc{SVD\_NRS}, per-dataset wins slightly favor OURS,
-but Holm-adjusted tests are not significant; family-aware analysis (\S\ref{subsec:family_aware})
-treats these as competitive rather than uniformly superior.
-On \texttt{upset\_naive}, the same directional pattern holds
-(e.g., $41/0/36$ vs SpringRank; $73/0/4$ vs BTL; $60/0/0$ vs \textsc{ib}).
-On \texttt{upset\_ratio}, BTL remains clearly stronger ($1/0/76$) and PageRank also wins more often ($14/0/63$);
-OURS is strong against DavidScore, SVD\_NRS, and RankCentrality.
+On \texttt{upset\_simple}, \textsc{OURS-Reach} records large W/T/L margins and significant Holm-adjusted Wilcoxon advantages against all listed classical and GNN baselines in Table~\ref{tab:pairwise_quality_simple}.
+On \texttt{upset\_naive}, the same directional pattern holds (e.g., $46/0/31$ vs SpringRank; $76/0/1$ vs BTL; $60/0/0$ vs \textsc{ib}).
+On \texttt{upset\_ratio}, BTL remains clearly stronger ($3/0/74$) and PageRank also wins more often ($14/0/63$); SpringRank is competitive ($42/0/35$).
 We do not claim universal dominance on any metric.
 
 \subsection{Family-Aware Robustness}
 \label{subsec:family_aware}
 
 Basketball seasons dominate per-dataset $n$ ($\approx 60/77$).
-Equal-family macros (seven included families; Finance excluded from quality macros) preserve large-margin \texttt{upset\_simple} advantages vs BTL/PageRank/\textsc{ib}/centrality-style methods.
-Vs SpringRank/DavidScore/SVD\_NRS, equal-family means of family medians still favor OURS directionally, but hierarchical bootstrap CIs include zero, and leave-one-family-out can move the SpringRank equal-family mean across zero (LOFO-fragile).
-Collapsing Basketball into one meta-point does not reverse the large-margin wins.
-The BTL \texttt{upset\_ratio} disadvantage persists under equal-family weighting ($0/0/7$ families).
+Equal-family macros (seven included families; Finance excluded from quality macros) preserve \texttt{upset\_simple} advantages for \textsc{OURS-Reach} vs BTL/PageRank/DavidScore/SVD\_NRS on six of seven families.
+The Halo family is the main SpringRank exception; leave-one-family-out of Basketball-coarse moves the equal-family mean near zero, so SpringRank comparisons remain family-sensitive even though the pairwise Holm test is significant.
+The BTL \texttt{upset\_ratio} disadvantage persists under equal-family scrutiny.
 Family-level $n$ is too small for heavy per-family significance testing; we treat family-aware results as sensitivity, not as a replacement for pairwise tests.
 
 \subsection{Runtime and Coverage}
@@ -523,29 +513,31 @@ Family-level $n$ is too small for heavy per-family significance testing; we trea
 \toprule
 \textbf{Baseline} & $n$ & OURS faster & ties & slower & median ratio (OURS/base) \\
 \midrule
-SyncRank & 77 & 3 & 6 & 68 & $2.6\times$ \\
-SpringRank & 77 & 14 & 0 & 63 & $17.9\times$ \\
-BTL & 77 & 4 & 3 & 70 & $25.0\times$ \\
-RankCentrality & 77 & 0 & 0 & 77 & $55.3\times$ \\
-SVD\_NRS & 77 & 0 & 0 & 77 & $180\times$ \\
-PageRank & 77 & 0 & 0 & 77 & $536\times$ \\
-DIGRAC & 60 & 60 & 0 & 0 & $0.123\times$ ($\sim 8\times$ faster) \\
-ib & 60 & 60 & 0 & 0 & $0.121\times$ ($\sim 8\times$ faster) \\
+SyncRank & 77 & 48 & 0 & 29 & $0.80\times$ ($\sim 1.2\times$ faster) \\
+SpringRank & 77 & 15 & 0 & 62 & $5.7\times$ \\
+BTL & 77 & 19 & 0 & 58 & $7.9\times$ \\
+RankCentrality & 77 & 0 & 0 & 77 & $17\times$ \\
+SerialRank & 77 & 0 & 0 & 77 & $32\times$ \\
+SVD\_NRS & 77 & 0 & 0 & 77 & $60\times$ \\
+DavidScore & 77 & 0 & 0 & 77 & $108\times$ \\
+PageRank & 77 & 0 & 0 & 77 & $170\times$ \\
+DIGRAC & 60 & 60 & 0 & 0 & $0.022\times$ ($\sim 45\times$ faster) \\
+ib & 60 & 60 & 0 & 0 & $0.027\times$ ($\sim 37\times$ faster) \\
 \bottomrule
 \end{tabular}
-\caption{Paired runtime W/T/L on common completions (archived \textsc{OURS\_MFAS} timings).
-OURS is slower than lightweight classical methods and faster than archived trained-GNN end-to-end runs.}
+\caption{Paired runtime W/T/L on common completions for \textsc{OURS-Reach}.
+\textsc{OURS-Reach} is slower than most lightweight classical methods (comparable to SyncRank) and faster than archived trained-GNN end-to-end runs.}
 \label{tab:runtime_wtl}
 \end{table}
 
-Coverage on $79$ readable datasets: OURS $77/79$ ($97.5\%$; Finance timeout); most classical methods $78/79$ ($98.7\%$); SyncRank $77/79$; DIGRAC/ib $61/79$ ($77.2\%$, primarily not-applicable rather than timeout).
+Coverage on $79$ readable datasets: \textsc{OURS-Reach} $77/79$ ($97.5\%$; Finance timeout); most classical methods $78/79$ ($98.7\%$); SyncRank $77/79$; DIGRAC/ib $61/79$ ($77.2\%$, primarily not-applicable rather than timeout).
 A global $60$-dataset subset where all methods finish exists but is GNN-applicability biased; pairwise completion remains primary.
 Figure~\ref{fig:runtime_vs_edges} shows empirical A4 runtimes versus $m$ for non-Finance graphs.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.72\linewidth]{fig_runtime_vs_edges.pdf}
-\caption{A4 wall time versus edge count on non-Finance ablation graphs (log--log). Finance ($m\approx 1.73\times 10^{6}$) is marked as the large-dense boundary.}
+\caption{\textsc{OURS-Reach} (A4) wall time versus edge count on non-Finance graphs (log--log). Finance ($m\approx 1.73\times 10^{6}$) is marked as the large-dense boundary.}
 \label{fig:runtime_vs_edges}
 \end{figure}
 
@@ -553,7 +545,7 @@ Figure~\ref{fig:runtime_vs_edges} shows empirical A4 runtimes versus $m$ for non
 \label{subsec:finance}
 
 Finance is reported separately, not averaged into quality macros.
-Under the archived $1800$\,s non-GNN protocol, leaderboard OURS and SyncRank time out while lightweight classical methods finish in $<4$\,s and GNN end-to-end runs finish in $\sim 15$--$18$\,min.
+Under the archived $1800$\,s non-GNN protocol, leaderboard topo-proxy OURS and SyncRank time out while lightweight classical methods finish in $<4$\,s and GNN end-to-end runs finish in $\sim 15$--$18$\,min.
 In the reviewer ablation stress configs (internal Phase~A budget $600$\,s): FINANCE\_A0 completes with wall $\approx 612.6$\,s (Phase~A $\approx 600.0$\,s); FINANCE\_A2/A4 hit \texttt{INTERNAL\_TIME\_LIMIT} at $\approx 1214.8$/$1214.6$\,s; FINANCE\_A6 hits \texttt{TIMEOUT\_HARD\_WALLCLOCK} at $\approx 1800.1$\,s without a finished ranking.
 This matches the $O(mn+m^{2})$ Phase~A discussion in \S\ref{subsec:framework_complexity}: Finance is a known large-dense boundary.
 
@@ -615,8 +607,8 @@ On active graphs, \texttt{upset\_simple}/\texttt{upset\_naive} never worsened; \
 Dense near-complete graphs remain difficult: Finance is the explicit boundary case documented in \S\ref{subsec:finance}.
 Finite-budget practical outputs need not inherit the idealized Demetrescu--Finocchi guarantee (\S\ref{subsec:theory_df03}), and identity-order fallback has no nontrivial general multiplicative error bound (Prop.~\ref{prop:fallback}).
 The optional min-cut repair improves the weighted feedback objective but not every upset metric, and its benefit is regime-specific (\S\ref{subsec:mincut_emp}).
-Relative to lightweight classical estimators the pipeline is slower (\S\ref{subsec:runtime_coverage}); GNN speedups refer to archived end-to-end training+evaluation under imperfect hardware comparability (\S\ref{subsec:exp_setup}).
-Family-aware analysis shows that SpringRank/DavidScore/SVD\_NRS comparisons are cautious, and BTL remains stronger on \texttt{upset\_ratio} (\S\ref{subsec:family_aware}).
+Relative to most lightweight classical estimators \textsc{OURS-Reach} is slower (\S\ref{subsec:runtime_coverage}); GNN speedups refer to archived end-to-end training+evaluation under imperfect hardware comparability (\S\ref{subsec:exp_setup}).
+Family-aware analysis shows that SpringRank comparisons remain family-sensitive, and BTL remains stronger on \texttt{upset\_ratio} (\S\ref{subsec:family_aware}).
 Protocol repetitions for deterministic non-GNN methods characterize runtime/timeout variability rather than ranking uncertainty.
 
 \section{Conclusion}
@@ -624,8 +616,8 @@ Protocol repetitions for deterministic non-GNN methods characterize runtime/time
 We addressed ranking from weighted pairwise comparisons with a training-free structural pipeline: local-ratio cycle breaking, exact reachability-aware reinsertion, optional weighted min-cut exchange, and score extraction/refinement.
 The algorithmic core follows Demetrescu--Finocchi and \citet{VK25}; the revised contributions are formal ranking--MWFAS clarification and guarantee boundaries, restoration of exact cycle-safe add-back after a topological-proxy weakening, a secondary monotone min-cut repair, and a broader timeout-aware empirical study.
 
-On common completions, the archived leaderboard configuration used for direct baseline tables is strong on simple/naive upset metrics against several classical and GNN baselines, competitive under family-aware scrutiny with SpringRank, DavidScore, and SVD\_NRS, and weaker than BTL on upset\_ratio; ablations quantify the reachability correction separately.
-It is slower than lightweight classical methods and substantially faster than the evaluated trained GNN pipelines under the archived end-to-end protocol, with Finance exposing a large-dense limit.
+On common completions, \textsc{OURS-Reach} is strong on simple/naive upset metrics against the listed classical and GNN baselines, remains weaker than BTL on upset\_ratio, and is family-sensitive versus SpringRank despite a significant pairwise Holm test on upset\_simple.
+It is slower than most lightweight classical methods (comparable to SyncRank), substantially faster than the evaluated trained GNN pipelines under the archived end-to-end protocol, and encounters a large-dense limit on Finance.
 
 \section{Future Work}
 \label{sec:future}

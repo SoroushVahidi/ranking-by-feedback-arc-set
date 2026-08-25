@@ -1,0 +1,9 @@
+{
+  "canonical_config": "A4",
+  "canonical_label": "OURS-Reach",
+  "metrics": "GNNRank calculate_upsets",
+  "n_A4": 77,
+  "mincut_in_headline": false,
+  "no_new_full_suite_experiments": false,
+  "targeted_rescore": true
+}
