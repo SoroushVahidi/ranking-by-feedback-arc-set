@@ -1,0 +1,267 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=*}
+\usepackage{xcolor}
+\newcommand{\commentbox}[1]{\par\textit{#1}\par\medskip}
+\newcommand{\changes}[1]{\textbf{Changes in the manuscript:} #1\par\medskip}
+
+\title{Response to Reviewers\\[0.4em]
+\large Training-Free Ranking from Pairwise Comparisons via Acyclic Graph Construction\\[0.2em]
+\normalsize Journal of Supercomputing --- Major Revision}
+\author{Soroush Vahidi}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Cover note to the Editor}
+
+Dear Editor,
+
+Thank you for arranging this careful review. I have prepared a major revision addressing all comments from Reviewers~1--4. The principal changes are:
+\begin{itemize}
+\item title revised to remove the word ``Scalable'';
+\item corrected add-back implementation using exact reachability-aware cycle safety (replacing the submitted fixed-topological proxy);
+\item secondary weighted min-cut structural exchange with proofs and regime-specific empirics;
+\item rebuilt baseline comparisons from a single canonical source and replaced headline tables with \textsc{OURS-Reach} (resolving the submitted Table~4/5 inconsistency and the topo-proxy/add-back mismatch);
+\item direct classical runtime comparisons (showing that OURS is slower than lightweight classical methods);
+\item comprehensive structural ablation, parameter sensitivity, timeout/coverage analysis, and family-aware statistics;
+\item clarified ranking--MWFAS theory and DF03 guarantee boundaries;
+\item manuscript-wide rewriting with a dedicated non-repetition pass.
+\end{itemize}
+The revised manuscript now includes the additional experiments and analyses requested by the reviewers. The point-by-point responses below cite the revised manuscript sections, propositions, tables, and figures.
+
+\vspace{0.8em}
+\noindent Sincerely,\\
+Soroush Vahidi
+
+\section*{General reply to all reviewers}
+
+Dear Editor and Reviewers,
+
+Thank you for the careful and constructive reviews. I agree that the original presentation did not sufficiently distinguish prior algorithmic components from the contributions of this work, left the Demetrescu--Finocchi guarantee ambiguous under practical timeouts, and did not provide the ablation, classical runtime, and statistical evidence needed for a major revision. The revised manuscript now separates prior local-ratio/add-back/refinement lineage, identifies exact reachability as an implementation-fidelity correction, positions the weighted min-cut exchange as a secondary new structural contribution, and clarifies the theoretical and empirical contributions.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Reviewer 1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\paragraph{Comment 1 (Positioning / novelty).}
+\commentbox{The contribution relative to prior feedback-arc-set / ranking work was not clearly delineated; the paper appeared to present the pipeline as more novel than supported.}
+
+\noindent\textbf{Response.}
+I agree that the original positioning was insufficient. The Introduction was completely rewritten, Related Work was restructured (including an explicit relation to Vahidi \& Koutis, arXiv:2412.16181), and a compact novelty-separation table was added. The revised manuscript no longer presents local-ratio cycle breaking, exact cycle-safe reinsertion, weight-ordered add-back, or ternary refinement as newly invented. The title no longer contains ``Scalable.''
+
+\changes{Sections~1 and~1.2; Table~1; title page.}
+
+\paragraph{Comment 2 (Ablation / sensitivity).}
+\commentbox{Provide ablations of Phase~1 only, Phase~1 with reinsertion, and the full pipeline; report upset metrics and runtime; study scale/density and sensitivity to zero tolerance, reinsertion passes, and refinement iterations.}
+
+\noindent\textbf{Response.}
+A structural ablation with human-readable stage labels was added:
+A0~=~Phase~A only; A1~=~Phase~A + submitted topological-proxy add-back; A2~=~Phase~A + exact reachability add-back; A4~=~A2 + refinement; A5/A6~=~optional min-cut on top of A2/A4.
+The principal empirical method is \textsc{OURS-Reach}~$=$~A4 (reachability + refinement; min-cut off).
+I have further revised Table~8 so that every within-panel stage comparison uses identical dataset support. Because the legacy fixed-topological/\textsc{ins} configuration (A1) and its refined full pipeline (A3) are available only on a smaller $n=33$ scope, comparisons involving those variants are reported on the exact common subset shared with Phase~A only (Panel~(a): A0~$\to$~A1~$\to$~A3, $n=33$), while the revised Phase~A~$\to$~exact-reachability-reinsertion~$\to$~refinement progression is reported separately on its own larger $n=77$ common-completion set (Panel~(b): A0~$\to$~A2~$\to$~A4, \textsc{OURS-Reach}). This avoids conflating stage effects with differences in dataset composition: an earlier version of this table compared A1's $n=33$ mean against A0/A2/A4's $n=77$ means directly, which mixed dataset support across rows. Both panels report all three requested upset measures (\texttt{upset\_simple}, \texttt{upset\_naive}, \texttt{upset\_ratio}) and mean runtime, and within each panel all three metrics and runtime move monotonically from Phase~A only to the full pipeline. These are consolidated/re-aggregated entirely from the already-completed structural-ablation runs underlying Table~7 (no new scientific experiment was run, and no ranking algorithm was re-executed). Directional significance (exact reachability add-back materially improving \texttt{upset\_simple} over Phase~A only, W/T/L $76/0/1$, $n=77$, Holm $p=2.4\times 10^{-12}$, and over the submitted topological proxy, $32/0/1$, $n=33$) is established by the paired tests in Table~7, which Table~8's per-panel means complement rather than replace. Legacy multipass topo-proxy passes P2/P3 add little beyond P1; \texttt{zero\_tol} is stable; refinement saturates quickly (R1$\approx$R2). Non-Finance A4 single-invocation algorithm runtimes (Phase~A + Phase~B + Phase~C) are roughly $0.01$--$0.83$\,s (median $\approx 0.38$\,s) for $n\le 602$; Finance is the large-dense boundary (Section~3.5). Table~8's runtime column uses this single-invocation algorithm quantity rather than the raw per-run harness timer, which for these configurations also includes a diagnostic Phase-A-only rerun (used only to compute a permutation-distance sensitivity statistic) and so is not the wall time of one \textsc{OURS-Reach} call; the manuscript's runtime discussion (Sections~3.5--3.6) was corrected accordingly.
+
+\changes{Sections~3.1, 3.5--3.8; Tables~7--8; Figures~1--2.}
+
+\paragraph{Comment 3 (Algorithm readability).}
+\commentbox{The algorithm description needs complete, readable pseudocode and explicit parameters (ties, tolerances, timeouts).}
+
+\noindent\textbf{Response.}
+A unified Algorithm~1 was inserted covering deterministic cycle search, residual updates, zero tolerance, forced-progress safeguards, wall-clock checks, exact reachability reinsertion, optional min-cut, refinement, and identity fallback, together with a consolidated parameter table.
+
+\changes{Sections~2.3 and~2.8; Algorithm~1; Table~2.}
+
+\paragraph{Comment 4 (Theory / complexity / guarantees).}
+\commentbox{Clarify the ranking--MWFAS relationship, complexity claims, and whether the practical method inherits the Demetrescu--Finocchi approximation guarantee; provide an error discussion for fallback ordering.}
+
+\noindent\textbf{Response.}
+Proposition~1 proves optimum-value equivalence $\mathrm{OPT}_{\mathrm{rank}}=\mathrm{OPT}_{\mathrm{MWFAS}}$ (many-to-many, not a bijection). For the audited Phase~A implementation, the idealized full-completion complexity is $O(mn+m^{2})$. Section~2.9 separates the idealized local-ratio guarantee from the practical finite-budget pipeline: the revised manuscript does \emph{not} claim the DF03 guarantee for prematurely terminated runs. Proposition~4 shows that identity-order fallback admits no nontrivial general multiplicative bound.
+
+\changes{Sections~2.2, 2.9--2.11; Propositions~1 and~4; Remark on DF03.}
+
+\paragraph{Comment 5 (Applications / future work).}
+\commentbox{Provide more concrete future directions and application context.}
+
+\noindent\textbf{Response.}
+Dedicated Limitations and Future Work sections were added covering denser-graph theory, SCC/parallel engineering, candidate selection for min-cut, and application settings (preference aggregation, multi-source sensors, industrial ranking) as directions, not evaluated domains.
+
+\changes{Sections~4--6.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Reviewer 2}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\paragraph{Comment 1 (Novelty).}
+\commentbox{Clarify what is scientifically new relative to prior MWFAS / ranking work.}
+
+\noindent\textbf{Response.}
+As in the reply to Reviewer~1 (Comment~1), the revised manuscript now separates prior lineage, fidelity correction, new theory, secondary min-cut, and expanded empirics (Table~1; Sections~1--2).
+
+\paragraph{Comment 2 (Add-back contribution).}
+\commentbox{The submitted add-back / INS variants do not appear to contribute clearly; please diagnose and strengthen this stage.}
+
+\noindent\textbf{Response.}
+I agree that the submitted fixed-topological proxy was too conservative and that multipass INS2/INS3 were not major quality innovations. Exact reachability restores the intended cycle-safety test and materially improves rankings in the ablation (A0$\to$A2: $76/0/1$; A1$\to$A2: $32/0/1$). The principal Tables~4--6 now report \textsc{OURS-Reach} (exact reachability + refinement), not the submitted topo-proxy. INS multipass is retained only historically. As a secondary mechanism, a weighted min-cut exchange with monotone weighted-FAS improvement was added (Proposition~3; Section~3.9); min-cut is not part of the headline method.
+
+\changes{Sections~2.5--2.6, 3.7--3.9; Algorithms~1--2; Table~7.}
+
+\paragraph{Comment 3 (GNN protocol / timing fairness).}
+\commentbox{Clarify what GNN runtimes include and whether hardware is comparable.}
+
+\noindent\textbf{Response.}
+Archived GNN timings measure end-to-end training+evaluation, not inference-only latency. The exact archived GPU model ledger is unavailable; the manuscript therefore qualifies hardware comparability and does not claim matched stage-by-stage inference fairness.
+
+\changes{Section~3.1; runtime discussion in Section~3.4.}
+
+\paragraph{Comment 4 (Timeout bias / missingness).}
+\commentbox{Timeouts and missing values may bias aggregates; please report coverage honestly.}
+
+\noindent\textbf{Response.}
+Pairwise common-completion comparisons are now primary. Coverage is reported explicitly on the $78$ loadable suite members (intended suite $80$; two adjacency files unavailable): \textsc{OURS-Reach} $77/78$ (Finance timeout); most classical methods $78/78$; SyncRank $77/78$ (Finance timeout); DIGRAC/ib $61/78$ (primarily not-applicable rather than timeout). Finance is separated rather than averaged into quality macros. Missing values are not imputed as scores.
+
+\changes{Sections~3.1, 3.4, 3.5.}
+
+\paragraph{Comment 5 (Oracle best-in-suite).}
+\commentbox{Best-in-suite / oracle envelopes should not be treated as deployable competitors.}
+
+\noindent\textbf{Response.}
+I agree. Direct fixed-method comparisons are primary; oracle envelopes are de-emphasized and labeled as non-deployable post-hoc context only.
+
+\changes{Section~3.1; captions of Tables~4--5.}
+
+\paragraph{Comment 6 (Statistics / dataset dependence).}
+\commentbox{Provide formal paired statistics and address Basketball-dominated dependence.}
+
+\noindent\textbf{Response.}
+The revised manuscript reports W/T/L, median paired deltas, and---where exported---Wilcoxon tests with Holm adjustment and bootstrap CIs. Family-aware equal-family macros, leave-one-family-out, and Basketball-collapsed analyses are included. SpringRank comparisons are acknowledged as LOFO-fragile; BTL's \texttt{upset\_ratio} advantage persists across families.
+
+\changes{Sections~3.2--3.3; Tables~4--5,~7.}
+
+\paragraph{Comment 7 (Deterministic repetitions).}
+\commentbox{Ten deterministic repetitions should not be interpreted as ranking robustness.}
+
+\noindent\textbf{Response.}
+I agree. For deterministic non-GNN methods, repeats characterize runtime variability and timeout repeatability, not independent ranking observations.
+
+\changes{Sections~3.1 and~4.}
+
+\paragraph{Comment 8 (Scalability).}
+\commentbox{The word ``scalable'' is not supported without qualification given dense/large cases.}
+
+\noindent\textbf{Response.}
+``Scalable'' was removed from the title. Empirical scope is qualified to the evaluated sparse and moderately dense graphs in the suite, with Finance as an explicit boundary.
+
+\changes{Title; Sections~3.5--3.6, 4.}
+
+\paragraph{Comment 9 (Presentation / repetition).}
+\commentbox{The manuscript is repetitive and hard to navigate.}
+
+\noindent\textbf{Response.}
+The experimental protocol was consolidated, Limitations were separated from Conclusion, and a manuscript-wide repetition audit was performed (novelty, DF03, INS, Finance, runtime accounting, contributions).
+
+\changes{Throughout; Sections~3.1, 4--5.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Reviewer 3}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\paragraph{Comment 1 (Ineffective add-back / INS1--3).}
+\commentbox{OURS-MFAS and INS variants appear nearly identical; add-back does not seem to help.}
+
+\noindent\textbf{Response.}
+I agree with this diagnosis of the submitted manuscript: archived \textsc{OURS-MFAS} and \textsc{INS3} were effectively duplicate topo-proxy configurations, and the fixed-topological rule was too conservative---so the submitted flagship add-back yielded no measurable ranking benefit. The revised Phase~B uses exact reachability-aware reinsertion, and the principal comparison tables now evaluate \textsc{OURS-Reach} (reachability + refinement) under the same GNNRank upset metrics as the baselines. Ablations show A2 improves the stage metric over Phase~A on $76/77$ datasets and over the legacy proxy on $32/33$. Multipass INS2/INS3 are historical only; optional min-cut remains secondary.
+
+\changes{Sections~2.5, 3.1, 3.7--3.8; Table~7.}
+
+\paragraph{Comment 2 (Table~4 / Table~5 inconsistency).}
+\commentbox{Submitted baseline tables were inconsistent (including classical values that did not match).}
+
+\noindent\textbf{Response.}
+I agree and take responsibility for this inconsistency. The earlier aggregation procedure produced inconsistent summaries. I have regenerated the revised tables from a single canonical per-method export using consistent pairwise common-completion rules. For example, the canonical SpringRank median \texttt{upset\_simple} in the verified full-suite export is $0.802724$. Submitted unpaired Table~4/5 aggregates are not reused.
+
+\changes{Section~3.1 (canonical source statement); Tables~4--5.}
+
+\paragraph{Comment 3 (Runtime versus classical methods).}
+\commentbox{Compare runtime directly against classical baselines, not only against GNNs.}
+
+\noindent\textbf{Response.}
+Paired runtime W/T/L for \textsc{OURS-Reach} against classical methods is now reported. It is slower than most lightweight classical estimators (e.g., median ratios $\approx 5.7\times$ vs SpringRank and $\approx 170\times$ vs PageRank) and comparable to SyncRank (slightly faster on the median paired ratio). The runtime advantage is relative to archived trained GNN end-to-end runs (about $37$--$45\times$ faster on $60/60$ common completions vs DIGRAC/ib), with the protocol qualification noted above.
+
+\changes{Section~3.4; Table~6.}
+
+\paragraph{Comment 4 (Accuracy--runtime tradeoff / overclaiming).}
+\commentbox{Claims of accuracy and runtime advantage need to be metric-specific and honest.}
+
+\noindent\textbf{Response.}
+Claims were revised to be metric-specific for \textsc{OURS-Reach}: strong simple/naive upset performance against the listed baselines; SpringRank remains family-sensitive despite a significant pairwise Holm test on \texttt{upset\_simple}; BTL remains stronger on \texttt{upset\_ratio}. Ablations document why the submitted topo-proxy add-back failed and how exact reachability contributes. The revised manuscript does not claim universal dominance. Together with Comments~1--3, the three concrete requests---reconcile tables, adopt reachability-aware insertion in the flagship evaluation, and add classical runtime comparisons---are implemented.
+
+\changes{Abstract; Sections~3.2--3.4, 5; Tables~4--6.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Reviewer 4}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\paragraph{Comment 1 (Scientific novelty).}
+\commentbox{What exactly is scientifically new?}
+
+\noindent\textbf{Response.}
+The Introduction and Related Work now answer this directly via prior/new separation and Table~1: formal ranking--MWFAS clarification and guarantee boundaries; fidelity restoration of exact add-back; secondary min-cut exchange; expanded empirical evaluation. Prior local-ratio/add-back/refinement components are credited, not reinvented.
+
+\changes{Sections~1--2; Table~1.}
+
+\paragraph{Comment 2 (DF03 approximation guarantee).}
+\commentbox{Does the practical implementation inherit the Demetrescu--Finocchi guarantee?}
+
+\noindent\textbf{Response.}
+The published guarantee applies to the idealized local-ratio procedure under its completion assumptions. The practical pipeline adds wall-clock termination, floating-point tolerances, forced-progress safeguards, and fallback output; therefore prematurely terminated practical runs do \emph{not} automatically inherit the DF03 guarantee (Remark in Section~2.9). Proposition~4 addresses fallback error.
+
+\changes{Sections~2.9--2.10, 4.}
+
+\paragraph{Comment 3 (Multipass INS).}
+\commentbox{INS1/INS2/INS3 appear oversold.}
+
+\noindent\textbf{Response.}
+Sensitivity analysis shows P1 restores many edges while P2/P3 add little ranking quality. Multipass INS variants are no longer framed as a core contribution.
+
+\changes{Sections~2 (opening), 3.1, 3.8.}
+
+\paragraph{Comment 4 (GNN protocol).}
+\commentbox{Clarify GNN timing/accounting.}
+
+\noindent\textbf{Response.}
+As in the reply to Reviewer~2 (Comment~3): end-to-end trained-GNN protocol, not inference-only; hardware ledger unavailable; claims qualified in Section~3.1.
+
+\paragraph{Comment 5 (``Scalable'').}
+\commentbox{The title/text overstate scalability.}
+
+\noindent\textbf{Response.}
+``Scalable'' was removed from the title. Empirical behavior is described on the evaluated sparse and moderately dense graphs in the suite, with Finance as an explicit large-dense boundary.
+
+\changes{Title; Sections~3.5--3.6, 4.}
+
+\paragraph{Comment 6 (Writing / repetition).}
+\commentbox{The writing is repetitive and sentences are too long.}
+
+\noindent\textbf{Response.}
+The Introduction was rewritten, protocol and limitations were consolidated, duplicated novelty/DF03/INS/Finance explanations were removed, and long passages were shortened while preserving technical precision.
+
+\changes{Throughout; Sections~1, 3.1, 4--5.}
+
+\paragraph{Comment 7 (MWFAS backbone / cycle-selection ablations).}
+\commentbox{Ablate the MWFAS backbone and related algorithmic choices.}
+
+\noindent\textbf{Response.}
+The A0--A6 structural ablation addresses backbone stages (Phase~A only; topo-proxy add-back; exact reachability; refinement; optional min-cut). Cycle-selection sensitivity (C0/C1) shows a small but detectable effect on the A4 path ($|\mathrm{med}\,\Delta|\approx 10^{-3}$); it is reported without overstatement.
+
+\changes{Sections~3.7--3.8; Table~7; Figure~2.}
+
+\section*{Closing}
+
+I thank the reviewers again for comments that substantially improved the clarity, correctness, and evidence standards of the manuscript. I hope the revised version addresses all concerns.
+
+\end{document}
