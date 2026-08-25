@@ -63,13 +63,13 @@ Across the benchmark suite used in recent ranking-from-comparisons work, the pro
 \keywords{Ranking; Pairwise comparisons; Feedback arc set; Directed graphs; Training-free methods}
 \section{Introduction}
 \label{sec:intro}
-Ranking from pairwise comparisons is a fundamental task in statistics, machine learning, and network analysis, with applications ranging from sports analytics to preference aggregation. Recent work in this area includes both strong classical approaches and learning-based methods, particularly graph-neural models that infer rankings directly from directed comparison graphs \citet{he22}. While learning-based methods can achieve strong performance, they also introduce training cost, hyperparameter sensitivity, and reduced reproducibility, which can be undesirable in deployment settings where runtime, determinism, and simplicity are important.
+Ranking from pairwise comparisons arises throughout statistics, machine learning, and network analysis, from sports analytics to preference aggregation. Methods typically return a real-valued score vector whose induced order is evaluated by upset-based losses \citet{he22}. Classical estimators are fast and training-free; learning-based directed GNNs such as GNNRank can be accurate but introduce training cost, hyperparameter sensitivity, and reduced reproducibility.
 
-Many ranking methods produce a real-valued score vector whose induced order is evaluated by disagreement- or upset-based losses. In practice, however, directed comparison graphs often contain cycles due to noise, incompleteness, and local inconsistencies. This creates a natural tension between observed pairwise evidence and the need for a globally consistent ranking. A combinatorial way to address this issue is to remove a set of directed edges so that the remaining graph becomes acyclic; a topological ordering of the resulting directed acyclic graph (DAG) then induces a globally consistent ranking.
+Directed comparison graphs almost always contain cycles arising from noise, incompleteness, and local inconsistencies. A combinatorial response is to delete a set of directed arcs so that the remaining graph is acyclic, then read a ranking from a topological order of the resulting directed acyclic graph (DAG). This is the Minimum Weighted Feedback Arc Set (MWFAS) viewpoint: minimize the total weight of deleted comparisons subject to acyclicity. Related spectral and synchronization methods already note connections between ranking inconsistency and feedback structure \citet{SerialRank,SyncRank}. MWFAS is NP-hard \citet{K72}, so exact minimization is generally impractical, yet the formulation supplies a precise consistency-restoration objective for ranking.
 
-This viewpoint leads directly to the Minimum Weighted Feedback Arc Set (MWFAS) problem. Although the connection between ranking inconsistency and feedback arc sets is known and has been noted in prior ranking work, including spectral and synchronization-based approaches such as \citet{SerialRank,SyncRank}, it has not been developed into a practical, time-bounded, training-free ranking pipeline evaluated side-by-side with standard classical baselines and modern learning-based methods under the upset-based metrics used in recent benchmarks \citet{he22}. In this work, we use the MWFAS perspective not as an exact optimization target, but as the foundation of a deterministic ranking pipeline designed for favorable accuracy--runtime trade-offs on large comparison graphs.
+We emphasize at the outset that this paper does \emph{not} propose a new general approximation algorithm for MWFAS. Our objective is a practical, training-free, deterministic, and time-bounded ranking pipeline for weighted pairwise-comparison graphs. Prior work by \citet{VK25} already operationalized ranking via the local-ratio cycle-breaking heuristic of Demetrescu and Finocchi \citet{CI03}, together with weight-prioritized reinsertion of deleted arcs under an exact cycle-safety test and optional order-preserving score refinement. The present manuscript clarifies that lineage, corrects an implementation-fidelity gap, adds theory and a secondary structural repair, and expands empirical validation.
 
-To make this connection precise, we begin with formal definitions of the ranking objective and the corresponding MWFAS formulation.
+To make the ranking--MWFAS connection precise, we begin with formal definitions.
 
 \begin{definition}[Ranking Problem]
 Let $G=(V,E)$ be a directed graph, where $V$ is the set of items and $E$ is the set of directed pairwise-comparison edges.
@@ -94,20 +94,24 @@ The MWFAS problem is
 \end{equation}
 \end{definition}
 
-The ranking objective~\eqref{eq:ranking_obj} and MWFAS~\eqref{eq:mwfas} are two equivalent views of the same consistency-restoration problem on a directed, weighted comparison graph. Given a ranking $R$, the set of \emph{backward} edges
-\[
-\{(i,j)\in E:\ R(i)>R(j)\}
-\]
-forms a feedback arc set, and its total weight is exactly the disagreement objective in~\eqref{eq:ranking_obj}. Conversely, any feedback arc set $F$ yields a DAG $(V,E\setminus F)$ that admits a topological ordering consistent with all remaining edges. Therefore, computing a minimum-weight set of edges to delete for acyclicity is equivalent to finding an ordering that minimizes the total weight of violated comparisons.
+The ranking objective~\eqref{eq:ranking_obj} and MWFAS~\eqref{eq:mwfas} share the same optimum \emph{value}: the backward edges of any ranking form a feedback arc set of equal weight, and any feedback arc set induces a DAG whose topological orders realize that deleted weight as ranking disagreement. The correspondence between optimal rankings and optimal feedback arc sets is many-to-many rather than one-to-one; we treat this equivalence as a formal claim to be stated and proved, not merely asserted.
 
-\subsection{Ranking Problem and Minimum Weighted Feedback Arc Set (MWFAS)}
-The equivalence above suggests a simple ranking strategy: remove a feedback arc set to obtain an acyclic backbone and then read off an ordering from the resulting DAG.
-This viewpoint is particularly compatible with large sparse comparison graphs, where topological ordering is linear-time in the number of edges and naturally produces a deterministic ranking once tie-breaking is fixed.
-However, MWFAS is computationally difficult: the (unweighted) Minimum Feedback Arc Set problem is NP-hard \citet{K72}, and the weighted variant is NP-hard as well, motivating the use of approximation and heuristic algorithms.
+\subsection{Scope, lineage, and contributions}
+The pipeline studied here (\S\ref{sec:framework}) builds an acyclic backbone with the local-ratio heuristic of \citet{CI03}, reinserts high-weight arcs while preserving acyclicity, extracts scores from the resulting DAG, and optionally applies order-preserving refinement. Several components are \emph{prior}: local-ratio Phase~A, exact cycle-safe add-back (including weight ordering), and ternary/refinement ideas already appear in \citet{CI03,VK25}. What this paper contributes is therefore not a reinvention of that core, but the following.
 
-In this work we exploit the MWFAS--ranking connection as a \emph{ranking pipeline} rather than as an exact solver.
-Concretely, our method (described in \S\ref{sec:framework}) uses a local-ratio-style cycle-breaking heuristic inspired by \citet{CI03} to construct an acyclic backbone, followed by a stable weight-prioritized add-back stage that reinserts high-weight edges while preserving acyclicity (INS1/2/3 variants), and finally extracts a score vector whose induced order is evaluated by the same upset-based losses used in recent ranking benchmarks \citet{he22}.
-Our experimental evaluation (\S\ref{sec:exp}) compares this learning-free MWFAS-based pipeline against standard classical ranking baselines (including \textsc{BTL}, \textsc{SpringRank}, \textsc{SyncRank}, \textsc{SerialRank}, centrality and SVD-based methods) and against learning-based GNNRank models, under a common protocol and time budgets.
+\begin{enumerate}
+\item \textbf{Formalization and guarantee boundaries.}
+We prove ranking--MWFAS optimum-value equivalence under the many-to-many correspondence above, restate implementation complexity carefully, and audit when the Demetrescu--Finocchi guarantee does and does not transfer. In particular, a practical timeout-bounded run does \emph{not} automatically inherit a nontrivial general approximation guarantee under early termination.
+\item \textbf{Implementation-fidelity correction.}
+The submitted codebase used a weaker fixed-topological-position proxy in place of the intended exact reachability test for cycle-safe reinsertion. Restoring exact reachability is fidelity to the established specification, not a newly invented mechanism; controlled ablations show that the correction materially improves ranking quality relative to the proxy.
+\item \textbf{Secondary structural repair.}
+We introduce a conflict-triggered weighted min-cut exchange with proofs of acyclicity preservation, strict improvement of the weighted feedback objective, and finite termination under strict improvement. Empirically, its benefit is regime-specific rather than universal.
+\item \textbf{Expanded empirical validation.}
+We compare against classical and GNNRank baselines under a common protocol with timeout-aware coverage, paired statistics, family-aware sensitivity (addressing Basketball-dominated suites), and a full ablation/sensitivity/scalability campaign. The modest expansion of the dataset suite relative to prior work is not presented as a primary novelty.
+\end{enumerate}
+
+Empirically, ranking quality shows strong gains against several classical and GNN methods, while remaining competitive---not uniformly superior---with \textsc{SpringRank}, \textsc{DavidScore}, and \textsc{SVD\_NRS} under family-aware analysis; \textsc{BTL} remains stronger on \texttt{upset\_ratio}. On runtime, the pipeline is slower than lightweight classical baselines and substantially faster than trained GNNRank models under the evaluated end-to-end training protocol. Scalability is strong on the evaluated sparse and moderately dense instances; the near-complete Finance graph is an explicit large-dense boundary case.
+
 \subsection{Related Works}
 
 \subsubsection{Previous Work on Ranking from Pairwise Comparisons}
@@ -134,7 +138,7 @@ From a parameterized viewpoint, \citet{RS06} investigated feedback set problems 
 
 Recent heuristic work has also emphasized structural refinements of feedback-arc-set solutions. \citet{c24} introduced the notions of minimal and stable feedback arc sets and proposed the MS-FAS heuristic based on strongly connected component decomposition and iterative refinement. Building on this direction, \citet{c25} examined how different initial orderings, including centrality-based ones, affect MS-FAS behavior and reported robustness to initialization across benchmark instances.
 
-Our contribution is not a new approximation guarantee or an exact algorithm for MWFAS. Instead, we use the MWFAS viewpoint as the foundation of a practical ranking pipeline for pairwise comparisons: we construct an acyclic backbone, selectively reinsert high-weight edges while preserving acyclicity, and then extract real-valued ranking scores that can be evaluated directly against standard ranking baselines under modern upset-based metrics.
+As stated above, we do not claim a new general MWFAS approximation algorithm. The Related Work above situates the classical and learning-based ranking baselines and the MWFAS literature that frames our pipeline; the contribution list in the preceding subsection delimits prior components from the theory, fidelity, min-cut, and empirical additions developed in this revision.
 % ============================================================
 % Framework / Methods Section (FULL UPDATED VERSION, 4 SUBSECS)
 % ============================================================
