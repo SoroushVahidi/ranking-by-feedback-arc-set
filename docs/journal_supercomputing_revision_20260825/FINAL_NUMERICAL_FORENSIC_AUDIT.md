@@ -12,14 +12,16 @@ Sources: `PASS3_NUMERICAL_SOURCE_MAP.md`, `PASS3_NUMERICAL_CLAIM_AUDIT.md`, `RES
 
 | Claim | Value | Source | Status |
 |---|---|---|---|
-| Intended suite | 80 | protocol + inventory | Pass |
-| Readable | 79 | missing ERO + Halo files | Pass |
+| Intended suite | 80 | `dataset_inventory.csv` | Pass |
+| Loadable / readable | **78** | robust loader; missing ERO + HeadToHead | Pass |
 | Exclude `_AUTO/Basketball_temporal__1985adj` | excluded | protocol | Pass |
 | OURS/classical common | 77 | pairwise CSV | Pass |
 | OURS/GNN common | 60 | pairwise/runtime CSV | Pass |
-| OURS coverage | 77/79 | e2 coverage | Pass |
-| GNN coverage | 61/79 | e2 / narrative | Pass |
-| Classical typical coverage | 78/79 | narrative | Pass |
+| OURS coverage | **77/78** (98.7%) | e2 ∖ ERO; Finance timeout | Pass |
+| GNN coverage | **61/78** (78.2%) | e2 ∖ ERO; primarily N/A | Pass |
+| Classical typical coverage | **78/78** (100%) | e2 ∖ ERO | Pass |
+| Denominator consistency | PASS | `check_dataset_denominator_consistency.py` | Pass |
+| `NO_DENOMINATOR_INCONSISTENCY` | Pass | supersedes stale 79 prose | Pass |
 | SpringRank median upset_simple (full-suite export) | 0.802724 | `table4_full_suite.csv` | Pass |
 | Stale SpringRank 1.675 | absent | rg scan | Pass |
 | BTL upset_simple W/T/L | 73/0/4 | pairwise | Pass |

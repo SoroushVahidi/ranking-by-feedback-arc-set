@@ -2,7 +2,7 @@
 \usepackage{lmodern}
 
 \usepackage{graphicx}
-\graphicspath{{../figures/}} % Required for inserting images
+\graphicspath{{figures/}} % Required for inserting images
 \usepackage{tcolorbox}
 
 \usepackage[ruled,vlined]{algorithm2e}
@@ -59,7 +59,7 @@ New Jersey Institute of Technology, Newark, NJ, USA\\
 \maketitle
 
 \begin{abstract}
-Ranking from weighted pairwise comparisons asks for a global order that respects observed preferences as well as possible. We study a training-free, deterministic pipeline that builds an acyclic backbone on the comparison digraph using an MWFAS-inspired local-ratio heuristic, restores high-weight arcs under exact cycle-safe reinsertion, optionally applies a secondary weighted min-cut exchange, and extracts scores with optional order-preserving refinement. The local-ratio and exact add-back components follow prior lineage; this paper formalizes ranking--MWFAS optimum-value equivalence and practical guarantee boundaries, corrects a submitted topological-proxy weakening of add-back, and expands classical and GNN evaluation under timeout-aware common-completion analysis. Empirically, the canonical reachability-aware method (\textsc{OURS-Reach}) is strong on simple/naive upset metrics against several baselines, remains competitive rather than uniformly superior to SpringRank on family-aware checks, and is weaker than BTL on upset\_ratio. It is slower than most lightweight classical estimators yet substantially faster than archived trained GNNRank runs under an end-to-end protocol; the near-complete Finance graph marks a large-dense scalability boundary.
+Ranking from weighted pairwise comparisons asks for a global order that respects observed preferences as well as possible. We study a training-free, deterministic pipeline that builds an acyclic backbone on the comparison digraph using an MWFAS-inspired local-ratio heuristic, restores high-weight arcs under exact cycle-safe reinsertion, optionally applies a secondary weighted min-cut exchange, and extracts scores with optional order-preserving refinement. The local-ratio and exact add-back components follow prior lineage; this paper formalizes ranking--MWFAS optimum-value equivalence and practical guarantee boundaries, corrects a fixed-topological-position proxy weakening of add-back, and expands classical and GNN evaluation under timeout-aware common-completion analysis. Empirically, the canonical reachability-aware method (\textsc{OURS-Reach}) is strong on simple/naive upset metrics against several baselines, remains competitive rather than uniformly superior to SpringRank on family-aware checks, and is weaker than BTL on upset\_ratio. It is slower than most lightweight classical estimators yet substantially faster than archived trained GNNRank runs under an end-to-end protocol; the near-complete Finance graph marks a large-dense scalability boundary.
 \end{abstract}
 \newcommand{\keywords}[1]{\textbf{Keywords:} #1}
 
@@ -106,7 +106,7 @@ The pipeline studied here (\S\ref{sec:framework}) builds an acyclic backbone wit
 \item \textbf{Formalization and guarantee boundaries.}
 Ranking--MWFAS optimum-value equivalence (Prop.~\ref{prop:rank_mwfas}), implementation complexity, and when the Demetrescu--Finocchi guarantee does and does not transfer (\S\ref{subsec:theory_df03}).
 \item \textbf{Implementation-fidelity correction.}
-Restore exact reachability-aware reinsertion in place of the submitted topological-position proxy (\S\ref{subsec:framework_phaseB}); ablations quantify the effect (\S\ref{subsec:ablation}).
+Restore exact reachability-aware reinsertion in place of a fixed-topological-position proxy (\S\ref{subsec:framework_phaseB}); ablations quantify the effect (\S\ref{subsec:ablation}).
 \item \textbf{Secondary structural repair.}
 A conflict-triggered weighted min-cut exchange with monotone objective improvement (Prop.~\ref{prop:mincut}), with regime-specific empirics (\S\ref{subsec:mincut_emp}).
 \item \textbf{Expanded empirical validation.}
@@ -133,7 +133,7 @@ Demetrescu and Finocchi \citet{CI03} give a local-ratio cycle-breaking heuristic
 
 \subsubsection{Relation to \citet{VK25}}
 \citet{VK25} operationalizes ranking via the \citet{CI03} local-ratio backbone with descending-weight exact cycle-safe reinsertion and order-preserving ternary refinement.
-A later practical codebase weakened reinsertion to a fixed topological-position proxy; multipass INS variants partially compensate and are historical comparison points only.
+A later practical codebase weakened reinsertion to a fixed topological-position proxy; multipass INS variants partially compensate and are ablation baselines only.
 Table~\ref{tab:novelty_separation} summarizes what is prior, restored for fidelity, or newly analyzed here.
 
 \begin{table}[t]
@@ -162,14 +162,14 @@ Broad classical + GNN eval.\ & -- & GNN-focused & expanded \\
 \section{Method and Theory}
 \label{sec:framework}
 
-We describe a deterministic, training-free ranking pipeline for weighted pairwise-comparison graphs. The canonical revised pipeline is:
+We describe a deterministic, training-free ranking pipeline for weighted pairwise-comparison graphs. The canonical pipeline is:
 \begin{enumerate}
 \item \textbf{Phase~A (prior):} local-ratio-style cycle breaking \citet{CI03,VK25}.
 \item \textbf{Phase~B (fidelity correction):} exact weight-prioritized reachability-aware reinsertion \citet{CI03,VK25}.
 \item \textbf{Optional secondary repair (new):} conflict-triggered weighted min-cut exchange.
 \item \textbf{Phase~C (prior lineage):} topological score extraction and optional order-preserving refinement \citet{VK25}.
 \end{enumerate}
-Legacy multipass topo-proxy variants (INS1--3) are retained only as historical comparison points (\S\ref{sec:related}).
+Fixed-topological-position multipass variants (INS1--3) are retained only as ablation contrasts (\S\ref{subsec:ablation}).
 
 \subsection{Problem Setting}
 \label{subsec:framework_problem}
@@ -212,7 +212,7 @@ If $F$ is inclusion-minimal, then for every topological order $R$ of $(V,E\setmi
 \label{subsec:pseudocode}
 
 \begin{algorithm}[H]
-\caption{Canonical revised ranking pipeline (training-free)}
+\caption{Canonical ranking pipeline (training-free)}
 \label{alg:ours_canonical}
 \KwIn{Weighted digraph $G=(V,E,w)$; wall-clock budget $T$; zero tolerance $\tau$; optional min-cut flag; refinement budgets}
 \KwOut{Score vector $s:V\to\mathbb{R}$}
@@ -246,7 +246,7 @@ Phase~A follows the local-ratio reduction of \citet{CI03}: maintain residuals, f
 
 \subsection{Phase~B: Exact Reachability-Aware Reinsertion (Fidelity Correction)}
 \label{subsec:framework_phaseB}
-After Phase~A, excluded arcs are scanned once in stable descending original weight. Arc $(u,v)$ is reinserted iff there is no directed path $v\rightarrow^\star u$ in the current kept DAG. This is the exact cycle-safety test of \citet{CI03,VK25}. The submitted fixed-topological-position proxy (accept iff $\mathrm{pos}(u)<\mathrm{pos}(v)$ for one fixed topological order) is weaker and is retained only for historical comparison (legacy INS multipass variants).
+After Phase~A, excluded arcs are scanned once in stable descending original weight. Arc $(u,v)$ is reinserted iff there is no directed path $v\rightarrow^\star u$ in the current kept DAG. This is the exact cycle-safety test of \citet{CI03,VK25}. A fixed-topological-position proxy (accept iff $\mathrm{pos}(u)<\mathrm{pos}(v)$ for one fixed topological order) is weaker and is retained only as an ablation baseline (INS multipass variants).
 
 \begin{proposition}[Exact add-back correctness]
 \label{prop:reachability_addback}
@@ -321,7 +321,7 @@ $T$ (\texttt{time\_limit\_sec}) & Global wall-clock budget & Shared by Phases~A-
 $\tau$ (\texttt{zero\_tol}) & Residual kill threshold & Default $10^{-15}$; numerical, not a modeling knob \\
 DFS / Kahn order & Deterministic traversal & Vertices $1..n$; stable edge order \\
 Add-back order & Descending $w$, stable ties & Exact reachability test (canonical) \\
-Legacy $P\in\{1,2,3\}$ & Submitted topo-proxy passes & Historical INS1/2/3; not canonical \\
+Legacy $P\in\{1,2,3\}$ & Fixed-topological-position passes & INS1/2/3 ablation baselines; not canonical \\
 Min-cut budgets & Optional repair caps & Secondary; regime-specific benefit \\
 Refinement budgets & Phase~C time/passes & Order-preserving ternary from prior lineage \\
 Identity fallback & Score extraction if cyclic & No nontrivial general error bound (\S\ref{subsec:theory_fallback}) \\
@@ -383,9 +383,10 @@ Exact reachability add-back costs $O(m\log m)$ for sorting plus polynomial-in-$n
 
 \paragraph{Dataset suite and denominators.}
 We use an $80$-dataset manuscript benchmark suite aligned with recent ranking-from-comparisons evaluations \citep{he22}, spanning basketball/football temporal graphs, faculty hiring networks, animal and head-to-head competition graphs, one ERO-style instance, and the near-complete Finance graph ($n=1315$, $m\approx 1.73\times 10^{6}$, density $\approx 1$).
-Two suite members lack loadable data files in the archived release (\texttt{ERO/p5K5N350eta10styleuniform}, \texttt{Halo2BetaData/HeadToHead}), so analyses that require readable graphs use an effective denominator of $79$ datasets with available data.
-An extra inventory entry \texttt{\_AUTO/Basketball\_temporal\_\_1985adj} is excluded from the manuscript suite.
-We never mix denominators: pairwise quality/runtime tables use method-pair common completions (typically $n=77$ for OURS vs classical; $n=60$ for OURS vs GNN), coverage uses $79$, and family-aware macros exclude Finance from quality aggregates.
+Two suite members lack loadable adjacency files in the archived release (\texttt{ERO/p5K5N350eta10styleuniform}, \texttt{Halo2BetaData/HeadToHead}), so analyses that require readable graphs use an effective denominator of $78$ loadable datasets ($80-2=78$).
+The loadable Halo family member is \texttt{Halo2BetaData}; \texttt{Halo2BetaData/HeadToHead} is a distinct suite ID without a resolvable \texttt{adj.npz} under the repository loader.
+An extra inventory entry \texttt{\_AUTO/Basketball\_temporal\_\_1985adj} is excluded from the manuscript suite (it is a duplicate adjacency variant of Basketball 1985 and would otherwise inflate a raw repository count to $81$).
+We never mix denominators: pairwise quality/runtime tables use method-pair common completions (typically $n=77$ for OURS vs classical; $n=60$ for OURS vs GNN), coverage uses the $78$ loadable graphs, and family-aware macros exclude Finance from quality aggregates.
 Table~\ref{tab:dataset_suite_summary} summarizes families; non-Finance ablation successes reach $n\le 602$.
 
 \begin{table}[H]
@@ -405,15 +406,15 @@ ERO-style & 1 & (suite range) & (suite range) \\
 Finance & 1 & 1{,}315 & 1{,}729{,}225 \\
 \bottomrule
 \end{tabular}
-\caption{Manuscript $80$-suite families (intended counts). Two missing files reduce readable graphs to $79$.}
+\caption{Manuscript $80$-suite families (intended counts). Two missing adjacency files reduce loadable graphs to $78$.}
 \label{tab:dataset_suite_summary}
 \end{table}
 
 \paragraph{Methods.}
 Baselines are ten classical methods (\textsc{SpringRank}, \textsc{SyncRank}, \textsc{SerialRank}, \textsc{BTL}, \textsc{DavidScore}, eigenvector/\textsc{PageRank}/\textsc{RankCentrality}, \textsc{SVD-RS}/\textsc{SVD-NRS}) and two GNNRank backbones (\textsc{DIGRAC}, \textsc{ib}) under fixed archived configurations (not post-hoc best-in-suite oracles).
-The \emph{canonical} revised method reported in the principal quality/runtime tables is \textsc{OURS-Reach}: Phase~A + exact reachability-aware reinsertion + Phase~C refinement (\S\ref{sec:framework}), \emph{without} the optional min-cut exchange.
+The \emph{canonical} method reported in the principal quality/runtime tables is \textsc{OURS-Reach}: Phase~A + exact reachability-aware reinsertion + Phase~C refinement (\S\ref{sec:framework}), \emph{without} the optional min-cut exchange.
 Optional min-cut remains a secondary structural operator evaluated in ablation/empirics (\S\ref{subsec:ablation}, \S\ref{subsec:mincut_emp}).
-Archived \textsc{OURS-MFAS}/\textsc{INS3} labels are duplicate submitted topo-proxy configurations retained only as historical/ablation contrasts.
+Archived \textsc{OURS-MFAS}/\textsc{INS3} labels correspond to duplicate fixed-topological-position configurations retained only as ablation contrasts.
 
 \paragraph{Determinism, repetitions, and timing.}
 Non-GNN methods are deterministic given fixed inputs and completed work: ranking outputs do not vary across the protocol's $10$ recorded trials except through wall-clock/timeout effects.
@@ -430,8 +431,7 @@ Because many basketball seasons are temporally related, we add a family-aware se
 
 \paragraph{Canonical numerical source.}
 Principal Tables~\ref{tab:pairwise_quality_simple}--\ref{tab:runtime_wtl} use \textsc{OURS-Reach} under the GNNRank upset metrics of \citet{he22}, paired against the archived baseline leaderboard.
-Ablation CSVs document stage contributions and the topo-proxy vs.\ reachability contrast.
-Stale submitted Table~4/5 aggregates are not reused.
+Structural ablation results document stage contributions and the fixed-topological-position versus reachability contrast (\S\ref{subsec:ablation}).
 
 \subsection{Direct Ranking Quality on Common Completions}
 \label{subsec:main_quality}
@@ -530,14 +530,14 @@ ib & 60 & 60 & 0 & 0 & $0.027\times$ ($\sim 37\times$ faster) \\
 \label{tab:runtime_wtl}
 \end{table}
 
-Coverage on $79$ readable datasets: \textsc{OURS-Reach} $77/79$ ($97.5\%$; Finance timeout); most classical methods $78/79$ ($98.7\%$); SyncRank $77/79$; DIGRAC/ib $61/79$ ($77.2\%$, primarily not-applicable rather than timeout).
+Coverage on $78$ loadable datasets: \textsc{OURS-Reach} $77/78$ ($98.7\%$; Finance timeout); most classical methods $78/78$ ($100\%$); SyncRank $77/78$ (Finance timeout); DIGRAC/ib $61/78$ ($78.2\%$, primarily not-applicable rather than timeout).
 A global $60$-dataset subset where all methods finish exists but is GNN-applicability biased; pairwise completion remains primary.
-Figure~\ref{fig:runtime_vs_edges} shows empirical A4 runtimes versus $m$ for non-Finance graphs.
+Figure~\ref{fig:runtime_vs_edges} shows empirical \textsc{OURS-Reach} runtimes versus $m$ for non-Finance graphs.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.72\linewidth]{fig_runtime_vs_edges.pdf}
-\caption{\textsc{OURS-Reach} (A4) wall time versus edge count on non-Finance graphs (log--log). Finance ($m\approx 1.73\times 10^{6}$) is marked as the large-dense boundary.}
+\caption{\textsc{OURS-Reach} wall time versus edge count on non-Finance graphs (log--log). Finance ($m\approx 1.73\times 10^{6}$) is marked as the large-dense boundary.}
 \label{fig:runtime_vs_edges}
 \end{figure}
 
@@ -545,20 +545,25 @@ Figure~\ref{fig:runtime_vs_edges} shows empirical A4 runtimes versus $m$ for non
 \label{subsec:finance}
 
 Finance is reported separately, not averaged into quality macros.
-Under the archived $1800$\,s non-GNN protocol, leaderboard topo-proxy OURS and SyncRank time out while lightweight classical methods finish in $<4$\,s and GNN end-to-end runs finish in $\sim 15$--$18$\,min.
-In the reviewer ablation stress configs (internal Phase~A budget $600$\,s): FINANCE\_A0 completes with wall $\approx 612.6$\,s (Phase~A $\approx 600.0$\,s); FINANCE\_A2/A4 hit \texttt{INTERNAL\_TIME\_LIMIT} at $\approx 1214.8$/$1214.6$\,s; FINANCE\_A6 hits \texttt{TIMEOUT\_HARD\_WALLCLOCK} at $\approx 1800.1$\,s without a finished ranking.
+Under the archived $1800$\,s non-GNN protocol, fixed-topological-position OURS variants and SyncRank time out while lightweight classical methods finish in $<4$\,s and GNN end-to-end runs finish in $\sim 15$--$18$\,min.
+Under a tightened Phase~A wall-clock budget of $600$\,s, Phase~A-only completes with wall $\approx 612.6$\,s (Phase~A $\approx 600.0$\,s); reachability and reachability+refinement configurations hit an internal time limit at $\approx 1214.8$/$1214.6$\,s; enabling optional min-cut hits a hard wall-clock timeout at $\approx 1800.1$\,s without a finished ranking.
 This matches the $O(mn+m^{2})$ Phase~A discussion in \S\ref{subsec:framework_complexity}: Finance is a known large-dense boundary.
 
 \subsection{Scalability (Empirical)}
 \label{subsec:scalability}
 
-On non-Finance ablation graphs ($n\le 602$), A4 finishes in roughly $0.01$--$1.2$\,s (median $\approx 0.57$\,s); enabling min-cut (A6) adds about $3$--$4$\,s median.
+On non-Finance ablation graphs ($n\le 602$), \textsc{OURS-Reach} finishes in roughly $0.01$--$1.2$\,s (median $\approx 0.57$\,s); enabling optional min-cut adds about $3$--$4$\,s median.
 These timings illustrate the audited $O(mn+m^2)$ Phase~A bound (\S\ref{subsec:framework_complexity}) on sparse/moderate instances; the Finance boundary is in \S\ref{subsec:finance}. No fitted complexity law is claimed.
 
-\subsection{Structural Ablation (A0--A6)}
+\subsection{Structural Ablation}
 \label{subsec:ablation}
 
-Configs: A0 Phase~A only; A1 topo-proxy add-back; A2 exact reachability; A4 reachability+refinement; A5/A6 add optional min-cut (Layer-1 vs full).
+We use compact stage labels A0--A6:
+A0~=~Phase~A only;
+A1~=~fixed-topological-position add-back;
+A2~=~exact reachability add-back;
+A4~=~reachability+refinement (\textsc{OURS-Reach});
+A5/A6~=~optional min-cut on top of A2/A4 (Layer-1 vs full).
 Primary Holm family (exact CSV values):
 
 \begin{table}[H]
@@ -592,10 +597,10 @@ Figure~\ref{fig:ablation} shows unpaired Layer median trajectories for context; 
 \label{subsec:sensitivity}
 
 On Layer~1 ($n=33$): \texttt{zero\_tol} $\in\{10^{-12},10^{-15},10^{-18}\}$ is STABLE (almost all ties vs default).
-Cycle-selection changes are statistically detectable on the A4 path but small ($|\mathrm{med}\,\Delta|\approx 10^{-3}$).
+Cycle-selection changes are statistically detectable on the reachability+refinement path but small ($|\mathrm{med}\,\Delta|\approx 10^{-3}$).
 Refinement: R0 (off) is worse; R1$\approx$R2 and R3$\approx$R2 (saturation).
-Legacy multipass topo-proxy: P1 restores many edges; P2/P3 add little ranking quality.
-Min-cut budgets: K20$\to$K50 modest; K50$\to$K100 nearly flat. Detailed grids are deferred to the supplement.
+Fixed-topological multipass add-back: P1 restores many edges; P2/P3 add little ranking quality.
+Min-cut budgets: K20$\to$K50 modest; K50$\to$K100 nearly flat. The main sensitivity trends relevant to the conclusions are summarized here.
 
 \subsection{Min-Cut Empirical Regime}
 \label{subsec:mincut_emp}
@@ -614,7 +619,7 @@ Protocol repetitions for deterministic non-GNN methods characterize runtime/time
 \section{Conclusion}
 \label{sec:conclusion}
 We addressed ranking from weighted pairwise comparisons with a training-free structural pipeline: local-ratio cycle breaking, exact reachability-aware reinsertion, optional weighted min-cut exchange, and score extraction/refinement.
-The algorithmic core follows Demetrescu--Finocchi and \citet{VK25}; the revised contributions are formal ranking--MWFAS clarification and guarantee boundaries, restoration of exact cycle-safe add-back after a topological-proxy weakening, a secondary monotone min-cut repair, and a broader timeout-aware empirical study.
+The algorithmic core follows Demetrescu--Finocchi and \citet{VK25}; the contributions of this paper are formal ranking--MWFAS clarification and guarantee boundaries, restoration of exact cycle-safe add-back relative to a weaker fixed-topological-position rule, a secondary monotone min-cut repair, and a broader timeout-aware empirical study.
 
 On common completions, \textsc{OURS-Reach} is strong on simple/naive upset metrics against the listed classical and GNN baselines, remains weaker than BTL on upset\_ratio, and is family-sensitive versus SpringRank despite a significant pairwise Holm test on upset\_simple.
 It is slower than most lightweight classical methods (comparable to SyncRank), substantially faster than the evaluated trained GNN pipelines under the archived end-to-end protocol, and encounters a large-dense limit on Finance.

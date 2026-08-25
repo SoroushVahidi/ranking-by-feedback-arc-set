@@ -9,6 +9,10 @@ Worktree: `/tmp/ranking-jsuper-manuscript-major-revision`
 **READY_FOR_RESUBMISSION**
 
 Scientific, editorial, package, and three-document consistency checks are complete.
+Dataset denominator accounting corrected (intended 80 / loadable 78; coverage 77/78, 78/78, 61/78).
+Publication-tone cleanup completed; no unsupported supplement references.
+Cover letter personalized to Prof. Arabnia with manuscript ID (author-attested metadata).
+Response-letter singular voice + coverage denominators finalized.
 The only optional author-side hygiene step is a final visual overlay of the publisher decision email against the response letter (verbatim email file is still not stored locally). That check does not block scientific readiness of the revision package.
 
 ## Completed gates
@@ -18,6 +22,14 @@ The only optional author-side hygiene step is a final visual overlay of the publ
 | Experiments / theory closed | Pass |
 | `CANONICAL_METHOD_MATCHES_HEADLINE_TABLES` | Pass |
 | `NO_UNTRACEABLE_NUMERICAL_CLAIMS` | Pass |
+| `NO_DENOMINATOR_INCONSISTENCY` | Pass |
+| `DATASET_DENOMINATOR_CONSISTENCY` | Pass |
+| `NO_INAPPROPRIATE_REVISION_HISTORY_LANGUAGE` | Pass |
+| `NO_UNSUPPORTED_SUPPLEMENT_REFERENCES` | Pass |
+| `NOVELTY_RESPONSE_TONE` | Pass |
+| `NO_INTERNAL_DEBUG_WORDING` | Pass |
+| `SINGLE_AUTHOR_VOICE` | Pass |
+| `RESPONSE_COVERAGE_DENOMINATORS` | Pass |
 | `NO_MATERIAL_REDUNDANT_PASSAGES` | Pass |
 | Reviewer coverage | 25/25 (R1 5/5, R2 9/9, R3 4/4, R4 7/7) |
 | Acknowledgments + AI disclosure | Pass |
@@ -30,11 +42,11 @@ The only optional author-side hygiene step is a final visual overlay of the publ
 
 | Artifact | Pages | SHA256 |
 |---|---:|---|
-| Manuscript PDF | 17 | `bca2b2d0cbbd6eede4b4596ca9145844c36975326b6f47560ab3b47db5597ab2` |
-| Response PDF | 6 | `6b10c559626cc5244ccf52c1f3e44e9397fcf353320c78d0c7fa532a9a9d1bea` |
-| Cover letter PDF | 1 | `5b17b2bd265e91e40651ccdeb8925f81f2dfb6735b411a6d8cd545301cf826ec` |
-| Package ZIP | — | `6f5f61634757a4ac7004908b7e0f372a1c08148a3f3b010be03e9344cfd3e559` |
+| Manuscript PDF | 17 | `b5a7bf7359c74619470373cf7d4a82087d23b415a39b4764307766dd046e5912` |
+| Response PDF | 6 | `b2d361e35c80b208e594865b90ca5319b362708ec3e5d35c764d3beba27825b2` |
+| Cover letter PDF | 1 | `d225d4e8ac9620c479268951c3c6c3ba614f49afa6efb1cf4268f7a346ec07ca` |
+| Package ZIP | — | `954578733403dc208bb61fc7b134e66203e3f234a5baab5fbf3bc07b9213d3e2` |
 
 ## Author-optional overlay
 
-Exact JoS decision-email file remains `EXACT_REVIEWER_TEXT_UNAVAILABLE_LOCALLY`. Response letter already covers author-supplied Reviewer 3 verbatim text and full 25/25 matrix.
+Exact full JoS decision-email file remains unavailable locally. Editor name and manuscript ID used in the cover letter are author-attested (`RESUBMISSION_METADATA.md`). Response letter already covers author-supplied Reviewer 3 verbatim text and full 25/25 matrix.

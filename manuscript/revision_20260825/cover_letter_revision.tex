@@ -1,13 +1,13 @@
 \documentclass[11pt]{article}
 
-\usepackage[margin=1in]{geometry}
+\usepackage[margin=0.95in]{geometry}
 \usepackage{lmodern}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{enumitem}
-\setlist[enumerate]{leftmargin=*,itemsep=0.2em,topsep=0.4em,parsep=0pt}
+\setlist[enumerate]{leftmargin=*,itemsep=0.08em,topsep=0.25em,parsep=0pt}
 \pagestyle{empty}
-\setlength{\parskip}{0.55em}
+\setlength{\parskip}{0.4em}
 \setlength{\parindent}{0pt}
 
 \begin{document}
@@ -16,19 +16,22 @@
 Soroush Vahidi\\
 New Jersey Institute of Technology\\
 Newark, NJ, USA\\
-\texttt{sv96@njit.edu}\\[0.6em]
+\texttt{sv96@njit.edu}\\[0.35em]
 \today
 \end{flushright}
 
-\noindent Editor-in-Chief\\
+\noindent Professor Hamid R.\ Arabnia\\
+Editor-in-Chief\\
 The Journal of Supercomputing
 
-\vspace{0.8em}
-Dear Editor,
+\vspace{0.4em}
+\noindent\textbf{Re:} Manuscript ID \texttt{feb25704-187e-4f95-8640-5e8c1ca26a94}\\
+\textit{``Training-Free Ranking from Pairwise Comparisons via Acyclic Graph Construction''}
 
-Thank you for the opportunity to revise my manuscript, now entitled
-\textit{``Training-Free Ranking from Pairwise Comparisons via Acyclic Graph Construction,''}
-and for the careful reviews for \textit{The Journal of Supercomputing}.
+\vspace{0.4em}
+Dear Professor Arabnia,
+
+Thank you for the opportunity to revise my manuscript and for the careful reviews for \textit{The Journal of Supercomputing}.
 I am submitting the revised manuscript for reconsideration.
 The manuscript is original, has not been published previously, and is not under consideration elsewhere.
 I take full responsibility for the scientific content of this revision.
@@ -38,29 +41,21 @@ The accompanying point-by-point response addresses every comment.
 The principal changes are:
 
 \begin{enumerate}
-\item The title and positioning were revised to remove an unqualified scalability claim and to distinguish prior MWFAS components from the contributions of this work.
-
-\item The submitted fixed-topological reinsertion proxy was replaced in the canonical pipeline by exact reachability-aware reinsertion.
-
-\item Principal Tables~4--6 now evaluate the canonical reachability-aware method, \textsc{OURS-Reach}, rather than the submitted topology-proxy variant.
-
-\item The inconsistent baseline tables identified by Reviewer~3 were rebuilt from a single canonical data source.
-
-\item Direct runtime comparisons against training-free classical baselines were added.
-The manuscript states that the method is slower than most lightweight classical methods, while retaining a substantial end-to-end runtime advantage over the evaluated trained GNN methods.
-
-\item Structural ablations, sensitivity analyses, timeout/coverage analysis, family-aware analysis, and statistical tests were added.
-
-\item Theory was strengthened with ranking--MWFAS optimum-value equivalence, exact reachability correctness, Demetrescu--Finocchi guarantee-boundary clarification, a fallback impossibility result, and a secondary weighted min-cut exchange with guarantees.
-
+\item Title and positioning were revised to remove an unqualified scalability claim and to distinguish prior MWFAS components from the contributions of this work.
+\item The fixed-topological reinsertion proxy was replaced in the canonical pipeline by exact reachability-aware reinsertion.
+\item Principal Tables~4--6 now evaluate the canonical reachability-aware method, \textsc{OURS-Reach}.
+\item Inconsistent baseline tables identified by Reviewer~3 were rebuilt from a single canonical data source.
+\item Direct classical runtime comparisons were added; the method is slower than most lightweight classical estimators while retaining a substantial end-to-end advantage over the evaluated trained GNN methods.
+\item Structural ablations, sensitivity, timeout/coverage, family-aware, and statistical analyses were added.
+\item Theory was strengthened (ranking--MWFAS equivalence, reachability correctness, Demetrescu--Finocchi guarantee boundaries, fallback impossibility, and a secondary weighted min-cut repair).
 \item The manuscript was substantially rewritten to reduce repetition and improve readability.
 \end{enumerate}
 
-I am grateful to the editor and reviewers; their comments led to substantial improvements.
+I am grateful to you and the reviewers; their comments led to substantial improvements.
 Detailed responses appear in the accompanying response-to-reviewers document.
 
-\vspace{1.2em}
-Sincerely,\\[1.4em]
+\vspace{0.85em}
+Sincerely,\\[1.0em]
 Soroush Vahidi\\
 New Jersey Institute of Technology\\
 \texttt{sv96@njit.edu}
