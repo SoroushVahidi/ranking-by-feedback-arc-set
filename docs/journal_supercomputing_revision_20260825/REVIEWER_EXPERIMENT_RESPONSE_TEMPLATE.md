@@ -6,7 +6,7 @@ Branch: `jsuper-reviewer-ablation-scale-20260825`
 Maps each reviewer experimental request to the experiment configuration
 answering it and the output table that will answer it.
 
-This is NOT the response letter — it is a planning document.
+Status legend: `RESOLVED_BY_COMPLETED_RUN` | `PARTIAL` | `FAILED_TO_COLLECT` | `NOT_APPLICABLE`
 
 ---
 
@@ -18,9 +18,9 @@ This is NOT the response letter — it is a planning document.
 |---|---|
 | Requested evidence | Show contribution of each pipeline stage: Phase A alone, Phase A + add-back, full pipeline |
 | Experiment configuration | A0 (Phase A only), A1 (Phase A + legacy topo add-back), A3 (original full: topo + refine), A4 (reach + refine) |
-| Output table | `structural_ablation.csv` — rows per (dataset, config) with upset_simple/ratio/naive, removed weight, runtime |
-| Manuscript section | §Experiments (ablation table) |
-| Response point | Table shows monotonic improvement from A0 → A2 (reachability) and A2 → A4 (refinement). Legacy A1 is near-random on upset_simple. |
+| Output table | `structural_ablation.csv`, `primary_pairwise_statistics.csv` |
+| Status | **RESOLVED_BY_COMPLETED_RUN** (non-finance complete; paired A0→A2 / A0→A4 significant) |
+| Response point | Reachability (A2) beats Phase A and topo proxy (A1). Full A4 improves upset_ratio vs A2. |
 
 ### R1: Density/scale behavior
 
@@ -28,19 +28,19 @@ This is NOT the response letter — it is a planning document.
 |---|---|
 | Requested evidence | How does the algorithm behave across density/scale regimes? |
 | Experiment configuration | A0, A2, A4, A6 on Layer 2 (all 78 feasible datasets) |
-| Output table | `scaling_results.csv` — n, m, density, runtime by stage, completion |
-| Manuscript section | §Experiments (scalability subsection) |
-| Response point | Runtime scales with m·n; finance timeout is a known boundary; sparse/moderate-density graphs complete in <1s. |
+| Output table | `scaling_results.csv` |
+| Status | **RESOLVED_BY_COMPLETED_RUN** (non-finance); finance stress **PARTIAL** until FINANCE_A6 terminal |
+| Response point | n≤602 completes in ≲1–4s median depending on config; finance is the boundary. |
 
 ### R1: Zero tolerance, insertion passes, refinement iterations
 
 | Field | Value |
 |---|---|
 | Requested evidence | Sensitivity to numerical tolerances and iteration counts |
-| Experiment configuration | Z12/Z15/Z18 (zero_tol grid on A4), P0–P3 (insertion passes), R0–R3 (refinement budget) |
+| Experiment configuration | Z12/Z15/Z18, P0–P3, R0–R3 |
 | Output tables | `zero_tol_sensitivity.csv`, `legacy_pass_sensitivity.csv`, `refinement_sensitivity.csv` |
-| Manuscript section | §Experiments (sensitivity analysis) or appendix |
-| Response point | Zero tolerance is numerically inert. Insertion passes 2-3 contribute zero additional reinsertions. Refinement has diminishing returns beyond canonical setting. |
+| Status | **RESOLVED_BY_COMPLETED_RUN** |
+| Response point | zero_tol STABLE; P2/P3 nearly inert vs P1; refinement saturates by R1/R2. |
 
 ---
 
@@ -51,20 +51,20 @@ This is NOT the response letter — it is a planning document.
 | Field | Value |
 |---|---|
 | Requested evidence | How are timeouts and failures handled? |
-| Experiment configuration | Finance stress case (FINANCE_A0/A2/A4/A6 with 600s budget) + completion matrix across all datasets |
-| Output table | `completion_matrix.csv`, `h_finance_stress_case` (within raw_runs.csv) |
-| Manuscript section | §Experiments (coverage/timeout subsection) |
-| Response point | 77/78 datasets complete for OURS; finance timeout acknowledged. No arbitrary penalty. |
+| Experiment configuration | Finance stress + completion matrix |
+| Output table | `completion_matrix.csv`, finance rows in `raw_runs.csv` |
+| Status | **PARTIAL** — A0/A2/A4 collected; FINANCE_A6 hard-wallclock resume in flight (timeout itself is valid evidence) |
+| Response point | Explicit INTERNAL_TIME_LIMIT on finance A2/A4; no fabricated penalties. |
 
 ### R2: Scalability qualification
 
 | Field | Value |
 |---|---|
 | Requested evidence | Qualified scalability claim |
-| Experiment configuration | Scaling results across all 78 datasets with n, m, density, stage runtimes |
+| Experiment configuration | Scaling + finance |
 | Output table | `scaling_results.csv` |
-| Manuscript section | §Discussion, §Limitations |
-| Response point | Scales to n≤602; finance (n=1315, dense) times out. O(mn+m²) confirmed empirically. |
+| Status | **RESOLVED_BY_COMPLETED_RUN** for suite; finance boundary **PARTIAL** pending A6 |
+| Response point | Suite scales; finance dense n=1315 is the stress boundary. |
 
 ---
 
@@ -75,20 +75,20 @@ This is NOT the response letter — it is a planning document.
 | Field | Value |
 |---|---|
 | Requested evidence | Does add-back change the ranking, not just the edge count? |
-| Experiment configuration | A0 vs A1 vs A2 — permutation distance, upset metric deltas |
+| Experiment configuration | A0 vs A1 vs A2 — permutation distance, upset deltas |
 | Output table | `structural_ablation.csv` with `permutation_distance_vs_p1` |
-| Manuscript section | §Experiments (ablation) |
-| Response point | Legacy topo add-back (A1) changes few rankings; reachability (A2) changes more and improves upset_simple in 74/78. |
+| Status | **RESOLVED_BY_COMPLETED_RUN** |
+| Response point | A2 improves upset_simple vs A0 on 76/77; topo A1 loses to A2 on 32/33. |
 
 ### R3: Stronger replacement for ineffective INS1/2/3
 
 | Field | Value |
 |---|---|
-| Requested evidence | INS1/2/3 are nearly identical — is there a better alternative? |
-| Experiment configuration | P0–P3 (insertion pass sensitivity), A2 (reachability as replacement), A5/A6 (min-cut exchange as replacement) |
+| Requested evidence | INS1/2/3 nearly identical — better alternative? |
+| Experiment configuration | P0–P3, A2, A5/A6 |
 | Output table | `legacy_pass_sensitivity.csv`, `structural_ablation.csv` |
-| Manuscript section | §Experiments (insertion-pass analysis) |
-| Response point | P2/P3 add zero edges beyond P1. Reachability (A2) is the principled replacement. Min-cut exchange (A5) provides further structural gain. |
+| Status | **RESOLVED_BY_COMPLETED_RUN** |
+| Response point | P2/P3 add almost no ranking value beyond P1. Reachability + min-cut are the replacements. |
 
 ---
 
@@ -99,27 +99,27 @@ This is NOT the response letter — it is a planning document.
 | Field | Value |
 |---|---|
 | Requested evidence | What does each algorithmic component contribute? |
-| Experiment configuration | A0–A6 structural ablation |
-| Output table | `structural_ablation.csv` |
-| Manuscript section | §Experiments (ablation table) |
-| Response point | Phase A contributes the base DAG. Reachability add-back improves upset_simple. Phase C improves upset_ratio. Min-cut exchange improves structural objective. |
+| Experiment configuration | A0–A6 |
+| Output table | `structural_ablation.csv`, `primary_pairwise_statistics.csv` |
+| Status | **RESOLVED_BY_COMPLETED_RUN** |
+| Response point | Phase A base; reachability ranking gain; refinement ratio gain; min-cut structural gain. |
 
 ### R4: Cycle-selection behavior
 
 | Field | Value |
 |---|---|
 | Requested evidence | How does cycle selection affect results? |
-| Experiment configuration | C0 (DFS first-found) vs C1 (DFS reverse-order) on A0 and A4 |
+| Experiment configuration | C0 vs C1 on A0 and A4 |
 | Output table | `cycle_selection_sensitivity.csv` |
-| Manuscript section | §Experiments or appendix |
-| Response point | Two deterministic DFS variants compared. Cycle selection has minimal effect on final ranking quality. |
+| Status | **RESOLVED_BY_COMPLETED_RUN** |
+| Response point | MATERIALLY_SENSITIVE under A4 (small significant Δ); disclose rather than claim inertness. |
 
 ### R4: Scalability
 
 | Field | Value |
 |---|---|
 | Requested evidence | Where does computational cost become limiting? |
-| Experiment configuration | Layer 2 (all 78 datasets) for A0, A2, A4, A6 + finance stress |
+| Experiment configuration | Layer 2 + finance |
 | Output table | `scaling_results.csv` |
-| Manuscript section | §Discussion |
-| Response point | Empirical scaling characterization. Cost is dominated by Phase A (O(mn+m²)). Finance is the boundary case. |
+| Status | **PARTIAL** until FINANCE_A6 terminal; suite evidence complete |
+| Response point | Cost dominated by Phase A / min-cut; finance is the limiting stress case. |

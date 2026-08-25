@@ -507,7 +507,144 @@ def _build_run_plan():
     return plan
 
 
-def main() -> int:
+def _classify_terminal(result: dict) -> str:
+    """Map a result row to a terminal classification label."""
+    status = str(result.get("status", ""))
+    if status == "TIMEOUT_HARD_WALLCLOCK":
+        return "TIMEOUT_HARD_WALLCLOCK"
+    if status in ("error", "data_unavailable"):
+        return "ERROR"
+    if status == "complete" and str(result.get("break_reason", "")) == "time_limit":
+        return "INTERNAL_TIME_LIMIT"
+    if status == "complete":
+        return "SUCCESS"
+    return status or "unknown"
+
+
+def _hard_wallclock_timeout_row(ds, family, config_label, wall_sec: float) -> dict:
+    return {
+        "dataset": ds,
+        "family": family,
+        "config": config_label,
+        "config_hash": CONFIG_HASH,
+        "timestamp": time.time(),
+        "status": "TIMEOUT_HARD_WALLCLOCK",
+        "n": "",
+        "m": "",
+        "density": "",
+        "total_edge_weight": "",
+        "removed_phaseA_count": "",
+        "removed_phaseA_weight": "",
+        "removed_final_count": "",
+        "removed_final_weight": "",
+        "normalized_removed_weight": "",
+        "restored_edge_count": "",
+        "mincut_attempts": "",
+        "mincut_accepted": "",
+        "mincut_gain": "",
+        "upset_simple": "",
+        "upset_ratio": "",
+        "upset_naive": "",
+        "permutation_distance_vs_p1": "",
+        "runtime_total_sec": wall_sec,
+        "runtime_phaseA_sec": "",
+        "runtime_phaseB_sec": "",
+        "runtime_phaseC_sec": "",
+        "runtime_mincut_sec": "",
+        "phase1_iterations": "",
+        "reinserted_per_pass": "",
+        "break_reason": "hard_wallclock_timeout",
+        "terminal_classification": "TIMEOUT_HARD_WALLCLOCK",
+    }
+
+
+def _run_config_with_hard_wallclock(ds, family, config_label, params, is_finance, wall_sec: float):
+    """Run one config under a hard external wall-clock (process kill).
+
+    Preserves algorithm parameters / internal time_limit_sec unchanged.
+    Returns (result_dict, elapsed_sec).
+    """
+    import multiprocessing as mp
+
+    q: mp.Queue = mp.Queue()
+
+    def _worker(queue, ds_, fam_, label_, params_, is_fin_):
+        try:
+            result, _ = run_config(ds_, fam_, label_, params_, is_fin_)
+            result["terminal_classification"] = _classify_terminal(result)
+            queue.put(("ok", result))
+        except Exception as exc:  # noqa: BLE001 — must surface to parent
+            queue.put(("error", str(exc)[:400]))
+
+    t0 = time.time()
+    proc = mp.Process(
+        target=_worker,
+        args=(q, ds, family, config_label, params, is_finance),
+    )
+    proc.start()
+    proc.join(wall_sec)
+    elapsed = time.time() - t0
+
+    if proc.is_alive():
+        proc.terminate()
+        proc.join(30)
+        if proc.is_alive():
+            proc.kill()
+            proc.join(10)
+        result = _hard_wallclock_timeout_row(ds, family, config_label, elapsed)
+        return result, elapsed
+
+    if not q.empty():
+        kind, payload = q.get()
+        if kind == "ok":
+            return payload, elapsed
+        result = {
+            "dataset": ds,
+            "family": family,
+            "config": config_label,
+            "config_hash": CONFIG_HASH,
+            "timestamp": time.time(),
+            "status": "error",
+            "error": payload,
+            "runtime_total_sec": elapsed,
+            "break_reason": "exception",
+            "terminal_classification": "ERROR",
+        }
+        return result, elapsed
+
+    # Process died without a queue payload
+    result = {
+        "dataset": ds,
+        "family": family,
+        "config": config_label,
+        "config_hash": CONFIG_HASH,
+        "timestamp": time.time(),
+        "status": "error",
+        "error": f"worker_exitcode={proc.exitcode}",
+        "runtime_total_sec": elapsed,
+        "break_reason": "worker_crash",
+        "terminal_classification": "ERROR",
+    }
+    return result, elapsed
+
+
+def main(argv: list[str] | None = None) -> int:
+    import argparse
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--only-config",
+        default=None,
+        help="Run only this config label (e.g. FINANCE_A6). Checkpoint still skips if done.",
+    )
+    parser.add_argument(
+        "--hard-wallclock-sec",
+        type=float,
+        default=None,
+        help="Hard per-config wall-clock (process kill). Applied only to --only-config runs.",
+    )
+    args = parser.parse_args(argv)
+
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     ledger_path = OUT_DIR / "_progress.jsonl"
 
@@ -524,10 +661,20 @@ def main() -> int:
                     done.add((rec["dataset"], rec["config"]))
 
     plan = _build_run_plan()
+    if args.only_config:
+        plan = [p for p in plan if p[2] == args.only_config]
+        if not plan:
+            print(f"ERROR: no plan entries for --only-config={args.only_config}", flush=True)
+            return 2
+
     total = len(plan)
     print(f"Config hash: {CONFIG_HASH}", flush=True)
-    print(f"Total planned runs: {total}", flush=True)
-    print(f"Already completed: {len(done)}", flush=True)
+    print(f"Total planned runs (this invocation): {total}", flush=True)
+    print(f"Already completed (ledger unique pairs): {len(done)}", flush=True)
+    if args.only_config:
+        print(f"Only-config filter: {args.only_config}", flush=True)
+    if args.hard_wallclock_sec is not None:
+        print(f"Hard wall-clock sec: {args.hard_wallclock_sec}", flush=True)
 
     # Load existing results
     all_results = []
@@ -538,9 +685,10 @@ def main() -> int:
                 all_results.append(row)
 
     # Write manifest
+    full_plan = _build_run_plan()
     manifest = {
         "config_hash": CONFIG_HASH,
-        "total_planned": total,
+        "total_planned": len(full_plan),
         "layer1_count": len(LAYER1),
         "layer2_count": len(LAYER2),
         "finance_count": len(FINANCE),
@@ -565,31 +713,42 @@ def main() -> int:
         ds_rows.append({"dataset": ds, "family": fam, "layer": "finance"})
     _write_csv(OUT_DIR / "dataset_manifest.csv", ds_rows)
 
+    ran = 0
     for i, (ds, fam, config_label, params, is_finance) in enumerate(plan):
         key = (ds, config_label)
         if key in done:
+            print(f"[skip] {ds} / {config_label} (checkpoint)", flush=True)
             continue
 
         print(f"[{i+1}/{total}] {ds} / {config_label} ...", flush=True, end=" ")
         t0 = time.time()
 
-        result, raw_rows = run_config(ds, fam, config_label, params, is_finance)
-        dt = time.time() - t0
+        if args.hard_wallclock_sec is not None and args.only_config:
+            result, dt = _run_config_with_hard_wallclock(
+                ds, fam, config_label, params, is_finance, args.hard_wallclock_sec
+            )
+        else:
+            result, _raw = run_config(ds, fam, config_label, params, is_finance)
+            dt = time.time() - t0
+            result["terminal_classification"] = _classify_terminal(result)
 
         status = result.get("status", "unknown")
-        print(f"{status} ({dt:.2f}s)", flush=True)
+        term = result.get("terminal_classification", _classify_terminal(result))
+        print(f"{status}/{term} ({dt:.2f}s)", flush=True)
 
         # Append to ledger
         rec = {
             "dataset": ds, "config": config_label,
             "config_hash": CONFIG_HASH, "timestamp": time.time(),
             "status": status, "runtime_sec": dt,
+            "terminal_classification": term,
         }
         with ledger_path.open("a") as f:
             f.write(json.dumps(rec) + "\n")
 
         # Add to results
         all_results.append(result)
+        ran += 1
 
         # Rewrite CSVs periodically
         _write_csv(raw_path, all_results)
@@ -597,7 +756,7 @@ def main() -> int:
     # Final write
     _write_csv(raw_path, all_results)
 
-    print(f"\nDone. {len(all_results)} results. Outputs in {OUT_DIR}", flush=True)
+    print(f"\nDone. ran={ran} total_rows={len(all_results)}. Outputs in {OUT_DIR}", flush=True)
     return 0
 
 
