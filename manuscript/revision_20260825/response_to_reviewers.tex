@@ -53,7 +53,7 @@ Thank you for the careful and constructive reviews. I agree that the original pr
 \commentbox{The contribution relative to prior feedback-arc-set / ranking work was not clearly delineated; the paper appeared to present the pipeline as more novel than supported.}
 
 \noindent\textbf{Response.}
-I agree that the original positioning was insufficient. The Introduction was completely rewritten, Related Work was restructured (including an explicit relation to Vahidi \& Koutis, arXiv:2412.16181), and a compact novelty-separation table was added. The revised manuscript no longer presents local-ratio cycle breaking, exact cycle-safe reinsertion, weight-ordered add-back, or Phase~C refinement (adjacent-swap and order-preserving ternary) as newly invented. The title no longer contains ``Scalable.''
+I agree that the original positioning was insufficient. The Introduction was completely rewritten, Related Work was restructured (including an explicit relation to Vahidi \& Koutis, arXiv:2412.16181), and a compact novelty-separation table was added. The revised manuscript no longer presents local-ratio cycle breaking, exact cycle-safe reinsertion, weight-ordered add-back, or Phase~C refinement (adjacent-swap and order-preserving ternary) as newly invented; the implemented Phase~C stages are described explicitly. The title no longer contains ``Scalable.''
 
 \changes{Sections~1 and~1.2; Table~1; title page.}
 
@@ -132,13 +132,13 @@ Pairwise common-completion comparisons are now primary. Coverage is reported exp
 \noindent\textbf{Response.}
 I agree. Direct fixed-method comparisons are primary; oracle envelopes are de-emphasized and labeled as non-deployable post-hoc context only.
 
-\changes{Section~3.1; captions of Tables~4--5.}
+\changes{Section~3.1.}
 
 \paragraph{Comment 6 (Statistics / dataset dependence).}
 \commentbox{Provide formal paired statistics and address Basketball-dominated dependence.}
 
 \noindent\textbf{Response.}
-The revised manuscript reports W/T/L, median paired deltas, and---where exported---Wilcoxon tests with Holm adjustment and bootstrap CIs. Family-aware equal-family macros, leave-one-family-out, and Basketball-collapsed analyses are included. SpringRank comparisons are acknowledged as LOFO-fragile; BTL's \texttt{upset\_ratio} advantage persists under equal-family scrutiny. Corrected RankCentrality is stronger on pairwise \texttt{upset\_ratio} (Tables~4--5); family-aware RankCentrality macros were not recomputed after the baseline fix and are not cited as evidence. Ten classical methods were evaluated in the archived suite; Tables~4--6 display a prespecified principal subset of eight classical methods plus two GNN backbones (\textsc{SVD-RS} and eigenvector centrality omitted as near-duplicate spectral companions). An inherited GNNRank RankCentrality overwrite bug was corrected to the Negahban--Oh--Shah construction and only that baseline was recomputed; other baselines are unchanged.
+The revised manuscript reports W/T/L, median paired deltas, and---where exported---Wilcoxon tests with Holm adjustment and bootstrap CIs. Family-aware equal-family macros and leave-one-family-out analyses are included. SpringRank comparisons are acknowledged as LOFO-fragile; BTL's \texttt{upset\_ratio} advantage persists under equal-family scrutiny. Corrected RankCentrality is stronger on pairwise \texttt{upset\_ratio} (Tables~4--5); family-aware RankCentrality macros were not recomputed after the baseline fix and are not cited as evidence. Ten classical methods were evaluated in the archived suite; Tables~4--6 display a prespecified principal subset of eight classical methods plus two GNN backbones (\textsc{SVD-RS} and eigenvector centrality omitted as near-duplicate spectral companions). An inherited GNNRank RankCentrality overwrite bug was corrected to the Negahban--Oh--Shah construction and only that baseline was recomputed; other baselines are unchanged.
 
 \changes{Sections~3.1--3.3; Tables~4--6,~7.}
 
@@ -182,7 +182,7 @@ I agree with this diagnosis of the submitted manuscript: archived \textsc{OURS-M
 \commentbox{Submitted baseline tables were inconsistent (including classical values that did not match).}
 
 \noindent\textbf{Response.}
-I agree and take responsibility for this inconsistency. The earlier aggregation procedure produced inconsistent summaries. I have regenerated the revised tables from a single canonical per-method export using consistent pairwise common-completion rules. For example, the canonical SpringRank median \texttt{upset\_simple} in the verified full-suite export is $0.802724$. Submitted unpaired Table~4/5 aggregates are not reused.
+I agree and take responsibility for this inconsistency. The earlier aggregation procedure produced inconsistent summaries; those submissions have been discarded. I have regenerated the revised tables from a single canonical per-method export using consistent pairwise common-completion rules. Submitted unpaired Table~4/5 aggregates are not reused.
 
 \changes{Section~3.1 (canonical source statement); Tables~4--5.}
 
@@ -210,7 +210,7 @@ Claims were revised to be metric-specific for \textsc{OURS-Reach}: strong simple
 \commentbox{What exactly is scientifically new?}
 
 \noindent\textbf{Response.}
-The Introduction and Related Work now answer this directly via prior/new separation and Table~1: formal ranking--MWFAS clarification and guarantee boundaries; fidelity restoration of exact add-back; secondary min-cut exchange; expanded empirical evaluation. Prior local-ratio/add-back/Phase~C (adjacent-swap + ternary) components are credited, not reinvented.
+The Introduction and Related Work now answer this directly via prior/new separation and Table~1: formal ranking--MWFAS clarification and guarantee boundaries; fidelity restoration of exact add-back; secondary min-cut exchange; expanded empirical evaluation. Prior local-ratio/add-back/ternary lineage is credited separately from the explicitly described implemented Phase~C (adjacent-swap then order-preserving ternary); the latter is not reinvented. Genuinely new contributions are the ranking--MWFAS equivalence/guarantee analysis, exact reachability as a fidelity correction, the weighted min-cut exchange, and the comprehensive empirical protocol.
 
 \changes{Sections~1--2; Table~1.}
 
@@ -218,7 +218,7 @@ The Introduction and Related Work now answer this directly via prior/new separat
 \commentbox{Does the practical implementation inherit the Demetrescu--Finocchi guarantee?}
 
 \noindent\textbf{Response.}
-The published guarantee applies to the idealized local-ratio procedure under its completion assumptions. The practical pipeline adds wall-clock termination, floating-point tolerances, forced-progress safeguards, and fallback output; therefore prematurely terminated practical runs do \emph{not} automatically inherit the DF03 guarantee (Remark in Section~2.9). Algorithm~1 now branches so that Proposition~2's DAG hypotheses are not implied after a cyclic Phase~A timeout, and min-cut is skipped unless the kept graph is a DAG. Proposition~4 addresses fallback error.
+The published guarantee applies to the idealized local-ratio procedure under its completion assumptions. The practical pipeline adds wall-clock termination, floating-point tolerances, forced-progress safeguards, and fallback output; therefore prematurely terminated practical runs do \emph{not} automatically inherit the DF03 guarantee (Remark in Section~2.9). Algorithm~1 now explicitly records whether Phase~A exits acyclic. Proposition~2 is invoked only under its DAG assumption; after a cyclic timeout, the reachability scan may still be attempted under the remaining budget, while min-cut is skipped unless the retained graph is a DAG. Proposition~4 addresses fallback error.
 
 \changes{Sections~2.3, 2.9--2.10, 4; Algorithm~1.}
 
