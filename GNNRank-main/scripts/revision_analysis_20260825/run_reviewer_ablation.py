@@ -473,9 +473,16 @@ def run_config(ds, family, config_label, params, is_finance=False):
 def _write_csv(path, rows):
     if not rows:
         return
-    fieldnames = list(rows[0].keys())
+    # Stable union of keys (supports schema growth e.g. terminal_classification)
+    fieldnames: list[str] = []
+    seen = set()
+    for r in rows:
+        for k in r.keys():
+            if k not in seen:
+                seen.add(k)
+                fieldnames.append(k)
     with path.open("w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
         writer.writeheader()
         writer.writerows(rows)
 

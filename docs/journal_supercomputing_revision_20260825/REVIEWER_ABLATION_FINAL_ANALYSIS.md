@@ -8,9 +8,9 @@ Analysis script: `GNNRank-main/scripts/revision_analysis_20260825/analyze_review
 This document follows `EXPERIMENT_INTERPRETATION_RULES.md` and
 `ABLATION_MANUSCRIPT_TABLE_PLAN.md`. Negative and null findings are reported.
 
-**Status note:** Aggregate tables below are computed from **1008/1009** terminal
-raw rows (FINANCE_A6 pending a hard-wallclock resume). Non-finance scientific
-comparisons are complete. Finance A6 will be folded in when terminal.
+**Status note:** Aggregate tables are computed from **1009/1009** terminal raw
+rows. FINANCE_A6 terminated as `TIMEOUT_HARD_WALLCLOCK` at ≈1800.10 s.
+Non-finance primary pairwise statistics are unchanged vs the 1008-row snapshot.
 
 ---
 
@@ -32,11 +32,11 @@ comparisons are complete. Finance A6 will be folded in when terminal.
 | Quantity | Value |
 |---|---|
 | Planned runs | 1009 |
-| Terminal raw rows | 1008 |
-| Deduped for stats | 1004 |
+| Terminal raw rows | 1009 |
+| Deduped for stats | 1005 |
 | Duplicate groups | 4 (`Basketball_temporal/finer2012` in Layer1∩Layer2) |
 | Recorded errors | 0 |
-| Missing | FINANCE_A6 (resume in flight with 1800s hard wall-clock) |
+| Missing | 0 |
 
 Duplicate audit (`duplicate_run_audit.csv`): scientific metrics agree;
 runtime jitter only; dedup rule = keep first raw row.
@@ -169,14 +169,18 @@ comfortably for n≤602 moderate density.
 
 | Config | Terminal class | runtime (s) | break_reason |
 |---|---|---:|---|
-| FINANCE_A0 | SUCCESS* | 612.6 | phase_b_disabled (Phase A used full 600s) |
-| FINANCE_A2 | INTERNAL_TIME_LIMIT | 1214.8 | time_limit |
-| FINANCE_A4 | INTERNAL_TIME_LIMIT | 1214.6 | time_limit |
-| FINANCE_A6 | PENDING | — | hard-wallclock resume (1800s) |
+| FINANCE_A0 | SUCCESS* | 612.55 | phase_b_disabled (Phase A used full 600.01 s) |
+| FINANCE_A2 | INTERNAL_TIME_LIMIT | 1214.76 | time_limit |
+| FINANCE_A4 | INTERNAL_TIME_LIMIT | 1214.57 | time_limit |
+| FINANCE_A6 | **TIMEOUT_HARD_WALLCLOCK** | **1800.10** | hard_wallclock_timeout |
 
 \*A0 completed with Phase-A budget exhaustion; no Phase B by design.  
-Wall times for A2/A4 exceed 600s because the harness also re-runs Phase-A-only
-for permutation distance. Finance remains the **hard scalability boundary**.
+Wall times for A2/A4 exceed 600 s because the harness also re-runs Phase-A-only
+for permutation distance. FINANCE_A6 did not finish within the predefined 1800 s
+hard wall-clock; this is a **hard scalability failure** for the full
+reachability+refinement+min-cut finance stress case—not a silent omission.
+We make **no universal scalability claim**. Finance remains the documented
+dense/large-n stress boundary.
 
 ## 12. Statistical analysis
 
@@ -207,10 +211,11 @@ for permutation distance. Finance remains the **hard scalability boundary**.
 4. Legacy multipass insertion does not justify INS2/INS3 as quality mechanisms.  
 5. zero_tol is stable; refinement and K-budgets saturate quickly.  
 6. Finance is a documented stress timeout boundary—not a silent omission.
+   FINANCE_A6 specifically hard-timed-out at 1800 s.
 
 ## 15. Limitations
 
-- FINANCE_A6 terminal outcome pending at document generation time.  
+- FINANCE_A6 is a hard wall-clock timeout (no ranking metrics produced).  
 - Single deterministic run per (dataset, config)—appropriate for OURS.  
 - Basketball-dominated sample.  
 - finer2012 Layer1/Layer2 duplication (audited, deduped for stats).  
