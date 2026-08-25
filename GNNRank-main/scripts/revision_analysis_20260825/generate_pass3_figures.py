@@ -18,13 +18,13 @@ def fig_runtime_vs_edges() -> None:
     a4 = sa[sa["config"] == "A4"]
     nf = a4[~a4["dataset"].astype(str).str.lower().str.contains("finance")]
     fig, ax = plt.subplots(figsize=(5.2, 3.4))
-    ax.scatter(nf["m"], nf["runtime_total_sec"], s=18, alpha=0.75, c="#1f4e79", label="A4 non-Finance")
+    ax.scatter(nf["m"], nf["runtime_total_sec"], s=18, alpha=0.75, c="#1f4e79", label="OURS-Reach non-Finance")
     ax.axvline(1_729_225, color="#b22222", ls="--", lw=1, label="Finance m")
     ax.set_xscale("log")
     ax.set_yscale("log")
     ax.set_xlabel("Directed edges m (log)")
-    ax.set_ylabel("A4 wall time (s, log)")
-    ax.set_title("Empirical scale: A4 runtime vs edges")
+    ax.set_ylabel("OURS-Reach wall time (s, log)")
+    ax.set_title("Empirical scale: OURS-Reach runtime vs edges")
     ax.legend(fontsize=8, loc="upper left")
     ax.grid(True, which="both", ls=":", alpha=0.4)
     fig.tight_layout()
