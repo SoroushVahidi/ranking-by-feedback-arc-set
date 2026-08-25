@@ -1,0 +1,68 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\setlist[enumerate]{leftmargin=*,itemsep=0.2em,topsep=0.4em,parsep=0pt}
+\pagestyle{empty}
+\setlength{\parskip}{0.55em}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{flushright}
+Soroush Vahidi\\
+New Jersey Institute of Technology\\
+Newark, NJ, USA\\
+\texttt{sv96@njit.edu}\\[0.6em]
+\today
+\end{flushright}
+
+\noindent Editor-in-Chief\\
+The Journal of Supercomputing
+
+\vspace{0.8em}
+Dear Editor,
+
+Thank you for the opportunity to revise my manuscript, now entitled
+\textit{``Training-Free Ranking from Pairwise Comparisons via Acyclic Graph Construction,''}
+and for the careful reviews for \textit{The Journal of Supercomputing}.
+I am submitting the revised manuscript for reconsideration.
+The manuscript is original, has not been published previously, and is not under consideration elsewhere.
+I take full responsibility for the scientific content of this revision.
+
+The manuscript has undergone a substantial major revision in response to all four reviewers.
+The accompanying point-by-point response addresses every comment.
+The principal changes are:
+
+\begin{enumerate}
+\item The title and positioning were revised to remove an unqualified scalability claim and to distinguish prior MWFAS components from the contributions of this work.
+
+\item The submitted fixed-topological reinsertion proxy was replaced in the canonical pipeline by exact reachability-aware reinsertion.
+
+\item Principal Tables~4--6 now evaluate the canonical reachability-aware method, \textsc{OURS-Reach}, rather than the submitted topology-proxy variant.
+
+\item The inconsistent baseline tables identified by Reviewer~3 were rebuilt from a single canonical data source.
+
+\item Direct runtime comparisons against training-free classical baselines were added.
+The manuscript states that the method is slower than most lightweight classical methods, while retaining a substantial end-to-end runtime advantage over the evaluated trained GNN methods.
+
+\item Structural ablations, sensitivity analyses, timeout/coverage analysis, family-aware analysis, and statistical tests were added.
+
+\item Theory was strengthened with ranking--MWFAS optimum-value equivalence, exact reachability correctness, Demetrescu--Finocchi guarantee-boundary clarification, a fallback impossibility result, and a secondary weighted min-cut exchange with guarantees.
+
+\item The manuscript was substantially rewritten to reduce repetition and improve readability.
+\end{enumerate}
+
+I am grateful to the editor and reviewers; their comments led to substantial improvements.
+Detailed responses appear in the accompanying response-to-reviewers document.
+
+\vspace{1.2em}
+Sincerely,\\[1.4em]
+Soroush Vahidi\\
+New Jersey Institute of Technology\\
+\texttt{sv96@njit.edu}
+
+\end{document}
