@@ -1,0 +1,31 @@
+# Reviewer-to-LaTeX Change Matrix
+
+Date: 2026-08-25  
+Submitted source: `manuscript/submitted_original/source/main_ik.tex`  
+Evidence base: `docs/journal_supercomputing_revision_20260824/` + `docs/journal_supercomputing_revision_20260825/`  
+Status column for this pass: Introduction rewrite in progress; other sections deferred.
+
+| reviewer | comment | exact concern | manuscript file | section | current submitted wording (summary) | problem | evidence now available | theory now available | required modification | experiment status | proposed revised location | status |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| R1 | Novelty vs prior work | Overlap with DF03 / authors’ prior pipeline not clear | `main_ik.tex` | Intro; Related Works; Framework | Presents pipeline as practical MWFAS ranking contribution; cites CI03 as inspiration | Does not separate prior lineage vs new work; no explicit [VK25] | `PRIOR_WORK_OVERLAP_MATRIX.md`, `NOVELTY_VERDICT.md` | `RANKING_MWFAS_EQUIVALENCE.md`, `PRIOR_ADDBACK_LINEAGE.md` | Reposition contributions; cite VK25; mark Phase A / add-back lineage as prior | Done (audit) | Intro contributions; later Related Work | **Intro rewrite this pass** |
+| R1 | Pseudocode / readability | Need complete pipeline description | `main_ik.tex` | Framework | Partial algorithm2e blocks | Incomplete vs review ask | `CURRENT_PIPELINE_PSEUDOCODE.md` | — | Insert full pseudocode / params | Done | Method | Deferred |
+| R1 | Theory / complexity | Unclear claims | `main_ik.tex` | Framework opening | Attributes DF03 cycle-length guarantee to pipeline | Timeout / shipped impl may not inherit; complexity informal | `COMPLEXITY_AUDIT.md` | `APPROXIMATION_GUARANTEE_AUDIT.md`, `DF03_PRIMARY_THEOREM_VERIFICATION.md` | Rewrite guarantee + complexity discussion | Done | Theory/Method | Deferred (flagged in Intro) |
+| R2 | Novelty (same) | Same as R1 | `main_ik.tex` | Intro | Same | Same | Same | Same | Same | Done | Intro | **Intro rewrite this pass** |
+| R2 | Classical runtime | OURS vs classical W/T/L | `main_ik.tex` | Results / runtime | Emphasizes GNN speedup; implies favorable classical trade-off | OURS slower than lightweight classical on almost all pairs | `CLASSICAL_RUNTIME_FINAL.md` | — | Soften runtime; never claim faster than classical | Done | Intro + Results | **Intro softens; Results deferred** |
+| R2 | Coverage / timeouts | Common-completion honesty | `main_ik.tex` | Experiments | Finance timeout noted; suite framed as ~80 | Need formal completion matrix | `CLASSICAL_RUNTIME_FINAL.md` E2 | — | Timeout-aware reporting | Done | Experiments | Deferred |
+| R2 | Formal stats | Wilcoxon / Holm etc. | `main_ik.tex` | Results | Descriptive W/T/L tables | Missing paired tests in text | Ablation + family-aware stats | — | Add stats language later | Done | Results | Deferred |
+| R2 | Basketball dependence | Independent n inflated | `main_ik.tex` | Results | Per-dataset wins vs SpringRank etc. | Family clustering | `FAMILY_AWARE_BASELINE_ANALYSIS.md` | — | Competitive vs SpringRank/davidScore/SVD_NRS; keep BTL upset_ratio loss | Done | Intro + Results | **Intro softens** |
+| R3 / gen. | Ablations / sensitivity | Component necessity unclear | `main_ik.tex` | Method/Exp | INS1/2/3 presented as useful multipass | INS2/3 weak; topo proxy vs reachability matters | `REVIEWER_ABLATION_FINAL_ANALYSIS.md` | Reachability proofs | De-emphasize INS; emphasize fidelity correction | Done | Intro + Ablation | **Intro de-emphasizes INS** |
+| R4 | What is scientifically new? | Contribution clarity | `main_ik.tex` | Intro | Practical scalable pipeline + INS | Oversells prior components | `REVISED_CONTRIBUTION_POSITIONING.md` | Equivalence + guarantee audits + min-cut theory | Four-part contribution list | Done | Intro | **Intro rewrite this pass** |
+| R4 | Approximation ambiguity | Guarantee transfer | `main_ik.tex` | Framework / Intro | “Underlying local-ratio… comes with approximation guarantee” | Early-stop / timeout: no nontrivial general fallback guarantee | `APPROXIMATION_GUARANTEE_AUDIT.md` | Same | Explicit non-transfer statement | Done | Intro + Theory | **Intro states; Theory deferred** |
+| R4 | Complete Intro rewrite | Positioning / length / repetition | `main_ik.tex` | `\section{Introduction}` | Long motivational paragraphs; Related Works nested | Needs concise prior/new split | `INTRODUCTION_REWRITE_PLAN.md` | — | Rewrite Intro prose + contributions | Done | Intro | **This pass** |
+| R4 | Novelty comparison table | Claim-by-claim prior overlap | — | — | Absent | Needed later | `PRIOR_WORK_OVERLAP_MATRIX.md` | — | Optional table in Related Work | Done | Related Work | Deferred |
+| Gen. | Min-cut exchange | Secondary algo not in submitted ZIP | `main_ik.tex` | — | **Absent** | Must add later with proofs + regime evidence | `MINCUT_*`, ablation A4–A6 | Acyclicity + monotone improvement | Position as secondary structural repair | Done | Intro mention; Method later | **Intro positions only** |
+| Gen. | Best-in-suite | Oracle envelope as competitor | `main_ik.tex` | Results | Runtime vs GNN best-in-suite | Not deployable method | GNN accounting audit | — | Qualify as post-hoc envelope | Partial | Results | Deferred (Intro avoids) |
+| Gen. | 10 deterministic reps | Ranking robustness | `main_ik.tex` | Experiments (if present) | Protocol language | Determinism ≠ ranking robustness | Ablation interpretation rules | — | Soften wording | Identified | Experiments | Deferred |
+| Gen. | Universal scalability | “Scalable” framing | Abstract/Intro/Conclusion | Abstract still oversells | Finance dense boundary | `SCALABILITY_CLAIM_AUDIT.md` | Complexity audit | Qualify sparse/moderate; Finance boundary | Done | Intro now; Abstract later | **Intro qualifies** |
+| Gen. | OURS beats BTL upset_ratio | Quality overclaim | Results | Mixed / possible overstatement | BTL stronger on upset_ratio (7/7 families) | `FAMILY_AWARE_BASELINE_ANALYSIS.md` | — | Explicit BTL upset_ratio disadvantage | Done | Intro + Results | **Intro states** |
+
+## This-pass editing scope
+
+Only Introduction narrative + contribution positioning (+ required `VK25` bib key). Related Works survey paragraphs left largely intact; closing Related Works contribution sentence updated for consistency.
