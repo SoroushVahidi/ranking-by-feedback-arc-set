@@ -4,6 +4,11 @@ Date: 2026-08-25
 Branch: `jsuper-final-r1-ablation-fix-20260825`
 Worktree: `/tmp/ranking-jsuper-final-r1-ablation-fix`
 
+Runtime provenance update (2026-08-25): this audit predated the
+`runtime_algorithm_sec` correction. Reviewer 1's average-runtime requirement remains
+complete, but the manuscript-facing runtime column is now mean `runtime_algorithm_sec`;
+`runtime_total_sec` is retained only as a harness diagnostic.
+
 ## Exact preserved Reviewer 1 wording (Comment 2, `response_to_reviewers.tex`)
 
 > "Provide ablations of Phase 1 only, Phase 1 with reinsertion, and the full pipeline;
@@ -43,12 +48,12 @@ runtime.
 | Full pipeline with refinement (canonical, `OURS-Reach`) | `A4` | same files | Yes ($n=77$ non-Finance) |
 | Full pipeline with refinement (legacy/submitted mechanism) | `A3` | same files | Yes ($n=33$), not used in the manuscript table (see `R1_ABLATION_STAGE_MAPPING.md`) |
 
-All four rows used in the manuscript table (`A0`, `A1`, `A2`, `A4`) are present with
-completed status (`status == "complete"` for all 407 rows in `structural_ablation.csv`)
-and with `upset_simple`, `upset_naive`, `upset_ratio`, and `runtime_total_sec` populated
-per dataset, from which per-stage means were computed by the existing
-`summarize_config_group` aggregation in
-`GNNRank-main/scripts/revision_analysis_20260825/analyze_reviewer_ablation.py`.
+All rows used in the manuscript table are present with completed status
+(`status == "complete"` for all 407 rows in `structural_ablation.csv`) and with
+`upset_simple`, `upset_naive`, `upset_ratio`, `runtime_total_sec`, and
+`runtime_algorithm_sec` populated per dataset. The final manuscript table uses
+matched-support panels (`A0/A1/A3`, n=33; `A0/A2/A4`, n=77) and publishes mean
+`runtime_algorithm_sec`.
 
 ## Availability verdict
 

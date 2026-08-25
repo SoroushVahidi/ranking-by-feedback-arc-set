@@ -17,17 +17,33 @@ def fig_runtime_vs_edges() -> None:
     sa = pd.read_csv(AB / "structural_ablation.csv")
     a4 = sa[sa["config"] == "A4"]
     nf = a4[~a4["dataset"].astype(str).str.lower().str.contains("finance")]
+    # runtime_algorithm_sec (Phase A + Phase B + Phase C, single OURS-Reach
+    # invocation) is used here rather than runtime_total_sec, which for any
+    # enable_phase_b=True config also contains a diagnostic Phase-A-only rerun
+    # (used only to compute permutation_distance_vs_p1) and is not the cost of
+    # a single OURS-Reach call. See run_reviewer_ablation.py / _add_runtime_
+    # algorithm_sec in analyze_reviewer_ablation.py.
     fig, ax = plt.subplots(figsize=(5.2, 3.4))
-    ax.scatter(nf["m"], nf["runtime_total_sec"], s=18, alpha=0.75, c="#1f4e79", label="OURS-Reach non-Finance")
-    ax.axvline(1_729_225, color="#b22222", ls="--", lw=1, label="Finance m")
+    ax.scatter(nf["m"], nf["runtime_algorithm_sec"], s=18, alpha=0.75, c="#1f4e79")
+    finance_m = 1_729_225
+    ax.axvline(finance_m, color="#b22222", ls="--", lw=1)
     ax.set_xscale("log")
     ax.set_yscale("log")
-    ax.set_xlim(65.91137797231134, 2807209.933886196)
-    ax.set_ylim(0.008616994651406062, 1.5358925860524664)
     ax.set_xlabel("Directed edges m (log)")
-    ax.set_ylabel("OURS-Reach wall time (s, log)")
+    ax.set_ylabel("OURS-Reach algorithm time (s, log)")
     # No embedded title: the manuscript's Figure 1 caption already states this.
-    ax.legend(fontsize=8, loc="lower right")
+    # No legend: with a single scatter series (identified by the y-axis label
+    # and caption) and one reference line, a legend box positioned anywhere
+    # near the right edge of the axes would sit immediately against -- or be
+    # visually cut by -- the near-edge Finance dashed line. The Finance
+    # boundary is instead labeled directly on the line itself.
+    ymin, ymax = ax.get_ylim()
+    ax.annotate(
+        "Finance\n$m\\approx1.73\\times10^{6}$",
+        xy=(finance_m, ymax), xycoords="data",
+        xytext=(-6, -6), textcoords="offset points",
+        ha="right", va="top", fontsize=7.5, color="#b22222",
+    )
     ax.grid(True, which="both", ls=":", alpha=0.4)
     fig.tight_layout()
     fig.savefig(FIG / "fig_runtime_vs_edges.pdf", bbox_inches="tight")

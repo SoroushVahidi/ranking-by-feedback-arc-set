@@ -120,6 +120,40 @@ def _write_csv(path: Path, rows: list[dict]) -> None:
             w.writerow({k: r.get(k, "") for k in keys})
 
 
+def _add_runtime_algorithm_sec(rows: list[dict]) -> None:
+    """Inject a clean single-invocation algorithm-runtime field into each row, in place.
+
+    run_config() (run_reviewer_ablation.py) measures runtime_total_sec from just
+    before data loading to just after metric computation. For every config with
+    enable_phase_b=True (i.e. every config except A0 and the C0_A0/C1_A0
+    cycle-selection baselines), that window also contains a second, diagnostic-only
+    call to ours_mfas_rmfa (Phase A only, to compute permutation_distance_vs_p1)
+    whose cost is not attributable to a single OURS-Reach invocation and is not
+    broken out anywhere else. runtime_total_sec is therefore a harness-wallclock
+    diagnostic, not the algorithm's single-invocation wall time.
+
+    ours_mfas_rmfa's own internal timestamps (t0 -> t_after_phase1 -> t_after_phase2
+    -> t_after_phaseC) are strictly consecutive within the one real call whose meta
+    is kept (the diagnostic call's meta is discarded), so
+    runtime_phaseA_sec + runtime_phaseB_sec + runtime_phaseC_sec telescopes back to
+    exactly that one call's own internal runtime_sec (= t_after_phaseC - t0). Adding
+    runtime_mincut_sec (a separately, correctly timed post-hoc step for A5/A6, not a
+    duplicate rerun) yields the correct total single-invocation algorithm cost for
+    every configuration, min-cut or not. runtime_total_sec is left untouched.
+    """
+    for r in rows:
+        parts = [
+            _f(r.get("runtime_phaseA_sec")),
+            _f(r.get("runtime_phaseB_sec")),
+            _f(r.get("runtime_phaseC_sec")),
+            _f(r.get("runtime_mincut_sec")),
+        ]
+        if any(np.isnan(p) for p in parts):
+            r["runtime_algorithm_sec"] = ""
+        else:
+            r["runtime_algorithm_sec"] = float(sum(parts))
+
+
 def _is_terminal_success_like(row: dict) -> bool:
     """Rows eligible for metric pairwise comparisons."""
     status = str(row.get("status", ""))
@@ -419,6 +453,8 @@ def summarize_config_group(rows: list[dict], configs: list[str], out_name_prefix
             "median_mincut_gain": med("mincut_gain"),
             "median_runtime_total_sec": med("runtime_total_sec"),
             "mean_runtime_total_sec": mean("runtime_total_sec"),
+            "median_runtime_algorithm_sec": med("runtime_algorithm_sec"),
+            "mean_runtime_algorithm_sec": mean("runtime_algorithm_sec"),
             "median_runtime_phaseA_sec": med("runtime_phaseA_sec"),
             "median_runtime_phaseB_sec": med("runtime_phaseB_sec"),
             "median_runtime_phaseC_sec": med("runtime_phaseC_sec"),
@@ -564,6 +600,7 @@ def analyze(out_dir: Path) -> dict:
 
     deduped, dup_audit = audit_and_dedup(raw)
     _write_csv(out_dir / "duplicate_run_audit.csv", dup_audit)
+    _add_runtime_algorithm_sec(deduped)
 
     # Index by config -> dataset -> row (deduped)
     by_cfg: dict[str, dict[str, dict]] = defaultdict(dict)

@@ -1,5 +1,7 @@
 # Final Numerical Forensic Audit
 
+
+> **SUPERSEDED NOTE (2026-08-25, runtime-provenance fix):** the raw `1214.76`/`1214.57` Finance timings cited below are per-run harness-timer readings, not single-invocation `OURS-Reach` algorithm cost -- each contains a diagnostic Phase-A-only rerun (used only to compute a permutation-distance sensitivity statistic) that inflates the reading by roughly one extra Phase-A execution (~612s on Finance). The corrected algorithm-only Finance timings are ~600.5s (A0), ~602.3s (A2/A4); `1800.10s` (A6, hard-wallclock timeout without a finished ranking) is unaffected. See `RUNTIME_PROVENANCE_AUDIT.md` for the full analysis.
 Date: 2026-08-25
 
 ## Classification
@@ -35,10 +37,10 @@ Sources: `PASS3_NUMERICAL_SOURCE_MAP.md`, `PASS3_NUMERICAL_CLAIM_AUDIT.md`, `RES
 | refinement | R1≈R2 saturates | sensitivity | Pass |
 | P0–P3 | P2/P3 nearly inert | sensitivity | Pass |
 | K20/K50/K100 | K50→K100 flat | sensitivity | Pass |
-| Finance A0/A2/A4/A6 | 612.55; 1214.76 INTERNAL; 1214.57 INTERNAL; 1800.10 HARD | analysis_summary.json | Pass |
+| Finance A0/A2/A4/A6 | algorithm 600.53; 602.31; 602.28; A6 not computable after 1800.10 hard timeout. Harness diagnostics 612.55; 1214.76; 1214.57; 1800.10 only when explicitly labeled | analysis_summary.json + raw_runs.csv + `RUNTIME_PROVENANCE_AUDIT.md` | Pass |
 | Classical median ratios | SyncRank 2.6× … PageRank 536× | e1_runtime_wtl | Pass |
 | GNN ~8× | DIGRAC/ib med ratio ≈0.12; 60/60 | e1 | Pass |
-| A4 non-Finance runtime | ~0.01–1.2s med ≈0.57s | structural | Pass |
+| A4 non-Finance runtime | algorithm ~0.01-0.83s med ≈0.38s | structural, `runtime_algorithm_sec` | Pass |
 | SpringRank family LOFO-fragile | narrative | family-aware docs | Pass |
 
 ## Fixes this pass

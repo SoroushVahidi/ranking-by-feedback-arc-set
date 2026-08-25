@@ -2,6 +2,12 @@
 
 Date: 2026-08-25
 
+Runtime provenance update (2026-08-25): the statement below that ablation-harness
+`runtime_total_sec` was usable is superseded for manuscript-facing ablation runtime.
+`runtime_total_sec` remains useful as a harness diagnostic, but the corrected
+single-invocation algorithm quantity is `runtime_algorithm_sec`; see
+`RUNTIME_PROVENANCE_AUDIT.md`.
+
 ## What is missing
 
 Structural ablation `A4` rows contain `upset_simple` / `upset_naive` / `upset_ratio` computed by
@@ -13,8 +19,9 @@ ablation A4 `upset_simple≈0.100` vs leaderboard SpringRank `≈0.762` under th
 
 Therefore existing A4 CSV **cannot** regenerate Tables 4–5 against classical/GNN baselines.
 
-Runtime (`runtime_total_sec`) and completion status **are** usable from existing A4 rows for
-runtime/coverage, but for consistency we re-emit runtime from the same targeted A4 pass.
+Completion status remains usable from existing A4 rows for runtime/coverage. The
+ablation-harness `runtime_total_sec` field is now treated only as a harness diagnostic;
+for manuscript-facing ablation runtime, use `runtime_algorithm_sec`.
 
 ## Why existing outputs cannot answer headline quality tables
 

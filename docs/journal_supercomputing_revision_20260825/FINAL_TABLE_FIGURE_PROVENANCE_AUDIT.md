@@ -11,7 +11,7 @@ Date: 2026-08-25
 | `tab:pairwise_quality_ratio` | upset_ratio W/T/L | same | same | 77 or 60 | Yes | Yes |
 | `tab:runtime_wtl` | runtime W/T/L | `e1_runtime_wtl.csv` | archived OURS_MFAS | 77 or 60 | Yes | Yes |
 | `tab:ablation_primary` | A0–A6 paired tests | `primary_pairwise_statistics.csv` | non-Finance | 77 or 33 | Yes | Yes |
-| `fig:runtime_vs_edges` | A4 time vs m | structural ablation | non-Finance A4 | ≤77 | Yes (PDF in package) | Yes |
+| `fig:runtime_vs_edges` | A4 algorithm time vs m | structural ablation, `runtime_algorithm_sec` | non-Finance A4 | 77 | Yes (PDF in package) | Yes |
 | `fig:ablation` | A0–A6 medians | structural ablation | unpaired descriptive | non-Finance | Yes | Yes |
 
 ## Negative checks

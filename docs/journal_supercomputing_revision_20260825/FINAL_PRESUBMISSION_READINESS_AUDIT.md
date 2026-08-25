@@ -1,12 +1,16 @@
 # Final Presubmission Readiness Audit
 
 Date: 2026-08-25
-Branch: `jsuper-final-r1-ablation-fix-20260825`
-Worktree: `/tmp/ranking-jsuper-final-r1-ablation-fix`
+Branch: `jsuper-runtime-provenance-fix-20260825`
+Worktree: `/tmp/ranking-jsuper-runtime-provenance-fix`
 
 ## Verdict
 
-**READY_FOR_RESUBMISSION**
+**RUNTIME_PROVENANCE_CLOSED**
+
+This audit supersedes the earlier package-finalization snapshot for the runtime issue only.
+It does not re-declare the entire paper submission-ready; any non-runtime issues documented
+elsewhere remain outside this workstream.
 
 Scientific, editorial, package, and three-document consistency checks are complete,
 including the two substantive corrections from independent inspection of
@@ -40,7 +44,8 @@ function `fig_runtime_vs_edges`) still carried the internal configuration code "
 title, legend, and y-axis label, even though the manuscript's own caption and surrounding
 prose already correctly said "OURS-Reach". The plotting script's three label strings were
 updated to "OURS-Reach" (title: "Empirical scale: OURS-Reach runtime vs edges"; legend:
-"OURS-Reach non-Finance"; y-axis: "OURS-Reach wall time (s, log)") and the figure was
+"OURS-Reach non-Finance"; y-axis later corrected to "OURS-Reach algorithm time (s, log)")
+and the figure was
 regenerated using the same source CSV (`structural_ablation.csv`, `config == "A4"` filter
 unchanged, hash-verified identical before/after) and the same 77-point non-Finance data
 (data hash verified identical before/after: `581fd7aa3f...`). Figure 2
@@ -65,15 +70,22 @@ embedded `ax.set_title(...)` call was removed entirely (the caption now serves a
 figure's title, as the task required); axis limits were made explicit
 (`xlim=(65.91, 2.81e6)`, `ylim=(0.00862, 1.536)`, matching the values matplotlib already
 computed automatically pre-edit) so the visual change could not silently alter the data
-envelope. The y-axis label ("OURS-Reach wall time (s, log)") was inspected at full
+envelope. The y-axis label ("OURS-Reach algorithm time (s, log)") was inspected at full
 resolution after the title/legend fix and found already clean (ample spacing from tick
 labels), so it was left unchanged rather than shortened. Figure 2 was separately audited
 for the same class of problem (legend/data overlap, redundant embedded title) and found
 already clean -- its per-subplot titles ("Ranking metric", "Structural objective") and
 `suptitle` carry information genuinely distinct from the caption's wording, and it has no
-legend to overlap data -- so it was left untouched. As before, the regenerated figure was
-verified against the same source CSV and the same 77-point non-Finance
-`(m, runtime_total_sec)` data hash (`581fd7aa3f...`); only rendered layout changed.
+legend to overlap data -- so it was left untouched.
+The subsequent runtime-provenance audit found that Figure 1's data field also had to
+change: the manuscript-facing y-values are now `runtime_algorithm_sec` from the same
+77 non-Finance A4 rows, rather than harness-level `runtime_total_sec`. The corrected
+range is roughly 0.01-0.83s with median about 0.38s; the old 0.01-1.2s / 0.57s values are
+superseded harness diagnostics, not algorithm cost.
+Table 8's runtime column was likewise corrected from `runtime_total_sec` to
+`runtime_algorithm_sec`: Panel (a) now reports 0.122/0.127/0.227s and Panel (b) reports
+0.144/0.252/0.364s. The upset losses, matched-support denominators, ranking-quality
+metrics, W/T/L counts, p-values, and Table 6 values are unchanged.
 Dataset denominator accounting remains correct (intended 80 / loadable 78; coverage 77/78, 78/78, 61/78).
 Publication-tone cleanup completed; no unsupported supplement references.
 Cover letter personalized to Prof. Arabnia with manuscript ID (author-attested metadata).
@@ -98,6 +110,9 @@ The only optional author-side hygiene step is a final visual overlay of the publ
 | `FIGURE1_REDUNDANT_INTERNAL_TITLE_REMOVED` | Pass |
 | `FIGURE1_LEGEND_DOES_NOT_OVERLAP_DATA` | Pass |
 | `FIGURE1_PUBLICATION_LAYOUT` | Pass |
+| `RUNTIME_PROVENANCE` | Pass |
+| `TABLE8_RUNTIME_ALGORITHM_SEC_TRACEABLE` | Pass |
+| `TABLE6_RUNTIME_UNCHANGED` | Pass |
 | `OTHER_FIGURES_VISUAL_AUDIT` | Pass |
 | `TABLE8_REGRESSION_CHECK` | Pass |
 | `RESPONSE_REGRESSION_CHECK` | Pass |
@@ -127,10 +142,10 @@ The only optional author-side hygiene step is a final visual overlay of the publ
 
 | Artifact | Pages | SHA256 |
 |---|---:|---|
-| Manuscript PDF | 18 | `ef41ea023daa87c6787558b01a0f351784d268b0c1115cde4baba941f322f709` |
-| Response PDF | 7 | `9495ec97bf83e3d2c1c98c171dfe46412270387db5c7cd8cecee04c2c62c5824` |
-| Cover letter PDF | 1 | `0fc03cc752e4ab5ba0fb6049e0d82bd962ba1ed0a6cac79057a4dd0045e10c73` |
-| Package ZIP | — | `66a4c1e3420d21fffe92f2a1cae4849a0acd5009b10f58e42c892fa1a72661b7` |
+| Manuscript PDF | 18 | `6bac0dc2e2c2d177ddf7b07155104fca2c46d44be23fea22a09002cdc03e9686` |
+| Response PDF | 7 | `091ff0a14df81de52adfbf62dddd824e485077673969197dbc77af61f28b549a` |
+| Cover letter PDF | 1 | `667b5fb4f041a0952bb5adb66e2b024e30c70c0841f9df14ab9f40cd416749e0` |
+| Package ZIP | -- | `87cdbd4a894d6c2eab11836bb291b7b31815b8af11825ab88ef4671ebeda6f92` |
 
 ## Author-optional overlay
 

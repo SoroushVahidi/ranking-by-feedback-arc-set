@@ -16,9 +16,9 @@ Derived: `outputs/revision_analysis_20260824/runtime_coverage_final/*`,
 | Table `tab:runtime_wtl` | `e1_runtime_wtl.csv` | OURS vs baseline | 77 classical / 60 GNN | ratio OURS/base | both succeed | Holm runtime in `j_formal_statistics.csv` |
 | Coverage 77/78, 78/78, 61/78 | `e2_completion_matrix.csv` excluding ERO | method SUCCESS counts | **78 loadable** | — | success/timeout/N/A | — |
 | Finance leaderboard timeout | `h_finance_stress_case.csv` | dataset=finance | 1 | — | TIMEOUT vs SUCCESS | — |
-| FINANCE_A0/A2/A4/A6 | `analysis_summary.json` + `raw_runs.csv` + ablation final doc | FINANCE_* | 4 configs | wall seconds | SUCCESS / INTERNAL_TIME_LIMIT / TIMEOUT_HARD_WALLCLOCK | — |
-| A4 runtime ~0.01–1.2s med 0.57 | `structural_ablation.csv` config=A4 non-Finance | A4 | 77 | runtime ↓ | complete | descriptive |
+| FINANCE_A0/A2/A4/A6 algorithm/harness distinction | `analysis_summary.json` + `raw_runs.csv` + `RUNTIME_PROVENANCE_AUDIT.md` | FINANCE_* | 4 configs | algorithm seconds where phase columns exist; harness seconds only when explicitly labeled | SUCCESS / INTERNAL_TIME_LIMIT / TIMEOUT_HARD_WALLCLOCK | A0 algorithm 600.53s, harness 612.55s; A2/A4 algorithm 602.31/602.28s, harness 1214.76/1214.57s; A6 hard wall-clock timeout 1800.10s, no completed algorithm runtime |
+| A4 non-Finance algorithm runtime ~0.01-0.83s med 0.38 | `structural_ablation.csv` config=A4 non-Finance, column `runtime_algorithm_sec` | A4 | 77 | runtime ↓ | complete | descriptive |
 | Table `tab:ablation_primary` | `primary_pairwise_statistics.csv` | is_primary / listed pairs | 77 or 33 | as labeled | non-Finance paired | Wilcoxon + Holm |
 | Sensitivity narrative | `zero_tol_sensitivity.csv`, `refinement_sensitivity.csv`, `legacy_pass_sensitivity.csv`, `mincut_budget_sensitivity.csv`, `cycle_selection_sensitivity.csv` | Layer-1 | 33 | various | complete | paired where present |
 | Min-cut regime | `MINCUT_MANUSCRIPT_EVIDENCE_SYNTHESIS.md` | broad char | 39/40 | structural | protocol | — |
-| Figures | generated from `structural_ablation*.csv` | A4 / A0–A6 | non-Finance | — | complete | script `generate_pass3_figures.py` |
+| Figures | generated from `structural_ablation*.csv` | Figure 1: A4 `runtime_algorithm_sec`; Figure 2: A0-A6 ablation metrics | non-Finance | — | complete | script `generate_pass3_figures.py` |

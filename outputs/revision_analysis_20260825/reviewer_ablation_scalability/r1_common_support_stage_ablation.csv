@@ -1,331 +1,331 @@
-panel,config,manuscript_label,dataset_id,upset_simple,upset_naive,upset_ratio,runtime_sec
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/1985,0.11898352801718816,4818.0,0.4571296595970426,0.10869979858398438
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/1988,0.12259701054485231,5848.0,0.4930276935153653,0.11072015762329102
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/1991,0.11844704889417451,6175.0,0.46378504429214873,0.16016507148742676
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/1993,0.12489955702070671,6062.0,0.4807220558033008,0.1264479160308838
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/1994,0.12160256912352158,6210.0,0.46764444582893633,0.1286015510559082
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/1997,0.13594173376635854,7074.0,0.48875371794603417,0.1657121181488037
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/2000,0.11705873811079649,6449.0,0.508771370693921,0.15813088417053223
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/2003,0.12958578795720238,7061.0,0.5108512596475314,0.14913249015808105
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/2006,0.13526587487816324,7494.0,0.511888407476773,0.17493844032287598
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/2009,0.1246892454718626,7724.0,0.48885300364503964,0.22005796432495117
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/2012,0.11998244872753275,7383.0,0.47870303606381914,0.18720602989196777
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/2014,0.12678785490254035,7721.0,0.49989785637465345,0.20436620712280273
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/finer1985,0.4801979587122619,249046.7,0.16460985124327354,0.2080845832824707
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/finer1988,0.4782642567778124,279324.5,0.16171459599363527,0.2114722728729248
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/finer1991,0.47755962196801244,301236.3,0.1628823225125111,0.23966717720031738
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/finer1994,0.47812979519683513,291029.0,0.16741347189018663,0.2238781452178955
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/finer1997,0.47841035849736574,278774.5,0.163471621573517,0.24380898475646973
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/finer2000,0.4770461935601028,302629.9,0.15983473550297636,0.3083648681640625
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/finer2003,0.4783814853993643,308601.6,0.16151201074932892,0.3077528476715088
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/finer2006,0.4785369983669522,312900.7,0.15289276923867193,0.32213902473449707
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/finer2009,0.4779240988447635,341709.89999999997,0.16364641567164026,0.3546755313873291
-panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/finer2012,0.4764550713716006,337870.3,0.15850561348368847,0.3765556812286377
-panel_a_legacy,A0,A0 (Phase A only),Dryad_animal_society,0.09158679446219382,86.0,0.4506010196832501,0.0029976367950439453
-panel_a_legacy,A0,A0 (Phase A only),FacultyHiringNetworks/Business/Business_FM_Full_,0.06359447004608294,207.0,0.4856897958502882,0.01819896697998047
-panel_a_legacy,A0,A0 (Phase A only),FacultyHiringNetworks/ComputerScience/ComputerScience_FM_Full_,0.05314256515074093,104.0,0.5606431279758989,0.015300989151000977
-panel_a_legacy,A0,A0 (Phase A only),FacultyHiringNetworks/History/History_FM_Full_,0.04448198198198198,79.0,0.5187581158908041,0.012830972671508789
-panel_a_legacy,A0,A0 (Phase A only),Football_data_England_Premier_League/England_2009_2010,0.15384615384615385,86.0,0.4166048353372061,0.0034046173095703125
-panel_a_legacy,A0,A0 (Phase A only),Football_data_England_Premier_League/England_2010_2011,0.27628865979381445,134.0,0.6199562495869084,0.0035266876220703125
-panel_a_legacy,A0,A0 (Phase A only),Football_data_England_Premier_League/England_2011_2012,0.2062043795620438,113.0,0.5001531258263577,0.0035583972930908203
-panel_a_legacy,A0,A0 (Phase A only),Football_data_England_Premier_League/finerEngland_2009_2010,0.35518157661647465,400.9999999999999,0.20377455015345627,0.008307218551635742
-panel_a_legacy,A0,A0 (Phase A only),Football_data_England_Premier_League/finerEngland_2010_2011,0.40913081650570665,465.9999999999999,0.2561041397723342,0.008781909942626953
-panel_a_legacy,A0,A0 (Phase A only),Football_data_England_Premier_League/finerEngland_2011_2012,0.37828371278458833,431.9999999999999,0.24508301398983168,0.008831262588500977
-panel_a_legacy,A0,A0 (Phase A only),Halo2BetaData,0.17738905549049377,4249.0,0.6900320582144942,0.11887598037719727
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/1985,0.11804509421381473,4780.0,0.45794183965857993,0.196244478225708
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/1988,0.12123435567388524,5783.0,0.4869309210884603,0.1990489959716797
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/1991,0.11775650739454856,6139.0,0.4590799850273461,0.2994077205657959
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/1993,0.12376635417739776,6007.0,0.48152638155633837,0.23693084716796875
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/1994,0.12083888149134488,6171.0,0.4685511790337731,0.2359461784362793
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/1997,0.13300151815054673,6921.0,0.4841280674034276,0.31073999404907227
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/2000,0.11584259057576418,6382.0,0.5053965645111415,0.3010709285736084
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/2003,0.1280625447337995,6978.0,0.5120650169235849,0.27779197692871094
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/2006,0.1340926320349446,7429.0,0.5145442320726015,0.3296644687652588
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/2009,0.12197720595357246,7556.0,0.4829944798618516,0.418881893157959
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/2012,0.11808106087691357,7266.0,0.47780483405192264,0.3492298126220703
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/2014,0.12558910947994154,7648.0,0.4955068737382105,0.38808226585388184
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/finer1985,0.4801979587122619,249046.7,0.16461180075190315,0.3716011047363281
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/finer1988,0.4782642567778124,279324.5,0.16392431426369763,0.3963029384613037
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/finer1991,0.47755962196801244,301236.3,0.16742932942184155,0.44822168350219727
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/finer1994,0.47812979519683513,291029.0,0.16609559542156405,0.41785264015197754
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/finer1997,0.47841035849736574,278774.5,0.16623644036943286,0.4553518295288086
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/finer2000,0.4770461935601028,302629.9,0.1658962276484227,0.5809364318847656
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/finer2003,0.4783814853993643,308601.6,0.16127509023381226,0.5770905017852783
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/finer2006,0.4785369983669522,312900.7,0.15287173218768743,0.6087832450866699
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/finer2009,0.4779240988447635,341709.89999999997,0.16624421574579704,0.6662735939025879
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/finer2012,0.4764550713716006,337870.3,0.1588574049943162,0.7098081111907959
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Dryad_animal_society,0.08945686900958466,84.0,0.4437286976166951,0.0041811466217041016
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),FacultyHiringNetworks/Business/Business_FM_Full_,0.061136712749615976,199.0,0.4874870590934423,0.02526688575744629
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),FacultyHiringNetworks/ComputerScience/ComputerScience_FM_Full_,0.05058763413387839,99.0,0.5621516532688475,0.020502567291259766
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),FacultyHiringNetworks/History/History_FM_Full_,0.04335585585585586,77.0,0.5202925724461757,0.01652073860168457
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Football_data_England_Premier_League/England_2009_2010,0.15384615384615385,86.0,0.4166048353372061,0.004563093185424805
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Football_data_England_Premier_League/England_2010_2011,0.2515463917525773,122.0,0.62088994190807,0.004988670349121094
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Football_data_England_Premier_League/England_2011_2012,0.2062043795620438,113.0,0.5001531258263577,0.005217552185058594
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Football_data_England_Premier_League/finerEngland_2009_2010,0.35518157661647465,400.9999999999999,0.20377455015345627,0.013449907302856445
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Football_data_England_Premier_League/finerEngland_2010_2011,0.40913081650570665,465.9999999999999,0.2561041397723342,0.014797687530517578
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Football_data_England_Premier_League/finerEngland_2011_2012,0.37828371278458833,431.9999999999999,0.24508301398983168,0.014762163162231445
-panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Halo2BetaData,0.17425791919231415,4174.0,0.6902244966765895,0.21373724937438965
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/1985,0.11678561726718198,4729.0,0.45106086472266094,0.2982771396636963
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/1988,0.12062640196222302,5754.0,0.4799318978289564,0.30951714515686035
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/1991,0.11537797556250359,6015.0,0.4531900842770146,0.4140744209289551
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/1993,0.12073761203255383,5860.0,0.47384275147627397,0.351088285446167
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/1994,0.11985979478342602,6121.0,0.46222143593003756,0.34720277786254883
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/1997,0.131022157311144,6818.0,0.47780339710709147,0.42496538162231445
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/2000,0.11371887025339432,6265.0,0.49715603835360206,0.4143352508544922
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/2003,0.12747527023802968,6946.0,0.5056468611072997,0.399228572845459
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/2006,0.1326305909533952,7348.0,0.5080362340353377,0.4577960968017578
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/2009,0.12018532270041649,7445.0,0.47716862200042637,0.5518574714660645
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/2012,0.11627718009555693,7155.0,0.4708736379195675,0.47989535331726074
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/2014,0.12337225150664237,7513.0,0.4888780160805523,0.5201003551483154
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/finer1985,0.4801979587122619,249046.7,0.13819782081075352,0.48105764389038086
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/finer1988,0.4782642567778124,279324.5,0.13818610263405598,0.512744665145874
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/finer1991,0.47755962196801244,301236.3,0.14200995138053585,0.5617399215698242
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/finer1994,0.47810186599899457,291012.0,0.14361781033214616,0.5399315357208252
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/finer1997,0.4784034940193235,278770.5,0.1499928338456238,0.6632931232452393
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/finer2000,0.4770461935601028,302629.9,0.1480363189716065,0.7289583683013916
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/finer2003,0.4783349806354163,308571.6,0.1396935237081196,0.7594287395477295
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/finer2006,0.478431472706935,312831.69999999995,0.13835235353129632,0.7632558345794678
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/finer2009,0.4779240988447635,341709.89999999997,0.14380101406353119,0.8392539024353027
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/finer2012,0.4764395594849829,337859.3,0.13817577455946445,0.8772025108337402
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Dryad_animal_society,0.08945686900958466,84.0,0.3594722985877824,0.011987924575805664
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",FacultyHiringNetworks/Business/Business_FM_Full_,0.05775729646697389,188.0,0.41631822994538625,0.07173395156860352
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",FacultyHiringNetworks/ComputerScience/ComputerScience_FM_Full_,0.050076647930505876,98.0,0.5295312045642753,0.08937239646911621
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",FacultyHiringNetworks/History/History_FM_Full_,0.04222972972972973,75.0,0.45353558675164346,0.07311177253723145
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Football_data_England_Premier_League/England_2009_2010,0.13595706618962433,76.0,0.36279419262650386,0.013272523880004883
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Football_data_England_Premier_League/England_2010_2011,0.23505154639175257,114.0,0.5043002029632442,0.01352381706237793
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Football_data_England_Premier_League/England_2011_2012,0.19343065693430658,106.0,0.42273712990585677,0.013131141662597656
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Football_data_England_Premier_League/finerEngland_2009_2010,0.33392382639503976,376.9999999999999,0.15372662913173574,0.021989822387695312
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Football_data_England_Premier_League/finerEngland_2010_2011,0.40298507462686556,458.9999999999999,0.18801401154337313,0.022476911544799805
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Football_data_England_Premier_League/finerEngland_2011_2012,0.3660245183887915,417.9999999999999,0.183561316807491,0.023454904556274414
-panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Halo2BetaData,0.17346470057964325,4155.0,0.6859868595095588,0.43674468994140625
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1985,0.11898352801718816,4818.0,0.4571296595970426,0.10869979858398438
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1986,0.11487157655740031,4857.0,0.4915088615879581,0.11801791191101074
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1987,0.12168974247850185,5335.0,0.4942987992575535,0.12113714218139648
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1988,0.12259701054485231,5848.0,0.4930276935153653,0.11072015762329102
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1989,0.11997721307806555,5897.0,0.494609623624423,0.13522005081176758
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1990,0.12213929322502165,5924.0,0.47842395659082626,0.14165735244750977
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1991,0.11844704889417451,6175.0,0.46378504429214873,0.16016507148742676
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1992,0.12279675410454803,6507.0,0.46876093481428904,0.1614091396331787
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1993,0.12489955702070671,6062.0,0.4807220558033008,0.1264479160308838
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1994,0.12160256912352158,6210.0,0.46764444582893633,0.1286015510559082
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1995,0.12417997097242381,6417.0,0.4780382251417253,0.13817214965820312
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1996,0.1349865481342847,6924.0,0.4853264407200022,0.13692855834960938
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1997,0.13594173376635854,7074.0,0.48875371794603417,0.1657121181488037
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1998,0.12114688512097542,6359.0,0.5181025967357485,0.14350605010986328
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1999,0.13679733519016882,7269.0,0.5193990472591065,0.14032602310180664
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2000,0.11705873811079649,6449.0,0.508771370693921,0.15813088417053223
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2001,0.11899330615908156,6364.0,0.4848366163218572,0.15309739112854004
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2002,0.13208470827138558,7285.0,0.5096625617558053,0.1443190574645996
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2003,0.12958578795720238,7061.0,0.5108512596475314,0.14913249015808105
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2004,0.12393872105390831,6642.0,0.48660437880553664,0.14661765098571777
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2005,0.12559048705000814,6939.0,0.5142016611329306,0.17820358276367188
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2006,0.13526587487816324,7494.0,0.511888407476773,0.17493844032287598
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2007,0.12178056678803335,7258.0,0.5209389892289127,0.19622063636779785
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2008,0.12946145723336852,7969.0,0.5114764445478518,0.17309808731079102
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2009,0.1246892454718626,7724.0,0.48885300364503964,0.22005796432495117
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2010,0.11800203808674607,7411.0,0.49839196288733406,0.18632864952087402
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2011,0.12227052743827414,7453.0,0.5010434515772375,0.18644213676452637
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2012,0.11998244872753275,7383.0,0.47870303606381914,0.18720602989196777
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2013,0.12330974906119554,7651.0,0.5175490046777402,0.18978190422058105
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2014,0.12678785490254035,7721.0,0.49989785637465345,0.20436620712280273
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1985,0.4801979587122619,249046.7,0.16460985124327354,0.2080845832824707
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1986,0.4770497285433312,250214.30000000002,0.1559447149321494,0.20429515838623047
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1987,0.47910881424262075,271911.5,0.16070470481626548,0.21410036087036133
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1988,0.4782642567778124,279324.5,0.16171459599363527,0.2114722728729248
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1989,0.4786520834212404,292667.69999999995,0.15183100921359982,0.22580599784851074
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1990,0.47885248200044533,290311.5,0.15724782926780806,0.22576570510864258
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1991,0.47755962196801244,301236.3,0.1628823225125111,0.23966717720031738
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1992,0.47682377219030275,289936.7,0.15089355062015639,0.2361311912536621
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1993,0.4777193710108227,279655.19999999995,0.15792640000294514,0.22008728981018066
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1994,0.47812979519683513,291029.0,0.16741347189018663,0.2238781452178955
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1995,0.47762716221773005,287596.7,0.1624397712036988,0.2209486961364746
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1996,0.47798142377760505,283996.19999999995,0.15583836612505597,0.23849844932556152
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1997,0.47841035849736574,278774.5,0.163471621573517,0.24380898475646973
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1998,0.4766857962697275,282146.7,0.14934326559873976,0.2558326721191406
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1999,0.4772042556352165,281404.2,0.1495559766140532,0.26068878173828125
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2000,0.4770461935601028,302629.9,0.15983473550297636,0.3083648681640625
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2001,0.4780557365232939,303497.69999999995,0.15014117302316052,0.2758049964904785
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2002,0.47803725003793757,308715.5,0.16495328733527395,0.2732846736907959
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2003,0.4783814853993643,308601.6,0.16151201074932892,0.3077528476715088
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2004,0.4792529379201666,302665.1,0.15450953425461633,0.2951986789703369
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2005,0.47841427300497086,307595.5,0.16851531978868556,0.3165435791015625
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2006,0.4785369983669522,312900.7,0.15289276923867193,0.32213902473449707
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2007,0.47786957932053364,332062.29999999993,0.15871229280850918,0.35489773750305176
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2008,0.4769860979881741,339647.29999999993,0.14794498970499798,0.3583812713623047
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2009,0.4779240988447635,341709.89999999997,0.16364641567164026,0.3546755313873291
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2010,0.47671635835792747,344572.3,0.15170212904140035,0.35073256492614746
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2011,0.4783485956770633,343902.6,0.1564430992620675,0.3612239360809326
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2012,0.4764550713716006,337870.3,0.15850561348368847,0.3765556812286377
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2013,0.47645128878710313,339523.0,0.16125040900689874,0.38671016693115234
-panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2014,0.47920087916118226,361662.19999999995,0.1610102308852385,0.38123440742492676
-panel_b_canonical,A0,A0 (Phase A only),Dryad_animal_society,0.09158679446219382,86.0,0.4506010196832501,0.0029976367950439453
-panel_b_canonical,A0,A0 (Phase A only),FacultyHiringNetworks/Business/Business_FM_Full_,0.06359447004608294,207.0,0.4856897958502882,0.01819896697998047
-panel_b_canonical,A0,A0 (Phase A only),FacultyHiringNetworks/ComputerScience/ComputerScience_FM_Full_,0.05314256515074093,104.0,0.5606431279758989,0.015300989151000977
-panel_b_canonical,A0,A0 (Phase A only),FacultyHiringNetworks/History/History_FM_Full_,0.04448198198198198,79.0,0.5187581158908041,0.012830972671508789
-panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/England_2009_2010,0.15384615384615385,86.0,0.4166048353372061,0.0034046173095703125
-panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/England_2010_2011,0.27628865979381445,134.0,0.6199562495869084,0.0035266876220703125
-panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/England_2011_2012,0.2062043795620438,113.0,0.5001531258263577,0.0035583972930908203
-panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/England_2012_2013,0.2231578947368421,106.0,0.547320393753414,0.0036857128143310547
-panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/England_2013_2014,0.17881944444444445,103.0,0.39833534213878674,0.0033369064331054688
-panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/England_2014_2015,0.15469613259668508,28.0,0.6157917721020821,0.0019910335540771484
-panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/finerEngland_2009_2010,0.35518157661647465,400.9999999999999,0.20377455015345627,0.008307218551635742
-panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/finerEngland_2010_2011,0.40913081650570665,465.9999999999999,0.2561041397723342,0.008781909942626953
-panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/finerEngland_2011_2012,0.37828371278458833,431.9999999999999,0.24508301398983168,0.008831262588500977
-panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/finerEngland_2012_2013,0.4038630377524143,459.9999999999999,0.23496362271640997,0.008722543716430664
-panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/finerEngland_2013_2014,0.36170212765957444,407.9999999999999,0.2807919057439403,0.008304834365844727
-panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/finerEngland_2014_2015,0.36879432624113473,155.99999999999994,0.34488362161654723,0.0065381526947021484
-panel_b_canonical,A0,A0 (Phase A only),Halo2BetaData,0.17738905549049377,4249.0,0.6900320582144942,0.11887598037719727
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1985,0.09954807003679648,4031.0,0.46287807766192984,0.23147010803222656
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1986,0.09907289153777021,4189.0,0.49779485835405946,0.2644016742706299
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1987,0.10218745010378413,4480.0,0.5003315857552244,0.26578354835510254
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1988,0.1018217647428775,4857.0,0.47731721189228,0.24891376495361328
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1989,0.10154422087037904,4991.0,0.5007927900319898,0.28970861434936523
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1990,0.10214011793328111,4954.0,0.4708540670957008,0.3093597888946533
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1991,0.10181650777818273,5308.0,0.4577467651395487,0.34908556938171387
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1992,0.09928288356293641,5261.0,0.47909289600134536,0.34793949127197266
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1993,0.10373956938291955,5035.0,0.49449650937971307,0.2861497402191162
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1994,0.0997297720686144,5093.0,0.4650117971288989,0.28629469871520996
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1995,0.10430575713594581,5390.0,0.4600492308049069,0.3031046390533447
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1996,0.10837524856708387,5559.0,0.48891639004689846,0.3039257526397705
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1997,0.11255452850856122,5857.0,0.5118884859958043,0.3663942813873291
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1998,0.10255286721280243,5383.0,0.52049948607162,0.3155393600463867
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1999,0.10917063439787719,5801.0,0.5327121783191459,0.316089391708374
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2000,0.09407899513540986,5183.0,0.5192976220189989,0.390744686126709
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2001,0.09947271979357541,5320.0,0.49641973739367024,0.34054994583129883
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2002,0.1078253617144722,5947.0,0.5091947790425694,0.32946228981018066
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2003,0.10704912918203674,5833.0,0.5062924422416042,0.3624603748321533
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2004,0.10703289731484764,5736.0,0.5003998529252239,0.33118486404418945
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2005,0.10206150114930046,5639.0,0.5151460821660918,0.4012598991394043
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2006,0.11021262770297101,6106.0,0.5244518797758679,0.41161084175109863
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2007,0.09706538700313763,5785.0,0.509570916147526,0.4539504051208496
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2008,0.1071562017707741,6596.0,0.5166196458726472,0.4140172004699707
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2009,0.10184676976721661,6309.0,0.484777546401147,0.5037810802459717
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2010,0.09723902936118718,6107.0,0.5130510528845686,0.428957462310791
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2011,0.09933557542449348,6055.0,0.5177672199960001,0.43306994438171387
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2012,0.09731205512399649,5988.0,0.49822388711455895,0.4325292110443115
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2013,0.10131029703289442,6286.0,0.5197326782579347,0.44792962074279785
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2014,0.10509548910455359,6400.0,0.5102001039406111,0.495272159576416
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1985,0.4733009867856563,245469.7,0.15586978403366397,0.48259425163269043
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1986,0.47025473228401093,246650.3,0.13769561461077948,0.4725189208984375
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1987,0.4730933368103521,268497.5,0.14351358386622676,0.5072576999664307
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1988,0.4722338272509665,275802.5,0.14449769790454048,0.5182962417602539
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1989,0.47242090574828605,288857.7,0.12071934993555469,0.5558779239654541
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1990,0.47257964751387593,286508.5,0.1418305626692336,0.5516114234924316
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1991,0.47142438615142523,297366.3,0.13622431434504015,0.5922360420227051
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1992,0.46991654091120183,285736.69999999995,0.13351128252746286,0.5715353488922119
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1993,0.47067969669782744,275534.20000000007,0.14105236912057204,0.5195281505584717
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1994,0.47161572052401746,287064.0,0.14357569367623405,0.5680575370788574
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1995,0.4701886482863351,283117.7,0.14044250626821914,0.5298454761505127
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1996,0.47177094823694876,280306.2,0.12943853859975274,0.5810708999633789
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1997,0.47092121295327005,274410.5,0.14324740812947453,0.6130414009094238
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1998,0.46973689812540254,278033.69999999995,0.13845285520946193,0.6120169162750244
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1999,0.4702345320466534,277294.2,0.1345782673230825,0.630772590637207
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2000,0.46985495193123145,298067.9,0.1377943847595876,0.7920677661895752
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2001,0.47081317660757105,298899.7,0.13905620633057816,0.6833152770996094
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2002,0.47088795567654285,304098.5,0.15482806503456498,0.6738290786743164
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2003,0.47214209623633846,304576.6,0.1356623729290675,0.8265557289123535
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2004,0.4724884693679782,298393.1,0.1422679520183909,0.7612900733947754
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2005,0.4710108749074575,302835.5,0.1405232363472893,0.8072590827941895
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2006,0.47131843147882435,308180.7,0.13862773969469852,0.8379673957824707
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2007,0.4703675710618487,326849.3,0.14639416092971674,0.9161233901977539
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2008,0.4704642636056925,335003.3,0.1436912033623975,0.9528064727783203
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2009,0.4710988075600731,336829.9,0.13770851824912297,0.9602088928222656
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2010,0.46991783106780327,339658.3,0.1465420609417117,0.925950288772583
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2011,0.4714926421946173,338973.6,0.1446890696906286,0.9614534378051758
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2012,0.46969611932081634,333077.3,0.1517753052288183,0.995891809463501
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2013,0.47004383896897034,334957.0,0.1544716431416688,1.0165073871612549
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2014,0.47281704962135596,356844.19999999995,0.15225755615951167,1.0315685272216797
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Dryad_animal_society,0.07880724174653887,74.0,0.4459050280269133,0.004470348358154297
-panel_b_canonical,A2,A2 (+ exact reachability add-back),FacultyHiringNetworks/Business/Business_FM_Full_,0.04884792626728111,159.0,0.4879582476096295,0.028365135192871094
-panel_b_canonical,A2,A2 (+ exact reachability add-back),FacultyHiringNetworks/ComputerScience/ComputerScience_FM_Full_,0.03372508942258559,66.0,0.5737833399383746,0.023873329162597656
-panel_b_canonical,A2,A2 (+ exact reachability add-back),FacultyHiringNetworks/History/History_FM_Full_,0.030405405405405407,54.0,0.5170612976755534,0.017925024032592773
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/England_2009_2010,0.13595706618962433,76.0,0.4290569441685285,0.00487971305847168
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/England_2010_2011,0.23505154639175257,114.0,0.5653113535932368,0.005529880523681641
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/England_2011_2012,0.18065693430656934,99.0,0.5105298240287788,0.005385875701904297
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/England_2012_2013,0.21052631578947367,100.0,0.49261592998617826,0.005149364471435547
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/England_2013_2014,0.1371527777777778,79.0,0.4181601063258682,0.00490880012512207
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/England_2014_2015,0.11602209944751381,21.0,0.5423514194623053,0.0028176307678222656
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/finerEngland_2009_2010,0.3312666076173604,373.9999999999999,0.1950516871194314,0.014591455459594727
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/finerEngland_2010_2011,0.40210711150131684,457.9999999999999,0.26384379825734927,0.015794038772583008
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/finerEngland_2011_2012,0.36339754816112074,414.9999999999999,0.2438721454676551,0.015796422958374023
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/finerEngland_2012_2013,0.38279192273924484,435.9999999999999,0.2196036230786358,0.01542210578918457
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/finerEngland_2013_2014,0.326241134751773,367.9999999999999,0.2587156891913768,0.014258146286010742
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/finerEngland_2014_2015,0.3451536643026004,145.99999999999994,0.331479326077039,0.010860681533813477
-panel_b_canonical,A2,A2 (+ exact reachability add-back),Halo2BetaData,0.4305097460746765,10312.0,0.5514235418490658,0.5450632572174072
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1985,0.09954807003679648,4031.0,0.4537179485826296,0.3315310478210449
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1986,0.09907289153777021,4189.0,0.4905395533266876,0.3557884693145752
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1987,0.10161720763668712,4455.0,0.4933408696631285,0.3726480007171631
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1988,0.1018217647428775,4857.0,0.46823382169098277,0.34849095344543457
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1989,0.10148318447234034,4988.0,0.49476108338589164,0.39830756187438965
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1990,0.10203702940084945,4949.0,0.46228819723358466,0.4185512065887451
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1991,0.1017589626532139,5305.0,0.45049485269184525,0.45845675468444824
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1992,0.09924514059256463,5259.0,0.471111065807879,0.4622340202331543
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1993,0.10373956938291955,5035.0,0.48807612884221246,0.3958570957183838
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1994,0.09959269992950576,5086.0,0.45838042296032355,0.40102529525756836
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1995,0.10430575713594581,5390.0,0.4520266035391816,0.4095480442047119
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1996,0.10829726673685032,5555.0,0.4818445980747301,0.4154398441314697
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1997,0.11249687722197667,5854.0,0.503928745818332,0.482025146484375
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1998,0.10255286721280243,5383.0,0.5143655362850964,0.4201779365539551
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1999,0.10915181511940832,5800.0,0.5225606155722685,0.42891526222229004
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2000,0.09407899513540986,5183.0,0.5113405684614751,0.4833829402923584
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2001,0.09947271979357541,5320.0,0.4892993733421754,0.45178699493408203
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2002,0.1078253617144722,5947.0,0.5024640734830979,0.44599270820617676
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2003,0.10699407219805833,5830.0,0.500897334106028,0.5551548004150391
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2004,0.10703289731484764,5736.0,0.49367100366651545,0.47967028617858887
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2005,0.10206150114930046,5639.0,0.5080352345619474,0.5709841251373291
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2006,0.11012237825349265,6101.0,0.5184200861286395,0.5363562107086182
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2007,0.09706538700313763,5785.0,0.5018254394507465,0.5904037952423096
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2008,0.1071074648688165,6593.0,0.5051778027654087,0.6342606544494629
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2009,0.10184676976721661,6309.0,0.4790352369295716,0.6444449424743652
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2010,0.09723902936118718,6107.0,0.5073117654977307,0.6764535903930664
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2011,0.09933557542449348,6055.0,0.5112383520393426,0.5686798095703125
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2012,0.09731205512399649,5988.0,0.492115364842966,0.5631849765777588
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2013,0.10126194658887618,6283.0,0.511103114038871,0.5802896022796631
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2014,0.10502980442386324,6396.0,0.5046936609697489,0.6306684017181396
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1985,0.4728093100058731,245214.7,0.1283160959895218,0.6062853336334229
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1986,0.4702051616042291,246624.3,0.11792212270306882,0.5953209400177002
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1987,0.4728924684953906,268383.5,0.12019151651319208,0.6393730640411377
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1988,0.4716996154359819,275490.5,0.11920099473811667,0.6525883674621582
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1989,0.4721968450288123,288720.7,0.10228448063111878,0.687067985534668
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1990,0.4723817142668635,286388.5,0.12552401515639358,0.6808476448059082
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1991,0.4712785355842091,297274.29999999993,0.12240264038768793,0.7073976993560791
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1992,0.4696221612924022,285557.7,0.1149124434653154,0.699941873550415
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1993,0.47060624219759467,275491.2,0.12465629222799113,0.6414239406585693
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1994,0.4711097091749058,286756.0,0.11848554236812299,0.6920342445373535
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1995,0.47000430467249615,283006.7,0.12033646254484404,0.672555685043335
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1996,0.471414140428109,280094.20000000007,0.1157995624573879,0.7099428176879883
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1997,0.47060029860479485,274223.5,0.12989884351136005,0.7394981384277344
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1998,0.46943785728622295,277856.69999999995,0.11623914078828597,0.7637796401977539
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1999,0.4699564214217083,277130.2,0.11173015583393141,0.7777316570281982
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2000,0.46960746728946623,297910.9,0.11973870437395276,0.898984432220459
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2001,0.47070134064540997,298828.69999999995,0.11926507661680726,0.921804666519165
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2002,0.4704714167588007,303829.5,0.13000093418972436,0.8271515369415283
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2003,0.47199018067410825,304478.6,0.1198827324469408,0.9257514476776123
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2004,0.4720007689199272,298085.1,0.1193452936376843,0.9253487586975098
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2005,0.4707869065616504,302691.5,0.12347284999474788,0.9921140670776367
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2006,0.4711257324474887,308054.69999999995,0.11759008929366013,0.9760556221008301
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2007,0.4702092704847424,326739.30000000005,0.13010484750715756,1.128194808959961
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2008,0.470263440540082,334860.3,0.1235340302289231,1.1383209228515625
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2009,0.4708414605116339,336645.89999999997,0.12049872165471384,1.1119933128356934
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2010,0.46966603376076166,339476.3,0.1252959776944091,1.1280298233032227
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2011,0.4709752117431119,338601.6,0.1245385715478756,1.1749513149261475
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2012,0.46959317680053536,333004.30000000005,0.12414116979929576,1.2135074138641357
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2013,0.4699484148367686,334889.0,0.1288799048214983,1.198275089263916
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2014,0.47258252537300616,356667.19999999995,0.13012434954877258,1.1956918239593506
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Dryad_animal_society,0.07880724174653887,74.0,0.3533387265554227,0.011841297149658203
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",FacultyHiringNetworks/Business/Business_FM_Full_,0.04884792626728111,159.0,0.42257671846794553,0.07682251930236816
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",FacultyHiringNetworks/ComputerScience/ComputerScience_FM_Full_,0.03372508942258559,66.0,0.5498087119561136,0.08458638191223145
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",FacultyHiringNetworks/History/History_FM_Full_,0.030405405405405407,54.0,0.44487579657341364,0.06908059120178223
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/England_2009_2010,0.13595706618962433,76.0,0.36279419262650386,0.013993501663208008
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/England_2010_2011,0.23505154639175257,114.0,0.48988376347761126,0.014062166213989258
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/England_2011_2012,0.18065693430656934,99.0,0.4493310731251582,0.013452529907226562
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/England_2012_2013,0.21052631578947367,100.0,0.4053311143432953,0.013401985168457031
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/England_2013_2014,0.1371527777777778,79.0,0.3807925017458761,0.01333475112915039
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/England_2014_2015,0.11602209944751381,21.0,0.5112614832798665,0.010906219482421875
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/finerEngland_2009_2010,0.32860938883968105,370.9999999999999,0.15260492030651915,0.02268505096435547
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/finerEngland_2010_2011,0.395083406496927,449.9999999999999,0.192197512203558,0.024380207061767578
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/finerEngland_2011_2012,0.35726795096322234,407.9999999999999,0.18626093724366505,0.024309635162353516
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/finerEngland_2012_2013,0.3810359964881474,433.9999999999999,0.15473210495895634,0.022350549697875977
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/finerEngland_2013_2014,0.326241134751773,367.9999999999999,0.19160545720186728,0.022533416748046875
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/finerEngland_2014_2015,0.3451536643026004,145.99999999999994,0.28939642040368413,0.018468141555786133
-panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Halo2BetaData,0.4254581928253174,10191.0,0.5483769904046956,0.74678635597229
+panel,config,manuscript_label,dataset_id,upset_simple,upset_naive,upset_ratio,runtime_algorithm_sec,runtime_total_sec
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/1985,0.11898352801718816,4818.0,0.4571296595970426,0.08429646492004395,0.10869979858398438
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/1988,0.12259701054485231,5848.0,0.4930276935153653,0.08600068092346191,0.11072015762329102
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/1991,0.11844704889417451,6175.0,0.46378504429214873,0.13515853881835938,0.16016507148742676
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/1993,0.12489955702070671,6062.0,0.4807220558033008,0.10184192657470703,0.1264479160308838
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/1994,0.12160256912352158,6210.0,0.46764444582893633,0.10295557975769043,0.1286015510559082
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/1997,0.13594173376635854,7074.0,0.48875371794603417,0.139909029006958,0.1657121181488037
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/2000,0.11705873811079649,6449.0,0.508771370693921,0.131547212600708,0.15813088417053223
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/2003,0.12958578795720238,7061.0,0.5108512596475314,0.1219477653503418,0.14913249015808105
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/2006,0.13526587487816324,7494.0,0.511888407476773,0.14716172218322754,0.17493844032287598
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/2009,0.1246892454718626,7724.0,0.48885300364503964,0.18848609924316406,0.22005796432495117
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/2012,0.11998244872753275,7383.0,0.47870303606381914,0.15596437454223633,0.18720602989196777
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/2014,0.12678785490254035,7721.0,0.49989785637465345,0.17266082763671875,0.20436620712280273
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/finer1985,0.4801979587122619,249046.7,0.16460985124327354,0.16359972953796387,0.2080845832824707
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/finer1988,0.4782642567778124,279324.5,0.16171459599363527,0.17195892333984375,0.2114722728729248
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/finer1991,0.47755962196801244,301236.3,0.1628823225125111,0.19835186004638672,0.23966717720031738
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/finer1994,0.47812979519683513,291029.0,0.16741347189018663,0.18402528762817383,0.2238781452178955
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/finer1997,0.47841035849736574,278774.5,0.163471621573517,0.20139002799987793,0.24380898475646973
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/finer2000,0.4770461935601028,302629.9,0.15983473550297636,0.26061439514160156,0.3083648681640625
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/finer2003,0.4783814853993643,308601.6,0.16151201074932892,0.26023149490356445,0.3077528476715088
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/finer2006,0.4785369983669522,312900.7,0.15289276923867193,0.2715721130371094,0.32213902473449707
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/finer2009,0.4779240988447635,341709.89999999997,0.16364641567164026,0.2989974021911621,0.3546755313873291
+panel_a_legacy,A0,A0 (Phase A only),Basketball_temporal/finer2012,0.4764550713716006,337870.3,0.15850561348368847,0.320481538772583,0.3765556812286377
+panel_a_legacy,A0,A0 (Phase A only),Dryad_animal_society,0.09158679446219382,86.0,0.4506010196832501,0.0008070468902587891,0.0029976367950439453
+panel_a_legacy,A0,A0 (Phase A only),FacultyHiringNetworks/Business/Business_FM_Full_,0.06359447004608294,207.0,0.4856897958502882,0.0038442611694335938,0.01819896697998047
+panel_a_legacy,A0,A0 (Phase A only),FacultyHiringNetworks/ComputerScience/ComputerScience_FM_Full_,0.05314256515074093,104.0,0.5606431279758989,0.0025577545166015625,0.015300989151000977
+panel_a_legacy,A0,A0 (Phase A only),FacultyHiringNetworks/History/History_FM_Full_,0.04448198198198198,79.0,0.5187581158908041,0.0016937255859375,0.012830972671508789
+panel_a_legacy,A0,A0 (Phase A only),Football_data_England_Premier_League/England_2009_2010,0.15384615384615385,86.0,0.4166048353372061,0.0009374618530273438,0.0034046173095703125
+panel_a_legacy,A0,A0 (Phase A only),Football_data_England_Premier_League/England_2010_2011,0.27628865979381445,134.0,0.6199562495869084,0.0012314319610595703,0.0035266876220703125
+panel_a_legacy,A0,A0 (Phase A only),Football_data_England_Premier_League/England_2011_2012,0.2062043795620438,113.0,0.5001531258263577,0.0012137889862060547,0.0035583972930908203
+panel_a_legacy,A0,A0 (Phase A only),Football_data_England_Premier_League/finerEngland_2009_2010,0.35518157661647465,400.9999999999999,0.20377455015345627,0.004821300506591797,0.008307218551635742
+panel_a_legacy,A0,A0 (Phase A only),Football_data_England_Premier_League/finerEngland_2010_2011,0.40913081650570665,465.9999999999999,0.2561041397723342,0.005353450775146484,0.008781909942626953
+panel_a_legacy,A0,A0 (Phase A only),Football_data_England_Premier_League/finerEngland_2011_2012,0.37828371278458833,431.9999999999999,0.24508301398983168,0.005365133285522461,0.008831262588500977
+panel_a_legacy,A0,A0 (Phase A only),Halo2BetaData,0.17738905549049377,4249.0,0.6900320582144942,0.08568429946899414,0.11887598037719727
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/1985,0.11804509421381473,4780.0,0.45794183965857993,0.08796119689941406,0.196244478225708
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/1988,0.12123435567388524,5783.0,0.4869309210884603,0.08933258056640625,0.1990489959716797
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/1991,0.11775650739454856,6139.0,0.4590799850273461,0.13981175422668457,0.2994077205657959
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/1993,0.12376635417739776,6007.0,0.48152638155633837,0.10811829566955566,0.23693084716796875
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/1994,0.12083888149134488,6171.0,0.4685511790337731,0.1079254150390625,0.2359461784362793
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/1997,0.13300151815054673,6921.0,0.4841280674034276,0.14404845237731934,0.31073999404907227
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/2000,0.11584259057576418,6382.0,0.5053965645111415,0.13887977600097656,0.3010709285736084
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/2003,0.1280625447337995,6978.0,0.5120650169235849,0.1285080909729004,0.27779197692871094
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/2006,0.1340926320349446,7429.0,0.5145442320726015,0.1534724235534668,0.3296644687652588
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/2009,0.12197720595357246,7556.0,0.4829944798618516,0.19619178771972656,0.418881893157959
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/2012,0.11808106087691357,7266.0,0.47780483405192264,0.16428184509277344,0.3492298126220703
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/2014,0.12558910947994154,7648.0,0.4955068737382105,0.1816997528076172,0.38808226585388184
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/finer1985,0.4801979587122619,249046.7,0.16461180075190315,0.17040395736694336,0.3716011047363281
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/finer1988,0.4782642567778124,279324.5,0.16392431426369763,0.18121957778930664,0.3963029384613037
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/finer1991,0.47755962196801244,301236.3,0.16742932942184155,0.20748233795166016,0.44822168350219727
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/finer1994,0.47812979519683513,291029.0,0.16609559542156405,0.19087791442871094,0.41785264015197754
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/finer1997,0.47841035849736574,278774.5,0.16623644036943286,0.207258939743042,0.4553518295288086
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/finer2000,0.4770461935601028,302629.9,0.1658962276484227,0.269794225692749,0.5809364318847656
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/finer2003,0.4783814853993643,308601.6,0.16127509023381226,0.2670865058898926,0.5770905017852783
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/finer2006,0.4785369983669522,312900.7,0.15287173218768743,0.28278398513793945,0.6087832450866699
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/finer2009,0.4779240988447635,341709.89999999997,0.16624421574579704,0.31070780754089355,0.6662735939025879
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Basketball_temporal/finer2012,0.4764550713716006,337870.3,0.1588574049943162,0.33237767219543457,0.7098081111907959
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Dryad_animal_society,0.08945686900958466,84.0,0.4437286976166951,0.0011250972747802734,0.0041811466217041016
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),FacultyHiringNetworks/Business/Business_FM_Full_,0.061136712749615976,199.0,0.4874870590934423,0.007010221481323242,0.02526688575744629
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),FacultyHiringNetworks/ComputerScience/ComputerScience_FM_Full_,0.05058763413387839,99.0,0.5621516532688475,0.0049285888671875,0.020502567291259766
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),FacultyHiringNetworks/History/History_FM_Full_,0.04335585585585586,77.0,0.5202925724461757,0.003722667694091797,0.01652073860168457
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Football_data_England_Premier_League/England_2009_2010,0.15384615384615385,86.0,0.4166048353372061,0.001184701919555664,0.004563093185424805
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Football_data_England_Premier_League/England_2010_2011,0.2515463917525773,122.0,0.62088994190807,0.0015616416931152344,0.004988670349121094
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Football_data_England_Premier_League/England_2011_2012,0.2062043795620438,113.0,0.5001531258263577,0.0015561580657958984,0.005217552185058594
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Football_data_England_Premier_League/finerEngland_2009_2010,0.35518157661647465,400.9999999999999,0.20377455015345627,0.005182743072509766,0.013449907302856445
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Football_data_England_Premier_League/finerEngland_2010_2011,0.40913081650570665,465.9999999999999,0.2561041397723342,0.005949497222900391,0.014797687530517578
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Football_data_England_Premier_League/finerEngland_2011_2012,0.37828371278458833,431.9999999999999,0.24508301398983168,0.005853891372680664,0.014762163162231445
+panel_a_legacy,A1,A1 (+ legacy topo/INS add-back),Halo2BetaData,0.17425791919231415,4174.0,0.6902244966765895,0.09437155723571777,0.21373724937438965
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/1985,0.11678561726718198,4729.0,0.45106086472266094,0.19135570526123047,0.2982771396636963
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/1988,0.12062640196222302,5754.0,0.4799318978289564,0.1996009349822998,0.30951714515686035
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/1991,0.11537797556250359,6015.0,0.4531900842770146,0.25163960456848145,0.4140744209289551
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/1993,0.12073761203255383,5860.0,0.47384275147627397,0.22255969047546387,0.351088285446167
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/1994,0.11985979478342602,6121.0,0.46222143593003756,0.2191321849822998,0.34720277786254883
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/1997,0.131022157311144,6818.0,0.47780339710709147,0.2590525150299072,0.42496538162231445
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/2000,0.11371887025339432,6265.0,0.49715603835360206,0.25427889823913574,0.4143352508544922
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/2003,0.12747527023802968,6946.0,0.5056468611072997,0.2494335174560547,0.399228572845459
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/2006,0.1326305909533952,7348.0,0.5080362340353377,0.2809436321258545,0.4577960968017578
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/2009,0.12018532270041649,7445.0,0.47716862200042637,0.32812070846557617,0.5518574714660645
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/2012,0.11627718009555693,7155.0,0.4708736379195675,0.29079270362854004,0.47989535331726074
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/2014,0.12337225150664237,7513.0,0.4888780160805523,0.3122258186340332,0.5201003551483154
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/finer1985,0.4801979587122619,249046.7,0.13819782081075352,0.2792637348175049,0.48105764389038086
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/finer1988,0.4782642567778124,279324.5,0.13818610263405598,0.2983205318450928,0.512744665145874
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/finer1991,0.47755962196801244,301236.3,0.14200995138053585,0.3184692859649658,0.5617399215698242
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/finer1994,0.47810186599899457,291012.0,0.14361781033214616,0.309558629989624,0.5399315357208252
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/finer1997,0.4784034940193235,278770.5,0.1499928338456238,0.38155174255371094,0.6632931232452393
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/finer2000,0.4770461935601028,302629.9,0.1480363189716065,0.410564661026001,0.7289583683013916
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/finer2003,0.4783349806354163,308571.6,0.1396935237081196,0.4378843307495117,0.7594287395477295
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/finer2006,0.478431472706935,312831.69999999995,0.13835235353129632,0.4320101737976074,0.7632558345794678
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/finer2009,0.4779240988447635,341709.89999999997,0.14380101406353119,0.4703342914581299,0.8392539024353027
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Basketball_temporal/finer2012,0.4764395594849829,337859.3,0.13817577455946445,0.4963059425354004,0.8772025108337402
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Dryad_animal_society,0.08945686900958466,84.0,0.3594722985877824,0.008827447891235352,0.011987924575805664
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",FacultyHiringNetworks/Business/Business_FM_Full_,0.05775729646697389,188.0,0.41631822994538625,0.05346822738647461,0.07173395156860352
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",FacultyHiringNetworks/ComputerScience/ComputerScience_FM_Full_,0.050076647930505876,98.0,0.5295312045642753,0.07343769073486328,0.08937239646911621
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",FacultyHiringNetworks/History/History_FM_Full_,0.04222972972972973,75.0,0.45353558675164346,0.05994677543640137,0.07311177253723145
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Football_data_England_Premier_League/England_2009_2010,0.13595706618962433,76.0,0.36279419262650386,0.009738922119140625,0.013272523880004883
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Football_data_England_Premier_League/England_2010_2011,0.23505154639175257,114.0,0.5043002029632442,0.009880781173706055,0.01352381706237793
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Football_data_England_Premier_League/England_2011_2012,0.19343065693430658,106.0,0.42273712990585677,0.009488582611083984,0.013131141662597656
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Football_data_England_Premier_League/finerEngland_2009_2010,0.33392382639503976,376.9999999999999,0.15372662913173574,0.013261556625366211,0.021989822387695312
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Football_data_England_Premier_League/finerEngland_2010_2011,0.40298507462686556,458.9999999999999,0.18801401154337313,0.013425111770629883,0.022476911544799805
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Football_data_England_Premier_League/finerEngland_2011_2012,0.3660245183887915,417.9999999999999,0.183561316807491,0.014139890670776367,0.023454904556274414
+panel_a_legacy,A3,"A3 (+ legacy refinement, full pipeline)",Halo2BetaData,0.17346470057964325,4155.0,0.6859868595095588,0.3156609535217285,0.43674468994140625
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1985,0.11898352801718816,4818.0,0.4571296595970426,0.08429646492004395,0.10869979858398438
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1986,0.11487157655740031,4857.0,0.4915088615879581,0.09467935562133789,0.11801791191101074
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1987,0.12168974247850185,5335.0,0.4942987992575535,0.09705257415771484,0.12113714218139648
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1988,0.12259701054485231,5848.0,0.4930276935153653,0.08600068092346191,0.11072015762329102
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1989,0.11997721307806555,5897.0,0.494609623624423,0.11079239845275879,0.13522005081176758
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1990,0.12213929322502165,5924.0,0.47842395659082626,0.11652326583862305,0.14165735244750977
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1991,0.11844704889417451,6175.0,0.46378504429214873,0.13515853881835938,0.16016507148742676
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1992,0.12279675410454803,6507.0,0.46876093481428904,0.13533282279968262,0.1614091396331787
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1993,0.12489955702070671,6062.0,0.4807220558033008,0.10184192657470703,0.1264479160308838
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1994,0.12160256912352158,6210.0,0.46764444582893633,0.10295557975769043,0.1286015510559082
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1995,0.12417997097242381,6417.0,0.4780382251417253,0.11302828788757324,0.13817214965820312
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1996,0.1349865481342847,6924.0,0.4853264407200022,0.11121225357055664,0.13692855834960938
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1997,0.13594173376635854,7074.0,0.48875371794603417,0.139909029006958,0.1657121181488037
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1998,0.12114688512097542,6359.0,0.5181025967357485,0.1171410083770752,0.14350605010986328
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/1999,0.13679733519016882,7269.0,0.5193990472591065,0.1139683723449707,0.14032602310180664
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2000,0.11705873811079649,6449.0,0.508771370693921,0.131547212600708,0.15813088417053223
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2001,0.11899330615908156,6364.0,0.4848366163218572,0.1261589527130127,0.15309739112854004
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2002,0.13208470827138558,7285.0,0.5096625617558053,0.1169581413269043,0.1443190574645996
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2003,0.12958578795720238,7061.0,0.5108512596475314,0.1219477653503418,0.14913249015808105
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2004,0.12393872105390831,6642.0,0.48660437880553664,0.11911630630493164,0.14661765098571777
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2005,0.12559048705000814,6939.0,0.5142016611329306,0.15093350410461426,0.17820358276367188
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2006,0.13526587487816324,7494.0,0.511888407476773,0.14716172218322754,0.17493844032287598
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2007,0.12178056678803335,7258.0,0.5209389892289127,0.16681694984436035,0.19622063636779785
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2008,0.12946145723336852,7969.0,0.5114764445478518,0.14256048202514648,0.17309808731079102
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2009,0.1246892454718626,7724.0,0.48885300364503964,0.18848609924316406,0.22005796432495117
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2010,0.11800203808674607,7411.0,0.49839196288733406,0.1539018154144287,0.18632864952087402
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2011,0.12227052743827414,7453.0,0.5010434515772375,0.15450263023376465,0.18644213676452637
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2012,0.11998244872753275,7383.0,0.47870303606381914,0.15596437454223633,0.18720602989196777
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2013,0.12330974906119554,7651.0,0.5175490046777402,0.1582324504852295,0.18978190422058105
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/2014,0.12678785490254035,7721.0,0.49989785637465345,0.17266082763671875,0.20436620712280273
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1985,0.4801979587122619,249046.7,0.16460985124327354,0.16359972953796387,0.2080845832824707
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1986,0.4770497285433312,250214.30000000002,0.1559447149321494,0.16727972030639648,0.20429515838623047
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1987,0.47910881424262075,271911.5,0.16070470481626548,0.1755526065826416,0.21410036087036133
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1988,0.4782642567778124,279324.5,0.16171459599363527,0.17195892333984375,0.2114722728729248
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1989,0.4786520834212404,292667.69999999995,0.15183100921359982,0.18505048751831055,0.22580599784851074
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1990,0.47885248200044533,290311.5,0.15724782926780806,0.18479251861572266,0.22576570510864258
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1991,0.47755962196801244,301236.3,0.1628823225125111,0.19835186004638672,0.23966717720031738
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1992,0.47682377219030275,289936.7,0.15089355062015639,0.19485068321228027,0.2361311912536621
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1993,0.4777193710108227,279655.19999999995,0.15792640000294514,0.1806316375732422,0.22008728981018066
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1994,0.47812979519683513,291029.0,0.16741347189018663,0.18402528762817383,0.2238781452178955
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1995,0.47762716221773005,287596.7,0.1624397712036988,0.17936396598815918,0.2209486961364746
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1996,0.47798142377760505,283996.19999999995,0.15583836612505597,0.1962599754333496,0.23849844932556152
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1997,0.47841035849736574,278774.5,0.163471621573517,0.20139002799987793,0.24380898475646973
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1998,0.4766857962697275,282146.7,0.14934326559873976,0.21228933334350586,0.2558326721191406
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer1999,0.4772042556352165,281404.2,0.1495559766140532,0.217041015625,0.26068878173828125
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2000,0.4770461935601028,302629.9,0.15983473550297636,0.26061439514160156,0.3083648681640625
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2001,0.4780557365232939,303497.69999999995,0.15014117302316052,0.2293109893798828,0.2758049964904785
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2002,0.47803725003793757,308715.5,0.16495328733527395,0.22660255432128906,0.2732846736907959
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2003,0.4783814853993643,308601.6,0.16151201074932892,0.26023149490356445,0.3077528476715088
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2004,0.4792529379201666,302665.1,0.15450953425461633,0.24782299995422363,0.2951986789703369
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2005,0.47841427300497086,307595.5,0.16851531978868556,0.267606258392334,0.3165435791015625
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2006,0.4785369983669522,312900.7,0.15289276923867193,0.2715721130371094,0.32213902473449707
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2007,0.47786957932053364,332062.29999999993,0.15871229280850918,0.30022621154785156,0.35489773750305176
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2008,0.4769860979881741,339647.29999999993,0.14794498970499798,0.30359721183776855,0.3583812713623047
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2009,0.4779240988447635,341709.89999999997,0.16364641567164026,0.2989974021911621,0.3546755313873291
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2010,0.47671635835792747,344572.3,0.15170212904140035,0.295107364654541,0.35073256492614746
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2011,0.4783485956770633,343902.6,0.1564430992620675,0.30512404441833496,0.3612239360809326
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2012,0.4764550713716006,337870.3,0.15850561348368847,0.320481538772583,0.3765556812286377
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2013,0.47645128878710313,339523.0,0.16125040900689874,0.3305630683898926,0.38671016693115234
+panel_b_canonical,A0,A0 (Phase A only),Basketball_temporal/finer2014,0.47920087916118226,361662.19999999995,0.1610102308852385,0.32464122772216797,0.38123440742492676
+panel_b_canonical,A0,A0 (Phase A only),Dryad_animal_society,0.09158679446219382,86.0,0.4506010196832501,0.0008070468902587891,0.0029976367950439453
+panel_b_canonical,A0,A0 (Phase A only),FacultyHiringNetworks/Business/Business_FM_Full_,0.06359447004608294,207.0,0.4856897958502882,0.0038442611694335938,0.01819896697998047
+panel_b_canonical,A0,A0 (Phase A only),FacultyHiringNetworks/ComputerScience/ComputerScience_FM_Full_,0.05314256515074093,104.0,0.5606431279758989,0.0025577545166015625,0.015300989151000977
+panel_b_canonical,A0,A0 (Phase A only),FacultyHiringNetworks/History/History_FM_Full_,0.04448198198198198,79.0,0.5187581158908041,0.0016937255859375,0.012830972671508789
+panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/England_2009_2010,0.15384615384615385,86.0,0.4166048353372061,0.0009374618530273438,0.0034046173095703125
+panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/England_2010_2011,0.27628865979381445,134.0,0.6199562495869084,0.0012314319610595703,0.0035266876220703125
+panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/England_2011_2012,0.2062043795620438,113.0,0.5001531258263577,0.0012137889862060547,0.0035583972930908203
+panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/England_2012_2013,0.2231578947368421,106.0,0.547320393753414,0.0011622905731201172,0.0036857128143310547
+panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/England_2013_2014,0.17881944444444445,103.0,0.39833534213878674,0.0009596347808837891,0.0033369064331054688
+panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/England_2014_2015,0.15469613259668508,28.0,0.6157917721020821,0.0003809928894042969,0.0019910335540771484
+panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/finerEngland_2009_2010,0.35518157661647465,400.9999999999999,0.20377455015345627,0.004821300506591797,0.008307218551635742
+panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/finerEngland_2010_2011,0.40913081650570665,465.9999999999999,0.2561041397723342,0.005353450775146484,0.008781909942626953
+panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/finerEngland_2011_2012,0.37828371278458833,431.9999999999999,0.24508301398983168,0.005365133285522461,0.008831262588500977
+panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/finerEngland_2012_2013,0.4038630377524143,459.9999999999999,0.23496362271640997,0.0051729679107666016,0.008722543716430664
+panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/finerEngland_2013_2014,0.36170212765957444,407.9999999999999,0.2807919057439403,0.004632711410522461,0.008304834365844727
+panel_b_canonical,A0,A0 (Phase A only),Football_data_England_Premier_League/finerEngland_2014_2015,0.36879432624113473,155.99999999999994,0.34488362161654723,0.003397226333618164,0.0065381526947021484
+panel_b_canonical,A0,A0 (Phase A only),Halo2BetaData,0.17738905549049377,4249.0,0.6900320582144942,0.08568429946899414,0.11887598037719727
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1985,0.09954807003679648,4031.0,0.46287807766192984,0.12384319305419922,0.23147010803222656
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1986,0.09907289153777021,4189.0,0.49779485835405946,0.14423584938049316,0.2644016742706299
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1987,0.10218745010378413,4480.0,0.5003315857552244,0.14470887184143066,0.26578354835510254
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1988,0.1018217647428775,4857.0,0.47731721189228,0.13739967346191406,0.24891376495361328
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1989,0.10154422087037904,4991.0,0.5007927900319898,0.15574240684509277,0.28970861434936523
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1990,0.10214011793328111,4954.0,0.4708540670957008,0.1687641143798828,0.3093597888946533
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1991,0.10181650777818273,5308.0,0.4577467651395487,0.18533563613891602,0.34908556938171387
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1992,0.09928288356293641,5261.0,0.47909289600134536,0.1876208782196045,0.34793949127197266
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1993,0.10373956938291955,5035.0,0.49449650937971307,0.15678930282592773,0.2861497402191162
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1994,0.0997297720686144,5093.0,0.4650117971288989,0.1580502986907959,0.28629469871520996
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1995,0.10430575713594581,5390.0,0.4600492308049069,0.16522431373596191,0.3031046390533447
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1996,0.10837524856708387,5559.0,0.48891639004689846,0.16715168952941895,0.3039257526397705
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1997,0.11255452850856122,5857.0,0.5118884859958043,0.19792747497558594,0.3663942813873291
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1998,0.10255286721280243,5383.0,0.52049948607162,0.17330312728881836,0.3155393600463867
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/1999,0.10917063439787719,5801.0,0.5327121783191459,0.17522668838500977,0.316089391708374
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2000,0.09407899513540986,5183.0,0.5192976220189989,0.21259641647338867,0.390744686126709
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2001,0.09947271979357541,5320.0,0.49641973739367024,0.18701910972595215,0.34054994583129883
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2002,0.1078253617144722,5947.0,0.5091947790425694,0.18486881256103516,0.32946228981018066
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2003,0.10704912918203674,5833.0,0.5062924422416042,0.20973968505859375,0.3624603748321533
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2004,0.10703289731484764,5736.0,0.5003998529252239,0.18548870086669922,0.33118486404418945
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2005,0.10206150114930046,5639.0,0.5151460821660918,0.22374534606933594,0.4012598991394043
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2006,0.11021262770297101,6106.0,0.5244518797758679,0.23314404487609863,0.41161084175109863
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2007,0.09706538700313763,5785.0,0.509570916147526,0.25877881050109863,0.4539504051208496
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2008,0.1071562017707741,6596.0,0.5166196458726472,0.24125051498413086,0.4140172004699707
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2009,0.10184676976721661,6309.0,0.484777546401147,0.281494140625,0.5037810802459717
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2010,0.09723902936118718,6107.0,0.5130510528845686,0.24513697624206543,0.428957462310791
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2011,0.09933557542449348,6055.0,0.5177672199960001,0.2492063045501709,0.43306994438171387
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2012,0.09731205512399649,5988.0,0.49822388711455895,0.24744868278503418,0.4325292110443115
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2013,0.10131029703289442,6286.0,0.5197326782579347,0.2558627128601074,0.44792962074279785
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/2014,0.10509548910455359,6400.0,0.5102001039406111,0.28805065155029297,0.495272159576416
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1985,0.4733009867856563,245469.7,0.15586978403366397,0.2803688049316406,0.48259425163269043
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1986,0.47025473228401093,246650.3,0.13769561461077948,0.2681090831756592,0.4725189208984375
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1987,0.4730933368103521,268497.5,0.14351358386622676,0.29514455795288086,0.5072576999664307
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1988,0.4722338272509665,275802.5,0.14449769790454048,0.3030567169189453,0.5182962417602539
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1989,0.47242090574828605,288857.7,0.12071934993555469,0.3294661045074463,0.5558779239654541
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1990,0.47257964751387593,286508.5,0.1418305626692336,0.3270385265350342,0.5516114234924316
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1991,0.47142438615142523,297366.3,0.13622431434504015,0.346362829208374,0.5922360420227051
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1992,0.46991654091120183,285736.69999999995,0.13351128252746286,0.3365302085876465,0.5715353488922119
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1993,0.47067969669782744,275534.20000000007,0.14105236912057204,0.3008992671966553,0.5195281505584717
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1994,0.47161572052401746,287064.0,0.14357569367623405,0.3352804183959961,0.5680575370788574
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1995,0.4701886482863351,283117.7,0.14044250626821914,0.3133056163787842,0.5298454761505127
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1996,0.47177094823694876,280306.2,0.12943853859975274,0.3457612991333008,0.5810708999633789
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1997,0.47092121295327005,274410.5,0.14324740812947453,0.36158204078674316,0.6130414009094238
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1998,0.46973689812540254,278033.69999999995,0.13845285520946193,0.3596484661102295,0.6120169162750244
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer1999,0.4702345320466534,277294.2,0.1345782673230825,0.3730173110961914,0.630772590637207
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2000,0.46985495193123145,298067.9,0.1377943847595876,0.473268985748291,0.7920677661895752
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2001,0.47081317660757105,298899.7,0.13905620633057816,0.4150259494781494,0.6833152770996094
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2002,0.47088795567654285,304098.5,0.15482806503456498,0.40247130393981934,0.6738290786743164
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2003,0.47214209623633846,304576.6,0.1356623729290675,0.505286693572998,0.8265557289123535
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2004,0.4724884693679782,298393.1,0.1422679520183909,0.45710229873657227,0.7612900733947754
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2005,0.4710108749074575,302835.5,0.1405232363472893,0.48758649826049805,0.8072590827941895
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2006,0.47131843147882435,308180.7,0.13862773969469852,0.511488676071167,0.8379673957824707
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2007,0.4703675710618487,326849.3,0.14639416092971674,0.563037633895874,0.9161233901977539
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2008,0.4704642636056925,335003.3,0.1436912033623975,0.595552921295166,0.9528064727783203
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2009,0.4710988075600731,336829.9,0.13770851824912297,0.6045405864715576,0.9602088928222656
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2010,0.46991783106780327,339658.3,0.1465420609417117,0.578934907913208,0.925950288772583
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2011,0.4714926421946173,338973.6,0.1446890696906286,0.6030464172363281,0.9614534378051758
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2012,0.46969611932081634,333077.3,0.1517753052288183,0.6107840538024902,0.995891809463501
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2013,0.47004383896897034,334957.0,0.1544716431416688,0.6293361186981201,1.0165073871612549
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Basketball_temporal/finer2014,0.47281704962135596,356844.19999999995,0.15225755615951167,0.6468384265899658,1.0315685272216797
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Dryad_animal_society,0.07880724174653887,74.0,0.4459050280269133,0.0012667179107666016,0.004470348358154297
+panel_b_canonical,A2,A2 (+ exact reachability add-back),FacultyHiringNetworks/Business/Business_FM_Full_,0.04884792626728111,159.0,0.4879582476096295,0.009673595428466797,0.028365135192871094
+panel_b_canonical,A2,A2 (+ exact reachability add-back),FacultyHiringNetworks/ComputerScience/ComputerScience_FM_Full_,0.03372508942258559,66.0,0.5737833399383746,0.007852315902709961,0.023873329162597656
+panel_b_canonical,A2,A2 (+ exact reachability add-back),FacultyHiringNetworks/History/History_FM_Full_,0.030405405405405407,54.0,0.5170612976755534,0.0049762725830078125,0.017925024032592773
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/England_2009_2010,0.13595706618962433,76.0,0.4290569441685285,0.0014770030975341797,0.00487971305847168
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/England_2010_2011,0.23505154639175257,114.0,0.5653113535932368,0.0018770694732666016,0.005529880523681641
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/England_2011_2012,0.18065693430656934,99.0,0.5105298240287788,0.001743316650390625,0.005385875701904297
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/England_2012_2013,0.21052631578947367,100.0,0.49261592998617826,0.0016422271728515625,0.005149364471435547
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/England_2013_2014,0.1371527777777778,79.0,0.4181601063258682,0.0014998912811279297,0.00490880012512207
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/England_2014_2015,0.11602209944751381,21.0,0.5423514194623053,0.000728607177734375,0.0028176307678222656
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/finerEngland_2009_2010,0.3312666076173604,373.9999999999999,0.1950516871194314,0.0057451725006103516,0.014591455459594727
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/finerEngland_2010_2011,0.40210711150131684,457.9999999999999,0.26384379825734927,0.006571054458618164,0.015794038772583008
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/finerEngland_2011_2012,0.36339754816112074,414.9999999999999,0.2438721454676551,0.006643056869506836,0.015796422958374023
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/finerEngland_2012_2013,0.38279192273924484,435.9999999999999,0.2196036230786358,0.0062940120697021484,0.01542210578918457
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/finerEngland_2013_2014,0.326241134751773,367.9999999999999,0.2587156891913768,0.005707263946533203,0.014258146286010742
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Football_data_England_Premier_League/finerEngland_2014_2015,0.3451536643026004,145.99999999999994,0.331479326077039,0.004227876663208008,0.010860681533813477
+panel_b_canonical,A2,A2 (+ exact reachability add-back),Halo2BetaData,0.4305097460746765,10312.0,0.5514235418490658,0.4223954677581787,0.5450632572174072
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1985,0.09954807003679648,4031.0,0.4537179485826296,0.2235877513885498,0.3315310478210449
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1986,0.09907289153777021,4189.0,0.4905395533266876,0.2376570701599121,0.3557884693145752
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1987,0.10161720763668712,4455.0,0.4933408696631285,0.2515904903411865,0.3726480007171631
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1988,0.1018217647428775,4857.0,0.46823382169098277,0.2361922264099121,0.34849095344543457
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1989,0.10148318447234034,4988.0,0.49476108338589164,0.26421427726745605,0.39830756187438965
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1990,0.10203702940084945,4949.0,0.46228819723358466,0.2777559757232666,0.4185512065887451
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1991,0.1017589626532139,5305.0,0.45049485269184525,0.2967405319213867,0.45845675468444824
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1992,0.09924514059256463,5259.0,0.471111065807879,0.30118465423583984,0.4622340202331543
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1993,0.10373956938291955,5035.0,0.48807612884221246,0.26645660400390625,0.3958570957183838
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1994,0.09959269992950576,5086.0,0.45838042296032355,0.2713644504547119,0.40102529525756836
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1995,0.10430575713594581,5390.0,0.4520266035391816,0.27050328254699707,0.4095480442047119
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1996,0.10829726673685032,5555.0,0.4818445980747301,0.2778196334838867,0.4154398441314697
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1997,0.11249687722197667,5854.0,0.503928745818332,0.31379079818725586,0.482025146484375
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1998,0.10255286721280243,5383.0,0.5143655362850964,0.2771933078765869,0.4201779365539551
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/1999,0.10915181511940832,5800.0,0.5225606155722685,0.2882354259490967,0.42891526222229004
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2000,0.09407899513540986,5183.0,0.5113405684614751,0.31670427322387695,0.4833829402923584
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2001,0.09947271979357541,5320.0,0.4892993733421754,0.29864978790283203,0.45178699493408203
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2002,0.1078253617144722,5947.0,0.5024640734830979,0.3011767864227295,0.44599270820617676
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2003,0.10699407219805833,5830.0,0.500897334106028,0.37030601501464844,0.5551548004150391
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2004,0.10703289731484764,5736.0,0.49367100366651545,0.29985952377319336,0.47967028617858887
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2005,0.10206150114930046,5639.0,0.5080352345619474,0.3882179260253906,0.5709841251373291
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2006,0.11012237825349265,6101.0,0.5184200861286395,0.3578178882598877,0.5363562107086182
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2007,0.09706538700313763,5785.0,0.5018254394507465,0.3843827247619629,0.5904037952423096
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2008,0.1071074648688165,6593.0,0.5051778027654087,0.4134559631347656,0.6342606544494629
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2009,0.10184676976721661,6309.0,0.4790352369295716,0.41680002212524414,0.6444449424743652
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2010,0.09723902936118718,6107.0,0.5073117654977307,0.4850645065307617,0.6764535903930664
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2011,0.09933557542449348,6055.0,0.5112383520393426,0.3805825710296631,0.5686798095703125
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2012,0.09731205512399649,5988.0,0.492115364842966,0.37400293350219727,0.5631849765777588
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2013,0.10126194658887618,6283.0,0.511103114038871,0.388416051864624,0.5802896022796631
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/2014,0.10502980442386324,6396.0,0.5046936609697489,0.42110681533813477,0.6306684017181396
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1985,0.4728093100058731,245214.7,0.1283160959895218,0.40184640884399414,0.6062853336334229
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1986,0.4702051616042291,246624.3,0.11792212270306882,0.39116740226745605,0.5953209400177002
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1987,0.4728924684953906,268383.5,0.12019151651319208,0.4258143901824951,0.6393730640411377
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1988,0.4716996154359819,275490.5,0.11920099473811667,0.43530964851379395,0.6525883674621582
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1989,0.4721968450288123,288720.7,0.10228448063111878,0.4585249423980713,0.687067985534668
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1990,0.4723817142668635,286388.5,0.12552401515639358,0.45681238174438477,0.6808476448059082
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1991,0.4712785355842091,297274.29999999993,0.12240264038768793,0.46285128593444824,0.7073976993560791
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1992,0.4696221612924022,285557.7,0.1149124434653154,0.46439361572265625,0.699941873550415
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1993,0.47060624219759467,275491.2,0.12465629222799113,0.4190330505371094,0.6414239406585693
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1994,0.4711097091749058,286756.0,0.11848554236812299,0.46172118186950684,0.6920342445373535
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1995,0.47000430467249615,283006.7,0.12033646254484404,0.4539668560028076,0.672555685043335
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1996,0.471414140428109,280094.20000000007,0.1157995624573879,0.4728400707244873,0.7099428176879883
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1997,0.47060029860479485,274223.5,0.12989884351136005,0.4898982048034668,0.7394981384277344
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1998,0.46943785728622295,277856.69999999995,0.11623914078828597,0.49953722953796387,0.7637796401977539
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer1999,0.4699564214217083,277130.2,0.11173015583393141,0.5171210765838623,0.7777316570281982
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2000,0.46960746728946623,297910.9,0.11973870437395276,0.5927984714508057,0.898984432220459
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2001,0.47070134064540997,298828.69999999995,0.11926507661680726,0.6462793350219727,0.921804666519165
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2002,0.4704714167588007,303829.5,0.13000093418972436,0.5543942451477051,0.8271515369415283
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2003,0.47199018067410825,304478.6,0.1198827324469408,0.6224415302276611,0.9257514476776123
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2004,0.4720007689199272,298085.1,0.1193452936376843,0.6195790767669678,0.9253487586975098
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2005,0.4707869065616504,302691.5,0.12347284999474788,0.6533160209655762,0.9921140670776367
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2006,0.4711257324474887,308054.69999999995,0.11759008929366013,0.6541731357574463,0.9760556221008301
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2007,0.4702092704847424,326739.30000000005,0.13010484750715756,0.7665925025939941,1.128194808959961
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2008,0.470263440540082,334860.3,0.1235340302289231,0.7628617286682129,1.1383209228515625
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2009,0.4708414605116339,336645.89999999997,0.12049872165471384,0.7556605339050293,1.1119933128356934
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2010,0.46966603376076166,339476.3,0.1252959776944091,0.7645506858825684,1.1280298233032227
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2011,0.4709752117431119,338601.6,0.1245385715478756,0.7967860698699951,1.1749513149261475
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2012,0.46959317680053536,333004.30000000005,0.12414116979929576,0.8309149742126465,1.2135074138641357
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2013,0.4699484148367686,334889.0,0.1288799048214983,0.8082680702209473,1.198275089263916
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Basketball_temporal/finer2014,0.47258252537300616,356667.19999999995,0.13012434954877258,0.8118085861206055,1.1956918239593506
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Dryad_animal_society,0.07880724174653887,74.0,0.3533387265554227,0.008749961853027344,0.011841297149658203
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",FacultyHiringNetworks/Business/Business_FM_Full_,0.04884792626728111,159.0,0.42257671846794553,0.058493852615356445,0.07682251930236816
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",FacultyHiringNetworks/ComputerScience/ComputerScience_FM_Full_,0.03372508942258559,66.0,0.5498087119561136,0.06905651092529297,0.08458638191223145
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",FacultyHiringNetworks/History/History_FM_Full_,0.030405405405405407,54.0,0.44487579657341364,0.05624961853027344,0.06908059120178223
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/England_2009_2010,0.13595706618962433,76.0,0.36279419262650386,0.010332822799682617,0.013993501663208008
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/England_2010_2011,0.23505154639175257,114.0,0.48988376347761126,0.010176897048950195,0.014062166213989258
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/England_2011_2012,0.18065693430656934,99.0,0.4493310731251582,0.009572029113769531,0.013452529907226562
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/England_2012_2013,0.21052631578947367,100.0,0.4053311143432953,0.00985264778137207,0.013401985168457031
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/England_2013_2014,0.1371527777777778,79.0,0.3807925017458761,0.010025262832641602,0.01333475112915039
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/England_2014_2015,0.11602209944751381,21.0,0.5112614832798665,0.008908987045288086,0.010906219482421875
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/finerEngland_2009_2010,0.32860938883968105,370.9999999999999,0.15260492030651915,0.01374959945678711,0.02268505096435547
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/finerEngland_2010_2011,0.395083406496927,449.9999999999999,0.192197512203558,0.015151739120483398,0.024380207061767578
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/finerEngland_2011_2012,0.35726795096322234,407.9999999999999,0.18626093724366505,0.014844417572021484,0.024309635162353516
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/finerEngland_2012_2013,0.3810359964881474,433.9999999999999,0.15473210495895634,0.013746023178100586,0.022350549697875977
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/finerEngland_2013_2014,0.326241134751773,367.9999999999999,0.19160545720186728,0.014098644256591797,0.022533416748046875
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Football_data_England_Premier_League/finerEngland_2014_2015,0.3451536643026004,145.99999999999994,0.28939642040368413,0.011963367462158203,0.018468141555786133
+panel_b_canonical,A4,"A4 (+ refinement, OURS-Reach)",Halo2BetaData,0.4254581928253174,10191.0,0.5483769904046956,0.6281287670135498,0.74678635597229

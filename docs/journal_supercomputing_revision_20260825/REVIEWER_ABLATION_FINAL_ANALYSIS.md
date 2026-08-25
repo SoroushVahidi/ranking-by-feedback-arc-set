@@ -1,5 +1,7 @@
 # Reviewer Ablation Final Analysis
 
+
+> **SUPERSEDED NOTE (2026-08-25, runtime-provenance fix):** the raw `1214.76`/`1214.57` Finance timings cited below are per-run harness-timer readings, not single-invocation `OURS-Reach` algorithm cost -- each contains a diagnostic Phase-A-only rerun (used only to compute a permutation-distance sensitivity statistic) that inflates the reading by roughly one extra Phase-A execution (~612s on Finance). The corrected algorithm-only Finance timings are ~600.5s (A0), ~602.3s (A2/A4); `1800.10s` (A6, hard-wallclock timeout without a finished ranking) is unaffected. See `RUNTIME_PROVENANCE_AUDIT.md` for the full analysis.
 Date: 2026-08-25  
 Branch: `jsuper-reviewer-ablation-scale-20260825`  
 Config hash: `712779aad638f619`  
@@ -45,15 +47,15 @@ runtime jitter only; dedup rule = keep first raw row.
 
 Unpaired Layer medians (descriptive; **paired** tests are authoritative):
 
-| Config | n | med upset_simple | med upset_ratio | med removed_w | med restored | med mincut_gain | med runtime (s) |
+| Config | n | med upset_simple | med upset_ratio | med removed_w | med restored | med mincut_gain | med algorithm runtime (s) |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| A0 | 77 | 0.206 | 0.451 | 11341 | 0 | 0 | 0.17 |
-| A1 | 33 | 0.154 | 0.459 | 6382 | 385 | 0 | 0.30 |
-| A2 | 77 | 0.211 | 0.446 | 5947 | 522 | 0 | 0.41 |
-| A3 | 33 | 0.136 | 0.423 | 6382 | 385 | 0 | 0.41 |
-| A4 | 77 | 0.211 | 0.381 | 5947 | 522 | 0 | 0.57 |
-| A5 | 33 | 0.136 | 0.465 | 5250 | 445 | 47 | 3.05 |
-| A6 | 77 | 0.198 | 0.429 | 5903 | 521 | 57 | 4.14 |
+| A0 | 77 | 0.206 | 0.451 | 11341 | 0 | 0 | 0.15 |
+| A1 | 33 | 0.154 | 0.459 | 6382 | 385 | 0 | 0.14 |
+| A2 | 77 | 0.211 | 0.446 | 5947 | 522 | 0 | 0.24 |
+| A3 | 33 | 0.136 | 0.423 | 6382 | 385 | 0 | 0.25 |
+| A4 | 77 | 0.211 | 0.381 | 5947 | 522 | 0 | 0.38 |
+| A5 | 33 | 0.136 | 0.465 | 5250 | 445 | 47 | 2.91 |
+| A6 | 77 | 0.198 | 0.429 | 5903 | 521 | 57 | 3.92 |
 
 ### Primary paired comparisons (Holm-adjusted family)
 
@@ -78,8 +80,9 @@ with significant Wilcoxon; mean-CI not decisive**.
 5. **A0→A4 (full pipeline):** material upset_simple gain matching reachability;
    refinement further improves **upset_ratio** (A2 med 0.446 → A4 med 0.381).
 
-Runtime: reachability adds ~0.2–0.4s median; min-cut adds ~3–4s median on
-Layer-1/2 (non-finance).
+Runtime: manuscript-facing values now use `runtime_algorithm_sec`, not the
+per-run harness timer. Reachability/refinement add sub-second median cost on
+Layer-1/2 (non-finance); min-cut adds about 3-4s median.
 
 ## 4. Cycle selection
 
@@ -158,7 +161,7 @@ supplementary check. No family-level Wilcoxon (per-family n inadequate).
 
 Non-finance A0/A2/A4/A6:
 
-- n ∈ [20, 602], A4 runtime ∈ ~0.01–1.2s, median ~0.57s  
+- n in [20, 602], A4 algorithm runtime in ~0.01-0.83s, median ~0.38s
 - Stage medians (A4): Phase A ~0.16s, Phase B ~0.09s, Phase C ~0.12s  
 - A6 min-cut median ~3.5s (dominates incremental cost)
 
@@ -167,17 +170,18 @@ comfortably for n≤602 moderate density.
 
 ## 11. Finance stress
 
-| Config | Terminal class | runtime (s) | break_reason |
-|---|---|---:|---|
-| FINANCE_A0 | SUCCESS* | 612.55 | phase_b_disabled (Phase A used full 600.01 s) |
-| FINANCE_A2 | INTERNAL_TIME_LIMIT | 1214.76 | time_limit |
-| FINANCE_A4 | INTERNAL_TIME_LIMIT | 1214.57 | time_limit |
-| FINANCE_A6 | **TIMEOUT_HARD_WALLCLOCK** | **1800.10** | hard_wallclock_timeout |
+| Config | Terminal class | algorithm runtime (s) | harness diagnostic / hard wall (s) | break_reason |
+|---|---|---:|---:|---|
+| FINANCE_A0 | SUCCESS* | 600.53 | 612.55 | phase_b_disabled (Phase A used full 600.01 s) |
+| FINANCE_A2 | INTERNAL_TIME_LIMIT | 602.31 | 1214.76 | time_limit |
+| FINANCE_A4 | INTERNAL_TIME_LIMIT | 602.28 | 1214.57 | time_limit |
+| FINANCE_A6 | **TIMEOUT_HARD_WALLCLOCK** | not computable | **1800.10** | hard_wallclock_timeout |
 
 \*A0 completed with Phase-A budget exhaustion; no Phase B by design.  
 Wall times for A2/A4 exceed 600 s because the harness also re-runs Phase-A-only
-for permutation distance. FINANCE_A6 did not finish within the predefined 1800 s
-hard wall-clock; this is a **hard scalability failure** for the full
+for permutation distance; they are diagnostic harness readings, not completed
+algorithm cost. FINANCE_A6 did not finish within the predefined 1800 s hard
+wall-clock; this is a **hard scalability failure** for the full
 reachability+refinement+min-cut finance stress case—not a silent omission.
 We make **no universal scalability claim**. Finance remains the documented
 dense/large-n stress boundary.

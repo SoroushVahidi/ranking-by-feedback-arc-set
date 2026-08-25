@@ -546,13 +546,13 @@ Figure~\ref{fig:runtime_vs_edges} shows empirical \textsc{OURS-Reach} runtimes v
 
 Finance is reported separately, not averaged into quality macros.
 Under the archived $1800$\,s non-GNN protocol, fixed-topological-position OURS variants and SyncRank time out while lightweight classical methods finish in $<4$\,s and GNN end-to-end runs finish in $\sim 15$--$18$\,min.
-Under a tightened Phase~A wall-clock budget of $600$\,s, Phase~A-only completes with wall $\approx 612.6$\,s (Phase~A $\approx 600.0$\,s); reachability and reachability+refinement configurations hit an internal time limit at $\approx 1214.8$/$1214.6$\,s; enabling optional min-cut hits a hard wall-clock timeout at $\approx 1800.1$\,s without a finished ranking.
+Under a tightened Phase~A wall-clock budget of $600$\,s, Phase~A-only has single-invocation algorithm wall time $\approx 600.5$\,s (Phase~A $\approx 600.0$\,s hitting its budget, plus refinement $\approx 0.5$\,s; harness wall time, including data loading and metric computation, $\approx 612.6$\,s). Reachability and reachability+refinement configurations also have Phase~A hit the same $600$\,s budget: true single-invocation algorithm wall time is $\approx 602.3$\,s (add-back $\approx 1.8$\,s and refinement $\approx 0.5$\,s beyond Phase~A). The per-run harness timer additionally records $\approx 1214.8$/$1214.6$\,s for these two configurations because it also executes a diagnostic Phase-A-only rerun (used only to compute the permutation-distance sensitivity statistic of \S\ref{subsec:sensitivity}) inside the same timed window; this second pass is not part of a single \textsc{OURS-Reach} invocation and is excluded from the algorithm wall time above. Enabling optional min-cut hits a hard wall-clock timeout at $\approx 1800.1$\,s without a finished ranking.
 This matches the $O(mn+m^{2})$ Phase~A discussion in \S\ref{subsec:framework_complexity}: Finance is a known large-dense boundary.
 
 \subsection{Scalability (Empirical)}
 \label{subsec:scalability}
 
-On non-Finance ablation graphs ($n\le 602$), \textsc{OURS-Reach} finishes in roughly $0.01$--$1.2$\,s (median $\approx 0.57$\,s); enabling optional min-cut adds about $3$--$4$\,s median.
+On non-Finance ablation graphs ($n\le 602$), \textsc{OURS-Reach} single-invocation algorithm wall time is roughly $0.01$--$0.83$\,s (median $\approx 0.38$\,s); enabling optional min-cut adds about $3$--$4$\,s median.
 These timings illustrate the audited $O(mn+m^2)$ Phase~A bound (\S\ref{subsec:framework_complexity}) on sparse/moderate instances; the Finance boundary is in \S\ref{subsec:finance}. No fitted complexity law is claimed.
 
 \subsection{Structural Ablation}
@@ -593,10 +593,11 @@ Figure~\ref{fig:ablation} shows unpaired Layer median trajectories for context; 
 \label{fig:ablation}
 \end{figure}
 
-Table~\ref{tab:reviewer1_stage_ablation} reports \texttt{upset\_simple}, \texttt{upset\_naive}, \texttt{upset\_ratio}, and mean runtime across three pipeline stages, on matched dataset support.
+Table~\ref{tab:reviewer1_stage_ablation} reports \texttt{upset\_simple}, \texttt{upset\_naive}, \texttt{upset\_ratio}, and mean single-invocation algorithm runtime across three pipeline stages, on matched dataset support.
 The legacy fixed-topological/\textsc{ins} reinsertion (A1) and its refined full pipeline (A3) were run on a smaller $n=33$ scope than the canonical reachability stages ($n=77$); comparing them against a Phase~A row computed on the larger scope would confound the stage effect with a change in dataset composition.
 We therefore report two panels, each internally on one exact common-completion dataset set: Panel~(a) compares Phase~A only, legacy reinsertion, and the legacy refined pipeline on their shared $n=33$ scope; Panel~(b) compares Phase~A only, exact reachability reinsertion, and refinement (\textsc{OURS-Reach}) on their shared $n=77$ scope.
-Within each panel, mean \texttt{upset\_simple}, \texttt{upset\_naive}, and \texttt{upset\_ratio} decrease monotonically from Phase~A only to the full pipeline, and mean runtime increases monotonically with pipeline depth; the significant paired improvement of exact reachability add-back over Phase~A only and over the legacy proxy is already quantified in Table~\ref{tab:ablation_primary}, which these per-panel means complement rather than replace.
+Within each panel, mean \texttt{upset\_simple}, \texttt{upset\_naive}, and \texttt{upset\_ratio} decrease monotonically from Phase~A only to the full pipeline, and mean algorithm runtime increases monotonically with pipeline depth; the significant paired improvement of exact reachability add-back over Phase~A only and over the legacy proxy is already quantified in Table~\ref{tab:ablation_primary}, which these per-panel means complement rather than replace.
+Runtime is reported as \texttt{runtime\_algorithm\_sec} (Phase~A + Phase~B + Phase~C of one \textsc{OURS-Reach} call, none of the configurations in this table use min-cut), not the harness-level \texttt{runtime\_total\_sec} recorded per run: for every stage past Phase~A only, the per-run harness timer also executes a diagnostic Phase-A-only rerun (used solely to compute a permutation-distance sensitivity statistic, \S\ref{subsec:sensitivity}) inside the same timed window, so \texttt{runtime\_total\_sec} is inflated by roughly one extra Phase-A cost and is not the wall time of a single invocation.
 
 \begin{table}[H]
 \centering
@@ -605,11 +606,11 @@ Within each panel, mean \texttt{upset\_simple}, \texttt{upset\_naive}, and \text
 \textbf{Panel (a): legacy fixed-topological/\textsc{ins} progression --- common $n=33$}\\[2pt]
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
-\textbf{Stage} & \texttt{upset\_simple} & \texttt{upset\_naive} & \texttt{upset\_ratio} & Mean runtime (s) \\
+\textbf{Stage} & \texttt{upset\_simple} & \texttt{upset\_naive} & \texttt{upset\_ratio} & Mean algorithm runtime (s) \\
 \midrule
-Phase~A only (A0) & 0.2571 & 93621.2 & 0.3762 & 0.148 \\
-+ legacy fixed-topological/\textsc{ins} reinsertion (A1) & 0.2555 & 93589.0 & 0.3760 & 0.276 \\
-+ legacy refinement, full pipeline (A3) & 0.2521 & 93548.8 & 0.3462 & 0.378 \\
+Phase~A only (A0) & 0.2571 & 93621.2 & 0.3762 & 0.122 \\
++ legacy fixed-topological/\textsc{ins} reinsertion (A1) & 0.2555 & 93589.0 & 0.3760 & 0.127 \\
++ legacy refinement, full pipeline (A3) & 0.2521 & 93548.8 & 0.3462 & 0.227 \\
 \bottomrule
 \end{tabular}
 
@@ -617,14 +618,14 @@ Phase~A only (A0) & 0.2571 & 93621.2 & 0.3762 & 0.148 \\
 \textbf{Panel (b): canonical reachability progression --- common $n=77$}\\[2pt]
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
-\textbf{Stage} & \texttt{upset\_simple} & \texttt{upset\_naive} & \texttt{upset\_ratio} & Mean runtime (s) \\
+\textbf{Stage} & \texttt{upset\_simple} & \texttt{upset\_naive} & \texttt{upset\_ratio} & Mean algorithm runtime (s) \\
 \midrule
-Phase~A only (A0) & 0.2853 & 120842.9 & 0.3498 & 0.174 \\
-+ exact reachability reinsertion (A2) & 0.2728 & 118788.6 & 0.3410 & 0.427 \\
-+ refinement, \textsc{OURS-Reach} (A4) & 0.2724 & 118722.0 & 0.3178 & 0.542 \\
+Phase~A only (A0) & 0.2853 & 120842.9 & 0.3498 & 0.144 \\
++ exact reachability reinsertion (A2) & 0.2728 & 118788.6 & 0.3410 & 0.252 \\
++ refinement, \textsc{OURS-Reach} (A4) & 0.2724 & 118722.0 & 0.3178 & 0.364 \\
 \bottomrule
 \end{tabular}
-\caption{Stage-wise ablation on matched dataset support. Panel~(a) reports the legacy fixed-topological/\textsc{ins} progression on its common-completion subset ($n=33$); Panel~(b) reports the canonical reachability-based progression on its common-completion subset ($n=77$). Entries are means over the indicated support; mean runtime is reported alongside the three upset losses (primary runtime comparisons elsewhere use the median, as in Table~\ref{tab:runtime_wtl}). The $33$ datasets in Panel~(a) are a subset of those in Panel~(b), so cross-panel numerical comparisons are not intended; paired significance is reported in Table~\ref{tab:ablation_primary}.}
+\caption{Stage-wise ablation on matched dataset support. Panel~(a) reports the legacy fixed-topological/\textsc{ins} progression on its common-completion subset ($n=33$); Panel~(b) reports the canonical reachability-based progression on its common-completion subset ($n=77$). Entries are means over the indicated support; mean single-invocation algorithm runtime (\texttt{runtime\_algorithm\_sec} = Phase~A + Phase~B + Phase~C) is reported alongside the three upset losses (primary runtime comparisons elsewhere use the median, as in Table~\ref{tab:runtime_wtl}). The $33$ datasets in Panel~(a) are a subset of those in Panel~(b), so cross-panel numerical comparisons are not intended; paired significance is reported in Table~\ref{tab:ablation_primary}.}
 \label{tab:reviewer1_stage_ablation}
 \end{table}
 

@@ -26,7 +26,7 @@ def main() -> None:
     diff = subprocess.check_output(["git", "diff", "--", "manuscript/submitted_original/"], cwd=ROOT)
     must(len(diff) == 0, "submitted_original unchanged")
     must("_AUTO" in TEX, "AUTO exclusion mentioned")
-    must("slower than lightweight classical" in TEX, "classical runtime honesty")
+    must("slower than most lightweight classical" in TEX, "classical runtime honesty")
     must("do not claim universal dominance" in TEX.lower() or "We do not claim universal dominance" in TEX, "no universal dominance")
     must("best-in-suite" in TEX.lower() or "Oracle best-in-suite" in TEX, "oracle qualified")
     r = F[(F.baseline == "btl") & (F.metric == "upset_ratio")].iloc[0]
@@ -35,7 +35,7 @@ def main() -> None:
     must(int(d.ours_faster) == 60 and int(d.ours_slower) == 0, "DIGRAC runtime 60/60")
     a02 = PP[(PP.comparison == "A0_vs_A2") & (PP.metric == "upset_simple")].iloc[0]
     must(int(a02.wins_b) == 76 and int(a02.losses_b) == 1, "A0→A2 76/0/1")
-    must("FINANCE_A6" in TEX or "TIMEOUT" in TEX, "Finance timeout present")
+    must("hard wall-clock timeout" in TEX, "Finance timeout present")
     must("faster than all classical" not in TEX.lower(), "no classical speed claim")
     print("All Pass-3 checks passed.")
 

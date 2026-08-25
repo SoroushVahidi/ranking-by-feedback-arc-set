@@ -1,5 +1,7 @@
 # Final Experimental Gap Audit
 
+
+> **SUPERSEDED NOTE (2026-08-25, runtime-provenance fix):** the raw `1214.76`/`1214.57` Finance timings cited below are per-run harness-timer readings, not single-invocation `OURS-Reach` algorithm cost -- each contains a diagnostic Phase-A-only rerun (used only to compute a permutation-distance sensitivity statistic) that inflates the reading by roughly one extra Phase-A execution (~612s on Finance). The corrected algorithm-only Finance timings are ~600.5s (A0), ~602.3s (A2/A4); `1800.10s` (A6, hard-wallclock timeout without a finished ranking) is unaffected. See `RUNTIME_PROVENANCE_AUDIT.md` for the full analysis.
 Date: 2026-08-25  
 Branch: `jsuper-final-experimental-gaps-20260825`  
 Base SHA: `d38244d61aa511183fab58c4ca5cbf4e8ca0f9b4`  
@@ -54,7 +56,7 @@ PARTIAL | UNRESOLVED | NOT_EXPERIMENTAL
 | Field | Value |
 |---|---|
 | Status | **TIMEOUT_HARD_WALLCLOCK** |
-| Runtime | 1800.10 s |
+| Runtime | 1800.10 s hard wall-clock timeout (no completed algorithm runtime) |
 | Campaign | **1009/1009** terminal |
 | Non-finance aggregates changed? | **No** (primary pairwise identical to 1008 snapshot) |
 

@@ -4,6 +4,12 @@ Date: 2026-08-25
 Checkpoint before this pass: git tag `checkpoint-before-common-support-fix` at
 `31d91fade0c85ae31d9e91a2a4ba35c0f8631a74`.
 
+Runtime provenance update (2026-08-25): this common-support audit established dataset
+sets and metric availability. Its `runtime_total_sec` availability checks are retained as
+historical harness-field checks, not as the final manuscript runtime definition. Table 8
+now uses `runtime_algorithm_sec`; see `FINAL_R1_ABLATION_NUMERICAL_AUDIT.md` and
+`RUNTIME_PROVENANCE_AUDIT.md`.
+
 ## Trigger
 
 Independent inspection of the previous `final_submission_package.zip` found that Table 8
@@ -20,7 +26,7 @@ Source: `GNNRank-main/scripts/revision_analysis_20260825/run_reviewer_ablation.p
 
 | Config | Meaning | Completed dataset count | Metrics present | Runtime present | Metric implementation | Source |
 |---|---|---:|---|---|---|---|
-| A0 | Phase A only | 77 | `upset_simple`, `upset_naive`, `upset_ratio` all present, no NaN | `runtime_total_sec` present, no NaN | `_upset_simple`/`_upset_naive`/`_upset_ratio` in `GNNRank-main/scripts/revision_analysis_20260824/run_mincut_cap_audit.py:72-110` | `structural_ablation.csv` |
+| A0 | Phase A only | 77 | `upset_simple`, `upset_naive`, `upset_ratio` all present, no NaN | `runtime_total_sec` present as harness diagnostic; `runtime_algorithm_sec` is final manuscript runtime | `_upset_simple`/`_upset_naive`/`_upset_ratio` in `GNNRank-main/scripts/revision_analysis_20260824/run_mincut_cap_audit.py:72-110` | `structural_ablation.csv` |
 | A1 | legacy fixed-topological/INS add-back (submitted) | 33 | present, no NaN | present, no NaN | same | `structural_ablation.csv` |
 | A2 | exact reachability add-back (revised canonical) | 77 | present, no NaN | present, no NaN | same | `structural_ablation.csv` |
 | A3 | legacy topo add-back + refinement (legacy/original full pipeline) | 33 | present, no NaN | present, no NaN | same | `structural_ablation.csv` |
