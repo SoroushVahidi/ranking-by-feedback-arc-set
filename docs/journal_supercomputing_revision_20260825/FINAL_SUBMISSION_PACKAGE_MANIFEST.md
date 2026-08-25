@@ -50,3 +50,7 @@ No absolute paths; no symlinks required.
 ## Denominator note
 
 Authoritative suite: intended 80 / loadable 78 (missing ERO + Halo2BetaData/HeadToHead); coverage 77/78, 78/78, 61/78.
+
+## Cover letter
+
+Addresses Professor Hamid R. Arabnia (Editor-in-Chief); includes Manuscript ID `feb25704-187e-4f95-8640-5e8c1ca26a94` and final title.
