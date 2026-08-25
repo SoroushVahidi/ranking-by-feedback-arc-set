@@ -34,15 +34,14 @@ def main() -> None:
     must("not independent ranking observations" in TEX or "rather than ranking uncertainty" in TEX, "deterministic-repeat interpretation")
     must("Legacy INS Labels" not in TEX, "legacy INS subsection removed")
     # contribution list not triplicated as identical enumerate in Abstract
+    abs_ = TEX[TEX.find(r"\begin{abstract}") : TEX.find(r"\end{abstract}")]
     must(r"\begin{enumerate}" not in abs_, "Abstract has no contribution enumerate")
+    must("scalable alternative" not in abs_.lower(), "Abstract no scalable marketing")
     # Intro has the detailed contribution list; Conclusion must not copy the same 4 bold itemize headers
     must("Implementation-fidelity correction" not in TEX[TEX.find(r"\section{Conclusion}"):], "Conclusion no contrib-item clone")
     must(TEX.count("Secondary structural repair") <= 2, "structural repair phrase not over-repeated")
     must("10.16" not in TEX, "no stale 10.16x")
     must("best-in-suite" in TEX.lower() or "Oracle best-in-suite" in TEX, "oracle qualified if mentioned")
-    # Abstract should not say scalable alternative
-    abs_ = TEX[TEX.find(r"\begin{abstract}") : TEX.find(r"\end{abstract}")]
-    must("scalable alternative" not in abs_.lower(), "Abstract no scalable marketing")
     print("All Pass-4 checks passed.")
 
 
