@@ -1,7 +1,8 @@
 \documentclass{article}
 \usepackage{lmodern}
 
-\usepackage{graphicx} % Required for inserting images
+\usepackage{graphicx}
+\graphicspath{{../figures/}} % Required for inserting images
 \usepackage{tcolorbox}
 
 \usepackage[ruled,vlined]{algorithm2e}
@@ -380,333 +381,246 @@ Exact reachability add-back costs $O(m\log m)$ for sorting plus, in the dense in
 
 \section{Experimental Results}
 \label{sec:exp}
-% -------------------------
-% -------------------------
-\subsection{Experimental Setup}
+
+% TODO(pass4): Abstract/Conclusion must reflect revised runtime (slower than classical;
+% ~8$\times$ vs trained GNN end-to-end), family-aware SpringRank caution, and BTL upset\_ratio.
+
+\subsection{Experimental Protocol}
 \label{subsec:exp_setup}
 
-\paragraph{Datasets.}
-We evaluate the proposed method on a benchmark suite of $80$ weighted directed comparison graphs drawn from several application domains, following the benchmark setting used in recent ranking-from-comparisons work \citep{he22}. The suite is dominated by temporal sports graphs and includes $60$ basketball instances (seasons 1985--2014 together with a higher-resolution ``finer'' version of each season) and $12$ football instances (seasons 2009--2014 together with finer versions). In addition, the suite contains three faculty hiring networks (Business, Computer Science, and History), one animal social network, two head-to-head competition graphs, one large finance graph, and one additional non-sports instance of ERO style. Across the full suite, the number of vertices ranges from $n=20$ to $n=1315$, and the number of directed edges ranges from $m=107$ to approximately $1.73\times 10^{6}$. Table~\ref{tab:dataset_suite_summary} summarizes the dataset families and their scale ranges.
+\paragraph{Dataset suite and denominators.}
+We use an $80$-dataset manuscript benchmark suite aligned with recent ranking-from-comparisons evaluations \citep{he22}, spanning basketball/football temporal graphs, faculty hiring networks, animal and head-to-head competition graphs, one ERO-style instance, and the near-complete Finance graph ($n=1315$, $m\approx 1.73\times 10^{6}$, density $\approx 1$).
+Two suite members lack loadable data files in the archived release (\texttt{ERO/p5K5N350eta10styleuniform}, \texttt{Halo2BetaData/HeadToHead}), so analyses that require readable graphs use an effective denominator of $79$ datasets with available data.
+An extra inventory entry \texttt{\_AUTO/Basketball\_temporal\_\_1985adj} is excluded from the manuscript suite.
+We never mix denominators: pairwise quality/runtime tables use method-pair common completions (typically $n=77$ for OURS vs classical; $n=60$ for OURS vs GNN), coverage uses $79$, and family-aware macros exclude Finance from quality aggregates.
+Table~\ref{tab:dataset_suite_summary} summarizes families; non-Finance ablation successes reach $n\le 602$.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.08}
-\begin{tabular}{l r r r r r}
+\begin{tabular}{@{}lrrrr@{}}
 \toprule
-\textbf{Family} & \textbf{\#} & \multicolumn{2}{c}{\textbf{$n$ range}} & \multicolumn{2}{c}{\textbf{$m$ range}} \\
-\cmidrule(lr){3-4}\cmidrule(lr){5-6}
-& & \textbf{min} & \textbf{max} & \textbf{min} & \textbf{max} \\
+\textbf{Family} & \textbf{\#} & $n$ min--max & $m$ min--max \\
 \midrule
-Basketball (temporal + finer) & 60 & 282 & 351  & 2{,}904    & 7{,}650 \\
-Football (temporal + finer)   & 12 & 20  & 20   & 107        & 380 \\
-Faculty (Business)            & 1  & 113 & 113  & 1{,}787    & 1{,}787 \\
-Faculty (Computer Science)    & 1  & 206 & 206  & 1{,}407    & 1{,}407 \\
-Faculty (History)             & 1  & 145 & 145  & 1{,}204    & 1{,}204 \\
-Animal social network         & 1  & 21  & 21   & 193        & 193 \\
-Head-to-head competition      & 2  & 602 & 602  & 5{,}010    & 5{,}010 \\
-Finance                       & 1  & 1{,}315 & 1{,}315 & 1{,}729{,}225 & 1{,}729{,}225 \\
-Other (ERO-style)             & 1  & \multicolumn{2}{c}{within overall range} & \multicolumn{2}{c}{within overall range} \\
+Basketball (coarse+finer) & 60 & 282--351 & 2{,}904--7{,}650 \\
+Football (coarse+finer) & 12 & 20--20 & 107--380 \\
+Faculty (3) & 3 & 113--206 & 1{,}204--1{,}787 \\
+Halo / head-to-head & 2 & 602--602 & 5{,}010--5{,}010 \\
+Animal & 1 & 21 & 193 \\
+ERO-style & 1 & (suite range) & (suite range) \\
+Finance & 1 & 1{,}315 & 1{,}729{,}225 \\
 \bottomrule
 \end{tabular}
-\caption{Benchmark suite summary by dataset family. Each instance is a weighted directed graph of pairwise comparisons.}
+\caption{Manuscript $80$-suite families (intended counts). Two missing files reduce readable graphs to $79$.}
 \label{tab:dataset_suite_summary}
 \end{table}
 
-\paragraph{Methods compared.}
-We compare four variants of the proposed pipeline: \textsc{OURS-MFAS}, \textsc{OURS-MFAS-INS1}, \textsc{OURS-MFAS-INS2}, and \textsc{OURS-MFAS-INS3}. We also compare against ten classical ranking baselines: \textsc{SpringRank}, \textsc{SyncRank}, \textsc{SerialRank}, \textsc{BTL}, \textsc{DavidScore}, \textsc{EigenvectorCentrality}, \textsc{PageRank}, \textsc{RankCentrality}, \textsc{SVD-RS}, and \textsc{SVD-NRS}. In addition, we include learning-based methods from the GNNRank framework using two directed graph neural network backbones, \textsc{DIGRAC} and \textsc{ib}. For each backbone, we report two fixed benchmark configurations: a distance-based configuration and a proximal-baseline configuration with distance-based pretraining. The main result tables report per-method results explicitly. When we additionally report compact ``best-of'' summaries, we treat them only as oracle-style envelopes over a fixed candidate set and not as standalone methods.
+\paragraph{Methods.}
+Baselines are ten classical methods (\textsc{SpringRank}, \textsc{SyncRank}, \textsc{SerialRank}, \textsc{BTL}, \textsc{DavidScore}, eigenvector/\textsc{PageRank}/\textsc{RankCentrality}, \textsc{SVD-RS}/\textsc{SVD-NRS}) and two GNNRank backbones (\textsc{DIGRAC}, \textsc{ib}) under fixed archived configurations (not post-hoc best-in-suite oracles).
+The \emph{canonical} revised method is the reachability-aware pipeline of \S\ref{sec:framework} (Phase~A + exact Phase~B + optional min-cut + Phase~C).
+Submitted multipass topo-proxy labels \textsc{OURS-MFAS}/\textsc{INS1--3} appear only for continuity with the submitted manuscript; in the archived leaderboard, \textsc{OURS-MFAS} and \textsc{INS3} are effectively duplicate labels of the same topo-proxy configuration.
 
-\paragraph{Evaluation metrics.}
-We report three upset-based losses computed from the weighted adjacency matrix $A$ and the predicted score vector $s$, where larger scores indicate higher rank. Let $M=A-A^\top$, and define score differences $T_{ij}=s_i-s_j$ over pairs with $M_{ij}\neq 0$. \emph{Upset-naive} is the fraction of pairs for which the predicted sign disagrees with $\mathrm{sign}(M_{ij})$. \emph{Upset-simple} averages the squared disagreement between $\mathrm{sign}(T_{ij})$ and $\mathrm{sign}(M_{ij})$. \emph{Upset-ratio} normalizes both score differences and pairwise edge imbalance by their corresponding sums and averages the resulting squared deviation:
-\[
-T^{(r)}_{ij}=\frac{s_i-s_j}{s_i+s_j+\varepsilon},
-\qquad
-M^{(r)}_{ij}=\frac{A_{ij}-A_{ji}}{A_{ij}+A_{ji}+\varepsilon},
-\]
-where $\varepsilon>0$ is a small constant.
+\paragraph{Determinism, repetitions, and timing.}
+Non-GNN methods are deterministic given fixed inputs and completed work: ranking outputs do not vary across the protocol's $10$ recorded trials except through wall-clock/timeout effects.
+Those repetitions characterize runtime variability and timeout repeatability; they are \emph{not} independent ranking observations.
+GNN methods are stochastic under training.
+Non-GNN wall-clock budgets use $1800$\,s; GNN runs use $7200$\,s.
+Archived GNN timings measure the end-to-end trained pipeline (construction + training + scoring), not inference-only latency; the exact archived GPU model ledger is unavailable, so hardware comparability is imperfect and GNN speedups are qualified accordingly.
 
-\paragraph{Protocol and compute.}
-All methods are evaluated with \texttt{TRIALS=10} repeated runs for each dataset--method pair. For all real datasets in the suite, the dataset seed is fixed internally to \texttt{seeds=[10]}. As a result, deterministic non-GNN methods produce identical outputs across trials apart from timing variability and timeout effects, whereas GNN methods can vary across runs because of stochastic training. Experiments are executed on a SLURM cluster using a typical allocation of one task, $48$ CPU cores, and $100$~GB memory. Non-GNN methods, including classical baselines and the proposed variants, are run under a per-run wall-clock budget of $1800$\,s, while GNN methods are run under a $7200$\,s budget. Timed-out runs are recorded as missing values and are excluded from aggregate statistics via NaN-robust averaging.
+\paragraph{Completion rules and statistics.}
+Timeouts, missing data, and GNN not-applicable cases are reported separately; we do not impute NaNs as scores.
+Primary comparisons use pairwise common completions.
+We report win/tie/loss (W/T/L) counts with ties $|\Delta|\le 10^{-6}$, median paired $\Delta$ (OURS $-$ baseline; for upset metrics, negative favors OURS), and---where precomputed---Wilcoxon signed-rank $p$-values with Holm adjustment and bootstrap CIs.
+Because many basketball seasons are temporally related, we add a family-aware sensitivity analysis (\S\ref{subsec:family_aware}).
 
-In addition to these native budgets, we also report a compute-matched view in which all families are restricted to runs that finish within $1800$\,s. Coverage is reported explicitly in that view. Under the recorded protocol, the compute-matched dataset set is a strict subset of the full suite because the ERO-style instance does not complete within $1800$\,s.
+\paragraph{Canonical numerical source.}
+All revised numbers below are recomputed from the archived per-method leaderboard
+and the revision-analysis CSV exports (runtime/coverage, family-aware, and
+ablation directories). Stale submitted Table~4/5 aggregates are not reused.
 
-\begin{table}[t]
+\subsection{Direct Ranking Quality on Common Completions}
+\label{subsec:main_quality}
+
+Table~\ref{tab:pairwise_quality_simple} and Table~\ref{tab:pairwise_quality_ratio}
+summarize OURS (archived \textsc{OURS\_MFAS} leaderboard column) against principal
+baselines on pairwise common completions.
+
+\begin{table}[H]
 \centering
 \small
-\setlength{\tabcolsep}{5pt}
-\renewcommand{\arraystretch}{1.10}
-\begin{tabular}{p{3.3cm} c p{7.0cm}}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrr@{}}
 \toprule
-\textbf{Item} & \textbf{Value} & \textbf{Notes} \\
+\textbf{Baseline} & $n$ & W/T/L & med~$\Delta$ & Holm $p$ \\
 \midrule
-Trials per dataset--method & 10 & Deterministic non-GNN methods vary only through timing and timeout effects \\
-Seed (real datasets) & 10 & Fixed internally to \texttt{seeds=[10]} \\
-Non-GNN timeout & 1800\,s & Applied to classical baselines and OURS variants \\
-GNN timeout & 7200\,s & Applied per GNN run \\
-Compute-matched budget & 1800\,s & Runs are filtered to runtime $\le 1800$\,s and coverage is reported explicitly \\
-GNN configurations per backbone & 2 & \texttt{train\_with} in \texttt{\{dist, proximal\_baseline\}} \\
-GNN backbones & 2 & \textsc{DIGRAC}, \textsc{ib} \\
-OURS metric coverage & 77/80 & Finance times out for all OURS variants under the $1800$\,s non-GNN budget \\
+SpringRank & 77 & 41/0/36 & $-0.078$ & $0.11$ \\
+davidScore & 77 & 40/1/36 & $-0.024$ & $0.11$ \\
+SVD\_NRS & 77 & 40/2/35 & $-0.025$ & $0.37$ \\
+BTL & 77 & 73/0/4 & $-0.207$ & $<10^{-11}$ \\
+PageRank & 77 & 53/0/24 & $-0.170$ & --- \\
+syncRank & 77 & 77/0/0 & $-0.720$ & --- \\
+serialRank & 77 & 75/0/2 & $-0.858$ & --- \\
+rankCentrality & 77 & 77/0/0 & $-0.987$ & --- \\
+DIGRAC & 60 & 30/0/30 & $-0.076$ & $0.013$ \\
+ib & 60 & 51/0/9 & $-0.408$ & $<10^{-8}$ \\
 \bottomrule
 \end{tabular}
-\caption{Protocol and computational settings used in the benchmark suite.}
-\label{tab:protocol_summary}
+\caption{\texttt{upset\_simple} (lower better) on pairwise common completions.
+$\Delta=$ OURS $-$ baseline (negative favors OURS). Holm $p$ where present in the
+formal-statistics export; ``---'' means not in that Holm family.}
+\label{tab:pairwise_quality_simple}
 \end{table}
 
-\paragraph{Result aggregation and per-dataset comparisons.}
-To ensure numerical consistency in the reported tables, we aggregate accuracy and runtime statistics primarily from saved per-trial arrays whenever they are available, using full-precision means and standard deviations across trials. If a dataset--method entry is unavailable in the array artifacts, we use the corresponding per-dataset summary extracted from the experiment logs and record this fallback in the missingness audit. Unless stated otherwise, all win/tie/loss comparisons are computed from full-precision per-dataset means using a tie tolerance of $|\Delta|\le 10^{-6}$, where $\Delta$ denotes the difference between the losses of two methods on the same dataset. Missing entries, including timeouts and missing runtime values, are reported explicitly through coverage columns and audit tables rather than being omitted silently.
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrr l@{}}
+\toprule
+\textbf{Baseline} & $n$ & W/T/L & med~$\Delta$ & Note \\
+\midrule
+SpringRank & 77 & 44/0/33 & $-0.018$ & competitive \\
+davidScore & 77 & 74/0/3 & $-0.131$ & \\
+SVD\_NRS & 77 & 72/0/5 & $-0.095$ & \\
+BTL & 77 & 1/0/76 & $+0.082$ & BTL stronger \\
+PageRank & 77 & 14/0/63 & $+0.030$ & PageRank stronger \\
+syncRank & 77 & 47/0/30 & $-0.204$ & \\
+serialRank & 77 & 47/0/30 & $-0.201$ & \\
+rankCentrality & 77 & 77/0/0 & $-0.612$ & \\
+DIGRAC & 60 & 30/0/30 & $-0.027$ & \\
+ib & 60 & 30/0/30 & $-0.134$ & \\
+\bottomrule
+\end{tabular}
+\caption{\texttt{upset\_ratio} (lower better) on the same common completions.
+Oracle best-in-suite envelopes are not headline competitors.}
+\label{tab:pairwise_quality_ratio}
+\end{table}
 
-\paragraph{Interpreting mean$\pm$std summaries.}
-The manuscript reports two different kinds of variability. When mean$\pm$std summarizes results across datasets, the standard deviation reflects heterogeneity across instances in the benchmark suite. When mean$\pm$std is reported for repeated runs of a fixed dataset--method pair, the standard deviation reflects run-to-run variability. For deterministic non-GNN methods on real datasets, this variability is typically zero except for timing and timeout effects; for GNN methods, it can be nonzero because of stochastic optimization.
-% -------------------------
-% \subsection{Baselines and Implementation Details}
-\label{subsec:baselines_impl}
+On \texttt{upset\_simple}, OURS records strong W/T/L margins against BTL, sync/serial/rank-centrality methods, and \textsc{ib}, with a significant Holm-adjusted Wilcoxon advantage vs BTL/\textsc{DIGRAC}/\textsc{ib}.
+Against \textsc{SpringRank}, \textsc{DavidScore}, and \textsc{SVD\_NRS}, per-dataset wins slightly favor OURS, but Holm-adjusted tests are not significant and family-aware analysis (\S\ref{subsec:family_aware}) treats these as competitive rather than uniformly superior.
+On \texttt{upset\_naive}, the same directional pattern holds (e.g., $41/0/36$ vs SpringRank; $73/0/4$ vs BTL; $60/0/0$ vs \textsc{ib}).
+On \texttt{upset\_ratio}, BTL remains clearly stronger ($1/0/76$) and PageRank also wins more often ($14/0/63$); OURS is strong against davidScore/SVD\_NRS/rankCentrality.
+We do not claim universal dominance on any metric.
 
-\paragraph{Unified execution and evaluation.}
-All non-GNN methods, including the classical baselines and the proposed variants, are evaluated through the same non-neural benchmark pathway. Each method produces a score vector $s\in\mathbb{R}^n$, where larger values indicate higher rank. When a method naturally returns only an ordering, we convert that ordering to deterministic rank-based scores so that all methods can be evaluated under the same three upset losses defined in \S\ref{subsec:exp_setup}. Learning-based methods are trained and evaluated separately through the GNNRank framework, but their outputs are scored using the same loss implementations for consistency. Because the dataset seed is fixed for all real datasets (Table~\ref{tab:protocol_summary}), non-GNN methods are deterministic under fixed time limits, whereas GNN runs may vary because of stochastic optimization.
+\subsection{Family-Aware Robustness}
+\label{subsec:family_aware}
 
-\paragraph{Classical ranking baselines.}
-Our classical benchmark suite includes ten standard training-free ranking methods: \textsc{SpringRank}, \textsc{SyncRank}, \textsc{SerialRank}, \textsc{BTL}, \textsc{DavidScore}, \textsc{EigenvectorCentrality}, \textsc{PageRank}, \textsc{RankCentrality}, \textsc{SVD-RS}, and \textsc{SVD-NRS}. These methods map the comparison graph directly to a score vector and span statistical, spectral, centrality-based, and physics-inspired ranking families. We use the default settings provided by the corresponding public implementations and do not tune hyperparameters on a per-dataset basis.
+Basketball seasons dominate per-dataset $n$ ($\approx 60/77$).
+Equal-family macros (seven included families; Finance excluded from quality macros) preserve large-margin \texttt{upset\_simple} advantages vs BTL/PageRank/\textsc{ib}/centrality-style methods.
+Vs SpringRank/davidScore/SVD\_NRS, equal-family means of family medians still favor OURS directionally, but hierarchical bootstrap CIs include zero, and leave-one-family-out can move the SpringRank equal-family mean across zero (LOFO-fragile).
+Collapsing Basketball into one meta-point does not reverse the large-margin wins.
+The BTL \texttt{upset\_ratio} disadvantage persists under equal-family weighting ($0/0/7$ families).
+Family-level $n$ is too small for heavy per-family significance testing; we treat family-aware results as sensitivity, not as a replacement for pairwise tests.
 
-\paragraph{Proposed pipeline and variants.}
-The proposed method is a combinatorial, training-free pipeline that first constructs an acyclic comparison backbone and then optionally densifies that backbone while preserving acyclicity. Concretely, it (i) removes arcs to eliminate directed cycles using local-ratio-style residual reduction, (ii) reinserts previously removed arcs in stable descending weight order subject to acyclicity, and (iii) extracts a score vector from the resulting DAG and optionally refines score magnitudes under the same upset-based objectives used for evaluation (see \S\ref{sec:framework}). We report four non-GNN variants: \textsc{OURS-MFAS}, \textsc{OURS-MFAS-INS1}, \textsc{OURS-MFAS-INS2}, and \textsc{OURS-MFAS-INS3}. These variants differ only in the number of add-back passes, with INS1, INS2, and INS3 corresponding to $P=1,2,3$, respectively. Unless stated otherwise, we report \textsc{OURS-MFAS-INS3} as \textbf{OURS} in the headline summaries, while INS1 and INS2 serve as lighter variants of the same pipeline.
+\subsection{Runtime and Coverage}
+\label{subsec:runtime_coverage}
 
-\paragraph{Complexity and time-bounded operation.}
-Let $n$ and $m$ denote the number of vertices and directed edges in the input graph, and let $P\in\{1,2,3\}$ denote the number of add-back passes. Phase~2 sorts edges once by weight, costing $O(m\log m)$, and then performs up to $P$ passes. Each pass computes a topological ordering of the currently kept graph and scans edges in weight order with $O(1)$ acceptance checks, yielding worst-case complexity $O(m\log m + P(n+m))$. Phase~1 repeatedly detects and breaks directed cycles; each cycle-finding call runs in $O(n+m_{\text{alive}})$ over the currently active edges, and at least one edge is deleted whenever a cycle is found, so the number of iterations is at most $m$ in the worst case. In practice, all phases operate under a fixed wall-clock budget (Table~\ref{tab:protocol_summary}), so our emphasis is on empirical runtime under shared budgets rather than on introducing a new approximation guarantee.
-
-\paragraph{GNNRank methods and configurations.}
-To represent learning-based alternatives, we include two directed-GNN backbones from the GNNRank framework: \textsc{DIGRAC} and \textsc{ib}. For each backbone, we report two fixed benchmark configurations: a distance-based configuration and a proximal-baseline configuration with distance-based pretraining. This yields four GNN configurations per dataset in total. In the main tables, these configurations are reported explicitly. When we provide compact ``best-of'' comparisons against GNNRank, we treat them only as oracle envelopes over this fixed candidate set and not as standalone methods.
-
-\paragraph{Timeout handling and missingness.}
-The benchmark enforces per-run wall-clock limits of $1800$\,s for non-GNN methods and $7200$\,s for GNN methods (Table~\ref{tab:protocol_summary}). Timed-out runs are recorded as missing values and are excluded from aggregate statistics via NaN-robust averaging. Coverage, defined as the number of datasets contributing to a method’s summary statistics, is reported explicitly throughout the results section. Under the $1800$\,s non-GNN budget, all proposed variants time out on the Finance instance, so \textbf{OURS} contributes metrics on $77$ of the $80$ datasets in the full suite. Any remaining missing values, including missing runtime entries or explicit dataset-level exclusions, are reported in the missingness audit rather than omitted silently.
-
-\paragraph{Aggregation and numerical precision.}
-To reduce artifacts from log formatting or rounding, our primary table construction uses full-precision per-trial arrays saved from the benchmark runs whenever these are available. If a dataset--method entry is unavailable in the saved arrays, we fall back to the corresponding per-dataset summary extracted from experiment logs and record that fallback in the audit outputs. All tables and figures in \S\ref{subsec:main_results}--\S\ref{subsec:exp_contribution} are generated from the same per-method CSV artifacts, and an automated validation step is used to check internal consistency of coverage and missingness summaries.
-
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \footnotesize
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.08}
-\begin{tabular}{p{2.0cm} p{4.0cm} p{8.0cm}}
+\begin{tabular}{@{}lrrrr r@{}}
 \toprule
-\textbf{Group} & \textbf{Method(s)} & \textbf{Implementation / key settings (summary)} \\
+\textbf{Baseline} & $n$ & OURS faster & ties & slower & median ratio (OURS/base) \\
 \midrule
-OURS &
-\textsc{OURS-MFAS}, \textsc{OURS-MFAS-INS1}, \textsc{OURS-MFAS-INS2}, \textsc{OURS-MFAS-INS3} &
-Common implementation with Phase~1 local-ratio-style cycle breaking, Phase~2 stable weight-prioritized add-back, and optional score refinement. INS1/INS2/INS3 correspond to $P=1/2/3$ add-back passes; INS3 is the main reported variant. \\
-Classical baselines &
-\textsc{SpringRank}, \textsc{SyncRank}, \textsc{SerialRank}, \textsc{BTL}, \textsc{DavidScore}, \textsc{EigenvectorCentrality}, \textsc{PageRank}, \textsc{RankCentrality}, \textsc{SVD-RS}, \textsc{SVD-NRS} &
-Executed through the common non-neural evaluation pipeline using public implementations and default settings, without per-dataset hyperparameter tuning. \\
-GNNRank &
-\textsc{DIGRAC}, \textsc{ib} &
-Evaluated under four fixed configurations per dataset: two backbones crossed with distance-based and proximal-baseline training settings; the proximal-baseline configuration uses distance-based pretraining. \\
+syncRank & 77 & 3 & 6 & 68 & $2.6\times$ \\
+SpringRank & 77 & 14 & 0 & 63 & $17.9\times$ \\
+BTL & 77 & 4 & 3 & 70 & $25.0\times$ \\
+rankCentrality & 77 & 0 & 0 & 77 & $55.3\times$ \\
+SVD\_NRS & 77 & 0 & 0 & 77 & $180\times$ \\
+PageRank & 77 & 0 & 0 & 77 & $536\times$ \\
+DIGRAC & 60 & 60 & 0 & 0 & $0.123\times$ ($\sim 8\times$ faster) \\
+ib & 60 & 60 & 0 & 0 & $0.121\times$ ($\sim 8\times$ faster) \\
 \bottomrule
 \end{tabular}
-\caption{Compared method families and primary configurations used in the benchmark suite. Main tables report per-method results explicitly; any ``best-of'' summaries over GNN configurations are treated only as oracle envelopes for context.}
-\label{tab:methods_summary}
+\caption{Paired runtime W/T/L on common completions.
+OURS is slower than lightweight classical methods and faster than archived trained-GNN end-to-end runs.}
+\label{tab:runtime_wtl}
 \end{table}
 
-\subsection{Main Results on Benchmark Datasets}
-\label{subsec:main_results}
+Coverage on $79$ readable datasets: OURS $77/79$ ($97.5\%$; Finance timeout); most classical methods $78/79$ ($98.7\%$); syncRank $77/79$; DIGRAC/ib $61/79$ ($77.2\%$, primarily not-applicable rather than timeout).
+A global $60$-dataset subset where all methods finish exists but is GNN-applicability biased; pairwise completion remains primary.
+Figure~\ref{fig:runtime_vs_edges} shows empirical A4 runtimes versus $m$ for non-Finance graphs.
 
-\paragraph{Per-method leaderboard on the full suite.}
-Table~\ref{tab:overall_leaderboard_non_gnn} summarizes the main per-method results for the non-GNN methods on the full benchmark suite of $80$ datasets. Each row reports robust aggregate performance across datasets, including the median and mean of the three upset losses together with explicit coverage. Lower values indicate better performance. We report the proposed variants and the classical baselines individually, since these methods have meaningful coverage across the suite and admit direct comparison under the shared non-GNN protocol.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.72\linewidth]{fig_runtime_vs_edges.pdf}
+\caption{A4 wall time versus edge count on non-Finance ablation graphs (log--log). Finance ($m\approx 1.73\times 10^{6}$) is marked as the large-dense boundary.}
+\label{fig:runtime_vs_edges}
+\end{figure}
 
-For readability, we do not include long raw GNN configuration strings in the main leaderboard table. Instead, the learning-based methods are compared separately through compute-matched summaries and best-in-suite comparisons in \S\ref{subsec:exp_contribution}. This keeps the main results section focused on interpretable method-level comparisons while preserving the paper’s broader classical-versus-learning-based evaluation story.
+\subsection{Finance Stress Case}
+\label{subsec:finance}
 
-\begin{table}[t]
+Finance is reported separately, not averaged into quality macros.
+Under the archived $1800$\,s non-GNN protocol, leaderboard OURS and syncRank time out while lightweight classical methods finish in $<4$\,s and GNN end-to-end runs finish in $\sim 15$--$18$\,min.
+In the reviewer ablation stress configs (internal Phase~A budget $600$\,s): FINANCE\_A0 completes with wall $\approx 612.6$\,s (Phase~A $\approx 600.0$\,s); FINANCE\_A2/A4 hit \texttt{INTERNAL\_TIME\_LIMIT} at $\approx 1214.8$/$1214.6$\,s; FINANCE\_A6 hits \texttt{TIMEOUT\_HARD\_WALLCLOCK} at $\approx 1800.1$\,s without a finished ranking.
+This matches the Pass~2 $O(mn+m^{2})$ Phase~A discussion: Finance is a known large-dense boundary, not a typical sparse/moderate instance.
+
+\subsection{Scalability (Empirical)}
+\label{subsec:scalability}
+
+We claim empirical scalability across evaluated sparse and moderately dense comparison graphs, not universal scalability.
+On non-Finance ablation graphs, A4 runtimes are roughly $0.01$--$1.2$\,s (median $\approx 0.57$\,s) with $n\le 602$; enabling min-cut (A6) adds roughly $3$--$4$\,s median.
+No fitted complexity law is inferred from these timings; they illustrate practical behavior under the audited implementation bound of \S\ref{subsec:framework_complexity}.
+% TODO(pass4): consider qualifying or revising the title word ``Scalable'' given Finance.
+
+\subsection{Structural Ablation (A0--A6)}
+\label{subsec:ablation}
+
+Configs: A0 Phase~A only; A1 topo-proxy add-back; A2 exact reachability; A4 reachability+refinement; A5/A6 add optional min-cut (Layer-1 vs full).
+Primary Holm family (exact CSV values):
+
+\begin{table}[H]
 \centering
 \footnotesize
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.08}
-\begin{tabular}{l r r r r r r l}
+\begin{tabular}{@{}llrrrr@{}}
 \toprule
-\textbf{Method} &
-\textbf{Median} &
-\textbf{Mean} &
-\textbf{Median} &
-\textbf{Mean} &
-\textbf{Median} &
-\textbf{Mean} &
-\textbf{Coverage} \\
-&
-\textbf{Upset-Simple} &
-\textbf{Upset-Simple} &
-\textbf{Upset-Ratio} &
-\textbf{Upset-Ratio} &
-\textbf{Upset-Naive} &
-\textbf{Upset-Naive} & \\
+\textbf{Pair} & \textbf{Metric} & $n$ & W/T/L & med~$\Delta$ & Holm $p$ \\
 \midrule
-\textsc{OURS-MFAS}        & 0.878049 & 0.887880 & 0.505748 & 0.381891 & 0.219512 & 0.221970 & 77 / 80 \\
-\textsc{OURS-MFAS-INS3}   & 0.878049 & 0.887880 & 0.505748 & 0.381891 & 0.219512 & 0.221970 & 77 / 80 \\
-\textsc{OURS-MFAS-INS2}   & 0.878049 & 0.887914 & 0.505748 & 0.381874 & 0.219512 & 0.221979 & 77 / 80 \\
-\textsc{OURS-MFAS-INS1}   & 0.880927 & 0.888633 & 0.502815 & 0.381915 & 0.220232 & 0.222158 & 77 / 80 \\
-\midrule
-\textsc{BTL}              & 0.825000 & 0.835385 & 0.631922 & 0.575385 & 0.206250 & 0.208718 & 78 / 80 \\
-\textsc{RankCentrality}   & 1.000000 & 1.010641 & 0.646415 & 0.573846 & 0.250000 & 0.252949 & 78 / 80 \\
-\textsc{SerialRank}       & 1.075000 & 1.093333 & 0.307267 & 0.296795 & 0.268750 & 0.273333 & 78 / 80 \\
-\textsc{SpringRank}       & 1.675000 & 1.679615 & 0.476411 & 0.491154 & 0.418750 & 0.420256 & 78 / 80 \\
-\textsc{SyncRank}         & 1.825000 & 1.833462 & 0.476411 & 0.490641 & 0.456250 & 0.461795 & 78 / 80 \\
-\textsc{PageRank}         & 1.925000 & 1.934615 & 0.960686 & 0.973974 & 0.481250 & 0.488846 & 78 / 80 \\
-\textsc{DavidScore}       & 0.925000 & 0.939103 & 0.632356 & 0.578957 & 0.231250 & 0.234615 & 78 / 80 \\
-\textsc{EigenvectorCentrality}
-                         & 1.825000 & 1.833077 & 0.960686 & 0.973623 & 0.456250 & 0.461603 & 78 / 80 \\
-\textsc{SVD-RS}           & 0.880927 & 0.890513 & 0.790599 & 0.550128 & 0.220232 & 0.222949 & 78 / 80 \\
-\textsc{SVD-NRS}          & 0.882925 & 0.898333 & 0.489421 & 0.380128 & 0.220732 & 0.224744 & 78 / 80 \\
+A0$\to$A2 & upset\_simple$\downarrow$ & 77 & 76/0/1 & $-0.0166$ & $2.4\times 10^{-12}$ \\
+A1$\to$A2 & upset\_simple$\downarrow$ & 33 & 32/0/1 & $-0.0159$ & $1.5\times 10^{-6}$ \\
+A2$\to$A5 & removed weight$\downarrow$ & 33 & 26/7/0 & $-47$ & $8.3\times 10^{-6}$ \\
+A4$\to$A6 & removed weight$\downarrow$ & 77 & 66/11/0 & $-57$ & $4.9\times 10^{-12}$ \\
+A0$\to$A4 & upset\_simple$\downarrow$ & 77 & 76/0/1 & $-0.0169$ & $2.4\times 10^{-12}$ \\
 \bottomrule
 \end{tabular}
-\caption{Per-method leaderboard on the full benchmark suite for the proposed variants and classical baselines. Values are medians and means across datasets; lower is better for all losses. Coverage indicates the number of datasets contributing to each row.}
-\label{tab:overall_leaderboard_non_gnn}
+\caption{Primary structural ablation paired tests (non-Finance). Exact reachability matters; topo-proxy is insufficient; min-cut improves the weighted FAS objective (ranking metrics need not improve monotonically---e.g., A4$\to$A6 can worsen upset\_ratio while reducing removed weight).}
+\label{tab:ablation_primary}
 \end{table}
 
-\paragraph{Compute-matched comparison under a shared $1800$\,s budget.}
-To reduce the effect of unequal compute budgets, Table~\ref{tab:compute_matched_leaderboard_non_gnn} reports the same type of summary after restricting attention to runs that complete within the shared non-GNN wall-clock budget of $1800$\,s. The compute-matched set contains $79$ datasets. This view is especially useful for assessing whether observed differences arise from ranking quality or from completion behavior under the fixed budget.
+Figure~\ref{fig:ablation} shows unpaired Layer median trajectories for context; paired tests above are authoritative.
 
-Within this restricted regime, the proposed variants remain competitive with the strongest classical baselines while maintaining explicit coverage accounting. As in the full-suite table, learning-based methods are handled separately through the cross-family comparisons reported later, rather than through raw configuration-heavy leaderboards in the main text.
-
-\begin{table}[t]
+\begin{figure}[H]
 \centering
-\footnotesize
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.08}
-\begin{tabular}{l r r r r r r l}
-\toprule
-\textbf{Method} &
-\textbf{Median} &
-\textbf{Mean} &
-\textbf{Median} &
-\textbf{Mean} &
-\textbf{Median} &
-\textbf{Mean} &
-\textbf{Coverage} \\
-&
-\textbf{Upset-Simple} &
-\textbf{Upset-Simple} &
-\textbf{Upset-Ratio} &
-\textbf{Upset-Ratio} &
-\textbf{Upset-Naive} &
-\textbf{Upset-Naive} & \\
-\midrule
-\textsc{OURS-MFAS}        & 0.878049 & 0.887880 & 0.505748 & 0.381891 & 0.219512 & 0.221970 & 77 / 79 \\
-\textsc{OURS-MFAS-INS3}   & 0.878049 & 0.887880 & 0.505748 & 0.381891 & 0.219512 & 0.221970 & 77 / 79 \\
-\textsc{OURS-MFAS-INS2}   & 0.878049 & 0.887914 & 0.505748 & 0.381874 & 0.219512 & 0.221979 & 77 / 79 \\
-\textsc{OURS-MFAS-INS1}   & 0.880927 & 0.888633 & 0.502815 & 0.381915 & 0.220232 & 0.222158 & 77 / 79 \\
-\midrule
-\textsc{SpringRank}       & 0.802724 & 0.811757 & 0.569862 & 0.385207 & 0.200681 & 0.202939 & 78 / 79 \\
-\textsc{BTL}              & 0.825000 & 0.835385 & 0.631922 & 0.575385 & 0.206250 & 0.208718 & 78 / 79 \\
-\textsc{SVD-RS}           & 0.880927 & 0.890513 & 0.790599 & 0.550128 & 0.220232 & 0.222949 & 78 / 79 \\
-\textsc{SVD-NRS}          & 0.882925 & 0.898333 & 0.489421 & 0.380128 & 0.220732 & 0.224744 & 78 / 79 \\
-\textsc{RankCentrality}   & 1.000000 & 1.010641 & 0.646415 & 0.573846 & 0.250000 & 0.252949 & 78 / 79 \\
-\textsc{SerialRank}       & 1.075000 & 1.093333 & 0.307267 & 0.296795 & 0.268750 & 0.273333 & 78 / 79 \\
-\textsc{DavidScore}       & 0.925000 & 0.939103 & 0.632356 & 0.578957 & 0.231250 & 0.234615 & 78 / 79 \\
-\textsc{PageRank}         & 1.925000 & 1.934615 & 0.960686 & 0.973974 & 0.481250 & 0.488846 & 78 / 79 \\
-\textsc{SyncRank}         & 1.825000 & 1.833462 & 0.476411 & 0.490641 & 0.456250 & 0.461795 & 78 / 79 \\
-\bottomrule
-\end{tabular}
-\caption{Compute-matched per-method leaderboard under a shared $1800$\,s runtime budget. Coverage is computed over the $79$ datasets with at least one recorded run within the budget. Lower is better for all losses.}
-\label{tab:compute_matched_leaderboard_non_gnn}
-\end{table}
+\includegraphics[width=0.95\linewidth]{fig_structural_ablation.pdf}
+\caption{Unpaired median upset\_simple and removed weight across A0--A6 (descriptive).}
+\label{fig:ablation}
+\end{figure}
 
-\paragraph{Missingness and timeout summary.}
-Coverage differences are an important part of the empirical picture, so Table~\ref{tab:missingness-audit-family} reports a compact dataset-level summary of missingness and timeouts by method family. The main limitation for the proposed method under the shared non-GNN budget is the Finance instance, which does not complete for any of the proposed variants. This explains the gap between the full suite size ($80$) and the OURS coverage ($77$) in the leaderboard tables.
+\subsection{Parameter Sensitivity (Compact)}
+\label{subsec:sensitivity}
 
-\begin{table}[t]
-\centering
-\small
-\setlength{\tabcolsep}{6pt}
-\renewcommand{\arraystretch}{1.10}
-\begin{tabular}{l r r r}
-\toprule
-\textbf{Method family} & \textbf{Datasets with metrics} & \textbf{Datasets with runtime} & \textbf{Datasets with any timeout} \\
-\midrule
-OURS      & 77 & 77 & 1 \\
-classical & 79 & 79 & 2 \\
-GNN       & 78 & 78 & 2 \\
-other     & 1  & 0  & 1 \\
-\bottomrule
-\end{tabular}
-\caption{Missingness and timeout audit by method family at the dataset level. Counts are computed from the same per-method artifacts used for the leaderboard summaries.}
-\label{tab:missingness-audit-family}
-\end{table}
+On Layer~1 ($n=33$): \texttt{zero\_tol} $\in\{10^{-12},10^{-15},10^{-18}\}$ is STABLE (almost all ties vs default).
+Cycle-selection changes are statistically detectable on the A4 path but small ($|\mathrm{med}\,\Delta|\approx 10^{-3}$).
+Refinement: R0 (off) is worse; R1$\approx$R2 and R3$\approx$R2 (saturation).
+Legacy multipass topo-proxy: P1 restores many edges; P2/P3 add little ranking quality---consistent with de-emphasizing INS2/INS3.
+Min-cut candidate budgets: K20$\to$K50 modest; K50$\to$K100 nearly flat.
+Detailed grids are deferred to the supplement.
 
-\paragraph{Instance-level comparisons and best-of envelopes.}
-Aggregate summaries can hide meaningful instance-level variation, so we also examine per-dataset win/tie/loss behavior using full-precision per-dataset means and a tie tolerance of $|\Delta|\le 10^{-6}$. Our primary comparisons remain method-specific. When we additionally report compact ``best-of'' views, we use them only as oracle envelopes over fixed candidate sets, not as standalone algorithms. In particular, later summaries compare the proposed method against a classical oracle envelope and a GNN oracle envelope defined from the fixed candidate sets reported in the benchmark. These summaries provide context for what is achievable within each family while avoiding misleading conflation of multiple methods into a single reported algorithm.
+\subsection{Min-Cut Empirical Regime}
+\label{subsec:mincut_emp}
 
-\paragraph{Reproducibility note.}
-To verify robustness after recent solver updates, we reran the proposed method on two tight-margin football instances and observed no change in upset-simple or runtime. The reported tables are generated from the same per-method CSV artifacts used throughout the analysis, and internal validation checks were used to confirm consistency of table coverage and missingness summaries.
+Connecting to \S\ref{subsec:framework_mincut}, the predefined broad characterization (40 datasets; 39 available) finds the operator active on $28/39$ graphs across $4/7$ families with $280$ accepted exchanges.
+On active graphs, \texttt{upset\_simple}/\texttt{upset\_naive} never worsened; \texttt{upset\_ratio} worsened on $7/28$ (all Basketball; small magnitude).
+We classify min-cut as a useful regime-specific structural mechanism, not a universal ranking cure.
 
+\subsection{Legacy INS Labels}
+\label{subsec:legacy_ins}
+Submitted tables that list \textsc{OURS-MFAS} alongside INS1/2/3 reflect the topo-proxy codebase.
+Archived aggregates show INS3 numerically matching \textsc{OURS-MFAS}; INS2/INS3 are not headline algorithms in this revision.
+Ablation P2/P3 near-inertness further supports presenting exact reachability (A2) rather than multipass proxies as the corrected Phase~B.
 
-\subsection{Contribution and Practical Advantages}
-\label{subsec:exp_contribution}
-
-This subsection summarizes the practical contribution of the proposed method as a scalable, training-free ranking pipeline under fixed wall-clock budgets. The method constructs a ranking directly from the comparison graph by enforcing acyclicity, selectively restoring high-weight edges while preserving that acyclicity, and then extracting scores consistent with the recovered structure. Accordingly, we do \emph{not} present the method as a new state-of-the-art algorithm for minimum weighted feedback arc set in the sense of new approximation guarantees. Rather, the contribution is a deterministic and deployable ranking pipeline grounded in the MWFAS viewpoint and evaluated under the same upset-based criteria used in recent ranking benchmarks.
-
-Two empirical messages emerge from the benchmark. First, \textsc{OURS-MFAS-INS3} (denoted \textbf{OURS}) is frequently competitive with strong classical ranking baselines on a per-dataset basis. Second, relative to training-based GNNRank configurations, \textbf{OURS} often matches or improves upset losses while providing a clear runtime advantage because it avoids training. Taken together, these findings support the paper’s main practical claim: combinatorial acyclicity-based ranking can offer a favorable accuracy--runtime trade-off on large pairwise-comparison graphs.
-
-\paragraph{Competitiveness relative to classical baselines.}
-To place \textbf{OURS} relative to the strongest behavior observed among the classical methods, we compare it against a \emph{best-in-suite} classical reference defined post hoc on each dataset as the minimum upset loss among the ten reported classical baselines. This reference is used only as context and is not treated as a standalone algorithm. The comparison is computed on the $77$ datasets for which \textbf{OURS} returns a valid value under the non-GNN $1800$\,s budget.
-
-Under upset-simple, \textbf{OURS} records $38$ wins and $39$ losses against the best-in-suite classical reference, with median gap $0.0244$ and median relative gap $0.0303$. It lies within $10\%$ of the classical reference on $42/77$ datasets. Under upset-ratio, \textbf{OURS} records $45$ wins and $32$ losses, with median relative gap $-0.0781$, and lies within $10\%$ of the classical reference on $47/77$ datasets. These results indicate that the proposed pipeline is often close to the strongest classical performance observed on a dataset, even though it is not tuned on a per-instance basis.
-
-\paragraph{Accuracy relative to training-based GNNRank configurations.}
-We also compare \textbf{OURS} against a \emph{best-in-suite} GNN reference defined post hoc on each dataset as the minimum upset loss among the fixed set of reported GNN configurations. As above, this serves only as compact context and does not replace the per-configuration reporting in the main tables.
-
-Across the same $77$ datasets for which both \textbf{OURS} and the GNN reference are defined, \textbf{OURS} records $45$ wins, $1$ tie, and $31$ losses under upset-simple, with median gap $-0.1822$ and median relative gap $-0.1701$. It is within $10\%$ of the GNN reference on $48/77$ datasets. Under upset-ratio, \textbf{OURS} records $47$ wins and $30$ losses, with median relative gap $-0.2282$, and is within $10\%$ of the GNN reference on $47/77$ datasets. Overall, these comparisons show that a training-free ranking pipeline can remain competitive even against stronger but substantially more expensive learning-based alternatives.
-
-\begin{table}[t]
-\centering
-\small
-\setlength{\tabcolsep}{6pt}
-\renewcommand{\arraystretch}{1.10}
-\begin{tabular}{l r l l r r l}
-\toprule
-\textbf{Comparison (best-in-suite reference)} & \textbf{$n$} & \textbf{Metric} & \textbf{W/T/L} & \textbf{Median gap} & \textbf{Median rel.\ gap} & \textbf{Within 10\%} \\
-\midrule
-OURS vs classical best-in-suite & 77 & upset-simple & 38/0/39 & 0.0244 & 0.0303 & 42/77 \\
-OURS vs classical best-in-suite & 77 & upset-ratio  & 45/0/32 & --     & $-0.0781$ & 47/77 \\
-\midrule
-OURS vs GNN best-in-suite       & 77 & upset-simple & 45/1/31 & $-0.1822$ & $-0.1701$ & 48/77 \\
-OURS vs GNN best-in-suite       & 77 & upset-ratio  & 47/0/30 & --     & $-0.2282$ & 47/77 \\
-\bottomrule
-\end{tabular}
-\caption{Summary of per-dataset comparisons using full-precision per-dataset means. ``Best-in-suite'' denotes a post-hoc per-dataset minimum over a fixed candidate set and is used only as context; it does not replace per-method or per-configuration reporting. Ties use $|\Delta|\le 10^{-6}$.}
-\label{tab:contribution_summary}
-\end{table}
-
-\paragraph{Runtime--accuracy trade-off and deployment advantages.}
-The main operational advantage of \textbf{OURS} is that it avoids training and runs under the same non-GNN wall-clock budget as the classical baselines. To quantify this advantage, we compare \textbf{OURS} with the best-in-suite GNN configuration on each dataset for which both runtimes are recorded. On these $76$ datasets, define the speedup
-\[
-S \;=\; \frac{t_{\text{GNN}}}{t_{\text{OURS}}}\,,
-\]
-where $t_{\text{GNN}}$ is the runtime of the selected GNN reference and $t_{\text{OURS}}$ is the runtime of \textbf{OURS}.
-
-The resulting speedups are strongly favorable to \textbf{OURS}: the $25$th percentile is $4.72\times$, the median is $10.16\times$, and the $75$th percentile is $18.18\times$, with mean $62.69\times$ due to a heavy tail of very slow GNN runs. Moreover, \textbf{OURS} achieves at least $10\times$ speedup on $38/76$ datasets, at least $50\times$ on $17/76$, and at least $100\times$ on $13/76$ datasets. Using upset-simple as the accuracy criterion, the Pareto breakdown over these $76$ datasets is especially informative: \textbf{OURS} is \emph{better and faster} on $45$ datasets and \emph{worse but faster} on $31$ datasets, and it is never slower than the selected GNN configuration under the recorded protocol. This makes the deployment trade-off clear: the proposed method provides deterministic ranking with substantial runtime savings while still improving accuracy on a substantial fraction of instances.
-
-\begin{table}[t]
-\centering
-\small
-\setlength{\tabcolsep}{7pt}
-\renewcommand{\arraystretch}{1.10}
-\begin{tabular}{l r}
-\toprule
-\textbf{Runtime summary (OURS vs GNN best-in-suite)} & \textbf{Value} \\
-\midrule
-Datasets with both runtimes & 76 \\
-Speedup $S=t_{\text{GNN}}/t_{\text{OURS}}$: $P25$ / median / $P75$ & $4.72\times$ / $10.16\times$ / $18.18\times$ \\
-Speedup mean & $62.69\times$ \\
-Datasets with $S\ge 10\times$ / $50\times$ / $100\times$ & 38 / 17 / 13 \\
-Pareto: better \& faster / better but slower & 45 / 0 \\
-Pareto: worse but faster / worse \& slower & 31 / 0 \\
-\bottomrule
-\end{tabular}
-\caption{Runtime--accuracy trade-off comparing \textbf{OURS} with the best observed GNN configuration per dataset over datasets with both runtimes recorded. Here the GNN runtime is taken from the best-in-suite post-hoc configuration on each dataset.}
-\label{tab:contribution_runtime}
-\end{table}
-
-\paragraph{Coverage and limitations.}
-The method also has clear limitations. Under the $1800$\,s non-GNN budget, \textbf{OURS} does not complete on the largest extremely dense instances, most notably Finance, and the comparisons above are therefore reported only on datasets for which valid outputs are available. In addition, the dominant accuracy tail relative to both classical and GNN references is concentrated in the higher-resolution \emph{finer basketball} instances. These behaviors are consistent with the design of the pipeline: Phase~1 repeatedly searches for cycles and removes arcs, while Phase~2 performs full edge scans in each pass, and both costs become more demanding as graph density increases. At the same time, finer temporal resolution can amplify local inconsistencies that are difficult to resolve using conservative acyclicity-preserving reinsertion alone. These limitations motivate future improvements such as strongly-connected-component-local refinement, reachability-aware insertion rules, and score-refinement procedures that avoid quadratic pair constructions on dense graphs.
 \section{Conclusion and Future Research}
 This paper presents a scalable, training-free ranking pipeline for weighted pairwise-comparison graphs based on the connection between ranking inconsistency and the Minimum Weighted Feedback Arc Set (MWFAS) formulation. The proposed method combines a local-ratio-style cycle-breaking stage to construct an acyclic backbone with a stable weight-prioritized add-back procedure (INS1/INS2/INS3 variants) that restores high-weight comparisons while preserving acyclicity. From the resulting graph, the pipeline produces real-valued scores whose induced order is evaluated under the same upset-based losses used in recent ranking benchmarks.
 
