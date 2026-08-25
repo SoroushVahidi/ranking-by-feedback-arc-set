@@ -51,6 +51,29 @@ code standing in for a public method name. All manuscript-`.tex`-side "A4" occur
 already-approved parenthetical "(A4)" traceability label) were re-audited and remain
 `ABLATION_LABEL_SCIENTIFICALLY_NEEDED`/`INTERNAL_TRACEABILITY_ALLOWED` -- no other
 public-facing "A4" label was found.
+A final figure-layout cleanup pass (this pass) addressed a purely visual problem in Figure 1
+found on direct inspection of the rendered 18-page PDF: the legend (at the time positioned
+"upper left") sat in the same upper region of the axes as the densest cluster of plotted
+runtime points, and an embedded chart title ("Empirical scale: OURS-Reach runtime vs edges")
+duplicated the information already in the formal LaTeX Figure 1 caption immediately below
+the plot. Three candidate legend positions ("lower right", "center right", "upper right")
+were rendered and visually compared using the figure's true production size; "lower right"
+was selected because it is the only one that places the legend entirely in genuinely empty
+axes space, clear of every data point and of the Finance boundary line, while "upper right"
+was rejected because its top edge sits immediately adjacent to the topmost data points. The
+embedded `ax.set_title(...)` call was removed entirely (the caption now serves as the
+figure's title, as the task required); axis limits were made explicit
+(`xlim=(65.91, 2.81e6)`, `ylim=(0.00862, 1.536)`, matching the values matplotlib already
+computed automatically pre-edit) so the visual change could not silently alter the data
+envelope. The y-axis label ("OURS-Reach wall time (s, log)") was inspected at full
+resolution after the title/legend fix and found already clean (ample spacing from tick
+labels), so it was left unchanged rather than shortened. Figure 2 was separately audited
+for the same class of problem (legend/data overlap, redundant embedded title) and found
+already clean -- its per-subplot titles ("Ranking metric", "Structural objective") and
+`suptitle` carry information genuinely distinct from the caption's wording, and it has no
+legend to overlap data -- so it was left untouched. As before, the regenerated figure was
+verified against the same source CSV and the same 77-point non-Finance
+`(m, runtime_total_sec)` data hash (`581fd7aa3f...`); only rendered layout changed.
 Dataset denominator accounting remains correct (intended 80 / loadable 78; coverage 77/78, 78/78, 61/78).
 Publication-tone cleanup completed; no unsupported supplement references.
 Cover letter personalized to Prof. Arabnia with manuscript ID (author-attested metadata).
@@ -72,6 +95,14 @@ The only optional author-side hygiene step is a final visual overlay of the publ
 | `FIGURE1_DATA_UNCHANGED` | Pass |
 | `NO_UNEXPLAINED_PUBLIC_A4_LABELS` | Pass |
 | `FIGURE1_VISUAL_LABEL_CHECK` | Pass |
+| `FIGURE1_REDUNDANT_INTERNAL_TITLE_REMOVED` | Pass |
+| `FIGURE1_LEGEND_DOES_NOT_OVERLAP_DATA` | Pass |
+| `FIGURE1_PUBLICATION_LAYOUT` | Pass |
+| `OTHER_FIGURES_VISUAL_AUDIT` | Pass |
+| `TABLE8_REGRESSION_CHECK` | Pass |
+| `RESPONSE_REGRESSION_CHECK` | Pass |
+| `COVER_LETTER_REGRESSION_CHECK` | Pass |
+| `NO_CLIPPING` / `NO_OVERLAP` / `NO_BROKEN_GLYPHS` / `NO_NEW_LAYOUT_REGRESSION` (full 18-page visual sweep) | Pass |
 | `CANONICAL_METHOD_MATCHES_HEADLINE_TABLES` | Pass |
 | `NO_UNTRACEABLE_NUMERICAL_CLAIMS` | Pass |
 | `NO_DENOMINATOR_INCONSISTENCY` | Pass |
@@ -96,10 +127,10 @@ The only optional author-side hygiene step is a final visual overlay of the publ
 
 | Artifact | Pages | SHA256 |
 |---|---:|---|
-| Manuscript PDF | 18 | `bd0fefac228f818fa32550828345542fb52424970b35ff27c6f6b61fcf6ac71d` |
-| Response PDF | 7 | `ddeadbc89265bf259d1d22ab481f7cb2c5a18decaae7e7cbb3363ba666a7ebd6` |
-| Cover letter PDF | 1 | `d283930f4c2df83da7558e1215daec6c3a7bebc37d81232d9d2bf3cc17ded6e7` |
-| Package ZIP | — | `c7c09ca9ba2c1b078a99c63345e451d82b0499e96ac1dd88cdfaafad771296c0` |
+| Manuscript PDF | 18 | `ef41ea023daa87c6787558b01a0f351784d268b0c1115cde4baba941f322f709` |
+| Response PDF | 7 | `9495ec97bf83e3d2c1c98c171dfe46412270387db5c7cd8cecee04c2c62c5824` |
+| Cover letter PDF | 1 | `0fc03cc752e4ab5ba0fb6049e0d82bd962ba1ed0a6cac79057a4dd0045e10c73` |
+| Package ZIP | — | `66a4c1e3420d21fffe92f2a1cae4849a0acd5009b10f58e42c892fa1a72661b7` |
 
 ## Author-optional overlay
 
