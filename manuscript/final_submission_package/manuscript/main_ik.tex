@@ -662,7 +662,7 @@ Dense near-complete graphs remain difficult: Finance is the explicit boundary ca
 Finite-budget practical outputs need not inherit the idealized Demetrescu--Finocchi guarantee (\S\ref{subsec:theory_df03}), and identity-order fallback has no nontrivial general multiplicative error bound (Prop.~\ref{prop:fallback}).
 The optional min-cut repair improves the weighted feedback objective but not every upset metric, and its benefit is regime-specific (\S\ref{subsec:mincut_emp}).
 Relative to most lightweight classical estimators \textsc{OURS-Reach} is slower (\S\ref{subsec:runtime_coverage}); GNN speedups refer to archived end-to-end training+evaluation under imperfect hardware comparability (\S\ref{subsec:exp_setup}).
-Family-aware analysis shows that SpringRank comparisons remain family-sensitive, and BTL (and corrected RankCentrality) remain stronger on \texttt{upset\_ratio} (\S\ref{subsec:family_aware}).
+Family-aware analysis shows that SpringRank comparisons remain family-sensitive, and BTL remains stronger on \texttt{upset\_ratio} under equal-family scrutiny (\S\ref{subsec:family_aware}). Corrected RankCentrality is stronger than \textsc{OURS-Reach} on pairwise \texttt{upset\_ratio} (Table~\ref{tab:pairwise_quality_ratio}); family-aware RankCentrality macros were not recomputed after the baseline correction and are not used as evidence.
 Protocol repetitions for deterministic non-GNN methods characterize runtime/timeout variability rather than ranking uncertainty.
 
 \section{Conclusion}

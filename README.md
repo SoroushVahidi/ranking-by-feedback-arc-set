@@ -2,13 +2,16 @@
 
 This repository compares **ranking by minimum feedback arc set (MFAS)** with classical ranking methods and GNN-based rankers (e.g. [GNNRank](https://github.com/SherylHYX/GNNRank), DIGRAC, ib) on directed pairwise-comparison data. All code and experiments live under **`GNNRank-main/`**, which extends the [GNNRank](https://github.com/SherylHYX/GNNRank) codebase with our method (OURS) and a full evaluation pipeline.
 
+**Journal of Supercomputing major revision (canonical method).** The method reported in the revised manuscript as **OURS-Reach** is Phase~A local-ratio cycle breaking + **exact reachability-aware** Phase~B reinsertion + Phase~C refinement (adjacent-swap then order-preserving ternary), **without** optional min-cut. Implementation entry points: `GNNRank-main/src/ours_mfas.py` (`addback_mode="reach"`) and the A4 configuration in `GNNRank-main/scripts/revision_analysis_20260825/`. Legacy fixed-topological multipass labels **OURS_MFAS_INS1/INS2/INS3** are ablation/historical only and are **not** the canonical revised method. Revision manuscript sources and tables/figures live under `manuscript/revision_20260825/`.
+
 ## What’s in this repo
 
-- **OURS (MFAS)**: ranking via minimum feedback arc set (several variants: OURS_MFAS_INS1, INS2, INS3).
-- **Classical baselines**: SpringRank, syncRank, serialRank, BTL, David’s score, PageRank, rankCentrality, SVD_RS, SVD_NRS, etc.
+- **OURS-Reach (canonical):** exact reachability add-back + refinement (see note above).
+- **OURS legacy ablation variants:** fixed-topological INS1/INS2/INS3 (not headline).
+- **Classical baselines**: SpringRank, syncRank, serialRank, BTL, David’s score, PageRank, rankCentrality (corrected Negahban–Oh–Shah), SVD_RS, SVD_NRS, etc.
 - **GNN rankers**: DIGRAC, ib (from the GNNRank line of work).
-- **Datasets**: ERO synthetic, Basketball temporal, Football (England Premier League), animal society, faculty hiring, Head-to-Head, and others (see below).
-- **Pipeline**: scripts to aggregate results from `result_arrays/`, build leaderboards, paper tables/figures, and validate artifacts.
+- **Datasets**: ERO synthetic, Basketball temporal, Football (England Premier League), animal society, faculty hiring, Head-to-Head, and others (see below). Two intended suite members lack loadable `adj.npz` files (`ERO/p5K5N350eta10styleuniform`, `Halo2BetaData/HeadToHead`); loadable analyses use 78 graphs.
+- **Pipeline**: scripts to aggregate results from `result_arrays/`, build leaderboards, paper tables/figures, and validate artifacts. JoS revision reaggregation: `GNNRank-main/scripts/revision_analysis_20260825/`.
 
 ## Quick start
 
