@@ -1,6 +1,17 @@
 # Reviewer-1 Ablation Stage Mapping Decision
 
-Date: 2026-08-25
+Date: 2026-08-25 (superseded in part 2026-08-25: see below)
+
+> **Update:** the single-table, four-row design below (A0/A1/A2/A4 in one table) was
+> replaced by a two-panel design on exact matched dataset support after independent
+> inspection found A1's row used a different ($n=33$) dataset scope than A0/A2/A4's
+> ($n=77$) rows in the same table. The A0-A6 code-level mapping and the legacy-vs-canonical
+> reasoning below are unchanged and still authoritative; only the final table layout
+> changed. See `FINAL_R1_COMMON_SUPPORT_AUDIT.md` and the revised
+> `FINAL_R1_ABLATION_NUMERICAL_AUDIT.md` for the current two-panel design (Panel (a):
+> A0→A1→A3 legacy progression on common $n=33$; Panel (b): A0→A2→A4 canonical progression
+> on common $n=77$), which additionally makes use of A3 (legacy topo add-back +
+> refinement), not used in the original single-table design.
 
 ## Code-verified A0-A6 configuration definitions
 

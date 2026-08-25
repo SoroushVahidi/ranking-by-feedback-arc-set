@@ -16,6 +16,13 @@ one new manuscript table (Table 8); (2) the Introduction's informal feedback-arc
 statement was corrected to match Proposition 1 exactly (inequality in general, equality
 under inclusion-minimality). No new scientific experiments were run; the new table is
 derived entirely from already-completed structural-ablation outputs.
+A follow-up correction (this pass) fixed a mixed-dataset-support issue in Table 8: the
+legacy A1 row previously used a different ($n=33$) dataset scope than the A0/A2/A4 rows
+($n=77$) in the same table. Table 8 is now two panels, each internally on one exact
+common-completion dataset set (Panel (a): A0/A1/A3 legacy progression, $n=33$; Panel (b):
+A0/A2/A4 canonical progression, $n=77$), re-aggregated from the same underlying
+`structural_ablation.csv` with no new experiment and no re-run ranking algorithm. See
+`FINAL_R1_COMMON_SUPPORT_AUDIT.md` and the revised `FINAL_R1_ABLATION_NUMERICAL_AUDIT.md`.
 Dataset denominator accounting remains correct (intended 80 / loadable 78; coverage 77/78, 78/78, 61/78).
 Publication-tone cleanup completed; no unsupported supplement references.
 Cover letter personalized to Prof. Arabnia with manuscript ID (author-attested metadata).
@@ -31,6 +38,8 @@ The only optional author-side hygiene step is a final visual overlay of the publ
 | Experiments / theory closed | Pass |
 | `REVIEWER_1_COMMENT_2_FULLY_ANSWERED` | Pass |
 | `NO_UNTRACEABLE_R1_ABLATION_VALUES` | Pass |
+| `LEGACY_PANEL_COMMON_SUPPORT` | Pass |
+| `CANONICAL_PANEL_COMMON_SUPPORT` | Pass |
 | `CANONICAL_METHOD_MATCHES_HEADLINE_TABLES` | Pass |
 | `NO_UNTRACEABLE_NUMERICAL_CLAIMS` | Pass |
 | `NO_DENOMINATOR_INCONSISTENCY` | Pass |
@@ -55,10 +64,10 @@ The only optional author-side hygiene step is a final visual overlay of the publ
 
 | Artifact | Pages | SHA256 |
 |---|---:|---|
-| Manuscript PDF | 17 | `76682f5e054d659e96959decff5b9419e5e4878d8eba481baa15da981d1fb701` |
-| Response PDF | 7 | `6f06c5ef138e0b33d75376b09360e9867b95b101e82bc5e15dc9ec9ad43b7850` |
-| Cover letter PDF | 1 | `0b77fe45a5480c6cfd8e27278d5d1e49e032975f378a64b931b791c55d35de0a` |
-| Package ZIP | — | `9ee5a24be268623410a916e10e4feff14e134bca69ee9b215acd878d8ff74298` |
+| Manuscript PDF | 18 | `fec7131399a70a3aa4dc7805cbfa02ca1d3139e241f29fc3315114c64def03af` |
+| Response PDF | 7 | `0949e658b24ffc5f0eeffb5d56fdd734b00a8103d3e5b6f65ed4d6c2b987583f` |
+| Cover letter PDF | 1 | `cd511ae2e122f1e883c2b8bc9d34339b28eb97678f307977edc6cdc54aa04f99` |
+| Package ZIP | — | `a177bac1a9cadef83ab13aaf769130edef2c0e15f6a35bad47f907f1a31f63f8` |
 
 ## Author-optional overlay
 
