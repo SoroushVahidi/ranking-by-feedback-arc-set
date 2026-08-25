@@ -48,3 +48,10 @@ Manuscript/response: unchanged in this pass (no contradiction requiring edits).
 
 - COVER_LETTER_NON_REPETITIVE = PASS  
 - Three-document consistency = PASS
+
+## Final hashes
+
+- manuscript: `c0d1e86dd340f950780ee72aaeb904d50421815906b8a939c933fc6335181ca7`
+- response: `248a0f34f299f692b90312277a64120fe712ccd9581499c31de5767b38fd7c7c`
+- cover letter: `c74da219622792bc6e42ff82ffacd9fb7b2b0bf549c3163452b9c14631858378`
+- package ZIP: `d07ad3617de4c2a41d5c75775503ee9dcbac4b9d33e36fce9a8ba19ffe75bf4a`

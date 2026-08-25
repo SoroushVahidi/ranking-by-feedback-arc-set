@@ -40,7 +40,7 @@ The only optional author-side hygiene step is a final visual overlay of the publ
 | Manuscript PDF | 17 | `c0d1e86dd340f950780ee72aaeb904d50421815906b8a939c933fc6335181ca7` |
 | Response PDF | 6 | `248a0f34f299f692b90312277a64120fe712ccd9581499c31de5767b38fd7c7c` |
 | Cover letter PDF | 1 | `c74da219622792bc6e42ff82ffacd9fb7b2b0bf549c3163452b9c14631858378` |
-| Package ZIP | — | `` |
+| Package ZIP | — | `d07ad3617de4c2a41d5c75775503ee9dcbac4b9d33e36fce9a8ba19ffe75bf4a` |
 
 ## Author-optional overlay
 
