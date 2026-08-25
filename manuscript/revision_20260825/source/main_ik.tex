@@ -10,11 +10,17 @@
 \usepackage{mathtools}
 \usepackage{amssymb}
 \usepackage{tabularx}
+\usepackage{float}
 
 \usepackage[round,authoryear]{natbib}
 \usepackage{amsthm}
 
 \newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{remark}{Remark}
+\newtheorem{corollary}{Corollary}
 
 \usepackage[
     top=1in,
@@ -112,200 +118,265 @@ We compare against classical and GNNRank baselines under a common protocol with 
 
 Empirically, ranking quality shows strong gains against several classical and GNN methods, while remaining competitive---not uniformly superior---with \textsc{SpringRank}, \textsc{DavidScore}, and \textsc{SVD\_NRS} under family-aware analysis; \textsc{BTL} remains stronger on \texttt{upset\_ratio}. On runtime, the pipeline is slower than lightweight classical baselines and substantially faster than trained GNNRank models under the evaluated end-to-end training protocol. Scalability is strong on the evaluated sparse and moderately dense instances; the near-complete Finance graph is an explicit large-dense boundary case.
 
-\subsection{Related Works}
+\subsection{Related Work}
+\label{sec:related}
 
-\subsubsection{Previous Work on Ranking from Pairwise Comparisons}
-Ranking from noisy and incomplete pairwise comparisons has been studied through statistical, spectral, random-walk, and optimization-based formulations \citet{H00,CGZ21,SW16}. Since our experiments evaluate score-based outputs under upset-style losses, we focus here on the principal baseline families most relevant to our benchmark and to the positioning of our method as a training-free ranking pipeline.
+\subsubsection{Feedback Arc Set and MWFAS}
+The Minimum Weighted Feedback Arc Set (MWFAS) problem asks for a minimum-weight set of directed arcs whose removal makes a graph acyclic \citet{K72,FPP20}. Classical approximation results include divide-and-conquer methods based on spreading metrics and LP relaxations \citet{EG95,EG2000}. Exact and parameterized algorithms target smaller or structurally restricted instances \citet{BA21,HM21,RS06,SJ21}. Heuristic refinements emphasize minimal/stable feedback sets and initialization effects \citet{c24,c25}. Closely related is the maximum acyclic subgraph problem \citet{HR94}. We use MWFAS as a ranking consistency objective, not as a setting in which we claim a new general approximation algorithm.
 
-A first major family is probabilistic and statistical ranking. \textsc{BTL} (Bradley--Terry) models each item with a positive latent ability parameter and defines pairwise win probabilities as $\Pr(i \succ j)=\pi_i/(\pi_i+\pi_j)$ \citet{BTL}. Estimating these abilities yields real-valued scores that induce a global ranking and remains one of the standard baselines for paired-comparison data. \textsc{DavidScore} provides a simpler summary-based alternative that aggregates possibly unbalanced paired-comparison outcomes into a single score per item \citet{DavidScore}.
+\subsubsection{Ranking from Pairwise Comparisons}
+Ranking from noisy and incomplete pairwise comparisons has been studied through statistical, spectral, random-walk, and optimization-based formulations \citet{H00,CGZ21,SW16}. Our experiments evaluate score-based outputs under the upset-style losses used in recent ranking benchmarks \citet{he22}, so we focus on the principal baseline families represented in that protocol.
 
-A second family uses random-walk and spectral constructions. \textsc{RankCentrality} builds a Markov chain from pairwise outcomes and uses its stationary distribution as a ranking score vector \citet{NS17}. \textsc{SerialRank} constructs a similarity/seriation matrix and then applies spectral seriation to recover an ordering \citet{SerialRank}, while \textsc{SyncRank} formulates ranking from incomplete and noisy comparisons as an angular synchronization problem and recovers scores through spectral or SDP-based relaxations \citet{SyncRank}. Related low-rank approaches include \textsc{SVD\_RS} and \textsc{SVD\_NRS}, which derive one-dimensional ranking scores from pairwise measurements using singular-vector structure under different normalization choices \citet{SVD_RS_NRS}.
+\subsubsection{Statistical and Spectral Ranking}
+\textsc{BTL} models pairwise win probabilities through latent abilities \citet{BTL}. \textsc{DavidScore} aggregates unbalanced paired outcomes into per-item scores \citet{DavidScore}. Random-walk and spectral constructions include \textsc{RankCentrality} \citet{NS17}, \textsc{SerialRank} \citet{SerialRank}, \textsc{SyncRank} \citet{SyncRank}, and SVD-based scores \citet{SVD_RS_NRS}. Graph scoring methods include eigenvector centrality \citet{EigenvectorCentrality}, \textsc{PageRank} \citet{PageRank}, and \textsc{SpringRank} \citet{SpringRank}. Spectral and synchronization approaches already note connections between ranking inconsistency and feedback structure \citet{SerialRank,SyncRank}.
 
-A third group consists of graph-based scoring methods that operate directly on the directed comparison network. \textsc{EigenvectorCentrality} assigns scores recursively through weighted endorsements from neighboring nodes \citet{EigenvectorCentrality}, while \textsc{PageRank} interprets importance through the stationary distribution of a random walk with teleportation \citet{PageRank}. \textsc{SpringRank} provides a physics-inspired alternative by embedding nodes on a real-valued axis through minimization of a quadratic spring-energy objective over directed edges, leading to a scalable linear-system-based estimator \citet{SpringRank}.
+\subsubsection{GNN-Based Ranking}
+Learning-based methods infer ranking scores from directed comparison graphs. \textsc{GNNRank} uses directed-GNN backbones with ranking-oriented losses \citet{he22}. We compare against the framework's \textsc{DIGRAC} \citet{DIGRAC} and inception-style (\textsc{ib}) \citet{DiGCN} backbones. These methods can be accurate but incur training cost and hyperparameter sensitivity, which motivates a training-free alternative under fixed wall-clock budgets.
 
-More recently, learning-based methods have used graph neural networks to infer ranking scores from directed comparison graphs. \textsc{GNNRank} learns global rankings from pairwise comparisons using directed-GNN backbones and differentiable objectives tailored to ranking losses \citet{he22}. In our experiments we use the two backbones provided in that framework: \textsc{DIGRAC}, which is designed to capture directionality and flow imbalance in directed graphs \citet{DIGRAC}, and an inception-style directed convolutional backbone (\textsc{ib}) that combines multi-hop proximity channels for directed graphs \citet{DiGCN}. These learning-based methods provide a useful point of comparison because they often achieve strong ranking quality but incur training cost and additional hyperparameter sensitivity.
+\subsubsection{Local-Ratio Cycle Breaking, Add-Back Lineage, and Structural Repair}
+Demetrescu and Finocchi \citet{CI03} give a local-ratio cycle-breaking heuristic with an approximation guarantee parameterized by the length of a longest simple directed cycle, building on the local-ratio framework of \citet{BK04}. Their Phase~2 reinserts deleted arcs subject to an \emph{exact} cycle-safety test (equivalently: reinsert $(u,v)$ iff $v$ does not reach $u$ in the current DAG), and they remark that ordering candidates by decreasing weight can improve solution quality. Exact cycle-safe reinsertion and weight-prioritized ordering are therefore prior; they are not newly invented here.
 
-Our work differs from the above families in emphasis rather than problem setting. Instead of learning ranking scores through statistical estimation or graph-neural training, we exploit combinatorial acyclicity structure to construct a deterministic, training-free ranking pipeline that is evaluated under the same upset-based criteria as these baselines.
+\subsubsection{Relation to \citet{VK25}}
+Prior work by \citet{VK25} operationalizes ranking via the \citet{CI03} local-ratio backbone, adopts descending-weight reinsertion under the exact cycle-safety test, and includes order-preserving ternary score refinement. The accompanying practical codebase later used a weaker fixed-topological-position proxy for reinsertion (accepting $(u,v)$ only if it is forward under one fixed topological order). That proxy is a sufficient but not necessary condition for cycle safety and can reject admissible arcs; multipass INS1/INS2/INS3 variants in the submitted manuscript compensate partially for this weakening and are retained only as historical comparison points. This revision restores exact reachability-aware reinsertion as an implementation-fidelity correction, adds formal ranking$\leftrightarrow$MWFAS analysis and guarantee/complexity qualifications, introduces a secondary conflict-triggered weighted min-cut exchange, and expands classical/GNN empirical validation.
 
-\subsubsection{Previous Work About Minimum Weighted Feedback Arc Set}
-The Minimum Weighted Feedback Arc Set (MWFAS) problem has been studied extensively from approximation, heuristic, exact, and parameterized perspectives \citet{K72,FPP20}. In general terms, MWFAS asks for a minimum-weight set of directed edges whose removal makes a graph acyclic, and it is a natural combinatorial formulation for resolving inconsistencies in directed comparison data.
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Component} & \textbf{DF03} & \textbf{VK25} & \textbf{This work} \\
+\midrule
+Local-ratio backbone & yes & yes & prior (used) \\
+Exact cycle-safe reinsertion & yes & yes (spec.) & fidelity restore \\
+Weight-ordered reinsertion & suggested & yes & prior (used) \\
+Time-bounded practical impl.\ & -- & partial & audited \\
+Order-preserving refinement & -- & yes & prior (used) \\
+Formal ranking$\leftrightarrow$MWFAS & -- & asserted & proved \\
+DF03 guarantee under timeout & N/A & not audited & qualified (no) \\
+Weighted min-cut exchange & -- & -- & secondary new \\
+Broad classical + GNN eval.\ & -- & GNN-focused & expanded \\
+\bottomrule
+\end{tabular}
+\caption{Novelty separation relative to Demetrescu--Finocchi (DF03) and \citet{VK25}. ``Fidelity restore'' means restoring the established exact test after an implementation weakening, not inventing the test.}
+\label{tab:novelty_separation}
+\end{table}
 
-Early approximation work by \citet{EG95} was strengthened by \citet{EG2000}, who developed divide-and-conquer methods based on spreading metrics and linear-programming relaxations. While these results are theoretically important, their reliance on comparatively heavy optimization machinery limits their practical appeal for large ranking graphs. For faster practical computation, \citet{CI03} proposed an $O(|V||E|)$ heuristic based on the local-ratio framework of \citet{BK04}, together with an approximation guarantee parameterized by the length of the longest directed cycle. This line is particularly relevant to our work because it provides the algorithmic starting point for our cycle-breaking stage.
-
-Exact and near-exact approaches have also been studied, primarily for smaller or sparser instances. \citet{BA21} presented an exact method for the unweighted minimum feedback arc set problem on sparse directed graphs using lazy cycle enumeration, while \citet{HM21} studied tight localizations of feedback sets and algorithms whose worst-case running times can become prohibitive on dense graphs. These approaches are valuable as methodological reference points, but their scalability is limited in the large benchmark settings targeted in our paper.
-
-From a parameterized viewpoint, \citet{RS06} investigated feedback set problems in tournaments, including weighted and unweighted feedback arc set variants, and obtained fixed-parameter algorithms with running times exponential in the solution size. Related approximation work by \citet{HR94} considered the maximum acyclic subgraph problem, which is closely connected to unweighted feedback arc deletion. More recently, \citet{SJ21} explored satisfiability-modulo-theories approaches to MFAS using incremental solving, again highlighting the trade-off between solution quality and scalability.
-
-Recent heuristic work has also emphasized structural refinements of feedback-arc-set solutions. \citet{c24} introduced the notions of minimal and stable feedback arc sets and proposed the MS-FAS heuristic based on strongly connected component decomposition and iterative refinement. Building on this direction, \citet{c25} examined how different initial orderings, including centrality-based ones, affect MS-FAS behavior and reported robustness to initialization across benchmark instances.
-
-As stated above, we do not claim a new general MWFAS approximation algorithm. The Related Work above situates the classical and learning-based ranking baselines and the MWFAS literature that frames our pipeline; the contribution list in the preceding subsection delimits prior components from the theory, fidelity, min-cut, and empirical additions developed in this revision.
-% ============================================================
-% Framework / Methods Section (FULL UPDATED VERSION, 4 SUBSECS)
-% ============================================================
-
-\section{A Framework for Ranking from Pairwise Comparisons via MWFAS}
+\section{Method and Theory}
 \label{sec:framework}
 
-We adopt the local-ratio feedback-arc-set heuristic of Demetrescu and Finocchi~\cite{CI03} as the combinatorial core and develop it into a deterministic, time-bounded ranking pipeline for weighted pairwise-comparison graphs. Given a directed comparison graph, the proposed pipeline (i) constructs an acyclic backbone through cycle-based residual reduction and arc removal (Phase~1), (ii) selectively reinserts high-weight arcs while preserving acyclicity (Phase~2), (iii) extracts a ranking from the resulting DAG and assigns real-valued scores consistent with that order, and (iv) optionally refines score magnitudes under bounded computation while preserving the induced ranking (Phase~C). The underlying local-ratio heuristic of~\citet{CI03} comes with an approximation guarantee bounded by the length of a longest simple directed cycle in the input graph. 
+We describe a deterministic, training-free ranking pipeline for weighted pairwise-comparison graphs. The canonical revised pipeline is:
+\begin{enumerate}
+\item \textbf{Phase~A (prior):} local-ratio-style cycle breaking \citet{CI03,VK25}.
+\item \textbf{Phase~B (fidelity correction):} exact weight-prioritized reachability-aware reinsertion \citet{CI03,VK25}.
+\item \textbf{Optional secondary repair (new):} conflict-triggered weighted min-cut exchange.
+\item \textbf{Phase~C (prior lineage):} topological score extraction and optional order-preserving refinement \citet{VK25}.
+\end{enumerate}
+Legacy multipass topo-proxy variants (INS1/INS2/INS3) appear only as submitted-manuscript comparison points; they are not the revised method's central contribution. We do not claim a new general MWFAS approximation algorithm.
 
-We do not claim any new approximation guarantee beyond that underlying result. Rather, our contribution is a practical, scalable, and training-free ranking-oriented instantiation of the MWFAS viewpoint, with deterministic tie-breaking, explicit time budgeting, robust numerical handling, multi-pass add-back variants, and an optional order-preserving refinement stage. In this sense, the method is intended not as an exact solver for MWFAS, but as a deployable alternative to learning-based ranking methods when runtime, reproducibility, and training cost are important considerations.
-% -------------------------
-\subsection{Problem Setting and Input Representation}
+\subsection{Problem Setting}
 \label{subsec:framework_problem}
+Let $V=\{1,\dots,n\}$ be items and $G=(V,E,w)$ a directed graph with strictly positive arc weights $w:E\to\mathbb{R}_{>0}$. Antiparallel arcs are allowed. The solver input is a sparse weighted adjacency matrix converted to arrays $(\texttt{src},\texttt{dst},\texttt{w})$ of length $m=|E|$. The output is a score vector $s\in\mathbb{R}^n$ with larger values indicating higher rank. Formal ranking and MWFAS definitions appear in \S\ref{sec:intro}.
 
-\paragraph{Comparison graph.}
-Let $V=\{1,\dots,n\}$ denote the items to be ranked. We represent pairwise comparisons by a weighted directed graph $G=(V,E,w)$, encoded as a nonnegative weighted adjacency matrix $A\in\mathbb{R}^{n\times n}$, where $A_{ij}$ denotes the aggregated weight of the directed comparison $i\to j$. The graph is fully general and is not restricted to tournaments; in particular, both $A_{ij}>0$ and $A_{ji}>0$ may occur for the same pair of items. In the implementation, only strictly positive weights are retained, so entries with $A_{ij}\le 0$ are ignored in the internal representation.
+\subsection{Ranking--MWFAS Optimum-Value Equivalence}
+\label{subsec:theory_equivalence}
 
-\paragraph{Input representation.}
-The canonical solver input is a sparse adjacency matrix. In the benchmark pipeline, datasets are loaded as sparse adjacency files and stored as \texttt{scipy.sparse.csr\_matrix} objects, which are then passed directly to the proposed method. For completeness, the implementation also accepts dense inputs and converts them to CSR format before invoking the core routine.
-
-\paragraph{Internal edge-list form.}
-For computation, the sparse matrix $A$ is converted to an edge-list representation with arrays
-\texttt{src}, \texttt{dst}, and \texttt{w} of length $m$, where each strictly positive entry of $A$ contributes one directed edge. Thus, antiparallel comparisons are preserved as distinct arcs whenever both directions are present. Unless explicitly stated otherwise, edge weights are used in their original form and are not normalized or rescaled before the acyclicity-enforcement stages.
-
-\paragraph{Outputs and score convention.}
-The core routine returns a real-valued score vector $s\in\mathbb{R}^n$, where larger values indicate higher rank. When a discrete ordering is needed for evaluation, the benchmark derives it from the score vector in a deterministic way. The implementation can also return auxiliary metadata, including runtime and per-phase diagnostics such as the number of edges removed in Phase~1, the number reinserted in each add-back pass, and the corresponding phase timings.
-
-\paragraph{Determinism and tie-breaking.}
-A central design goal of the pipeline is deterministic behavior under fixed input and time budget. In Phases~1 and~2, cycle search traverses vertices in increasing index order and explores outgoing edges in stored edge order, while the add-back stage processes candidate edges in a stable descending-weight order. Topological ordering for add-back and score extraction is computed with Kahn's algorithm under a deterministic queue policy: initially eligible zero-indegree vertices are processed in increasing index order, and newly eligible vertices are appended as they arise. The optional score-refinement stage preserves the induced order but can introduce minor non-determinism when exact score ties are present and tie-breaking depends on non-stable sorting. Aside from such score-tie effects, the pipeline is deterministic for fixed inputs and time limits.
-% -------------------------
-\subsection{Phase 1: Local-Ratio Cycle Breaking (Acyclic Backbone)}
-\label{subsec:framework_phase1}
-
-This subsection describes Phase~1 of our pipeline, which produces an \emph{acyclic backbone} by iteratively identifying directed cycles and removing a subset of arcs.
-The procedure is a local-ratio-style heuristic: it maintains residual arc weights and repeatedly reduces residual mass along a detected cycle, deleting arcs whose residual reaches (near) zero.
-We emphasize that Phase~1 is a practical heuristic component; we do not claim a new approximation guarantee beyond what is known for local-ratio-type feedback-arc-set heuristics, and our contribution is the ranking-oriented, time-bounded, deterministic instantiation used in the experimental protocol.
-
-\paragraph{State and initialization.}
-Given the input adjacency $A$, we first form an edge list $(\texttt{src},\texttt{dst},\texttt{w})$ containing one directed edge for each strictly positive entry of $A$ (see \S\ref{subsec:framework_problem}).
-Phase~1 maintains:
-(i) a residual weight vector $r\in\mathbb{R}^m$ initialized by $r\leftarrow w$,
-(ii) a Boolean mask \texttt{alive}$\in\{0,1\}^m$ indicating which edges are currently kept (initialized to all \texttt{True}), and
-(iii) a static adjacency structure \texttt{adj\_e} in which \texttt{adj\_e[u]} stores the indices of all edges with source vertex $u$.
-Edges are removed by setting \texttt{alive[e]} to \texttt{False}; the adjacency lists are not rebuilt, and removed edges are skipped via the \texttt{alive} mask.
-
-\paragraph{Cycle detection.}
-At each iteration, Phase~1 calls a deterministic DFS-based cycle finder to obtain one directed cycle in the currently alive subgraph.
-The cycle finder performs an iterative depth-first search over vertices in increasing index order and explores outgoing edges in the stored adjacency order.
-It uses standard three-color marking (\texttt{WHITE}/\texttt{GRAY}/\texttt{BLACK}) together with parent pointers \texttt{parent\_v} and \texttt{parent\_e}.
-A back edge to a \texttt{GRAY} vertex identifies a directed cycle, which is reconstructed as a list of edge indices by following parent pointers and returned to the caller.
-
-\paragraph{Local-ratio-style residual reduction and deletion.}
-Given a detected cycle $C$ (represented as a list of edge indices), we compute
+\begin{proposition}[Optimum-value equivalence]
+\label{prop:rank_mwfas}
+Let $G=(V,E,w)$ with $w>0$. Write
 \[
-\Delta \;=\; \min_{e\in C} r_e.
+\mathrm{OPT}_{\mathrm{rank}}
+=
+\min_{R}\sum_{(i,j)\in E:\,R(i)>R(j)} w_{ij},
+\qquad
+\mathrm{OPT}_{\mathrm{MWFAS}}
+=
+\min\bigl\{\textstyle\sum_{e\in F}w_e : F\subseteq E,\ (V,E\setminus F)\ \text{acyclic}\bigr\}.
 \]
-If $\Delta>0$, we subtract $\Delta$ from the residual of every edge on the cycle, i.e., $r_e\leftarrow r_e-\Delta$ for all $e\in C$.
-We then delete all edges whose residual is numerically zero, using a tolerance \texttt{zero\_tol} (default $10^{-15}$): edges with $r_e\le\texttt{zero\_tol}$ are removed by setting \texttt{alive[e]} to \texttt{False}.
-To guarantee progress in floating-point arithmetic, if residual reduction fails to delete any edge on the current cycle (e.g., due to roundoff), we forcibly delete the minimum-residual edge on the cycle by setting its residual to zero and marking it dead.
-This ensures that at least one edge is removed from the alive subgraph per iteration whenever a cycle is found.
+Then $\mathrm{OPT}_{\mathrm{rank}}=\mathrm{OPT}_{\mathrm{MWFAS}}$.
+The correspondence between optimal rankings and optimal feedback arc sets is many-to-many: we do \emph{not} claim a bijection between arbitrary rankings and arbitrary feedback arc sets.
+\end{proposition}
 
-\paragraph{Stopping conditions and time budgeting.}
-Phase~1 repeats the above loop until either (i) no directed cycle is found in the alive subgraph (in which case the kept subgraph is acyclic), or (ii) a global wall-clock budget \texttt{time\_limit\_sec} is exceeded.
-In the latter case Phase~1 terminates early and passes the current kept set to Phase~2; therefore the output of Phase~1 is guaranteed to be acyclic only when it stops due to cycle absence (not due to timeout).
-In all experiments, Phase~1 is executed under the same per-run timeout policy as the rest of the non-GNN pipeline (\S\ref{subsec:exp_setup}).
+\begin{proof}
+Write $L(R)=\sum_{(i,j)\in E:\,R(i)>R(j)} w_{ij}$ for the ranking loss of $R$.
 
-\paragraph{Recorded diagnostics.}
-For reproducibility and profiling, the solver records Phase~1 diagnostics in the returned metadata when enabled, including the number of Phase~1 iterations, the number of removed edges after Phase~1, the number of kept edges after Phase~1, and the Phase~1 wall-clock time.
-These quantities are used only for analysis and do not affect the ranking output.
+($\mathrm{OPT}_{\mathrm{MWFAS}}\le\mathrm{OPT}_{\mathrm{rank}}$.)
+Fix any ranking $R$ and let $F_R=\{(i,j)\in E:R(i)>R(j)\}$. Every retained arc is forward under $R$, so $R$ is a topological order of $(V,E\setminus F_R)$ and $F_R$ is a feedback arc set of weight $L(R)$. Hence $\mathrm{OPT}_{\mathrm{MWFAS}}\le L(R)$ for every $R$, and taking the best ranking yields $\mathrm{OPT}_{\mathrm{MWFAS}}\le\mathrm{OPT}_{\mathrm{rank}}$.
 
+($\mathrm{OPT}_{\mathrm{rank}}\le\mathrm{OPT}_{\mathrm{MWFAS}}$.)
+Let $F^\star$ be an optimal feedback arc set and let $R$ be any topological order of the DAG $(V,E\setminus F^\star)$. Every retained arc is forward under $R$, so the set of backward arcs of $R$ is contained in $F^\star$. Therefore $L(R)\le w(F^\star)=\mathrm{OPT}_{\mathrm{MWFAS}}$, which implies $\mathrm{OPT}_{\mathrm{rank}}\le\mathrm{OPT}_{\mathrm{MWFAS}}$.
+\end{proof}
 
-% -------------------------
-\subsection{Phase 2: Stable Weight-Prioritized Add-Back (Variants INS1/INS2/INS3)}
-\label{subsec:framework_phase2}
+\begin{remark}
+If $F$ is inclusion-minimal, then for every topological order $R$ of $(V,E\setminus F)$ one has $L(R)=w(F)$. Optimal feedback arc sets under strictly positive weights are inclusion-minimal, but the optimum-value claim above does not require uniqueness of $F^\star$ or of $R$.
+\end{remark}
 
-Phase~2 post-processes the acyclic backbone produced by Phase~1 by attempting to reinsert previously removed arcs while preserving acyclicity. The goal of this stage is to recover high-confidence comparisons, as reflected by larger edge weights, without reintroducing directed cycles. To this end, we use a deterministic, time-bounded add-back procedure that scans candidate arcs in stable descending order of weight and accepts an arc only when it is forward with respect to a topological ordering of the current kept subgraph.
+\subsection{Unified Pipeline Pseudocode}
+\label{subsec:pseudocode}
 
-\paragraph{Inputs and outputs.}
-Phase~2 is applied after Phase~1 and takes as input the vertex count $n$, the full edge list $(\texttt{src},\texttt{dst},\texttt{w})$, and an initial Boolean mask \texttt{kept\_initial} indicating which arcs remain after cycle breaking. It returns a final mask \texttt{kept} describing the post-processed DAG. When enabled, the implementation also records auxiliary information such as the kept mask after each pass, the number of reinserted arcs per pass, and a termination reason.
+\begin{algorithm}[H]
+\caption{Canonical revised ranking pipeline (training-free)}
+\label{alg:ours_canonical}
+\KwIn{Weighted digraph $G=(V,E,w)$; wall-clock budget $T$; zero tolerance $\tau$; optional min-cut flag; refinement budgets}
+\KwOut{Score vector $s:V\to\mathbb{R}$}
+$t_0\leftarrow\mathrm{now}()$;\ $r_e\leftarrow w_e$,\ $\mathrm{alive}_e\leftarrow\mathrm{true}$ for all $e\in E$\;
+\While{$\mathrm{true}$}{
+  \If{$\mathrm{now}()-t_0>T$}{\textbf{break}\tcp*{may exit while cyclic}}
+  $C\leftarrow\mathrm{FindOneCycle}(\mathrm{alive})$ with deterministic vertex/edge order\;
+  \If{$C=\emptyset$}{\textbf{break}\tcp*{acyclic}}
+  $\Delta\leftarrow\min_{e\in C} r_e$\;
+  \eIf{$\Delta\le 0$}{force-kill $\arg\min_{e\in C} r_e$}{
+    $r_e\leftarrow r_e-\Delta$ for $e\in C$\;
+    delete $\{e\in C:r_e\le\tau\}$;\ \If{none deleted}{force-kill $\arg\min_{e\in C} r_e$}
+  }
+}
+$\mathrm{kept}\leftarrow\mathrm{alive}$\tcp*{Phase~A output}
+sort excluded arcs by descending $w$, stable ties by edge id\;
+\ForEach{excluded arc $e=(u,v)$ in that order}{
+  \If{$\mathrm{now}()-t_0>T$}{\textbf{break}}
+  \If{$v\not\rightarrow^\star u$ in current kept DAG}{$\mathrm{kept}[e]\leftarrow\mathrm{true}$}
+}
+\If{min-cut repair enabled}{apply Alg.~\ref{alg:mincut_exchange} under remaining budget}\;
+$\pi\leftarrow\mathrm{TopoSort}(\mathrm{kept})$;\ \If{$\pi=\mathrm{None}$}{$\pi\leftarrow(1,\dots,n)$\tcp*{identity fallback}}
+$s_v\leftarrow\max\{1,n-\mathrm{pos}_\pi(v)\}$\;
+optionally apply order-preserving refinement under remaining budget\;
+\Return{$s$}
+\end{algorithm}
 
-\paragraph{Stable descending-weight scan.}
-Let $w_e$ denote the original weight of arc $e$. We first compute a stable ordering of all arcs in descending order of $w_e$, using a stable sorting procedure so that ties are handled deterministically. Within each pass, arcs are scanned in this fixed order, and only arcs that are currently absent from the kept set are considered for reinsertion. Stable ordering is important because it ensures reproducible tie-breaking among equal-weight arcs and gives priority to stronger comparisons throughout the add-back process.
+\subsection{Phase~A: Local-Ratio Cycle Breaking (Prior)}
+\label{subsec:framework_phaseA}
+Phase~A follows the local-ratio reduction of \citet{CI03}: maintain residuals, find a directed cycle by deterministic DFS (vertices in increasing index order; outgoing arcs in stored order), subtract the cycle's minimum residual, and delete arcs whose residual falls to at most $\tau$. Forced-progress safeguards kill one minimum-residual arc if floating-point reduction would otherwise stall. Phase~A stops when the alive subgraph is acyclic or when the wall-clock budget expires. Acyclicity is guaranteed only on the former exit.
 
-\paragraph{Acyclicity test within each pass.}
-At the beginning of each add-back pass, we compute a topological ordering of the current kept subgraph using Kahn's algorithm. Let $\mathrm{pos}(v)$ denote the position of vertex $v$ in this order. An absent arc $(u,v)$ is accepted if and only if $\mathrm{pos}(u) < \mathrm{pos}(v)$, that is, if the arc is forward with respect to the current topological order. This provides an $O(1)$ acceptance test per arc once the topological positions are known and avoids more expensive dynamic reachability checks during the scan. Importantly, the topological order is computed once at the start of a pass and is not updated after each individual insertion.
+\subsection{Phase~B: Exact Reachability-Aware Reinsertion (Fidelity Correction)}
+\label{subsec:framework_phaseB}
+After Phase~A, excluded arcs are scanned once in stable descending original weight. Arc $(u,v)$ is reinserted iff there is no directed path $v\rightarrow^\star u$ in the current kept DAG. This is the exact cycle-safety test of \citet{CI03,VK25}. The submitted fixed-topological-position proxy (accept iff $\mathrm{pos}(u)<\mathrm{pos}(v)$ for one fixed topological order) is weaker and is retained only for historical comparison (legacy INS multipass variants).
 
-\paragraph{Why acyclicity is preserved.}
-Because only forward arcs are inserted with respect to a valid topological ordering of the current kept subgraph, that same ordering remains valid after all accepted insertions within the pass. Therefore, the kept subgraph remains acyclic throughout the pass and at its conclusion. If the current kept subgraph is not acyclic, for example because an earlier stage terminated under a time limit before full resolution, Kahn's algorithm will fail to produce a complete topological order; in that case, the implementation stops Phase~2 and records the corresponding termination condition.
+\begin{proposition}[Exact add-back correctness]
+\label{prop:reachability_addback}
+Assume the Phase~A kept graph is a DAG. Consider a single descending-weight scan that inserts $(u,v)$ iff $v\not\rightarrow^\star u$ in the current kept DAG.
+\begin{enumerate}
+\item \textbf{Acyclicity.} Every accepted insertion preserves acyclicity.
+\item \textbf{Monotonicity.} Insertions only enlarge reachability.
+\item \textbf{One-pass sufficiency.} An arc rejected when scanned cannot become admissible later in the same monotone scan.
+\item \textbf{Single-edge inclusion minimality.} After a complete exact scan, no excluded arc can be restored individually without creating a cycle.
+\end{enumerate}
+This is inclusion-minimality under single-edge restoration, not a claim of globally minimum-weight FAS.
+\end{proposition}
 
-\paragraph{Multiple passes and INS variants.}
-We consider three multi-pass variants, namely \textsc{OURS-MFAS-INS1}, \textsc{OURS-MFAS-INS2}, and \textsc{OURS-MFAS-INS3}, which execute $P=1,2,3$ add-back passes, respectively. After each pass, a new topological order is computed on the updated kept subgraph, and the same stable descending-weight scan is repeated. Multiple passes are useful because an arc that is backward under one topological order may become forward after other insertions have altered the structure of the kept DAG. In this way, later passes can recover additional high-weight comparisons that were not admissible earlier. Phase~2 terminates early if the global time budget is exhausted, if a pass inserts no new arcs, or if a valid topological order cannot be produced.
+\begin{proof}
+(1) If adding $(u,v)$ created a cycle, the remainder of that cycle would be a $v\rightarrow^\star u$ path in the previous DAG, contradicting the acceptance test.
+(2) Adding arcs cannot destroy existing paths.
+(3) Suppose $(u,v)$ is unsafe at its turn, so a path $v\rightarrow^\star u$ exists. Later insertions only add arcs, so that path persists and $(u,v)$ remains unsafe.
+(4) Completeness of the scan means every excluded arc was rejected exactly because restoring it alone would close a cycle.
+\end{proof}
 
-\paragraph{Determinism and recorded metadata.}
-Phase~2 is deterministic under fixed input and time limits. Determinism follows from the use of stable weight ordering together with a deterministic Kahn queue policy, in which initially eligible zero-indegree vertices are processed in increasing vertex order and newly eligible vertices are appended as they arise. For reproducibility and profiling, the solver records metadata including the number of executed passes, the number of reinserted arcs per pass, and the reason for termination.
-% -------------------------
-\subsection{Ranking Extraction and Order-Preserving Score Refinement}
+\subsection{Optional Secondary Repair: Weighted Min-Cut Exchange}
+\label{subsec:framework_mincut}
+Some high-weight excluded arcs remain unsafe because $v$ reaches $u$. For such an arc $e=(u,v)$, let $C$ be a minimum-capacity directed $v\rightarrow u$ cut in the retained DAG (capacities $=$ kept-arc weights). The candidate exchange is
+\[
+D'=(D\setminus C)\cup\{e\}.
+\]
+Accept only if $w(C)+\mathrm{tol}<w(e)$.
+
+\begin{algorithm}[H]
+\caption{Conflict-triggered weighted min-cut exchange (optional)}
+\label{alg:mincut_exchange}
+\KwIn{Kept DAG $D$; excluded arcs; budgets on candidates/acceptances; tolerance $\mathrm{tol}$}
+\ForEach{unsafe candidate $e=(u,v)$ under a fixed deterministic order}{
+  $C\leftarrow$ directed min $v\rightarrow u$ cut in $D$\;
+  \If{$w(C)+\mathrm{tol}<w(e)$}{
+    $D\leftarrow(D\setminus C)\cup\{e\}$\tcp*{strict weighted-FAS improvement}
+  }
+}
+\end{algorithm}
+
+\begin{proposition}[Min-cut exchange]
+\label{prop:mincut}
+Whenever an exchange is accepted under the strict rule $w(C)+\mathrm{tol}<w(e)$:
+\begin{enumerate}
+\item $D'$ is acyclic;
+\item the removed-FAS weight changes by $\Delta=w(C)-w(e)<0$;
+\item repeated accepted exchanges terminate after finitely many steps.
+\end{enumerate}
+We claim no global optimality and no approximation ratio for this operator. The guarantee is structural improvement of the weighted feedback objective; ranking metrics need not improve monotonically.
+\end{proposition}
+
+\begin{proof}
+(1) Removing $C$ destroys every $v\rightarrow u$ path, so adding $(u,v)$ cannot close a cycle.
+(2) Relative to the previous feedback set, arcs in $C$ re-enter the feedback set and $e$ leaves it, giving $\Delta=w(C)-w(e)$; acceptance forces $\Delta<0$.
+(3) There are finitely many subsets of $E$, and each acceptance strictly decreases a nonnegative objective bounded below by $0$.
+\end{proof}
+
+\subsection{Phase~C: Scores and Optional Refinement (Prior Lineage)}
 \label{subsec:framework_phaseC}
+From a kept DAG we compute a deterministic topological order (Kahn's algorithm with index-ordered initial queue) and assign $s_v=\max\{1,n-\mathrm{pos}(v)\}$. If the kept graph is still cyclic (e.g., Phase~A timeout), the implementation falls back to the identity order $(1,\dots,n)$; see \S\ref{subsec:theory_fallback}. Optional adjacent-swap refinement may change the order under a local budget. Optional order-preserving ternary refinement adjusts magnitudes without changing the induced order, following the refinement lineage in \citet{VK25}.
 
-After Phases~1--2, the solver maintains a set of kept arcs (encoded by a Boolean mask over the edge list).
-This subsection describes (i) how we extract a ranking-consistent score vector from the kept subgraph and (ii) two optional refinement steps that improve upset-style objectives under a fixed time budget.
-These steps are used uniformly in the experimental protocol (\S\ref{subsec:exp_setup}) and return a score vector whose induced ordering is evaluated by the same upset metrics as all baselines.
+\subsection{Termination, Parameters, and Determinism}
+\label{subsec:parameters}
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}llp{6.6cm}@{}}
+\toprule
+\textbf{Parameter} & \textbf{Role} & \textbf{Notes} \\
+\midrule
+$T$ (\texttt{time\_limit\_sec}) & Global wall-clock budget & Shared by Phases~A--C; early exit may leave cycles \\
+$\tau$ (\texttt{zero\_tol}) & Residual kill threshold & Default $10^{-15}$; numerical, not a modeling knob \\
+DFS / Kahn order & Deterministic traversal & Vertices $1..n$; stable edge order \\
+Add-back order & Descending $w$, stable ties & Exact reachability test (canonical) \\
+Legacy $P\in\{1,2,3\}$ & Submitted topo-proxy passes & Historical INS1/2/3; not canonical \\
+Min-cut budgets & Optional repair caps & Secondary; regime-specific benefit \\
+Refinement budgets & Phase~C time/passes & Order-preserving ternary from prior lineage \\
+Identity fallback & Score extraction if cyclic & No nontrivial general error bound (\S\ref{subsec:theory_fallback}) \\
+\bottomrule
+\end{tabular}
+\caption{Consolidated parameters and termination behavior.}
+\label{tab:parameters}
+\end{table}
 
-\paragraph{Score extraction from the kept DAG.}
-Given a kept mask \texttt{kept}, we compute a topological order of the kept subgraph using Kahn's algorithm (the same routine as in Phase~2).
-The queue policy is deterministic: initial zero-indegree vertices are enqueued in increasing vertex id order, and newly eligible vertices are appended as they arise.
-Let $\mathrm{pos}(v)$ denote the position of vertex $v$ in the returned topological order (smaller position means earlier in the order).
-We assign scores by
+\subsection{DF03 Approximation Guarantee: Idealized vs.\ Practical}
+\label{subsec:theory_df03}
+\paragraph{Idealized local-ratio Phase~A.}
+If Phase~A is executed under the assumptions of the published Demetrescu--Finocchi local-ratio procedure and runs to the relevant completion condition (fully reduced acyclic residual), the published $\lambda$-approximation on removed weight applies to that idealized algorithm, where $\lambda$ is governed by longest-cycle length in the source analysis \citet{CI03}.
+
+\paragraph{Practical implementation.}
+The implemented pipeline additionally uses finite wall-clock termination, floating-point zero tolerance, forced-progress safeguards, and a fallback ranking when topological sort fails. Therefore the original theorem does \emph{not} automatically imply that every practical finite-budget output satisfies the same approximation guarantee.
+
+\begin{remark}[No inherited guarantee under premature termination]
+\label{rem:no_df03_timeout}
+\textbf{We do not claim the DF03 approximation guarantee for prematurely terminated practical runs.}
+In particular, a wall-clock cutoff inside Phase~A may leave the kept graph cyclic; subsequent identity-order fallback is outside the theorem's scope.
+\end{remark}
+
+\subsection{Fallback Ordering: Unbounded Multiplicative Gap}
+\label{subsec:theory_fallback}
+
+\begin{proposition}[No nontrivial multiplicative bound for identity fallback]
+\label{prop:fallback}
+For every $M>0$ there exists a weighted digraph $G$ with $\mathrm{OPT}_{\mathrm{rank}}>0$ such that if $R_{\mathrm{fb}}$ denotes the identity ranking $R_{\mathrm{fb}}(v)=v$, then
 \[
-s_v \;=\; \max\{1,\; n-\mathrm{pos}(v)\},
+\frac{L(R_{\mathrm{fb}})}{\mathrm{OPT}_{\mathrm{rank}}}>M.
 \]
-so earlier vertices in the topological order receive larger scores (higher rank).
-If, due to early termination under a time limit, the kept subgraph is not acyclic and a full topological order cannot be produced, the implementation falls back to the identity order $[1,2,\dots,n]$ for score assignment; this case is recorded via metadata and is not typical under the benchmark time budgets.
+\end{proposition}
 
-\paragraph{Optional local refinement of the induced order (naive-upset swaps).}
-Optionally, we apply a bounded local-improvement procedure that directly optimizes the \emph{naive upset} objective while operating on the induced ordering.
-Starting from the current order (obtained by sorting scores), the procedure performs repeated sweeps of adjacent swaps.
-A swap is accepted if it strictly decreases the weighted naive-upset loss (sum of weights of edges that disagree with the current order) by at least a small numerical tolerance.
-The refinement is time-bounded by a local budget and also respects the global per-run time limit; it terminates early if a full sweep makes no improvement.
-After refinement, we reconstruct a score vector consistent with the refined order by assigning ranks $n,n-1,\dots,1$ along the order and clamping scores to be at least $1$.
-This step can change the induced ranking (permutation), but it preserves the convention that larger scores indicate higher rank.
+\begin{proof}
+Fix $\varepsilon\in(0,1)$ and an integer $n\ge 3$ large enough that $\binom{n}{2}/\varepsilon>M$.
+On vertex set $\{1,\dots,n\}$, include every arc $(j,i)$ with $j>i$ and weight $1$, and add the single arc $(1,2)$ with weight $\varepsilon$.
+Under the identity ranking $R_{\mathrm{fb}}(v)=v$, every arc $(j,i)$ with $j>i$ is backward, so $L(R_{\mathrm{fb}})=\binom{n}{2}$.
+Under the reverse ranking $R^\star(v)=n+1-v$, every unit-weight arc is forward and only $(1,2)$ is backward, so $L(R^\star)=\varepsilon$ and thus $\mathrm{OPT}_{\mathrm{rank}}\le\varepsilon$.
+Hence $L(R_{\mathrm{fb}})/\mathrm{OPT}_{\mathrm{rank}}\ge\binom{n}{2}/\varepsilon>M$.
+(The same instances show that additive regret $L(R_{\mathrm{fb}})-\mathrm{OPT}_{\mathrm{rank}}$ is likewise unbounded as $n$ grows with $\varepsilon$ fixed.)
+\end{proof}
 
-\paragraph{Optional order-preserving ratio-upset refinement (coordinate-wise ternary search).}
-We also implement an order-preserving refinement of \emph{score magnitudes} that targets the ratio-upset objective used in prior work.
-Given a fixed ordering induced by the current scores, we optimize score values while enforcing strict monotonicity so that the ordering does not change.
-Concretely, we process vertices in nondecreasing score order and update one coordinate at a time using ternary search to minimize the ratio-upset contribution, subject to box constraints
-\[
-s_{\text{prev}}+\delta \;\le\; s_v \;\le\; s_{\text{next}}-\delta
-\]
-with a small margin $\delta>0$.
-A monotone repair step enforces these constraints after updates.
-This refinement is executed for a bounded number of passes and ternary-search iterations per coordinate, and it uses a dedicated budget \texttt{refine\_time\_sec} that is additionally capped by the remaining global time in \texttt{time\_limit\_sec}.
-When the remaining budget is below a minimal threshold, the refinement is skipped.
-
-\paragraph{Per-pass scores and metadata.}
-When enabled, the solver can record intermediate score vectors after each add-back pass (INS1/INS2/INS3), by computing scores from the kept mask after each Phase~2 pass and optionally applying the same refinement policy to each.
-The solver also records timing diagnostics, including the time spent in the refinement stage and whether ratio refinement was enabled; these quantities support profiling and reproducible benchmarking.
-
-\paragraph{Determinism considerations.}
-Phases~1--2 and score extraction are deterministic under fixed inputs and time limits (see \S\ref{subsec:framework_problem}--\S\ref{subsec:framework_phase2}).
-The naive-swap refinement uses stable sorting for deterministic tie-handling.
-The ratio-upset refinement processes vertices in sorted score order using a non-stable sort; therefore, when the current score vector contains exact ties, the internal update order can vary and may lead to minor non-determinism in the refined magnitudes.
-This non-determinism affects only score magnitudes and is avoided when scores are strictly ordered by construction.
-% -------------------------
-\subsection{Complexity and Practical Considerations}
+\subsection{Complexity}
 \label{subsec:framework_complexity}
+Let $n=|V|$ and $m=|E|$. For the audited Phase~A implementation, each cycle search scans the static adjacency of all original arcs (dead arcs are skipped but not compacted), costing $O(n+m)$ per iteration, and at most $m$ iterations occur before acyclicity in the unbudgeted case. Therefore the idealized full-completion Phase~A bound is
+\[
+O(mn+m^2),
+\]
+which is weaker than a textbook $O(nm)$ accounting that assumes compacted alive adjacency. A wall-clock budget caps completed iterations empirically; it is an execution policy, not an average-case complexity theorem.
 
-We summarize the computational costs of the three stages of the proposed pipeline and relate these costs to the empirical scaling behavior observed in the benchmark. Let $n$ denote the number of vertices, $m$ the number of directed edges with positive weight, $P\in\{1,2,3\}$ the number of add-back passes in the INS variants, and $I$ the number of Phase~1 iterations completed before termination.
-
-\paragraph{Phase~1: cycle breaking.}
-Phase~1 maintains a residual weight for each edge together with an \emph{alive} mask indicating which edges remain active. Directed cycles are identified by depth-first search on the currently active subgraph. Since inactive edges are skipped, one cycle-detection call runs in $O(n+m_{\text{alive}})$ time, where $m_{\text{alive}}\le m$. Each iteration reduces residual mass along a detected cycle and deletes all edges whose residual falls below the numerical threshold. Because at least one edge is removed whenever a cycle is processed, the number of iterations is at most $m$ in the worst case. In practice, Phase~1 is also explicitly time-bounded and stops either when no directed cycle remains or when the available time budget is exhausted.
-
-\paragraph{Phase~2: stable weight-prioritized add-back.}
-Phase~2 begins with one stable sorting of all edges by descending original weight, which costs $O(m\log m)$. Each add-back pass then computes a topological ordering of the current kept subgraph in $O(n+m)$ time and scans the full edge list once. An absent edge $(u,v)$ is accepted if it is forward with respect to the topological order of that pass, so the acceptance test is $O(1)$ once vertex positions in the topological order are known. Consequently, Phase~2 runs in $O(m\log m + P(n+m))$ time in the worst case, with early termination when no additional edges can be reinserted or when the time budget is reached. By construction, this stage preserves acyclicity throughout each pass.
-
-\paragraph{Phase~3: optional score refinement.}
-We implement two optional refinement procedures, both executed under explicit time budgets.
-
-The first is a naive adjacent-swap refinement that improves the weighted upset objective by local swaps in the current order. One sweep examines $O(n)$ adjacent pairs, and evaluating each candidate swap requires scanning the edge set, giving worst-case cost $O(nm)$ per sweep. In practice, however, this stage is run with a small number of sweeps and a strict local time budget.
-
-The second is an order-preserving ratio refinement that adjusts score magnitudes without changing the induced ordering. This refinement constructs arrays over unordered vertex pairs $(i,j)$ with nonzero total weight $A_{ij}+A_{ji}$; in the worst case, this structure has size $\Theta(n^2)$. It then performs coordinate-wise updates using ternary search while enforcing strict monotonicity constraints. This stage is likewise explicitly budgeted and is capped by the remaining global time.
-
-\paragraph{Memory footprint.}
-The dominant memory cost comes from the sparse edge-list representation: endpoint arrays, weights, residuals, and masks all require $O(m)$ storage, and the adjacency lists also store $O(m)$ edge references. Phase~2 adds one sorted index array of length $m$. If ratio refinement is enabled, the auxiliary pairwise structures can require up to $O(n^2)$ memory in the worst case. The pipeline is otherwise designed for sparse inputs and does not require densifying the adjacency matrix.
-
-\paragraph{Practical scaling and the Finance bottleneck.}
-All stages operate under a single wall-clock budget, and the experimental driver enforces a non-GNN timeout of $1800$\,s (see \S\ref{subsec:exp_setup}). The main scalability limitation in the current benchmark arises on very large or dense graphs, most notably Finance with $m\approx 1.7\times 10^6$. In such cases, the combination of repeated cycle searches in Phase~1, full-edge scans in each add-back pass, and potentially quadratic pairwise structures in the ratio-refinement stage can exhaust the available time budget. This behavior is consistent with the intended operating regime of the method: the pipeline is effective on large sparse and moderately dense comparison graphs, while extremely dense instances place simultaneous pressure on the iterative cycle-breaking stage and on the global edge- and pair-based refinement procedures.
-% =========================
+Exact reachability add-back costs $O(m\log m)$ for sorting plus, in the dense incremental-closure realization used for moderate $n$, initialization and per-acceptance updates polynomial in $n$ (or BFS queries in a sparse fallback mode). Optional min-cut repair adds per-candidate directed min-cut computations on the kept DAG and is budgeted by candidate/acceptance caps. Phase~C refinement is explicitly time-bounded; worst-case pairwise structures for ratio refinement can reach $O(n^2)$ memory. Empirically, sparse and moderately dense instances finish quickly under the experimental budgets, while the near-complete Finance graph is a large-dense boundary case for Phase~A.
 
 \section{Experimental Results}
 \label{sec:exp}
