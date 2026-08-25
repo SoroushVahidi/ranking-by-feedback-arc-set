@@ -97,7 +97,7 @@ The MWFAS problem is
 \end{equation}
 \end{definition}
 
-The ranking objective~\eqref{eq:ranking_obj} and MWFAS~\eqref{eq:mwfas} share the same optimum \emph{value}: the backward edges of any ranking form a feedback arc set of equal weight, and any feedback arc set induces a DAG whose topological orders realize that deleted weight as ranking disagreement. The correspondence between optimal rankings and optimal feedback arc sets is many-to-many rather than one-to-one; we treat this equivalence as a formal claim to be stated and proved, not merely asserted.
+The ranking objective~\eqref{eq:ranking_obj} and MWFAS~\eqref{eq:mwfas} share the same optimum \emph{value}: the backward edges of any ranking form a feedback arc set of equal weight, and any feedback arc set induces a DAG whose topological orders have ranking disagreement no greater than the deleted weight, with equality for an inclusion-minimal (in particular, optimal positive-weight) feedback arc set. The correspondence between optimal rankings and optimal feedback arc sets is many-to-many rather than one-to-one; we treat this equivalence as a formal claim to be stated and proved, not merely asserted.
 
 \subsection{Scope, lineage, and contributions}
 The pipeline studied here (\S\ref{sec:framework}) builds an acyclic backbone with the local-ratio heuristic of \citet{CI03}, reinserts high-weight arcs while preserving acyclicity, extracts scores from the resulting DAG, and optionally applies order-preserving refinement. Several components are \emph{prior}: local-ratio Phase~A, exact cycle-safe add-back (including weight ordering), and ternary/refinement ideas already appear in \citet{CI03,VK25}. What this paper contributes is therefore not a reinvention of that core, but the following.
@@ -592,6 +592,28 @@ Figure~\ref{fig:ablation} shows unpaired Layer median trajectories for context; 
 \caption{Unpaired median upset\_simple and removed weight across A0--A6 (descriptive).}
 \label{fig:ablation}
 \end{figure}
+
+Table~\ref{tab:reviewer1_stage_ablation} consolidates the three pipeline stages into a single per-stage view, reporting all three requested upset losses together with mean runtime.
+Phase~A alone (A0) establishes the acyclic backbone; exact reachability reinsertion (A2) is the stage that most changes the ranking relative to Phase~A, with the significant paired improvement already quantified in Table~\ref{tab:ablation_primary}; refinement (A4, \textsc{OURS-Reach}) yields a further, smaller \texttt{upset\_ratio} gain while \texttt{upset\_simple}/\texttt{upset\_naive} are essentially unchanged from A2, consistent with the refinement-saturation trend of \S\ref{subsec:sensitivity}.
+The legacy fixed-topological-position reinsertion used in the submitted manuscript (A1) is included as a separate row, available only on the $n=33$ Layer-1 core scope; it is not part of the revised canonical progression and is retained solely to answer the reviewer's original wording.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+\textbf{Configuration} & $n$ & \texttt{upset\_simple} & \texttt{upset\_naive} & \texttt{upset\_ratio} & Mean runtime (s) \\
+\midrule
+A0 (Phase~A only) & 77 & 0.2853 & 120842.9 & 0.3498 & 0.174 \\
+A1 (legacy topo add-back, submitted) & 33 & 0.2555 & 93589.0 & 0.3760 & 0.276 \\
+A2 (+ exact reachability add-back) & 77 & 0.2728 & 118788.6 & 0.3410 & 0.427 \\
+A4 (+ refinement, \textsc{OURS-Reach}) & 77 & 0.2724 & 118722.0 & 0.3178 & 0.542 \\
+\bottomrule
+\end{tabular}
+\caption{Reviewer-requested pipeline-stage ablation on non-Finance common completions: Phase~A only, plus exact reachability add-back, plus refinement (\textsc{OURS-Reach}); one legacy row reports the submitted fixed-topological/INS proxy reinsertion. All values are per-stage means (mean runtime specifically answers the reviewer's request for average runtime; primary runtime comparisons elsewhere use the median, as in Table~\ref{tab:runtime_wtl}). A0, A2, and A4 share the identical $n=77$ non-Finance common-completion set; A1 is available only on its $n=33$ Layer-1 core scope. Directional significance between stages is established by the paired tests in Table~\ref{tab:ablation_primary}, not by these unpaired per-stage means.}
+\label{tab:reviewer1_stage_ablation}
+\end{table}
 
 \subsection{Parameter Sensitivity (Compact)}
 \label{subsec:sensitivity}
