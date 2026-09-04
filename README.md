@@ -1,6 +1,6 @@
 # Training-Free Ranking from Pairwise Comparisons via Acyclic Graph Construction
 
-**Journal of Supercomputing — Major Revision**
+**Journal of Supercomputing — Accepted (2026), sole-authored**
 
 This repository contains the implementation, experiments, and manuscript materials for a training-free, deterministic ranking pipeline that builds an acyclic backbone from directed pairwise comparisons using a minimum weighted feedback arc set (MWFAS) inspired local-ratio heuristic, restores high-weight arcs via exact reachability-aware cycle-safe reinsertion, and optionally applies refinement.
 
@@ -172,7 +172,19 @@ Use `outputs/paper_tables/` and `outputs/revision_analysis_20260825/` as the aut
   }
   ```
 
-- **This repository / ranking by feedback arc set:** please cite the paper that accompanies this codebase (when available) and the [GNNRank repo](https://github.com/SherylHYX/GNNRank).
+- **This repository / ranking by feedback arc set:**
+
+  ```bibtex
+  @article{vahidi2026training,
+    author  = {Vahidi, Soroush},
+    title   = {Training-Free Ranking from Pairwise Comparisons via Acyclic Graph Construction},
+    journal = {The Journal of Supercomputing},
+    year    = {2026},
+    note    = {Accepted}
+  }
+  ```
+
+  and the [GNNRank repo](https://github.com/SherylHYX/GNNRank).
 
 ---
 

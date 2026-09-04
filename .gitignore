@@ -16,3 +16,8 @@ GNNRank-main/data/finance/*.pk
 GNNRank-main/full_833614_metrics_best.csv
 __pycache__/
 .pytest_cache/
+
+# IDE/tool metadata and notebook checkpoints
+.vscode/
+.cursor/
+.ipynb_checkpoints/
